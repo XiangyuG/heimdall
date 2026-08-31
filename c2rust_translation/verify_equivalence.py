@@ -42,6 +42,103 @@ try:
 except ImportError:
     from c2rust_translation.verify_ebpf_kernel import find_maps as _find_maps_for_type_check
 
+try:
+    from witness_spec import WitnessError as _WitnessError
+except ImportError:
+    from c2rust_translation.witness_spec import WitnessError as _WitnessError
+
+
+# --------------------------------------------------------------------------- #
+# Witness expression -> Z3 (stage 3: binding transforms)
+#
+# Mirrors witness_spec.eval_expr, but lowers directly to Z3 so the leaves can
+# be the exact Z3 constants the formulas already use (map keys, split inputs).
+# Keep the operator set in sync with witness_spec.eval_expr.
+# --------------------------------------------------------------------------- #
+def _z3_coerce_pair(a, b, signed):
+    sa, sb = a.size(), b.size()
+    if sa == sb:
+        return a, b
+    ext = z3.SignExt if signed else z3.ZeroExt
+    if sa < sb:
+        return ext(sb - sa, a), b
+    return a, ext(sa - sb, b)
+
+
+def eval_witness_expr_z3(node, resolve):
+    """Evaluate a witness expression node to a Z3 AST.
+
+    `resolve(path_or_name) -> z3 BitVec` supplies the leaves (bound variables
+    and path references).
+    """
+    from witness_spec import _bits_of_type, WitnessError
+
+    if isinstance(node, bool):
+        return z3.BoolVal(node)
+    if isinstance(node, int):
+        return z3.BitVecVal(node, 64)
+    if isinstance(node, str):
+        return resolve(node)
+    if not isinstance(node, dict):
+        raise WitnessError(f"cannot evaluate expression node: {node!r}")
+    if "path" in node:
+        return resolve(node["path"])
+    if "value" in node:
+        bits = _bits_of_type(node.get("type", "u64"))
+        return z3.BitVecVal(int(node["value"]) & ((1 << bits) - 1), bits)
+
+    if len(node) != 1:
+        raise WitnessError(f"expression object needs exactly one operator key, got {sorted(node)}")
+    (op, arg), = node.items()
+
+    if op in ("truncate", "zero_extend", "sign_extend"):
+        v = eval_witness_expr_z3(arg["value"], resolve)
+        width = int(arg["width"])
+        cur = v.size()
+        if op == "truncate":
+            if width > cur:
+                raise WitnessError(f"truncate width {width} > value width {cur}")
+            return z3.Extract(width - 1, 0, v)
+        if width < cur:
+            raise WitnessError(f"{op} width {width} < value width {cur}")
+        if width == cur:
+            return v
+        return (z3.ZeroExt if op == "zero_extend" else z3.SignExt)(width - cur, v)
+
+    if op == "bitnot":
+        return ~eval_witness_expr_z3(arg, resolve)
+    if op == "not":
+        return z3.Not(eval_witness_expr_z3(arg, resolve))
+    if op in ("all_of", "any_of"):
+        parts = [eval_witness_expr_z3(x, resolve) for x in arg]
+        return z3.And(*parts) if op == "all_of" else z3.Or(*parts)
+
+    if op in ("add", "sub", "mul", "bitand", "bitor", "bitxor", "shl", "lshr", "ashr"):
+        l = eval_witness_expr_z3(arg["left"], resolve)
+        r = eval_witness_expr_z3(arg["right"], resolve)
+        l, r = _z3_coerce_pair(l, r, signed=False)
+        return {
+            "add": lambda: l + r, "sub": lambda: l - r, "mul": lambda: l * r,
+            "bitand": lambda: l & r, "bitor": lambda: l | r, "bitxor": lambda: l ^ r,
+            "shl": lambda: l << r, "lshr": lambda: z3.LShR(l, r), "ashr": lambda: l >> r,
+        }[op]()
+
+    cmp_signed = {"signed_le", "signed_lt", "signed_ge", "signed_gt"}
+    if op in ("eq", "ne", "unsigned_le", "unsigned_lt", "unsigned_ge", "unsigned_gt") or op in cmp_signed:
+        l = eval_witness_expr_z3(arg["left"], resolve)
+        r = eval_witness_expr_z3(arg["right"], resolve)
+        l, r = _z3_coerce_pair(l, r, signed=op in cmp_signed)
+        return {
+            "eq": lambda: l == r, "ne": lambda: l != r,
+            "unsigned_le": lambda: z3.ULE(l, r), "unsigned_lt": lambda: z3.ULT(l, r),
+            "unsigned_ge": lambda: z3.UGE(l, r), "unsigned_gt": lambda: z3.UGT(l, r),
+            "signed_le": lambda: l <= r, "signed_lt": lambda: l < r,
+            "signed_ge": lambda: l >= r, "signed_gt": lambda: l > r,
+        }[op]()
+
+    raise WitnessError(f"unknown expression operator {op!r}")
+
+
 VALID_HELPER_FAIL_MODES = ("off", "all", "selected")
 DEFAULT_FAILABLE_HELPERS = (
     "bpf_probe_read",
@@ -284,8 +381,122 @@ def build_map_ite_presence(paths_z3, map_name, query_key, default_presence):
         result = z3.If(path_pred_z3, path_presence, result)
     return result
 
+
+def _side_map_bits(program_data, meta, name, collect):
+    """Resolve (key_bits, value_bits) for one side of a map, preferring
+    declared metadata and falling back to widths seen in path snapshots."""
+    kb = vb = None
+    if meta:
+        try:
+            kb = (int(meta.get('key_size', 0)) * 8) or None
+            vb = (int(meta.get('value_size', 0)) * 8) or None
+        except Exception:
+            pass
+    k_set, v_set = collect(program_data, name)
+    if kb is None and k_set:
+        kb = sorted(k_set)[0]
+    if vb is None and v_set:
+        vb = sorted(v_set)[0]
+    return kb, vb
+
+
+def _apply_map_correspondence(mb, map_name, c_meta, r_meta, c_pd, r_pd,
+                              c_paths_z3, r_paths_z3, solver,
+                              divergence_checks, map_ite_fns, collect):
+    """Compare a map under a witness `map_correspondence` binding.
+
+    Instead of comparing C and Rust at one shared key, this compares, for every
+    original key `k`, the C entry at `k` against the Rust entry at
+    `optimized_key(k)`, with values related by `value_relation`.
+    """
+    from witness_spec import _expr_summary
+
+    r_name = mb.optimized_object if mb.optimized_object in r_pd.map_metadata else map_name
+
+    c_kb, c_vb = _side_map_bits(c_pd, c_meta, map_name, collect)
+    r_kb, r_vb = _side_map_bits(r_pd, r_meta or r_pd.map_metadata.get(r_name), r_name, collect)
+    if not (c_kb and c_vb and r_kb and r_vb):
+        raise _WitnessError(
+            f"binding {mb.name}: cannot resolve key/value widths for map "
+            f"'{map_name}' (C key={c_kb} val={c_vb}, Rust key={r_kb} val={r_vb})"
+        )
+
+    k = z3.BitVec(f'corrk_{map_name}', c_kb)
+
+    def _kresolve(tok):
+        if tok == mb.original_key:
+            return k
+        raise _WitnessError(
+            f"binding {mb.name}: expression references {tok!r}; only the "
+            f"original_key symbol {mb.original_key!r} is in scope"
+        )
+
+    if mb.assume is not None:
+        dom = eval_witness_expr_z3(mb.assume, _kresolve)
+        if not z3.is_bool(dom):
+            raise _WitnessError(f"binding {mb.name}: `assume` must be a boolean predicate")
+        solver.add(dom)
+        print(f"    [*] map_correspondence '{mb.name}': key domain restricted by "
+              f"assume {mb.assume}")
+
+    tk = eval_witness_expr_z3(mb.optimized_key, _kresolve)
+    if tk.size() != r_kb:
+        tk = (z3.ZeroExt(r_kb - tk.size(), tk) if tk.size() < r_kb
+              else z3.Extract(r_kb - 1, 0, tk))
+
+    c_init_v = z3.Array(f'corr_init_{map_name}_c', z3.BitVecSort(c_kb), z3.BitVecSort(c_vb))
+    r_init_v = z3.Array(f'corr_init_{map_name}_r', z3.BitVecSort(r_kb), z3.BitVecSort(r_vb))
+    c_init_p = z3.Array(f'corr_initp_{map_name}_c', z3.BitVecSort(c_kb), z3.BitVecSort(1))
+    r_init_p = z3.Array(f'corr_initp_{map_name}_r', z3.BitVecSort(r_kb), z3.BitVecSort(1))
+
+    c_def_v = z3.Select(c_init_v, k)
+    r_def_v = z3.Select(r_init_v, tk)
+    c_def_p = z3.Select(c_init_p, k)
+    r_def_p = z3.Select(r_init_p, tk)
+
+    # corresponding maps start in corresponding states
+    _cv, _rv = _z3_coerce_pair(c_def_v, r_def_v, signed=False)
+    solver.add(_cv == _rv)
+    solver.add(c_def_p == r_def_p)
+
+    c_fn = build_map_ite(c_paths_z3, map_name, k, c_def_v)
+    r_fn = build_map_ite(r_paths_z3, r_name, tk, r_def_v)
+    c_pres = build_map_ite_presence(c_paths_z3, map_name, k, c_def_p)
+    r_pres = build_map_ite_presence(r_paths_z3, r_name, tk, r_def_p)
+
+    if mb.value_is_identity():
+        a, b = _z3_coerce_pair(c_fn, r_fn, signed=False)
+        divergence_checks.append(a != b)
+    else:
+        eq = (mb.value_relation or {}).get("equal")
+        if not (isinstance(eq, dict) and "left" in eq and "right" in eq):
+            raise _WitnessError(
+                f"binding {mb.name}: value_relation must be `equal: true` or "
+                f"`equal: {{left, right}}`"
+            )
+
+        def _vresolve(tok):
+            if isinstance(tok, str) and tok.split(".")[0] in ("original", "optimized"):
+                return c_fn if tok.split(".")[0] == "original" else r_fn
+            raise _WitnessError(
+                f"binding {mb.name}: value_relation references {tok!r}; use "
+                f"'original.value' / 'optimized.value'"
+            )
+
+        lhs = eval_witness_expr_z3(eq["left"], _vresolve)
+        rhs = eval_witness_expr_z3(eq["right"], _vresolve)
+        lhs, rhs = _z3_coerce_pair(lhs, rhs, signed=False)
+        divergence_checks.append(lhs != rhs)
+
+    divergence_checks.append(c_pres != r_pres)
+    map_ite_fns[map_name] = (c_fn, r_fn, c_pres, r_pres, k, c_kb, c_vb)
+    print(f"    [+] map_correspondence '{mb.name}': C key {c_kb}b ↔ Rust key {r_kb}b "
+          f"via {_expr_summary(mb.optimized_key)}; "
+          f"value {'equal' if mb.value_is_identity() else 'related'}")
+
+
 def verify_equivalence_ite(c_program_data, rust_program_data, unifier,
-                           ctx_constraints=None, skip_r0=False):
+                           ctx_constraints=None, skip_r0=False, witness=None):
     """Verify equivalence using ITE canonical map semantics.
 
     Args:
@@ -294,6 +505,9 @@ def verify_equivalence_ite(c_program_data, rust_program_data, unifier,
         unifier: Z3VariableUnifier (already used for both programs)
         ctx_constraints: optional list of claripy constraints on shared inputs
                          (e.g., XDP data <= data_end)
+        witness: optional WitnessSpec. When its `observations` block is
+                 non-empty, only the named outputs (return value / maps /
+                 globals) are compared; everything else is left unconstrained.
     """
     print("\n[=] Starting ITE-based Z3 Verification [=]")
 
@@ -367,11 +581,46 @@ def verify_equivalence_ite(c_program_data, rust_program_data, unifier,
 
     divergence_checks = []
 
+    from witness_spec import (
+        build_observation_selection, relation_is_plain_equal, RETURN_KEY,
+        build_binding_plan,
+    )
+    sel = build_observation_selection(witness)
+    obs_hits = set()
+    if sel is not None:
+        print(f"    [*] witness: comparing only {sel.size()} observation(s): "
+              f"{('return, ' if sel.want_return else '')}{sorted(sel.names) or '(none)'}")
+
+    plan = build_binding_plan(witness)
+    if plan is not None:
+        for bname, reason in plan.unsupported:
+            print(f"    [!] witness: binding '{bname}' not applied — {reason}")
+        if plan.maps:
+            print(f"    [*] witness: applying map_correspondence for "
+                  f"{sorted(set(mb.name for mb in plan.maps.values()))}")
+
+    def _rel_note(key, fallback_label):
+        if sel is None:
+            return
+        rel = sel.relations.get(key)
+        if not relation_is_plain_equal(rel, witness):
+            print(f"    [!] witness: observation '{sel.labels.get(key, fallback_label)}' "
+                  f"relation {rel!r} is not a plain equality; stage 2 still compares "
+                  f"it as strict equality (binding transforms are stage 3)")
+
     if skip_r0:
         print("    [~] Skipping R0 comparison (void return type per BTF)")
+        if sel is not None and sel.want_return:
+            print("    [~] witness observes 'return' but entry returns void — nothing to compare")
+            obs_hits.add(RETURN_KEY)
+    elif sel is not None and not sel.want_return:
+        print("    [~] R0 comparison skipped (not among witness observations)")
     else:
         print("    [+] Comparing return values (R0)")
         divergence_checks.append(c_output_z3 != r_output_z3)
+        if sel is not None:
+            obs_hits.add(RETURN_KEY)
+            _rel_note(RETURN_KEY, "return")
 
     all_map_names = set()
     all_map_names.update(c_program_data.map_metadata.keys())
@@ -457,6 +706,25 @@ def verify_equivalence_ite(c_program_data, rust_program_data, unifier,
         r_meta = rust_program_data.map_metadata.get(map_name)
         if c_meta is None and r_meta is None:
             continue
+        if sel is not None and map_name not in sel.names:
+            continue
+
+        mb = plan.maps.get(map_name) if plan is not None else None
+        if mb is not None and map_name == mb.original_object:
+            _apply_map_correspondence(
+                mb, map_name, c_meta, r_meta,
+                c_program_data, rust_program_data,
+                c_paths_z3, r_paths_z3, solver,
+                divergence_checks, map_ite_fns, _collect_snapshot_bitwidths,
+            )
+            map_checks += 1
+            if sel is not None:
+                obs_hits.add(map_name)
+            continue
+        if mb is not None:
+            # binding registered under the optimized name too; the original-name
+            # iteration already handled it.
+            continue
 
         try:
             key_bits, val_bits = _resolve_map_bitwidths(map_name, c_meta, r_meta)
@@ -494,6 +762,9 @@ def verify_equivalence_ite(c_program_data, rust_program_data, unifier,
 
         map_ite_fns[map_name] = (c_fn, r_fn, c_pres, r_pres, query_key, key_bits, val_bits)
         map_checks += 1
+        if sel is not None:
+            obs_hits.add(map_name)
+            _rel_note(map_name, map_name)
 
     print(f"    [+] Comparing {map_checks} maps via ITE semantics")
 
@@ -541,6 +812,8 @@ def verify_equivalence_ite(c_program_data, rust_program_data, unifier,
         if c_bits > _GLOB_BITS_LIMIT:
             print(f"[!] .data symbol '{sym_name}': too large ({c_bits // 8}B > {_DATA_SYMBOLIZE_LIMIT}B), skipping value comparison")
             continue
+        if sel is not None and sym_name not in sel.names:
+            continue
         c_init = claripy.BVS(f'glob_{sym_name}_init', c_bits)
         r_init = claripy.BVS(f'glob_{sym_name}_init', r_bits)
         c_default = unifier.convert_and_unify(c_init, 'c')
@@ -549,6 +822,9 @@ def verify_equivalence_ite(c_program_data, rust_program_data, unifier,
         r_ite = _build_glob_ite(sym_name, r_paths_z3_glob, r_default)
         divergence_checks.append(c_ite != r_ite)
         glob_checks += 1
+        if sel is not None:
+            obs_hits.add(sym_name)
+            _rel_note(sym_name, sym_name)
 
     c_unmatched = {n: b for n, b in c_syms.items() if n not in c_matched}
     r_unmatched = {n: b for n, b in r_syms.items() if n not in r_matched}
@@ -590,6 +866,8 @@ def verify_equivalence_ite(c_program_data, rust_program_data, unifier,
         c_name, r_name = c_names[0], r_names[0]
         c_size_paired.add(c_name)
         r_size_paired.add(r_name)
+        if sel is not None and c_name not in sel.names and r_name not in sel.names:
+            continue
         if size_bits > _GLOB_BITS_LIMIT:
             print(f"    [~] .data alias (too large to compare): '{c_name}' (C) ↔ '{r_name}' (Rust) [{size_bits // 8}B]")
         else:
@@ -602,15 +880,23 @@ def verify_equivalence_ite(c_program_data, rust_program_data, unifier,
             r_ite = _build_glob_ite(r_name, r_paths_z3_glob, r_init_z3)
             divergence_checks.append(c_ite != r_ite)
             glob_checks += 1
+            if sel is not None:
+                hit = c_name if c_name in sel.names else r_name
+                obs_hits.add(hit)
+                _rel_note(hit, hit)
             print(f"    [+] .data alias: '{c_name}' (C) ↔ '{r_name}' (Rust) [{size_bits // 8}B]")
 
     for sym_name, bits in sorted(c_output.items()):
         if sym_name not in c_size_paired:
+            if sel is not None and sym_name not in sel.names:
+                continue
             structural_mismatches.append(
                 f"C has .data global '{sym_name}' ({bits // 8}B) but Rust does not"
             )
     for sym_name, bits in sorted(r_output.items()):
         if sym_name not in r_size_paired:
+            if sel is not None and sym_name not in sel.names:
+                continue
             structural_mismatches.append(
                 f"Rust has .data global '{sym_name}' ({bits // 8}B) but C does not"
             )
@@ -634,6 +920,21 @@ def verify_equivalence_ite(c_program_data, rust_program_data, unifier,
             result_type="mismatch",
             counter_example=sm_str,
         )
+
+    if sel is not None:
+        requested = set(sel.names) | ({RETURN_KEY} if sel.want_return else set())
+        missing = requested - obs_hits
+        if missing:
+            disp = sorted("return" if m == RETURN_KEY else m for m in missing)
+            msg = (
+                "witness observations name outputs not present in the generated "
+                f"formulas: {disp}. Observable here: return, "
+                f"maps={sorted(all_map_names)}, globals={sorted(all_data_syms)}"
+            )
+            print(f"\n[!] {msg}")
+            return VerificationResult(
+                equivalent=False, result_type="witness_error", counter_example=msg
+            )
 
     if not divergence_checks:
         print("[!] No outputs or maps found to compare. Verification is meaningless.")
@@ -822,17 +1123,28 @@ class VerificationContext:
     symbolic_uninit: bool = False
     program_type: str = "default"
     c_filepath: str = ""
+    witness: Any = None
 
-def prepare_verification(c_filepath, map_specs, helper_fail_mode="off", helper_fail_helpers=None, pkt_size=None, symbolic_uninit=False):
+def prepare_verification(c_filepath, map_specs, helper_fail_mode="off", helper_fail_helpers=None, pkt_size=None, symbolic_uninit=False, witness=None):
     """Prepare shared verification context and generate the C formula (once).
 
     Args:
         c_filepath: path to C eBPF object file
         map_specs: list of "name:type" strings
+        witness: optional WitnessSpec (see witness_spec.py). Stage 1 uses it to
+            derive map specs from `map_correspondence` bindings (only when
+            `map_specs` is empty) and to append assumption constraints to the
+            shared ctx_constraints list.
 
     Returns:
         VerificationContext, or VerificationResult on error
     """
+    if witness is not None and not map_specs:
+        derived = witness.derived_map_specs()
+        if derived:
+            print(f"[*] witness: using map specs derived from bindings: {derived}")
+            map_specs = derived
+
     map_symbol_names, map_type_names = parse_map_specs(map_specs)
     helper_fail_mode = (helper_fail_mode or "off").strip().lower()
     if helper_fail_mode not in VALID_HELPER_FAIL_MODES:
@@ -879,6 +1191,13 @@ def prepare_verification(c_filepath, map_specs, helper_fail_mode="off", helper_f
             map_type_names.append(meta.map_type_name)
 
     shared_vars, ctx_constraints = build_ctx_shared_vars(program_type, ctx_size, pkt_size=pkt_size)
+
+    if witness is not None:
+        from witness_spec import build_assumption_constraints
+        ctx_constraints = list(ctx_constraints) + build_assumption_constraints(
+            witness, shared_vars
+        )
+
     shared_vars['ctx_constraints'] = ctx_constraints
 
     return VerificationContext(
@@ -894,6 +1213,7 @@ def prepare_verification(c_filepath, map_specs, helper_fail_mode="off", helper_f
         symbolic_uninit=symbolic_uninit,
         program_type=program_type,
         c_filepath=c_filepath,
+        witness=witness,
     )
 
 def generate_c_formula(vctx, c_filepath, entry_sym, max_steps=50000, ringbuf_track_max=512):
@@ -1013,6 +1333,16 @@ def run_verification_rust_only(vctx, rust_filepath, entry_sym, max_steps=50000, 
     if mt_result is not None:
         return mt_result
 
+    _corr_maps = set()
+    if vctx.witness is not None:
+        try:
+            from witness_spec import build_binding_plan
+            _bp = build_binding_plan(vctx.witness)
+            if _bp is not None:
+                _corr_maps = set(_bp.maps.keys())
+        except Exception:
+            _corr_maps = set()
+
     r_btf_metadata = parse_map_metadata_from_btf(rust_filepath)
 
     if r_btf_metadata:
@@ -1025,6 +1355,13 @@ def run_verification_rust_only(vctx, rust_filepath, entry_sym, max_steps=50000, 
         for name in sorted(set(vctx.c_btf_metadata or {}) & set(r_btf_metadata)):
             c_meta = vctx.c_btf_metadata[name]
             r_meta = r_btf_metadata[name]
+            if name in _corr_maps:
+                if c_meta.key_size != r_meta.key_size or c_meta.value_size != r_meta.value_size:
+                    print(f"[*] map '{name}': key/value size differs "
+                          f"(C key={c_meta.key_size} val={c_meta.value_size}, "
+                          f"Rust key={r_meta.key_size} val={r_meta.value_size}) — "
+                          f"allowed by witness map_correspondence")
+                continue
             if c_meta.key_size != r_meta.key_size:
                 print(f"[!] BTF MISMATCH: map '{name}' key_size differs: "
                       f"C={c_meta.key_size} vs Rust={r_meta.key_size}")
@@ -1084,8 +1421,15 @@ def run_verification_rust_only(vctx, rust_filepath, entry_sym, max_steps=50000, 
 
     unifier = Z3VariableUnifier()
     ctx_constraints = vctx.shared_vars.get('ctx_constraints', [])
-    return verify_equivalence_ite(vctx.c_program_data, r_program_data, unifier,
-                                  ctx_constraints=ctx_constraints, skip_r0=skip_r0)
+    try:
+        return verify_equivalence_ite(vctx.c_program_data, r_program_data, unifier,
+                                      ctx_constraints=ctx_constraints, skip_r0=skip_r0,
+                                      witness=vctx.witness)
+    except _WitnessError as exc:
+        print(f"[!] witness: {exc}")
+        return VerificationResult(
+            equivalent=False, result_type="witness_error", counter_example=str(exc)
+        )
 
 def run_verification(
     c_filepath,
@@ -1095,6 +1439,7 @@ def run_verification(
     helper_fail_mode="off",
     helper_fail_helpers=None,
     pkt_size=None,
+    witness=None,
 ):
     """Run full verification pipeline programmatically.
 
@@ -1103,6 +1448,7 @@ def run_verification(
         rust_filepath: path to Rust eBPF object file
         entry_sym: entry symbol name
         map_specs: list of "name:type" strings
+        witness: optional WitnessSpec (see witness_spec.py)
 
     Returns:
         VerificationResult
@@ -1113,6 +1459,7 @@ def run_verification(
         helper_fail_mode=helper_fail_mode,
         helper_fail_helpers=helper_fail_helpers,
         pkt_size=pkt_size,
+        witness=witness,
     )
 
     err = generate_c_formula(vctx, c_filepath, entry_sym)
@@ -1130,8 +1477,15 @@ def main(argv):
     parser.add_argument("entry_symbol", help="Entry symbol name (used for both objects)")
     parser.add_argument(
         "map_specs",
-        nargs="+",
-        help="Map specs in name or name:type format (type: hash|array)",
+        nargs="*",
+        help="Map specs in name or name:type format (type: hash|array). "
+             "Optional when --witness supplies map_correspondence bindings.",
+    )
+    parser.add_argument(
+        "--witness",
+        default=None,
+        help="Path to a witness file (JSON, or YAML with PyYAML) declaring "
+             "bindings / assumptions / observations. See witness_spec.py.",
     )
     parser.add_argument(
         "--helper-fail-mode",
@@ -1167,15 +1521,38 @@ def main(argv):
         h.strip() for h in args.helper_fail_helpers.split(",") if h.strip()
     ]
 
-    result = run_verification(
-        args.c_ebpf,
-        args.rust_ebpf,
-        args.entry_symbol,
-        args.map_specs,
-        helper_fail_mode=args.helper_fail_mode,
-        helper_fail_helpers=selected_helpers,
-        pkt_size=args.pkt_size,
-    )
+    witness = None
+    if args.witness:
+        from witness_spec import load_witness, WitnessError
+        try:
+            witness = load_witness(args.witness)
+        except WitnessError as exc:
+            print(f"[!] witness: {exc}")
+            sys.exit(2)
+        print(f"[*] witness: loaded '{witness.name or witness.source_path}' "
+              f"({len(witness.bindings)} bindings, {len(witness.assumptions)} "
+              f"assumptions, {len(witness.observations)} observations)")
+
+    if not args.map_specs and witness is None:
+        parser.error("no map_specs given and no --witness to derive them from")
+
+    try:
+        result = run_verification(
+            args.c_ebpf,
+            args.rust_ebpf,
+            args.entry_symbol,
+            args.map_specs,
+            helper_fail_mode=args.helper_fail_mode,
+            helper_fail_helpers=selected_helpers,
+            pkt_size=args.pkt_size,
+            witness=witness,
+        )
+    except Exception as exc:
+        from witness_spec import WitnessError
+        if isinstance(exc, WitnessError):
+            print(f"[!] witness: {exc}")
+            sys.exit(2)
+        raise
 
     if not result.equivalent:
         sys.exit(1)

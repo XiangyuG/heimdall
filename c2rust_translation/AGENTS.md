@@ -84,6 +84,38 @@ python3 verify_mixed_entries.py <c_binary.o> <rust_binary.o> <c_entry> <rust_ent
 - If **SAT** (mismatch): read the counter-example carefully, understand which branch or map operation diverges, fix the Rust code, recompile, re-run the kernel verifier, re-run the safety checker, and re-check equivalence. Repeat up to 10 attempts.
 - For multi-entry programs, check each entry point.
 
+### Optional: `--witness <file.json>`
+
+Both `verify_mixed_entries.py` and `verify_equivalence.py` accept `--witness`, a
+JSON (or YAML) file that makes the checker's implicit assumptions explicit. It
+has three blocks — `bindings` (original↔optimized object correspondence),
+`assumptions` (facts the solver may assume, e.g. an input range), and
+`observations` (which outputs to compare). See `witness_spec.py` for the schema
+and expression mini-language; `witnesses/reduce_queue_key_width.json` is a worked
+example.
+
+- `assumptions`: each is lowered to a solver constraint on the shared input
+  context (same channel as the built-in XDP `data<=data_end`).
+- `observations`: when non-empty, the proof compares **only** the named outputs
+  (`original.return`, or a map / `.data` global by name); the return value and
+  any unlisted map/global are left unconstrained. An observation naming an
+  output that is not in the formulas fails with `result_type: witness_error`.
+- `bindings`:
+  - `map_correspondence` — the map is compared under the key transform: for
+    every original key `k`, C's entry at `k` is matched against Rust's entry at
+    `optimized_key(k)`, with values related by `value_relation` (`equal: true`,
+    or `equal: {left, right}` over `original.value` / `optimized.value`). C and
+    Rust key/value widths may differ (the BTF size-mismatch guard is skipped for
+    the bound map). An optional `assume` (a boolean expression over the
+    `original_key` symbol, e.g. `k <= 65535`) restricts the key domain — needed
+    when a range assumption is what makes a key narrowing lossless. The binding
+    also supplies the map spec, so the positional `<map:type>` args can be
+    omitted. Worked example: `witnesses/reduce_queue/`.
+  - `equal: true` — identity; this is already the default (same-named inputs are
+    unified), nothing to do.
+  - `equal: {left, right}` on a scalar object — **not applied yet**; logged and
+    the objects are still compared as strict equality.
+
 ## Step 5: Save Results
 
 - Copy final Rust source to the output directory
@@ -558,6 +590,7 @@ struct Event {
 | `aya-ebpf/target/bpfel-unknown-none-atomic/release/aya-ebpf-translated` | Compiled Rust .o |
 | `verify_mixed_entries.py` | Equivalence checker |
 | `generate_formula.py` | Formula generator |
+| `witness_spec.py` | Optional `--witness` file parser (bindings / assumptions / observations) |
 
 ---
 
