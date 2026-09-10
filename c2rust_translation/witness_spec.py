@@ -144,16 +144,33 @@ class WitnessSpec:
 # --------------------------------------------------------------------------- #
 # Loading / structural parsing
 # --------------------------------------------------------------------------- #
-def load_witness(path: str) -> WitnessSpec:
-    """Load and structurally validate a witness file (JSON or YAML)."""
+def load_witness(
+    path: str, *, original_obj: str = None, optimized_obj: str = None
+) -> WitnessSpec:
+    """Load and structurally validate a witness file.
+
+    JSON (recommended) or YAML (with PyYAML). A `.wit` file is the textual
+    transformation-witness DSL: it is parsed and semantically lowered by
+    `witness_dsl` to the same WitnessSpec, using the two program objects to
+    resolve map widths -- `original_obj` / `optimized_obj` are then required
+    (callers already have these paths).
+    """
+    if str(path).lower().endswith(".wit"):
+        return _load_witness_dsl(path, original_obj, optimized_obj)
+
     with open(path, "r") as f:
         raw = f.read()
-
     doc = _parse_document(raw, path)
+    return witness_spec_from_doc(doc, source_path=path)
+
+
+def witness_spec_from_doc(doc, source_path: str = "") -> WitnessSpec:
+    """Build a WitnessSpec from an already-parsed witness document (a dict,
+    either the witness object or `{"witness": {...}}`)."""
     if isinstance(doc, dict) and set(doc.keys()) == {"witness"}:
         doc = doc["witness"]
     if not isinstance(doc, dict):
-        raise WitnessError(f"{path}: top level must be a mapping/object")
+        raise WitnessError(f"{source_path or '<witness>'}: top level must be a mapping/object")
 
     version = str(doc.get("version", "0.1"))
     if version not in SUPPORTED_VERSIONS:
@@ -178,8 +195,77 @@ def load_witness(path: str) -> WitnessSpec:
         bindings=bindings,
         assumptions=assumptions,
         observations=observations,
-        source_path=path,
+        source_path=source_path,
     )
+
+
+def _load_witness_dsl(path: str, original_obj, optimized_obj) -> WitnessSpec:
+    """Parse + semantically lower a `.wit` file to a WitnessSpec.
+
+    Transition path: the DSL is lowered to the legacy witness JSON document
+    (written next to the `.wit` as `<path>.lowered.json` for inspection) and
+    that document builds the WitnessSpec. Lowering diagnostics are printed;
+    only genuine errors abort.
+    """
+    try:
+        from witness_dsl import parse as _parse_wit
+        from witness_dsl.errors import DslSyntaxError
+        from witness_dsl.lower import Env, lower
+    except ImportError as exc:  # pragma: no cover - depends on env
+        raise WitnessError(
+            f"{path}: the witness_dsl package is not importable ({exc}); "
+            f"is c2rust_translation on sys.path?"
+        ) from None
+
+    if not original_obj or not optimized_obj:
+        raise WitnessError(
+            f"{path}: a .wit witness needs both program objects to resolve map "
+            f"widths, but the caller did not supply them"
+        )
+
+    try:
+        with open(path, "r") as f:
+            src = f.read()
+    except OSError as exc:
+        raise WitnessError(f"{path}: {exc}") from None
+
+    try:
+        ast = _parse_wit(src, path)
+    except DslSyntaxError as exc:
+        raise WitnessError(f"{path}: {exc.diagnostic.render(src)}") from None
+
+    try:
+        env = Env.from_btf(original_obj, optimized_obj)
+    except Exception as exc:  # btf parse failure
+        raise WitnessError(f"{path}: could not read map BTF ({exc})") from None
+
+    plan = lower(ast, env, name=_derive_name(path))
+    for d in plan.diagnostics:
+        marker = "!" if d.severity == "error" else "*"
+        print(f"[{marker}] witness_dsl: {d.render(src)}")
+    for note in plan.unsupported:
+        print(f"[*] witness_dsl: {note}")
+    if plan.has_errors:
+        n = sum(1 for d in plan.diagnostics if d.severity == "error")
+        raise WitnessError(f"{path}: lowering failed ({n} error(s))")
+
+    doc = plan.to_legacy_json()
+    try:
+        out_path = f"{path}.lowered.json"
+        with open(out_path, "w") as f:
+            json.dump(doc, f, indent=2)
+        print(f"[*] witness_dsl: lowered {path} -> {out_path}")
+    except OSError:
+        pass
+
+    return witness_spec_from_doc(doc, source_path=path)
+
+
+def _derive_name(path: str) -> str:
+    import os
+
+    base = os.path.basename(str(path))
+    return base[:-4] if base.endswith(".wit") else base or "witness_dsl"
 
 
 def _parse_document(raw: str, path: str):
