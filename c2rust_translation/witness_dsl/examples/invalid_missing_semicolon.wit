@@ -1,0 +1,4 @@
+// INVALID: the statement is missing its terminating ';' (decision 9).
+observation {
+    original.return = optimized.return
+}

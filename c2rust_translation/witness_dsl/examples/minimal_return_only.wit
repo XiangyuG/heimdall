@@ -1,0 +1,4 @@
+// Smallest legal program: no assumptions, no bindings, one observation.
+observation {
+    original.return = optimized.return;
+}

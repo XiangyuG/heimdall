@@ -1,0 +1,146 @@
+; ============================================================================
+; Transformation-Witness DSL -- complete grammar
+; ============================================================================
+; This is the single source of truth for the concrete syntax checked by
+; syntax_check.py.  It merges the original BNF figure with the decisions made
+; during design review:
+;
+;   (4) `assumption` and `binding` blocks are optional and may be empty;
+;       `observation` is required and must hold at least one statement.
+;   (5) integers may carry a leading `-` and may be written in hexadecimal
+;       (`0x...`); decimal literals may not have leading zeros.
+;   (6) `expression` is a variable followed by a chain of accessors, so
+;       nested access such as `m[k].a.b` and `m[:].v` is expressible.  The
+;       grammar is deliberately permissive here (`x[:][:]`, `scalar.f` parse);
+;       kind consistency is left to the semantic layer, not this checker.
+;   (7) a range assumption may target either side (`original.` or `optimized.`).
+;   (8) `ignore` is fixed to `ignore flag of <helper-name>` -- no generalization.
+;   (9) `;` is a statement terminator and is always required.
+;
+; Notation: `::=` productions, `|` alternation, `ε` the empty string,
+; "literal" terminals.  Repetition/optionality are spelled out with recursion
+; and ε so this stays pure BNF (drop-in for the paper figure).
+; ============================================================================
+
+; ---------------------------------------------------------------------------
+; Program structure
+; ---------------------------------------------------------------------------
+
+<program> ::= <opt-assumption-block> <opt-binding-block> <observation-block>
+
+<opt-assumption-block> ::= <assumption-block> | ε
+<opt-binding-block>    ::= <binding-block>    | ε
+
+<assumption-block>  ::= "assumption"  "{" <assumption-list>  "}"
+<binding-block>     ::= "binding"     "{" <binding-list>     "}"
+<observation-block> ::= "observation" "{" <observation-list> "}"
+
+<assumption-list> ::= ε
+                    | <assumption-statement> <assumption-list>
+
+<binding-list> ::= ε
+                 | <binding-statement> <binding-list>
+
+<observation-list> ::= <observation-statement>
+                     | <observation-statement> <observation-list>
+
+; ---------------------------------------------------------------------------
+; Statements
+; ---------------------------------------------------------------------------
+
+<assumption-statement> ::= <range-assumption>  ";"
+                         | <ignore-assumption> ";"
+
+<range-assumption> ::= <side-expression> "in" "[" <number> "," <number> "]"
+
+<ignore-assumption> ::= "ignore" "flag" "of" <helper-name>
+
+<binding-statement>     ::= <original-expression> "=" <optimized-expression> ";"
+<observation-statement> ::= <original-expression> "=" <optimized-expression> ";"
+
+; ---------------------------------------------------------------------------
+; Expressions
+; ---------------------------------------------------------------------------
+
+<side-expression> ::= <original-expression> | <optimized-expression>
+
+<original-expression>  ::= "original"  "." <expression>
+<optimized-expression> ::= "optimized" "." <expression>
+
+<expression> ::= <variable> <accessor-list>
+
+<accessor-list> ::= ε
+                  | <accessor> <accessor-list>
+
+<accessor> ::= "[:]"
+             | "[" <variable> "]"
+             | "." <field-name>
+
+<variable>    ::= <identifier>
+<helper-name> ::= <identifier>
+<field-name>  ::= <identifier>
+
+; ---------------------------------------------------------------------------
+; Numbers
+; ---------------------------------------------------------------------------
+
+<number> ::= <unsigned-number>
+           | "-" <unsigned-number>
+
+<unsigned-number> ::= <decimal> | <hex>
+
+<decimal> ::= "0"
+            | <nonzero-digit> <digit-list>
+
+<digit-list> ::= ε | <digit> <digit-list>
+
+<hex> ::= "0x" <hex-digit> <hex-digit-list>
+
+<hex-digit-list> ::= ε | <hex-digit> <hex-digit-list>
+
+; ---------------------------------------------------------------------------
+; Identifiers and character classes
+; ---------------------------------------------------------------------------
+
+<identifier> ::= <letter> <identifier-tail>
+
+<identifier-tail> ::= ε
+                    | <letter> <identifier-tail>
+                    | <digit>  <identifier-tail>
+                    | "_"      <identifier-tail>
+
+<letter> ::= "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k"
+           | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v"
+           | "w" | "x" | "y" | "z"
+           | "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K"
+           | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V"
+           | "W" | "X" | "Y" | "Z"
+
+<digit> ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+
+<nonzero-digit> ::= "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+
+<hex-digit> ::= <digit>
+              | "a" | "b" | "c" | "d" | "e" | "f"
+              | "A" | "B" | "C" | "D" | "E" | "F"
+
+; ---------------------------------------------------------------------------
+; Lexical side conditions (not expressible in the BNF above)
+; ---------------------------------------------------------------------------
+;
+;  L1. Whitespace (space, tab, CR, LF) separates tokens and is otherwise
+;      insignificant.
+;  L2. Comments are equivalent to whitespace:
+;        line   -- "//" up to end of line
+;        block  -- "/*" up to the next "*/" (not nested)
+;      An unterminated block comment is a lexical error.
+;  L3. Reserved words are NOT valid <identifier>s:
+;        assumption  binding  observation  in  ignore  flag  of
+;        original    optimized
+;      (Consequence: a variable/field/helper may not be spelled with one of
+;       these words.)
+;  L4. "[:]" is a single token; no whitespace is allowed between "[", ":", "]".
+;  L5. A decimal literal with a leading zero (e.g. "01", "007") is a lexical
+;      error.  "0x" with no following hex digit is a lexical error.
+;  L6. Tokens use maximal munch: the lexer consumes the longest valid token
+;      at each point.

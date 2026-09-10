@@ -1,0 +1,4 @@
+// INVALID: the observation block is required and must be non-empty.
+assumption {
+    ignore flag of bpf_map_lookup_elem;
+}

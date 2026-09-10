@@ -1,0 +1,17 @@
+// reduce_queue: the optimized program narrows a 32-bit RX queue index (and the
+// map key) to 16 bits.  Sound only while rx_queue_index stays in [0, 65535].
+// Textual form of witnesses/reduce_queue/witness.json.
+
+assumption {
+    original.ctx.rx_queue_index in [0, 65535];
+    ignore flag of bpf_map_update_elem;
+}
+
+binding {
+    original.queue_packets[k] = optimized.queue_packets[k];
+}
+
+observation {
+    original.return = optimized.return;
+    original.queue_packets[:].value = optimized.queue_packets[:].value;
+}

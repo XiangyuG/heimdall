@@ -1,0 +1,155 @@
+% Merged BNF of the transformation-witness DSL (paper figure).
+% Kept in sync with GRAMMAR.bnf and the syntax checker in this directory.
+% Lexical side conditions (whitespace, comments, reserved words, "[:]" as one
+% token, no leading zeros) are stated in the caption / surrounding text, not
+% in the grammar.
+\begin{figure}[t]
+\centering
+\resizebox{\columnwidth}{!}{%
+$\begin{aligned}
+\langle \mathit{program} \rangle
+  &::=
+  \langle \mathit{opt\text{-}assumption\text{-}block} \rangle\
+  \langle \mathit{opt\text{-}binding\text{-}block} \rangle\
+  \langle \mathit{observation\text{-}block} \rangle
+  \\[3pt]
+%
+\langle \mathit{opt\text{-}assumption\text{-}block} \rangle
+  &::= \langle \mathit{assumption\text{-}block} \rangle \mid \varepsilon
+  \\
+\langle \mathit{opt\text{-}binding\text{-}block} \rangle
+  &::= \langle \mathit{binding\text{-}block} \rangle \mid \varepsilon
+  \\[3pt]
+%
+\langle \mathit{assumption\text{-}block} \rangle
+  &::=
+  \texttt{assumption}\ \texttt{\{}\ \langle \mathit{assumption\text{-}list} \rangle\ \texttt{\}}
+  \\
+\langle \mathit{binding\text{-}block} \rangle
+  &::=
+  \texttt{binding}\ \texttt{\{}\ \langle \mathit{binding\text{-}list} \rangle\ \texttt{\}}
+  \\
+\langle \mathit{observation\text{-}block} \rangle
+  &::=
+  \texttt{observation}\ \texttt{\{}\ \langle \mathit{observation\text{-}list} \rangle\ \texttt{\}}
+  \\[3pt]
+%
+\langle \mathit{assumption\text{-}list} \rangle
+  &::= \varepsilon
+     \mid \langle \mathit{assumption\text{-}statement} \rangle\ \langle \mathit{assumption\text{-}list} \rangle
+  \\
+\langle \mathit{binding\text{-}list} \rangle
+  &::= \varepsilon
+     \mid \langle \mathit{binding\text{-}statement} \rangle\ \langle \mathit{binding\text{-}list} \rangle
+  \\
+\langle \mathit{observation\text{-}list} \rangle
+  &::= \langle \mathit{observation\text{-}statement} \rangle
+  \\
+  &\mid \langle \mathit{observation\text{-}statement} \rangle\ \langle \mathit{observation\text{-}list} \rangle
+  \\[5pt]
+%
+\langle \mathit{assumption\text{-}statement} \rangle
+  &::= \langle \mathit{range\text{-}assumption} \rangle\ \texttt{;}
+  \\
+  &\mid \langle \mathit{ignore\text{-}assumption} \rangle\ \texttt{;}
+  \\
+%
+\langle \mathit{range\text{-}assumption} \rangle
+  &::=
+  \langle \mathit{side\text{-}expression} \rangle\
+  \texttt{in}\ \texttt{[}\ \langle \mathit{number} \rangle\ \texttt{,}\ \langle \mathit{number} \rangle\ \texttt{]}
+  \\
+%
+\langle \mathit{ignore\text{-}assumption} \rangle
+  &::=
+  \texttt{ignore}\ \texttt{flag}\ \texttt{of}\ \langle \mathit{helper\text{-}name} \rangle
+  \\
+%
+\langle \mathit{binding\text{-}statement} \rangle
+  &::=
+  \langle \mathit{original\text{-}expression} \rangle\ \texttt{=}\ \langle \mathit{optimized\text{-}expression} \rangle\ \texttt{;}
+  \\
+\langle \mathit{observation\text{-}statement} \rangle
+  &::=
+  \langle \mathit{original\text{-}expression} \rangle\ \texttt{=}\ \langle \mathit{optimized\text{-}expression} \rangle\ \texttt{;}
+  \\[5pt]
+%
+\langle \mathit{side\text{-}expression} \rangle
+  &::= \langle \mathit{original\text{-}expression} \rangle \mid \langle \mathit{optimized\text{-}expression} \rangle
+  \\
+\langle \mathit{original\text{-}expression} \rangle
+  &::= \texttt{original}\ \texttt{.}\ \langle \mathit{expression} \rangle
+  \\
+\langle \mathit{optimized\text{-}expression} \rangle
+  &::= \texttt{optimized}\ \texttt{.}\ \langle \mathit{expression} \rangle
+  \\[5pt]
+%
+\langle \mathit{expression} \rangle
+  &::= \langle \mathit{variable} \rangle\ \langle \mathit{accessor\text{-}list} \rangle
+  \\
+\langle \mathit{accessor\text{-}list} \rangle
+  &::= \varepsilon \mid \langle \mathit{accessor} \rangle\ \langle \mathit{accessor\text{-}list} \rangle
+  \\
+\langle \mathit{accessor} \rangle
+  &::= \texttt{[:]}
+     \mid \texttt{[}\ \langle \mathit{variable} \rangle\ \texttt{]}
+     \mid \texttt{.}\ \langle \mathit{field\text{-}name} \rangle
+  \\[5pt]
+%
+\langle \mathit{variable} \rangle    &::= \langle \mathit{identifier} \rangle \\
+\langle \mathit{helper\text{-}name} \rangle &::= \langle \mathit{identifier} \rangle \\
+\langle \mathit{field\text{-}name} \rangle  &::= \langle \mathit{identifier} \rangle \\[5pt]
+%
+\langle \mathit{number} \rangle
+  &::= \langle \mathit{unsigned\text{-}number} \rangle
+     \mid \texttt{-}\ \langle \mathit{unsigned\text{-}number} \rangle
+  \\
+\langle \mathit{unsigned\text{-}number} \rangle
+  &::= \langle \mathit{decimal} \rangle \mid \langle \mathit{hex} \rangle
+  \\
+\langle \mathit{decimal} \rangle
+  &::= \texttt{0} \mid \langle \mathit{nonzero\text{-}digit} \rangle\ \langle \mathit{digit\text{-}list} \rangle
+  \\
+\langle \mathit{digit\text{-}list} \rangle
+  &::= \varepsilon \mid \langle \mathit{digit} \rangle\ \langle \mathit{digit\text{-}list} \rangle
+  \\
+\langle \mathit{hex} \rangle
+  &::= \texttt{0x}\ \langle \mathit{hex\text{-}digit} \rangle\ \langle \mathit{hex\text{-}digit\text{-}list} \rangle
+  \\
+\langle \mathit{hex\text{-}digit\text{-}list} \rangle
+  &::= \varepsilon \mid \langle \mathit{hex\text{-}digit} \rangle\ \langle \mathit{hex\text{-}digit\text{-}list} \rangle
+  \\[5pt]
+%
+\langle \mathit{identifier} \rangle
+  &::= \langle \mathit{letter} \rangle\ \langle \mathit{identifier\text{-}tail} \rangle
+  \\
+\langle \mathit{identifier\text{-}tail} \rangle
+  &::= \varepsilon
+     \mid \langle \mathit{letter} \rangle\ \langle \mathit{identifier\text{-}tail} \rangle
+  \\
+  &\mid \langle \mathit{digit} \rangle\ \langle \mathit{identifier\text{-}tail} \rangle
+     \mid \texttt{\_}\ \langle \mathit{identifier\text{-}tail} \rangle
+  \\[5pt]
+%
+\langle \mathit{letter} \rangle
+  &::= \texttt{a} \mid \cdots \mid \texttt{z} \mid \texttt{A} \mid \cdots \mid \texttt{Z}
+  \\
+\langle \mathit{digit} \rangle
+  &::= \texttt{0} \mid \texttt{1} \mid \cdots \mid \texttt{9}
+  \\
+\langle \mathit{nonzero\text{-}digit} \rangle
+  &::= \texttt{1} \mid \texttt{2} \mid \cdots \mid \texttt{9}
+  \\
+\langle \mathit{hex\text{-}digit} \rangle
+  &::= \langle \mathit{digit} \rangle
+     \mid \texttt{a} \mid \cdots \mid \texttt{f}
+     \mid \texttt{A} \mid \cdots \mid \texttt{F}
+\end{aligned}$%
+}
+\caption{BNF grammar of the transformation-witness DSL. Tokens are separated
+by whitespace and \texttt{//}/\texttt{/*\,*/} comments. The reserved words
+\texttt{assumption}, \texttt{binding}, \texttt{observation}, \texttt{in},
+\texttt{ignore}, \texttt{flag}, \texttt{of}, \texttt{original}, and
+\texttt{optimized} are not valid identifiers; \texttt{[:]} is a single token.}
+\label{fig:witness-dsl-grammar}
+\end{figure}

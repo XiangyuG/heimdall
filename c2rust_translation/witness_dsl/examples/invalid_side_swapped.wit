@@ -1,0 +1,4 @@
+// INVALID: observation/binding operands are fixed as original. = optimized.
+observation {
+    optimized.return = original.return;
+}
