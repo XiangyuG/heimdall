@@ -1,0 +1,22 @@
+// Same transformation witness as witness.json, in the textual DSL.
+// 32-bit RX queue index (and the queue_packets map key) narrowed to 16 bits;
+// sound because rx_queue_index is always < 65536 on the target.
+//
+//   python3 verify_mixed_entries.py orig.bpf.o opt.bpf.o \
+//       count_by_queue count_by_queue --witness witness.wit
+//
+// witness_spec lowers this to witness.wit.lowered.json (gitignored) and runs
+// the same relaxed check as witness.json.
+
+assumption {
+    original.ctx.rx_queue_index in [0, 65535];
+}
+
+binding {
+    original.queue_packets[k] = optimized.queue_packets[k];
+}
+
+observation {
+    original.return = optimized.return;
+    original.queue_packets[:].value = optimized.queue_packets[:].value;
+}

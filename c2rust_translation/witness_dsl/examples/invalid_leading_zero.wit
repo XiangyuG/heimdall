@@ -1,0 +1,4 @@
+// INVALID: decimal literals may not have a leading zero (decision 5 / L5).
+assumption {
+    original.ctx.rx_queue_index in [0, 007];
+}

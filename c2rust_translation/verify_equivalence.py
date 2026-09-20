@@ -1570,7 +1570,9 @@ def main(argv):
     if args.witness:
         from witness_spec import load_witness, WitnessError
         try:
-            witness = load_witness(args.witness)
+            witness = load_witness(
+                args.witness, original_obj=args.c_ebpf, optimized_obj=args.rust_ebpf
+            )
         except WitnessError as exc:
             print(f"[!] witness: {exc}")
             sys.exit(2)

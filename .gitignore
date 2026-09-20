@@ -1,2 +1,8 @@
 __pycache__/
 *.egg-info/
+
+# derived by witness_spec when a .wit witness is lowered to legacy JSON
+*.wit.lowered.json
+
+# compiled BPF benchmark runners -- build with `make` in that directory
+/c2rust_translation/c_bpf_programs/libbpf-tools/*_runner

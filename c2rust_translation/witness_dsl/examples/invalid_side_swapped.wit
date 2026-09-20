@@ -1,0 +1,4 @@
+// INVALID: binding operands are fixed as original. = optimized.
+binding {
+    optimized.return = original.return;
+}

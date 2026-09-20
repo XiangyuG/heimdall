@@ -1,0 +1,124 @@
+// SPDX-License-Identifier: GPL-3.0
+#include "vmlinux.h"
+#include <bpf/bpf_helpers.h>
+#include <bpf/bpf_core_read.h>
+#include <bpf/bpf_tracing.h>
+#include "maps.bpf.h"
+
+#define MAX_ENTRIES 10240
+#define TASK_COMM_LEN 16
+#define PF_KTHREAD 0x00200000
+
+struct key_t {
+	char waker[TASK_COMM_LEN];
+	char target[TASK_COMM_LEN];
+	int w_k_stack_id;
+};
+
+const volatile pid_t targ_pid = 0;
+const volatile __u64 max_block_ns = (__u64)-1;
+const volatile __u64 min_block_ns = 1;
+const volatile bool user_threads_only = false;
+
+struct {
+	__uint(type, BPF_MAP_TYPE_HASH);
+	__uint(max_entries, MAX_ENTRIES);
+	__type(key, struct key_t);
+	__type(value, __u64);
+} counts SEC(".maps");
+
+struct {
+	__uint(type, BPF_MAP_TYPE_HASH);
+	__uint(max_entries, MAX_ENTRIES);
+	__type(key, __u32);
+	__type(value, __u64);
+} start SEC(".maps");
+
+struct {
+	__uint(type, BPF_MAP_TYPE_STACK_TRACE);
+	__uint(key_size, sizeof(__u32));
+	__uint(value_size, 127 * sizeof(__u64));
+	__uint(max_entries, MAX_ENTRIES);
+} stackmap SEC(".maps");
+
+static __always_inline int offcpu_sched_switch(struct task_struct *prev)
+{
+	__u32 pid, tid, flags;
+	__u64 ts;
+
+	if (!prev)
+		return 0;
+
+	pid = BPF_CORE_READ(prev, tgid);
+	tid = BPF_CORE_READ(prev, pid);
+
+	if (targ_pid && targ_pid != pid)
+		return 0;
+
+	flags = BPF_CORE_READ(prev, flags);
+	if (user_threads_only && (flags & PF_KTHREAD))
+		return 0;
+
+	ts = bpf_ktime_get_ns();
+	bpf_map_update_elem(&start, &tid, &ts, BPF_ANY);
+	return 0;
+}
+
+static __always_inline int wakeup(void *ctx, struct task_struct *p)
+{
+	struct key_t key = {};
+	static const __u64 zero = 0;
+	__u64 *valp, *tsp;
+	__u64 ts, start_ts, delta;
+	__u32 pid, tid;
+
+	if (!p)
+		return 0;
+
+	pid = BPF_CORE_READ(p, tgid);
+	tid = BPF_CORE_READ(p, pid);
+
+	if (targ_pid && targ_pid != pid)
+		return 0;
+
+	tsp = bpf_map_lookup_elem(&start, &tid);
+	if (!tsp)
+		return 0;
+
+	start_ts = *tsp;
+	bpf_map_delete_elem(&start, &tid);
+
+	ts = bpf_ktime_get_ns();
+	if (ts < start_ts)
+		return 0;
+
+	delta = ts - start_ts;
+	if (delta < min_block_ns || delta > max_block_ns)
+		return 0;
+
+	key.w_k_stack_id = bpf_get_stackid(ctx, &stackmap, 0);
+	BPF_CORE_READ_STR_INTO(&key.target, p, comm);
+	bpf_get_current_comm(&key.waker, sizeof(key.waker));
+
+	valp = bpf_map_lookup_or_try_init(&counts, &key, &zero);
+	if (valp)
+		__sync_fetch_and_add(valp, delta);
+
+	return 0;
+}
+
+SEC("tp_btf/sched_switch")
+int BPF_PROG(sched_switch, bool preempt,
+	     struct task_struct *prev,
+	     struct task_struct *next)
+{
+	return offcpu_sched_switch(prev);
+}
+
+SEC("tp_btf/sched_wakeup")
+int BPF_PROG(sched_wakeup, struct task_struct *p)
+{
+	return wakeup(ctx, p);
+}
+
+char LICENSE[] SEC("license") = "GPL";

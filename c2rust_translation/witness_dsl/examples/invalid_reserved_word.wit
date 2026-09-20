@@ -1,0 +1,4 @@
+// INVALID: 'flag' is a reserved word and cannot be used as a field name (L3).
+binding {
+    original.ctx.flag = optimized.ctx.flag;
+}

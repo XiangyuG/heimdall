@@ -1,0 +1,9 @@
+/* assumption and binding may be present but empty (decision 4).
+   Hex and negative bounds are allowed (decision 5). */
+
+assumption {
+    optimized.cfg[key].rate in [-1, 0x7fffffff];
+}
+
+binding {
+}

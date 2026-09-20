@@ -110,7 +110,9 @@ def main() -> int:
     if args.witness:
         from witness_spec import load_witness, WitnessError
         try:
-            witness = load_witness(args.witness)
+            witness = load_witness(
+                args.witness, original_obj=args.c_obj, optimized_obj=args.rust_obj
+            )
         except WitnessError as exc:
             print(f"[!] witness: {exc}")
             return _finish(2, None, "witness_error", str(exc))
