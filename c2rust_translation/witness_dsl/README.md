@@ -79,6 +79,7 @@ program = parse(source_text)       # raises DslSyntaxError on the first error
 | file | role |
 |---|---|
 | `GRAMMAR.bnf` | authoritative grammar + lexical side conditions |
+| `TEACHING.md` | annotated walkthrough: each design decision as valid/invalid `.wit` pairs |
 | `lexer.py` | `tokenize(src)` → `[Token]`; keywords, numbers, comments, `[:]` |
 | `ast_nodes.py` | dataclass AST (`Program`, `Expr`, statements, …) |
 | `parser.py` | recursive-descent `parse(src)` → `Program` |
