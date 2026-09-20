@@ -18,7 +18,6 @@ KEYWORDS = frozenset(
     {
         "assumption",
         "binding",
-        "observation",
         "in",
         "ignore",
         "flag",

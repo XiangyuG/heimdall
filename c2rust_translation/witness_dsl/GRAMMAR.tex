@@ -10,8 +10,7 @@ $\begin{aligned}
 \langle \mathit{program} \rangle
   &::=
   \langle \mathit{opt\text{-}assumption\text{-}block} \rangle\
-  \langle \mathit{opt\text{-}binding\text{-}block} \rangle\
-  \langle \mathit{observation\text{-}block} \rangle
+  \langle \mathit{opt\text{-}binding\text{-}block} \rangle
   \\[3pt]
 %
 \langle \mathit{opt\text{-}assumption\text{-}block} \rangle
@@ -28,10 +27,6 @@ $\begin{aligned}
 \langle \mathit{binding\text{-}block} \rangle
   &::=
   \texttt{binding}\ \texttt{\{}\ \langle \mathit{binding\text{-}list} \rangle\ \texttt{\}}
-  \\
-\langle \mathit{observation\text{-}block} \rangle
-  &::=
-  \texttt{observation}\ \texttt{\{}\ \langle \mathit{observation\text{-}list} \rangle\ \texttt{\}}
   \\[3pt]
 %
 \langle \mathit{assumption\text{-}list} \rangle
@@ -41,11 +36,6 @@ $\begin{aligned}
 \langle \mathit{binding\text{-}list} \rangle
   &::= \varepsilon
      \mid \langle \mathit{binding\text{-}statement} \rangle\ \langle \mathit{binding\text{-}list} \rangle
-  \\
-\langle \mathit{observation\text{-}list} \rangle
-  &::= \langle \mathit{observation\text{-}statement} \rangle
-  \\
-  &\mid \langle \mathit{observation\text{-}statement} \rangle\ \langle \mathit{observation\text{-}list} \rangle
   \\[5pt]
 %
 \langle \mathit{assumption\text{-}statement} \rangle
@@ -66,10 +56,6 @@ $\begin{aligned}
   \\
 %
 \langle \mathit{binding\text{-}statement} \rangle
-  &::=
-  \langle \mathit{original\text{-}expression} \rangle\ \texttt{=}\ \langle \mathit{optimized\text{-}expression} \rangle\ \texttt{;}
-  \\
-\langle \mathit{observation\text{-}statement} \rangle
   &::=
   \langle \mathit{original\text{-}expression} \rangle\ \texttt{=}\ \langle \mathit{optimized\text{-}expression} \rangle\ \texttt{;}
   \\[5pt]
@@ -148,8 +134,10 @@ $\begin{aligned}
 }
 \caption{BNF grammar of the transformation-witness DSL. Tokens are separated
 by whitespace and \texttt{//}/\texttt{/*\,*/} comments. The reserved words
-\texttt{assumption}, \texttt{binding}, \texttt{observation}, \texttt{in},
+\texttt{assumption}, \texttt{binding}, \texttt{in},
 \texttt{ignore}, \texttt{flag}, \texttt{of}, \texttt{original}, and
-\texttt{optimized} are not valid identifiers; \texttt{[:]} is a single token.}
+\texttt{optimized} are not valid identifiers; \texttt{[:]} is a single token.
+There is no \texttt{observation} block: the checker always compares every
+output, so a witness only ever adds premises.}
 \label{fig:witness-dsl-grammar}
 \end{figure}

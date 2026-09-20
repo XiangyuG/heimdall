@@ -1,12 +1,8 @@
-// INVALID: blocks must be assumption? binding? observation, in that order.
+// INVALID: blocks must be assumption? binding?, in that order.
 binding {
     original.x = optimized.x;
 }
 
 assumption {
     original.x in [0, 10];
-}
-
-observation {
-    original.return = optimized.return;
 }

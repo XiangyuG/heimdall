@@ -6,9 +6,9 @@ Standalone, no pytest dependency.  Run:
 
 Covers: the lexer (keywords, numbers, comments, '[:]'), the parser
 (every production, nested accessors, optional/empty blocks), the structural
-rules enforced beyond the raw token stream (block order, operand sides,
-non-empty observation), and the optional well-formedness warnings.  Also
-round-trips every *.wit file under examples/.
+rules enforced beyond the raw token stream (block order, operand sides), and
+the optional well-formedness warnings.  Also round-trips every *.wit file
+under examples/.
 """
 
 from __future__ import annotations
@@ -131,32 +131,33 @@ def test_parser_valid():
         }
         binding {
             original.m[k] = optimized.m[k];
-        }
-        observation {
-            original.return = optimized.return;
             original.m[:].value = optimized.m[:].value;
         }
         """,
     )
     if p:
         check("parse/full/assumption-count", len(p.assumption.statements) == 3)
-        check("parse/full/binding-count", len(p.binding.statements) == 1)
-        check("parse/full/observation-count", len(p.observation.statements) == 2)
+        check("parse/full/binding-count", len(p.binding.statements) == 2)
         rng = p.assumption.statements[0]
         check("parse/full/range-bounds", (rng.lo, rng.hi) == (0, 65535))
         check("parse/full/neg-hex", (p.assumption.statements[1].lo, p.assumption.statements[1].hi) == (-1, 16))
         check("parse/full/ignore", p.assumption.statements[2].helper == "bpf_map_update_elem")
-        obs2 = p.observation.statements[1]
-        check("parse/full/nested-accessors", obs2.lhs.text() == "original.m[:].value", obs2.lhs.text())
+        bnd2 = p.binding.statements[1]
+        check("parse/full/nested-accessors", bnd2.lhs.text() == "original.m[:].value", bnd2.lhs.text())
 
-    p = expect_ok("parse/minimal", "observation { original.return = optimized.return; }")
+    # There is no `observation` block: the smallest legal program is the
+    # empty string -- no assumption, no binding.
+    p = expect_ok("parse/nothing-at-all", "")
     if p:
-        check("parse/minimal/no-assumption", p.assumption is None)
-        check("parse/minimal/no-binding", p.binding is None)
+        check("parse/nothing-at-all/all-none", p.assumption is None and p.binding is None)
+
+    p = expect_ok("parse/minimal-binding", "binding { original.return = optimized.return; }")
+    if p:
+        check("parse/minimal-binding/no-assumption", p.assumption is None)
 
     p = expect_ok(
         "parse/empty-blocks",
-        "assumption { } binding { } observation { original.a = optimized.a; }",
+        "assumption { } binding { }",
     )
     if p:
         check("parse/empty-blocks/assumption-empty", p.assumption.statements == [])
@@ -164,10 +165,10 @@ def test_parser_valid():
 
     p = expect_ok(
         "parse/deep-chain",
-        "observation { original.a[k].b.c = optimized.a[k].b.c; }",
+        "binding { original.a[k].b.c = optimized.a[k].b.c; }",
     )
     if p:
-        acc = p.observation.statements[0].lhs.accessors
+        acc = p.binding.statements[0].lhs.accessors
         check("parse/deep-chain/len", len(acc) == 3)
         check(
             "parse/deep-chain/kinds",
@@ -176,7 +177,7 @@ def test_parser_valid():
         )
 
     # deliberately permissive: kind-nonsense still parses (semantic layer's job)
-    expect_ok("parse/permissive-double-mapall", "observation { original.m[:][:] = optimized.m[:][:]; }")
+    expect_ok("parse/permissive-double-mapall", "binding { original.m[:][:] = optimized.m[:][:]; }")
 
 
 # --------------------------------------------------------------------------
@@ -185,32 +186,36 @@ def test_parser_valid():
 
 
 def test_parser_invalid():
-    expect_err("err/missing-semi", "observation { original.a = optimized.a }", "';'")
+    expect_err("err/missing-semi", "binding { original.a = optimized.a }", "';'")
     expect_err(
         "err/block-order",
-        "binding { original.a = optimized.a; } assumption { } observation { original.a = optimized.a; }",
+        "binding { original.a = optimized.a; } assumption { }",
         "out of order",
-    )
-    expect_err("err/no-observation", "assumption { ignore flag of h; }", "observation")
-    expect_err(
-        "err/empty-observation", "observation { }", "at least one"
     )
     expect_err(
         "err/lhs-not-original",
-        "observation { optimized.a = original.a; }",
+        "binding { optimized.a = original.a; }",
         "left-hand side",
     )
     expect_err(
         "err/rhs-not-optimized",
-        "observation { original.a = original.a; }",
+        "binding { original.a = original.a; }",
         "right-hand side",
     )
-    expect_err("err/reserved-field", "observation { original.x.flag = optimized.x.flag; }", "field name")
-    expect_err("err/bare-side", "observation { original = optimized; }", "'.'")
-    expect_err("err/index-not-ident", "observation { original.m[0] = optimized.m[0]; }", "key variable")
-    expect_err("err/range-missing-comma", "assumption { original.a in [0 5]; } observation { original.a = optimized.a; }", "','")
-    expect_err("err/trailing-junk", "observation { original.a = optimized.a; } xyz", "end of input")
-    expect_err("err/unclosed-block", "observation { original.a = optimized.a;", "'}'")
+    expect_err("err/reserved-field", "binding { original.x.flag = optimized.x.flag; }", "field name")
+    expect_err("err/bare-side", "binding { original = optimized; }", "'.'")
+    expect_err("err/index-not-ident", "binding { original.m[0] = optimized.m[0]; }", "key variable")
+    expect_err("err/range-missing-comma", "assumption { original.a in [0 5]; }", "','")
+    expect_err("err/trailing-junk", "binding { original.a = optimized.a; } xyz", "end of input")
+    expect_err("err/unclosed-block", "binding { original.a = optimized.a;", "'}'")
+    # `observation` is not a keyword any more -- it's just an identifier, so
+    # this fails as unrecognised trailing content, not as an out-of-order or
+    # duplicate block.
+    expect_err(
+        "err/observation-is-gone",
+        "binding { } observation { original.a = optimized.a; }",
+        "end of input",
+    )
 
 
 # --------------------------------------------------------------------------
@@ -219,28 +224,22 @@ def test_parser_invalid():
 
 
 def test_warnings():
-    res = check_source(
-        "assumption { original.a in [10, 0]; } observation { original.a = optimized.a; }",
-        "w1",
-    )
+    res = check_source("assumption { original.a in [10, 0]; }", "w1")
     check("warn/empty-range/ok", res.ok)
     check("warn/empty-range/warned", any("lower bound exceeds" in w.message for w in res.warnings))
 
     res = check_source(
-        "assumption { ignore flag of h; ignore flag of h; } observation { original.a = optimized.a; }",
-        "w2",
+        "assumption { ignore flag of h; ignore flag of h; }", "w2"
     )
     check("warn/dup-ignore", any("duplicate 'ignore flag of h'" in w.message for w in res.warnings))
 
     res = check_source(
-        "observation { original.a = optimized.a; original.a = optimized.a; }", "w3"
+        "binding { original.a = optimized.a; original.a = optimized.a; }", "w3"
     )
-    check("warn/dup-observation", any("duplicate observation" in w.message for w in res.warnings))
+    check("warn/dup-binding", any("duplicate binding" in w.message for w in res.warnings))
 
     res = check_source(
-        "assumption { original.a in [10, 0]; } observation { original.a = optimized.a; }",
-        "w4",
-        extra=False,
+        "assumption { original.a in [10, 0]; }", "w4", extra=False,
     )
     check("warn/suppressed-with-extra-false", res.warnings == [])
 

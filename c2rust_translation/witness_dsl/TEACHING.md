@@ -1,57 +1,83 @@
-# `witness_dsl` 设计机理讲义
+# `witness_dsl` design rationale
 
-> 教学用。每一节对应 `GRAMMAR.bnf` 里的一条产生式或一条设计决策，
-> 用「合法 / 非法」对照来展示这条规则想表达什么，以及它为什么被这样切分。
-> 所有代码片段都用 `syntax_check.py` 跑过，报错文本是真实输出。
+> A teaching document. Each section corresponds to one production in
+> `GRAMMAR.bnf` or one design decision, shown as a valid/invalid contrast to
+> explain what the rule means and why it was carved out this way. Every code
+> snippet has actually been run through `syntax_check.py` — the error text
+> shown is real output.
 
-跑法（在 `c2rust_translation/` 目录下）：
+How to run it (from the `c2rust_translation/` directory):
 
 ```
-python3 -m witness_dsl path/to/file.wit        # 完整报告
-python3 -m witness_dsl -q *.wit                # 只报失败
-python3 -m witness_dsl --strict file.wit       # 警告也算失败
+python3 -m witness_dsl path/to/file.wit        # full report
+python3 -m witness_dsl -q *.wit                # only print failures
+python3 -m witness_dsl --strict file.wit       # warnings count as failures
 ```
 
-退出码 `0` 当且仅当每个文件都语法合法。
+Exit code `0` iff every file is syntactically valid.
 
 ---
 
-## 0. 一句话哲学
+## 0. One-sentence philosophy
 
-这个 DSL 的前端**只回答一个问题**：
+This DSL's front end answers **exactly one question**:
 
-> 这个文件符合 `GRAMMAR.bnf` 吗？
+> Does this file conform to `GRAMMAR.bnf`?
 
-它不解析名字、不查类型、不解释语义。`original.m` 是不是真的存在、`m[:]`
-是不是真的作用在 map 上、`bpf_map_update_elem` 是不是真的有 `flags` 参数
-—— 这些全部交给后面的语义层（`lower.py`）。
+It does not resolve names, check kinds, or interpret meaning. Whether
+`original.m` actually exists, whether `m[:]` is really applied to a map, or
+whether `bpf_map_update_elem` really takes a `flags` argument — all of that
+is left to the semantic layer (`lower.py`) further down the pipeline.
 
-**教学要点**：语法层与语义层的边界画在哪里，是 DSL 设计里最重要的一个决定。
-下面每一节的「故意宽松」标记，都是这条边界的体现。
+**Teaching point**: where the line between the syntax layer and the semantic
+layer is drawn is the single most important decision in this DSL's design.
+Every "deliberately permissive" marker in the sections below is an
+instance of that line.
 
 ---
 
-## 1. 程序 = 三段式，顺序固定，前两段可选可空
+## 1. A program is two sections, fixed order, both optional and may be empty
 
 ```bnf
-<program> ::= <opt-assumption-block> <opt-binding-block> <observation-block>
+<program> ::= <opt-assumption-block> <opt-binding-block>
 
 <opt-assumption-block> ::= <assumption-block> | ε
 <opt-binding-block>    ::= <binding-block>    | ε
 ```
 
-> 设计决策 (4)：`assumption` 和 `binding` 可以缺省、也可以为空块；
-> `observation` 必须出现，且至少一条语句。
+> Design decision (4): `assumption` and `binding` may both be omitted, and
+> may both be empty blocks. There is **no** `observation` concept in this
+> language — heimdall always compares every output (return value, every
+> map, every `.data` global). A witness can only add premises; it can never
+> narrow what gets compared.
 
-机理：一个 witness 的**核心断言**是「优化前后要观察到什么相等」，所以
-`observation` 是唯一的必需部分。前提（`assumption`）和对应关系（`binding`）
-是可选的松弛条件——没有它们，检查只会更严格，不会不成立。
+Mechanism: a witness's core assertion is always "every output must still
+match after the optimization", but the *scope* of that assertion isn't
+something the witness author gets to pick — it's the checker's fixed
+default behavior. All a witness can do is add a premise (`assumption`) or a
+correspondence (`binding`) that lets an otherwise-"not equivalent" legal
+optimization go through; without them, the check only gets stricter, never
+unsound. **This is why the language has no syntax at all for saying "only
+compare this, ignore that" — that's a deliberate design choice, not an
+oversight.**
 
-### 1.1 最小合法程序
+### 1.1 The smallest legal program — a completely empty file
 
 ```wit
-observation {
-    original.return = optimized.return;
+// Writing no blocks at all is legal: no premises, no bindings, every
+// output is still compared as usual.
+```
+
+```
+=> OK
+```
+
+### 1.2 Both sections present but empty — legal
+
+```wit
+assumption {
+}
+binding {
 }
 ```
 
@@ -59,100 +85,56 @@ observation {
 => OK
 ```
 
-### 1.2 前两段出现但为空 —— 合法
-
-```wit
-assumption {
-}
-binding {
-}
-observation {
-    original.return = optimized.return;
-}
-```
-
-```
-=> OK
-```
-
-### 1.3 块顺序颠倒 —— 非法
+### 1.3 Blocks out of order — invalid
 
 ```wit
 binding {
 }
 assumption {
-}
-observation {
-    original.return = optimized.return;
 }
 ```
 
 ```
 error: keyword 'assumption' block is out of order or repeated; blocks must
-appear as: assumption? binding? observation (each at most once)
+appear as: assumption? binding? (each at most once)
   |
 3 | assumption {
   | ^^^^^^^^^^
 ```
 
-顺序写死在产生式里（不是用集合），所以「顺序错」和「重复」是同一条错误。
+The order is baked into the production (not treated as a set), so "wrong
+order" and "duplicate" are reported as the same error.
 
-### 1.4 同一个块出现两次 —— 非法
+### 1.4 The same block appearing twice — invalid
 
 ```wit
-observation {
+binding {
     original.a = optimized.a;
 }
-observation {
+binding {
     original.b = optimized.b;
 }
 ```
 
 ```
-error: expected end of input after the observation block, found keyword 'observation'
+error: keyword 'binding' block is out of order or repeated; blocks must
+appear as: assumption? binding? (each at most once)
 ```
-
-### 1.5 缺少 `observation` —— 非法
-
-```wit
-assumption {
-    ignore flag of h;
-}
-```
-
-```
-error: expected the 'observation' block, found end of input
-```
-
-### 1.6 `observation` 为空 —— 非法
-
-```wit
-observation {
-}
-```
-
-```
-error: the 'observation' block must contain at least one statement
-```
-
-注意这条规则**无法**只靠 BNF 表达（`<observation-list>` 至少一项是能写的，
-但「块里必须非空」这种结构约束仍由检查器显式兜底）。
 
 ---
 
-## 2. `;` 是语句终结符，永远必需
+## 2. `;` is a statement terminator, always required
 
 ```bnf
-<assumption-statement>  ::= <range-assumption>  ";" | <ignore-assumption> ";"
-<binding-statement>     ::= <original-expression> "=" <optimized-expression> ";"
-<observation-statement> ::= <original-expression> "=" <optimized-expression> ";"
+<assumption-statement> ::= <range-assumption>  ";" | <ignore-assumption> ";"
+<binding-statement>    ::= <original-expression> "=" <optimized-expression> ";"
 ```
 
-> 设计决策 (9)：`;` 是终结符，任何时候都要写。
+> Design decision (9): `;` is a terminator and must always be written.
 
 ```wit
-observation {
-    original.return = optimized.return
+binding {
+    original.x = optimized.x
 }
 ```
 
@@ -163,40 +145,42 @@ error: expected ';', found '}'
   | ^
 ```
 
-机理：不做「行尾即语句尾」这种隐式规则，换来的是——多行表达式、注释穿插
-都不会改变语句边界。代价是每条都要打分号。
+Mechanism: not treating "end of line" as an implicit statement boundary
+means multi-line expressions and interleaved comments never change where a
+statement ends. The cost is that every statement needs its own semicolon.
 
 ---
 
-## 3. `=` 两侧写死为 `original.` = `optimized.`
+## 3. A `binding`'s `=` is fixed as `original.` = `optimized.`
 
 ```bnf
-<binding-statement>     ::= <original-expression> "=" <optimized-expression> ";"
-<observation-statement> ::= <original-expression> "=" <optimized-expression> ";"
+<binding-statement> ::= <original-expression> "=" <optimized-expression> ";"
 
 <original-expression>  ::= "original"  "." <expression>
 <optimized-expression> ::= "optimized" "." <expression>
 ```
 
-左边**只能**是 `original.`，右边**只能**是 `optimized.`。
+The left side **must** be `original.`; the right side **must** be
+`optimized.`.
 
 ```wit
-observation {
-    optimized.return = original.return;
+binding {
+    optimized.x = original.x;
 }
 ```
 
 ```
-error: the left-hand side of a statement in the observation block must be an
+error: the left-hand side of a binding statement must be an
 'original.' expression, found 'optimized.'
 ```
 
-机理：witness 描述的是一个**有方向**的变换（original → optimized）。
-把方向固定进语法，就不用在语义层再消歧「这条等式哪边是基准」。
+Mechanism: a witness describes a **directional** transformation (original →
+optimized). Baking the direction into the grammar means the semantic layer
+never has to disambiguate "which side of this equation is the baseline".
 
 ---
 
-## 4. 表达式 = 变量 + accessor 链（故意宽松）
+## 4. An expression = a variable + a chain of accessors (deliberately permissive)
 
 ```bnf
 <expression>    ::= <variable> <accessor-list>
@@ -204,14 +188,16 @@ error: the left-hand side of a statement in the observation block must be an
 <accessor>      ::= "[:]" | "[" <variable> "]" | "." <field-name>
 ```
 
-> 设计决策 (6)：表达式是「变量 + 一串取用」，所以 `m[k].a.b`、`m[:].v`
-> 这种嵌套访问天然可写。语法**故意宽松**：`x[:][:]`、`scalar.f` 也能过。
-> 类型一致性留给语义层，不在这个检查器里。
+> Design decision (6): an expression is "a variable plus a run of
+> accessors", so nested access like `m[k].a.b` and `m[:].v` is naturally
+> writable. The grammar is **deliberately permissive** here: `x[:][:]` and
+> `scalar.f` also parse. Kind consistency is left to the semantic layer, not
+> this checker.
 
-### 4.1 嵌套访问 —— 合法
+### 4.1 Nested access — legal
 
 ```wit
-observation {
+binding {
     original.m[k].a.b = optimized.m[k].a.b;
     original.m[:].v   = optimized.m[:].v;
 }
@@ -221,13 +207,13 @@ observation {
 => OK
 ```
 
-三种 accessor 可以任意串联：`[:]`（对整个 map 的所有 key）、`[k]`（用某个
-变量当 key）、`.field`（取结构体字段）。
+The three accessor kinds can be chained arbitrarily: `[:]` (every key of a
+map), `[k]` (a variable used as a key), `.field` (a struct field).
 
-### 4.2 明显「类型不对」的写法 —— 语法层照样放行
+### 4.2 Obviously "type-wrong" spellings — the syntax layer lets them through anyway
 
 ```wit
-observation {
+binding {
     original.x[:][:]  = optimized.x[:][:];
     original.scalar.f = optimized.scalar.f;
 }
@@ -237,21 +223,26 @@ observation {
 => OK
 ```
 
-`x[:][:]`（对 map 迭代两次）、`scalar.f`（对标量取字段）在语义上都是错的，
-但**语法层不管**。它们会在 `lower.py` 的 kind 检查里被拒。
+`x[:][:]` (iterating a map twice) and `scalar.f` (taking a field of a
+scalar) are both semantically wrong, but **the syntax layer doesn't care**.
+They get rejected by the kind check in `lower.py` instead (recorded as
+`unsupported`, a warning, never a hard failure).
 
-**教学要点**：宽松的语法 + 独立的语义层，比「把所有约束塞进语法」更好维护——
-BNF 保持小而稳定，类型规则可以单独演进。
+**Teaching point**: a permissive grammar plus an independent semantic layer
+is easier to maintain than "stuff every constraint into the grammar" — the
+BNF stays small and stable, and type rules can evolve on their own.
 
 ---
 
-## 5. `[:]` 是一个不可分割的 token
+## 5. `[:]` is a single indivisible token
 
-> 词法侧条件 L4：`[:]` 是单个 token，`[` `:` `]` 之间不允许有空白。
-> L6：最长匹配（maximal munch），词法器每步吃掉最长的合法 token。
+> Lexical side condition L4: `[:]` is one token; no whitespace is allowed
+> between `[`, `:`, and `]`.
+> L6: maximal munch — the lexer consumes the longest valid token at each
+> step.
 
 ```wit
-observation {
+binding {
     original.m[ : ].v = optimized.m[ : ].v;
 }
 ```
@@ -263,13 +254,15 @@ error: unexpected character ':'
   |                 ^
 ```
 
-机理：`[` 后面紧跟 `:` 才被识别为「遍历所有 key」；一旦有空格，`[` 就走
-`[` `<variable>` `]` 那条产生式，而 `:` 不是合法变量，于是报「意外字符」。
-把 `[:]` 做成原子 token，避免了 `[` 之后要 lookahead 才能决定走哪条规则。
+Mechanism: `[` is only recognized as "iterate every key" when a `:`
+immediately follows it. As soon as there's whitespace, `[` instead follows
+the `[` `<variable>` `]` production, and `:` isn't a legal variable, hence
+the "unexpected character" error. Making `[:]` an atomic token avoids
+needing lookahead after `[` to decide which production to take.
 
 ---
 
-## 6. 整数：可负、可十六进制、十进制不许前导零
+## 6. Integers: may be negative, may be hex, decimals may not have a leading zero
 
 ```bnf
 <number>          ::= <unsigned-number> | "-" <unsigned-number>
@@ -278,25 +271,25 @@ error: unexpected character ':'
 <hex>             ::= "0x" <hex-digit> <hex-digit-list>
 ```
 
-> 设计决策 (5)：整数可带前导 `-`，可写十六进制（`0x...`）；
-> 十进制字面量不许前导零。
-> 词法侧条件 L5：`01`、`007` 是词法错误；`0x` 后面没有 hex 位也是词法错误。
+> Design decision (5): integers may carry a leading `-` and may be written
+> in hexadecimal (`0x...`); decimal literals may not have a leading zero.
+> Lexical side condition L5: `01`, `007` are lexical errors; `0x` with no
+> following hex digit is also a lexical error.
 
-### 6.1 合法
+### 6.1 Legal
 
 ```wit
 assumption {
     original.x in [-1, 0x7fffffff];
     optimized.y in [0, 255];
 }
-observation { original.return = optimized.return; }
 ```
 
 ```
 => OK
 ```
 
-### 6.2 前导零 —— 非法
+### 6.2 Leading zero — invalid
 
 ```wit
 assumption {
@@ -311,10 +304,11 @@ error: decimal literal may not have a leading zero
   |                       ^^^
 ```
 
-机理：前导零在很多语言里意味着八进制。这里直接禁掉，消除「`010` 是 8 还是
-10」的歧义，也逼迫作者写清楚意图。
+Mechanism: a leading zero means octal in many languages. Banning it
+outright removes the "is `010` 8 or 10?" ambiguity and forces the author to
+be explicit about intent.
 
-### 6.3 `0x` 后无 hex 位 —— 非法
+### 6.3 `0x` with no hex digits after it — invalid
 
 ```wit
 assumption {
@@ -328,32 +322,33 @@ error: hexadecimal literal has no digits after '0x'
 
 ---
 
-## 7. `range` 假设可以约束任意一侧
+## 7. A `range` assumption may constrain either side
 
 ```bnf
 <range-assumption> ::= <side-expression> "in" "[" <number> "," <number> "]"
 <side-expression>  ::= <original-expression> | <optimized-expression>
 ```
 
-> 设计决策 (7)：range 假设可以指向 `original.` 或 `optimized.` 任意一侧。
+> Design decision (7): a range assumption may point at either `original.` or
+> `optimized.`.
 
 ```wit
 assumption {
     optimized.cfg[key].rate in [-1, 0x7fffffff];
 }
-observation { original.return = optimized.return; }
 ```
 
 ```
 => OK
 ```
 
-对比第 3 节：`observation` / `binding` 的 `=` 两侧写死，但 `range` 不写死。
-机理——前提条件既可能是「原程序的某个输入在某范围内」，也可能是「优化程序
-里某个被收窄的量在某范围内」，两种都有意义，所以这里保留 `<side-expression>`
-的二选一。
+Contrast with section 3: a `binding`'s `=` is fixed (left `original`, right
+`optimized`), but `range` is not. Mechanism — a precondition might be "some
+input to the original program lies within a range", or it might be "some
+narrowed quantity in the optimized program lies within a range"; both are
+meaningful, so `<side-expression>`'s either/or is kept here.
 
-注意 range 的 `<side-expression>` 前缀也是必需的：
+Note that a range's `<side-expression>` prefix is also mandatory:
 
 ```wit
 assumption {
@@ -367,31 +362,31 @@ error: expected 'original.' or 'optimized.', found identifier 'x'
 
 ---
 
-## 8. `ignore flag of <helper>` 是写死的固定形，不做泛化
+## 8. `ignore flag of <helper>` is a fixed idiom, not a general mechanism
 
 ```bnf
 <ignore-assumption> ::= "ignore" "flag" "of" <helper-name>
 ```
 
-> 设计决策 (8)：`ignore` 固定成 `ignore flag of <helper-name>`，不泛化。
+> Design decision (8): `ignore` is fixed as `ignore flag of <helper-name>`,
+> not generalized into anything broader.
 
-### 8.1 合法
+### 8.1 Legal
 
 ```wit
 assumption {
     ignore flag of bpf_map_update_elem;
 }
-observation { original.return = optimized.return; }
 ```
 
 ```
 => OK
 ```
 
-语义：把某个 helper 的 `flags` 实参抽象掉，让 Heimdall 对所有 flag 取值建模
-这个 helper。
+Semantics: abstract away a helper's `flags` argument, so Heimdall models
+that helper for every possible flag value.
 
-### 8.2 换个词 —— 非法
+### 8.2 A different word — invalid
 
 ```wit
 assumption {
@@ -406,22 +401,26 @@ error: expected keyword 'flag', found identifier 'flags'
   |            ^^^^^
 ```
 
-机理：目前只有这一种「忽略」需求。与其设计一套通用的「忽略 X 的 Y」语法，
-不如先固定成一句话——等真的出现第二种需求再泛化。**DSL 应该按需生长，
-不要提前造框架。**
+Mechanism: there is currently exactly one "ignore" need. Rather than
+designing a general "ignore Y of X" grammar, it's fixed to one sentence for
+now — generalize it if and when a second need actually shows up. **A DSL
+should grow on demand, not pre-build a framework it doesn't need yet.**
 
 ---
 
-## 9. 保留字不能当标识符
+## 9. Reserved words cannot be used as identifiers
 
-> 词法侧条件 L3：下列词**不是**合法 `<identifier>`：
-> `assumption  binding  observation  in  ignore  flag  of  original  optimized`
-> 因此变量 / 字段 / helper 名都不能正好是其中之一。
+> Lexical side condition L3: the following words are **not** valid
+> `<identifier>`s:
+> `assumption  binding  in  ignore  flag  of  original  optimized`
+> so no variable, field, or helper name may spell exactly one of them. Note
+> that `observation` is **not** on this list — it isn't a word in this
+> language at all, so it's free to use as a name.
 
-### 9.1 用 `flag` 当字段名 —— 非法
+### 9.1 Using `flag` as a field name — invalid
 
 ```wit
-observation {
+binding {
     original.ctx.flag = optimized.ctx.flag;
 }
 ```
@@ -433,10 +432,10 @@ error: expected a field name, found keyword 'flag'
   |                  ^^^^
 ```
 
-### 9.2 只是「以保留字开头」—— 合法
+### 9.2 Merely "starting with" a reserved word — legal
 
 ```wit
-observation {
+binding {
     original.informant = optimized.informant;
     original.flagship  = optimized.flagship;
 }
@@ -446,13 +445,14 @@ observation {
 => OK
 ```
 
-`in`、`flag` 是整词保留，`informant` / `flagship` 只是碰巧前缀相同，最长匹配
-会把它们当成完整标识符。
+`in` and `flag` are reserved as whole words; `informant` / `flagship` just
+happen to share a prefix — maximal munch treats them as complete
+identifiers.
 
-### 9.3 `return` 不是保留字，但也不能裸写
+### 9.3 `return` isn't reserved, but it can't stand bare either
 
 ```wit
-observation {
+binding {
     return = optimized.return;
 }
 ```
@@ -461,32 +461,43 @@ observation {
 error: expected 'original.' or 'optimized.', found identifier 'return'
 ```
 
-`return` 在 L3 列表之外，所以它是**合法标识符**（可以当字段名，见各例里的
-`original.return`）。这里报错是因为语句左边缺 `original.` 前缀（第 3 节），
-不是因为 `return` 本身。
+`return` is outside the L3 list, so it's a **legal identifier** — but at the
+syntax level it's just an ordinary variable name. The error here is because
+the left side of the statement is missing its `original.` prefix (see
+section 3), not because of anything special about `return`.
 
-**教学要点**：区分「这个词被保留了」和「这个位置需要别的东西」——两种错误
-的修法完全不同。
+**Before vs. now**: when `observation` existed, `original.return` /
+`optimized.return` was specially recognized by `lower.py` as "the program's
+return value". Now that `observation` is gone entirely, `original.return`
+inside a `binding` is just an ordinary name — since it has no `[k]`
+accessor, `lower.py` files it under "scalar binding, not applied", exactly
+like any other scalar name.
 
-### 已知局限
+**Teaching point**: distinguish "this word is reserved" from "this position
+needs something else" — the two errors are fixed in completely different
+ways.
 
-如果哪天真有一个 BPF 结构体字段就叫 `flag` 或 `of`，这套关键字就得改成
-**上下文相关关键字**（只在特定位置才当关键字）。当前实现没做这一步。
+### Known limitation
+
+If a real BPF struct ever has a field literally named `flag` or `of`, these
+keywords would need to become **context-sensitive** (only a keyword in
+specific positions). The current implementation doesn't do that.
 
 ---
 
-## 10. 注释等价于空白
+## 10. Comments are equivalent to whitespace
 
-> 词法侧条件 L2：
-> 行注释 `// ...` 到行尾；块注释 `/* ... */` 到下一个 `*/`（不嵌套）。
-> 未闭合的块注释是词法错误。
+> Lexical side condition L2:
+> line comments `// ...` run to end of line; block comments `/* ... */` run
+> to the next `*/` (not nestable). An unterminated block comment is a
+> lexical error.
 
-### 10.1 各种位置的注释 —— 合法
+### 10.1 Comments in various positions — legal
 
 ```wit
 // line comment
-observation {
-    /* block */ original.return = optimized.return; // trailing
+binding {
+    /* block */ original.x = optimized.x; // trailing
 }
 ```
 
@@ -494,13 +505,14 @@ observation {
 => OK
 ```
 
-注释可以插在 token 之间任何地方，因为它在词法层就被当成空白吃掉了。
+Comments can be inserted between tokens anywhere, because the lexer treats
+them as whitespace.
 
-### 10.2 未闭合块注释 —— 非法
+### 10.2 Unterminated block comment — invalid
 
 ```wit
-observation {
-    original.return = optimized.return;
+binding {
+    original.x = optimized.x;
 } /* oops
 ```
 
@@ -511,70 +523,76 @@ error: unterminated block comment
   |   ^^
 ```
 
-块注释不嵌套（`/* /* */` 在第一个 `*/` 就结束），这样词法器不用维护
-计数器，实现简单、行为可预测。
+Block comments don't nest (`/* /* */` ends at the first `*/`), so the lexer
+doesn't need to maintain a nesting counter — simple to implement, predictable
+to reason about.
 
 ---
 
-## 11. 可选的「良构性」警告
+## 11. Optional "well-formedness" warnings
 
-这些不是语法错误——文件仍然合法——但多半是笔误。默认会打印，
-`--no-extra` 跳过，`--strict` 让它们导致失败。
+These are not syntax errors — the file is still legal — but they're usually
+typos. Printed by default; `--no-extra` skips them, `--strict` turns them
+into failures.
 
-### 11.1 空区间 `[lo > hi]`
+### 11.1 An empty range `[lo > hi]`
 
 ```wit
 assumption {
     original.x in [10, 0];
 }
-observation { original.return = optimized.return; }
 ```
 
 ```
 warning: empty range [10, 0]: lower bound exceeds upper bound
-=> OK (1 warning)          # 加 --strict 则 FAILED
+=> OK (1 warning)          # FAILED with --strict
 ```
 
-### 11.2 重复的 `ignore flag of X`
+### 11.2 A duplicate `ignore flag of X`
 
 ```wit
 assumption {
     ignore flag of h;
     ignore flag of h;
 }
-observation { original.return = optimized.return; }
 ```
 
 ```
 warning: duplicate 'ignore flag of h'
 ```
 
-### 11.3 完全相同的 binding / observation 语句重复
+### 11.3 The exact same binding statement repeated
 
 ```wit
-observation {
-    original.return = optimized.return;
-    original.return = optimized.return;
+binding {
+    original.x = optimized.x;
+    original.x = optimized.x;
 }
 ```
 
 ```
-warning: duplicate observation statement 'original.return = optimized.return'
+warning: duplicate binding statement 'original.x = optimized.x'
 ```
 
-机理：语法层严格「对 / 错」，良构性警告是叠在上面的一层**可关闭的**提示。
-把两者分开，工具在不同场景（快速实验 vs. CI 门禁）可以调不同的严格度。
+Mechanism: the syntax layer is a strict pass/fail; well-formedness warnings
+are a separate, **toggleable** layer on top of it. Keeping the two apart
+lets tooling dial the strictness up or down depending on context (a quick
+experiment vs. a CI gate).
 
 ---
 
-## 12. 语法层**不**做的事（留给 `lower.py`）
+## 12. What the syntax layer does **not** do (left to `lower.py`)
 
-| 问题 | 谁来管 |
+| Question | Who's responsible |
 |---|---|
-| `original.m` 是不是原程序里真实的变量 / map？ | 语义层 |
-| `m[:]` 用在 map 上、`.f` 用在结构体上了吗？（`x[:][:]`、`scalar.f` 语法过） | 语义层 kind 检查 |
-| `bpf_map_update_elem` 真的有 `flags` 参数吗？ | 语义层 |
-| 把三个块下降成一个关系证明义务 | 语义层 |
+| Does `original.m` name a real variable/map in the original program? | Semantic layer |
+| Is `m[:]` applied to a map and `.f` to a struct? (`x[:][:]`, `scalar.f` parse fine at this layer) | Semantic layer's kind check |
+| Does `bpf_map_update_elem` really take a `flags` argument? | Semantic layer |
+| Lowering the `assumption`/`binding` blocks into a stronger-premise equivalence proof obligation | Semantic layer (`lower.py`) |
 
-一句话总结整份讲义：**BNF 负责形状，语义层负责意义，中间那条线画在
-「不看具体程序就能判定的」和「必须看程序才能判定的」之间。**
+One-sentence summary of this whole document: **the BNF is responsible for
+shape, the semantic layer is responsible for meaning, and the line between
+them runs between "decidable without looking at the actual program" and
+"only decidable by looking at the program". And this language deliberately
+has no way to narrow what gets compared — a witness only ever adds
+premises, never subtracts outputs.**

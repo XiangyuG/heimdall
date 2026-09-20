@@ -2,7 +2,3 @@
 assumption {
     original.ctx.rx_queue_index in [0, 007];
 }
-
-observation {
-    original.return = optimized.return;
-}

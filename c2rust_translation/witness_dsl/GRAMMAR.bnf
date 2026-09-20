@@ -5,8 +5,11 @@
 ; syntax_check.py.  It merges the original BNF figure with the decisions made
 ; during design review:
 ;
-;   (4) `assumption` and `binding` blocks are optional and may be empty;
-;       `observation` is required and must hold at least one statement.
+;   (4) `assumption` and `binding` blocks are both optional and may be empty.
+;       There is no `observation` block: heimdall always compares every
+;       output (return value, every map, every .data global) -- a witness
+;       only ever adds premises (`assumption`/`binding`), never narrows what
+;       gets compared.
 ;   (5) integers may carry a leading `-` and may be written in hexadecimal
 ;       (`0x...`); decimal literals may not have leading zeros.
 ;   (6) `expression` is a variable followed by a chain of accessors, so
@@ -26,23 +29,19 @@
 ; Program structure
 ; ---------------------------------------------------------------------------
 
-<program> ::= <opt-assumption-block> <opt-binding-block> <observation-block>
+<program> ::= <opt-assumption-block> <opt-binding-block>
 
 <opt-assumption-block> ::= <assumption-block> | ε
 <opt-binding-block>    ::= <binding-block>    | ε
 
-<assumption-block>  ::= "assumption"  "{" <assumption-list>  "}"
-<binding-block>     ::= "binding"     "{" <binding-list>     "}"
-<observation-block> ::= "observation" "{" <observation-list> "}"
+<assumption-block> ::= "assumption" "{" <assumption-list> "}"
+<binding-block>    ::= "binding"    "{" <binding-list>    "}"
 
 <assumption-list> ::= ε
                     | <assumption-statement> <assumption-list>
 
 <binding-list> ::= ε
                  | <binding-statement> <binding-list>
-
-<observation-list> ::= <observation-statement>
-                     | <observation-statement> <observation-list>
 
 ; ---------------------------------------------------------------------------
 ; Statements
@@ -55,8 +54,7 @@
 
 <ignore-assumption> ::= "ignore" "flag" "of" <helper-name>
 
-<binding-statement>     ::= <original-expression> "=" <optimized-expression> ";"
-<observation-statement> ::= <original-expression> "=" <optimized-expression> ";"
+<binding-statement> ::= <original-expression> "=" <optimized-expression> ";"
 
 ; ---------------------------------------------------------------------------
 ; Expressions
@@ -135,7 +133,7 @@
 ;        block  -- "/*" up to the next "*/" (not nested)
 ;      An unterminated block comment is a lexical error.
 ;  L3. Reserved words are NOT valid <identifier>s:
-;        assumption  binding  observation  in  ignore  flag  of
+;        assumption  binding  in  ignore  flag  of
 ;        original    optimized
 ;      (Consequence: a variable/field/helper may not be spelled with one of
 ;       these words.)

@@ -1,6 +1,7 @@
 // reduce_queue: the optimized program narrows a 32-bit RX queue index (and the
 // map key) to 16 bits.  Sound only while rx_queue_index stays in [0, 65535].
-// Textual form of witnesses/reduce_queue/witness.json.
+// Textual form of witnesses/reduce_queue/witness.json (compares every output
+// by default -- there is no `observation` block in this DSL).
 
 assumption {
     original.ctx.rx_queue_index in [0, 65535];
@@ -9,9 +10,4 @@ assumption {
 
 binding {
     original.queue_packets[k] = optimized.queue_packets[k];
-}
-
-observation {
-    original.return = optimized.return;
-    original.queue_packets[:].value = optimized.queue_packets[:].value;
 }

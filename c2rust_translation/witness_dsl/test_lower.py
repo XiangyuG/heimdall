@@ -70,10 +70,6 @@ def test_reduce_queue():
            mc.orig_val_bytes, mc.opt_val_bytes) == ("queue_packets", "k", 4, 2, 8, 8),
           str(mc))
     check("rq/key-narrows", mc.key_narrows and not mc.value_narrows)
-    check("rq/observe-return", plan.observe_return)
-    check("rq/observe-maps", plan.observe_maps == {"queue_packets"}, str(plan.observe_maps))
-    check("rq/field-obs-degraded",
-          any("field granularity" in n for n in plan.unsupported), str(plan.unsupported))
 
     j = plan.to_legacy_json()["witness"]
     check("rq/json-name", j["name"] == "reduce_queue")
@@ -88,26 +84,27 @@ def test_reduce_queue():
     check("rq/json-range-vals",
           aexpr[0]["unsigned_ge"]["right"]["value"] == 0
           and aexpr[1]["unsigned_le"]["right"]["value"] == 65535, str(aexpr))
-    names = {o["name"] for o in j["observations"]}
-    check("rq/json-observations", names == {"return_value", "queue_packets"}, str(names))
+    # No `observation` block in the DSL: to_legacy_json() always emits [],
+    # which witness_spec.build_observation_selection() reads as "compare
+    # every output" -- see test_roundtrip_witness_spec below.
+    check("rq/json-observations-empty", j["observations"] == [], str(j["observations"]))
 
 
 # --------------------------------------------------------------------------
-# minimal: observation-only
+# empty program: no blocks at all -> empty plan, still compares everything
 # --------------------------------------------------------------------------
-def test_minimal():
-    plan = lower(load("minimal_return_only.wit"), Env(SideEnv(), SideEnv()))
-    check("min/no-errors", not plan.has_errors)
-    check("min/empty", not plan.ranges and not plan.map_correspondences
-          and not plan.ignored_helper_flags)
-    check("min/observe-return", plan.observe_return and not plan.observe_maps)
+def test_empty_program():
+    plan = lower(parse("", "<empty>"), Env(SideEnv(), SideEnv()))
+    check("empty/no-errors", not plan.has_errors)
+    check("empty/all-empty", not plan.ranges and not plan.map_correspondences
+          and not plan.ignored_helper_flags and not plan.unsupported)
     j = plan.to_legacy_json()["witness"]
-    check("min/json", j["bindings"] == [] and j["assumptions"] == []
-          and [o["name"] for o in j["observations"]] == ["return_value"], str(j))
+    check("empty/json", j["bindings"] == [] and j["assumptions"] == []
+          and j["observations"] == [], str(j))
 
 
 # --------------------------------------------------------------------------
-# empty_blocks: signed range, empty binding block, field observation
+# empty_blocks: signed range, empty binding block
 # --------------------------------------------------------------------------
 def test_empty_blocks():
     env = Env(SideEnv({"pkts": MapInfo(4, 8)}), SideEnv({"pkts": MapInfo(4, 8)}))
@@ -116,7 +113,6 @@ def test_empty_blocks():
     check("eb/range", [(r.path, r.lo, r.hi) for r in plan.ranges]
           == [("optimized.cfg[key].rate", -1, 0x7fffffff)], str(plan.ranges))
     check("eb/no-corr", plan.map_correspondences == [])
-    check("eb/observe-maps", plan.observe_maps == {"pkts"} and not plan.observe_return)
     j = plan.to_legacy_json()["witness"]
     ops = [list(c)[0] for c in j["assumptions"][0]["expression"]["all_of"]]
     check("eb/json-signed-ops", ops == ["signed_ge", "signed_le"], str(ops))
@@ -133,7 +129,6 @@ def test_unsupported_bindings():
         original.scalarx = optimized.scalarx;
         original.m[:].f = optimized.m[:].f;
     }
-    observation { original.return = optimized.return; }
     """
     plan = lower_src(src)
     check("ub/no-errors", not plan.has_errors, str([d.render() for d in plan.diagnostics]))
@@ -144,10 +139,7 @@ def test_unsupported_bindings():
 
 
 def test_unknown_map_binding():
-    src = """
-    binding { original.ghost[k] = optimized.ghost[k]; }
-    observation { original.return = optimized.return; }
-    """
+    src = "binding { original.ghost[k] = optimized.ghost[k]; }"
     plan = lower_src(src, Env(SideEnv(), SideEnv()))
     check("um/no-errors", not plan.has_errors)
     check("um/no-corr", plan.map_correspondences == [])
@@ -171,7 +163,7 @@ def test_roundtrip_witness_spec():
     plan = lower(load("reduce_queue.wit"), env, name="reduce_queue")
     spec = witness_spec_from_doc(plan.to_legacy_json(), source_path="reduce_queue.wit")
     check("rt/name", spec.name == "reduce_queue")
-    check("rt/counts", (len(spec.bindings), len(spec.assumptions), len(spec.observations)) == (1, 1, 2),
+    check("rt/counts", (len(spec.bindings), len(spec.assumptions), len(spec.observations)) == (1, 1, 0),
           f"{len(spec.bindings)},{len(spec.assumptions)},{len(spec.observations)}")
     check("rt/binding-is-map", spec.bindings[0].is_map)
     check("rt/derived-map-specs", spec.derived_map_specs() == ["queue_packets:hash"],
@@ -180,14 +172,16 @@ def test_roundtrip_witness_spec():
     from witness_spec import build_binding_plan, build_observation_selection
     bp = build_binding_plan(spec)
     check("rt/binding-plan", bp is not None and "queue_packets" in bp.maps)
+    # Empty observations -> build_observation_selection returns None, which
+    # means "no restriction": compare the return value and every map/global.
     sel = build_observation_selection(spec)
-    check("rt/obs-selection", sel is not None and sel.want_return and "queue_packets" in sel.names)
+    check("rt/obs-selection-none", sel is None, str(sel))
 
 
 def main():
     for fn in (
         test_reduce_queue,
-        test_minimal,
+        test_empty_program,
         test_empty_blocks,
         test_unsupported_bindings,
         test_unknown_map_binding,

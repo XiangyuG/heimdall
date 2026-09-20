@@ -5,9 +5,9 @@ of lookahead, so one function per non-terminal is enough.
 
 `parse(source)` returns a `Program` or raises `DslSyntaxError` on the first
 lexical or grammatical error.  Structural rules that the BNF productions
-encode but a bare token stream does not -- block order, the `original.` /
-`optimized.` side of each `=` operand, a non-empty `observation` block -- are
-enforced here and reported as syntax errors.
+encode but a bare token stream does not -- block order and the `original.` /
+`optimized.` side of each `=` operand -- are enforced here and reported as
+syntax errors.
 """
 
 from __future__ import annotations
@@ -103,25 +103,18 @@ class _Parser:
         if self._at("BINDING"):
             binding = self._parse_binding_block()
 
-        if not self._at("OBSERVATION"):
-            # Targeted messages for the most likely mistakes.
-            if self.cur.kind in ("ASSUMPTION", "BINDING"):
-                raise self._die(
-                    f"{self._describe(self.cur)} block is out of order or repeated; "
-                    "blocks must appear as: assumption? binding? observation "
-                    "(each at most once)"
-                )
+        if self.cur.kind in ("ASSUMPTION", "BINDING"):
+            # A block name here means either block was out of order (binding
+            # before assumption) or one of the two was repeated.
             raise self._die(
-                f"expected the 'observation' block, found {self._describe(self.cur)}"
+                f"{self._describe(self.cur)} block is out of order or repeated; "
+                "blocks must appear as: assumption? binding? (each at most once)"
             )
-        observation = self._parse_observation_block()
-
         if not self._at("EOF"):
             raise self._die(
-                f"expected end of input after the observation block, "
-                f"found {self._describe(self.cur)}"
+                f"expected end of input, found {self._describe(self.cur)}"
             )
-        return A.Program(observation=observation, assumption=assumption, binding=binding)
+        return A.Program(assumption=assumption, binding=binding)
 
     # -- grammar: blocks -------------------------------------------------
 
@@ -143,25 +136,9 @@ class _Parser:
         while not self._at("RBRACE"):
             if self._at("EOF"):
                 raise self._die("unclosed 'binding' block: expected '}'")
-            stmts.append(self._parse_eq_statement("binding"))
+            stmts.append(self._parse_eq_statement())
         self._expect("RBRACE")
         return A.BindingBlock(statements=stmts, pos=kw.pos)
-
-    def _parse_observation_block(self) -> A.ObservationBlock:
-        kw = self._expect("OBSERVATION")
-        self._expect("LBRACE")
-        stmts: list = []
-        while not self._at("RBRACE"):
-            if self._at("EOF"):
-                raise self._die("unclosed 'observation' block: expected '}'")
-            stmts.append(self._parse_eq_statement("observation"))
-        self._expect("RBRACE")
-        if not stmts:
-            raise self._die(
-                "the 'observation' block must contain at least one statement",
-                tok=kw,
-            )
-        return A.ObservationBlock(statements=stmts, pos=kw.pos)
 
     # -- grammar: statements ----------------------------------------------
 
@@ -191,12 +168,12 @@ class _Parser:
         self._expect("RBRACK")
         return A.RangeAssumption(expr=expr, lo=lo, hi=hi, pos=expr.pos)
 
-    def _parse_eq_statement(self, block: str) -> A.EqStatement:
+    def _parse_eq_statement(self) -> A.EqStatement:
         lhs = self._parse_side_expression()
         if lhs.side != A.ORIGINAL:
             raise self._die_at(
-                f"the left-hand side of a statement in the {block} block must be "
-                f"an 'original.' expression, found '{lhs.side}.'",
+                f"the left-hand side of a binding statement must be an "
+                f"'original.' expression, found '{lhs.side}.'",
                 lhs.pos,
                 len(lhs.side),
             )
@@ -204,8 +181,8 @@ class _Parser:
         rhs = self._parse_side_expression()
         if rhs.side != A.OPTIMIZED:
             raise self._die_at(
-                f"the right-hand side of a statement in the {block} block must be "
-                f"an 'optimized.' expression, found '{rhs.side}.'",
+                f"the right-hand side of a binding statement must be an "
+                f"'optimized.' expression, found '{rhs.side}.'",
                 rhs.pos,
                 len(rhs.side),
             )

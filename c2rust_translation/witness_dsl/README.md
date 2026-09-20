@@ -21,11 +21,6 @@ assumption {
 binding {
     original.queue_packets[k] = optimized.queue_packets[k];
 }
-
-observation {
-    original.return = optimized.return;
-    original.queue_packets[:].value = optimized.queue_packets[:].value;
-}
 ```
 
 - **`assumption`** *(optional, may be empty)* — preconditions. Either a range
@@ -34,8 +29,10 @@ observation {
   Heimdall models the helper for all flag values).
 - **`binding`** *(optional, may be empty)* — assumed original↔optimized
   correspondences, always `original.<expr> = optimized.<expr>`.
-- **`observation`** *(required, non-empty)* — the equalities that must hold
-  after execution, same shape as bindings.
+
+There is no `observation` block. Heimdall always compares every output
+(return value, every map, every `.data` global) — a witness only ever adds
+premises (`assumption`/`binding`); it never narrows what gets compared.
 
 Integers may be negative (`-1`) or hexadecimal (`0x7fffffff`); decimal
 literals may not have a leading zero. `;` terminates every statement.
@@ -94,12 +91,11 @@ program = parse(source_text)       # raises DslSyntaxError on the first error
    handling, `[:]` as one token.
 2. **Parsing** — every production in `GRAMMAR.bnf`, LL(2), recursive descent.
 3. **Structural rules the productions encode** but a token stream does not:
-   block order (`assumption? binding? observation`) and single occurrence,
-   the fixed `original. = optimized.` sides of each `=`, and a non-empty
-   `observation` block.
+   block order (`assumption? binding?`) and single occurrence, and the
+   fixed `original. = optimized.` sides of each `=`.
 4. **Optional well-formedness warnings** (`--no-extra` to skip, `--strict` to
    enforce): empty range `[lo > hi]`, duplicate `ignore flag of X`, duplicate
-   identical binding/observation statement.
+   identical binding statement.
 
 ## Deliberately **out of scope** (the semantic pass)
 
@@ -107,11 +103,11 @@ program = parse(source_text)       # raises DslSyntaxError on the first error
 - Is `m[:]` applied to a map and `.f` to a struct? (`x[:][:]`, `scalar.f`
   parse fine here — kind checking rejects them later.)
 - Is `bpf_map_update_elem` a helper that actually takes a `flags` argument?
-- Lowering the three blocks to a relational proof obligation.
+- Lowering the two blocks to a relational proof obligation.
 
 ## Known limitation
 
-Reserved words (`assumption binding observation in ignore flag of original
+Reserved words (`assumption binding in ignore flag of original
 optimized`) cannot be used as variable, field, or helper names. If a real BPF
 struct ever has a field literally named one of these, the keywords would need
 to become contextual.

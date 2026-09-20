@@ -84,20 +84,15 @@ def _wellformedness_warnings(prog: A.Program, filename: str) -> list:
                     )
                 seen_ignore[st.helper] = True
 
-    for block, label in (
-        (prog.binding, "binding"),
-        (prog.observation, "observation"),
-    ):
-        if block is None:
-            continue
+    if prog.binding is not None:
         seen: dict = {}
-        for st in block.statements:
+        for st in prog.binding.statements:
             key = (st.lhs.text(), st.rhs.text())
             if key in seen:
                 warns.append(
                     Diagnostic(
                         "warning",
-                        f"duplicate {label} statement '{key[0]} = {key[1]}'",
+                        f"duplicate binding statement '{key[0]} = {key[1]}'",
                         st.pos,
                         filename,
                     )

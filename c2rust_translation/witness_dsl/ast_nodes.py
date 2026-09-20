@@ -88,7 +88,7 @@ class IgnoreAssumption:
 
 @dataclass
 class EqStatement:
-    """`original.<expr> = optimized.<expr> ;` -- used in binding and observation."""
+    """`original.<expr> = optimized.<expr> ;` -- a binding statement."""
 
     lhs: Expr
     rhs: Expr
@@ -111,13 +111,8 @@ class BindingBlock:
 
 
 @dataclass
-class ObservationBlock:
-    statements: list  # list[EqStatement] -- non-empty
-    pos: Pos
-
-
-@dataclass
 class Program:
-    observation: ObservationBlock
+    # Both optional: there is no `observation` block -- heimdall always
+    # compares every output. A witness only ever adds premises.
     assumption: AssumptionBlock | None = None
     binding: BindingBlock | None = None

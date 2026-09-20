@@ -1,4 +1,4 @@
-// INVALID: observation/binding operands are fixed as original. = optimized.
-observation {
+// INVALID: binding operands are fixed as original. = optimized.
+binding {
     optimized.return = original.return;
 }

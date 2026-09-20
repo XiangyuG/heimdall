@@ -20,8 +20,12 @@ Known limitations of this transition path (each emits a diagnostic, never a
 hard failure, so experiments are not blocked):
   * `ignore flag of <helper>` has no JSON representation -- recorded, not applied.
   * `binding` is lowered only for the `original.M[k] = optimized.M[k]` shape.
-  * `observation` on `M[:].field` degrades to a whole-map comparison.
   * scalar `binding`s are not applied (same gap as the JSON path).
+
+There is no `observation` block in the DSL: heimdall always compares every
+output (return value, every map, every .data global) -- `to_legacy_json()`
+always emits an empty `observations` list, which
+`witness_spec.build_observation_selection()` reads as "no restriction".
 """
 
 from __future__ import annotations
@@ -30,8 +34,6 @@ from dataclasses import dataclass, field
 
 from . import ast_nodes as A
 from .errors import Diagnostic, Pos
-
-_RETURN_TOKENS = {"return", "return_value", "retval", "ret", "r0"}
 
 
 # --------------------------------------------------------------------------- #
@@ -112,8 +114,6 @@ class WitnessPlan:
     ranges: list = field(default_factory=list)  # RangeAssumption
     ignored_helper_flags: list = field(default_factory=list)  # helper names
     map_correspondences: list = field(default_factory=list)  # MapCorrespondence
-    observe_return: bool = False
-    observe_maps: set = field(default_factory=set)  # whole-map compares
     unsupported: list = field(default_factory=list)  # human-readable notes
     diagnostics: list = field(default_factory=list)  # Diagnostic
 
@@ -190,33 +190,16 @@ class WitnessPlan:
                 }
             )
 
-        observations = []
-        if self.observe_return:
-            observations.append(
-                {
-                    "name": "return_value",
-                    "original": "original.return",
-                    "optimized": "optimized.return",
-                    "relation": "equal",
-                }
-            )
-        for m in sorted(self.observe_maps):
-            observations.append(
-                {
-                    "name": m,
-                    "original": f"original.{m}",
-                    "optimized": f"optimized.{m}",
-                    "relation": "equal",
-                }
-            )
-
         return {
             "witness": {
                 "version": "0.1",
                 "name": self.name,
                 "bindings": bindings,
                 "assumptions": assumptions,
-                "observations": observations,
+                # No `observation` block in the DSL -- always empty, which
+                # witness_spec.build_observation_selection() reads as
+                # "compare every output" (return + every map + every global).
+                "observations": [],
             }
         }
 
@@ -226,13 +209,6 @@ class WitnessPlan:
 # --------------------------------------------------------------------------- #
 def _diag(plan: WitnessPlan, severity: str, message: str, pos: Pos) -> None:
     plan.diagnostics.append(Diagnostic(severity, message, pos, "<witness_dsl:lower>"))
-
-
-def _leaf_token(expr: A.Expr) -> str:
-    for acc in reversed(expr.accessors):
-        if isinstance(acc, A.Field):
-            return acc.name
-    return expr.root
 
 
 def _map_index_key(expr: A.Expr):
@@ -318,23 +294,6 @@ def lower(program: A.Program, env: Env, name: str = "witness_dsl") -> WitnessPla
                     opt_val_bytes=p_info.value_bytes,
                     kind=p_info.kind,
                 )
-            )
-
-    # -- observations ---------------------------------------------------
-    for st in program.observation.statements:
-        lhs = st.lhs
-        token = _leaf_token(lhs)
-        if lhs.root == "return" and not lhs.accessors:
-            plan.observe_return = True
-            continue
-        if token.lower() in _RETURN_TOKENS:
-            plan.observe_return = True
-            continue
-        plan.observe_maps.add(lhs.root)
-        if any(isinstance(a, A.Field) for a in lhs.accessors):
-            plan.unsupported.append(
-                f"observation '{lhs.text()}': compared as a whole-map equality "
-                f"(field granularity is not in the JSON path)"
             )
 
     return plan
