@@ -1,0 +1,22 @@
+{
+  "case": "branch_5.o",
+  "test": "source",
+  "entry": "blk_account_io_done",
+  "log": "/Users/dajohnyu/Documents/heimdall/heimdall/merge-branch/results/branch_5.o_source_20260922_020158_019341/log.txt",
+  "benchmarks": [
+    {
+      "label": "Original",
+      "object": "/Users/dajohnyu/Documents/heimdall/heimdall/merge-branch/bytes/branch_5.o",
+      "equivalent": true,
+      "result_type": "equivalent",
+      "total_seconds": 1.653629332955461
+    },
+    {
+      "label": "Source optimization",
+      "object": "/Users/dajohnyu/Documents/heimdall/heimdall/merge-branch/bytes/branch_5_MERGED.o",
+      "equivalent": true,
+      "result_type": "equivalent",
+      "total_seconds": 0.1806248749489896
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+// SPDX-License-Identifier: GPL-2.0
+#include "vmlinux.h"
+#include "maps.bpf.h"
+#include <bpf/bpf_tracing.h>
+
+
+
+
+
+static __always_inline
+int trace_done(struct request *rq)
+{
+	volatile __u64 benchmark_duration = (__u64)(unsigned long)rq;
+
+	if (((unsigned long)rq & (1UL << 0)) != 0)
+		benchmark_duration += 1;
+	if (((unsigned long)rq & (1UL << 1)) != 0)
+		benchmark_duration += 2;
+	if (((unsigned long)rq & (1UL << 2)) != 0)
+		benchmark_duration += 4;
+	if (((unsigned long)rq & (1UL << 3)) != 0)
+		benchmark_duration += 8;
+	if (((unsigned long)rq & (1UL << 4)) != 0)
+		benchmark_duration += 16;
+	if (((unsigned long)rq & (1UL << 5)) != 0)
+		benchmark_duration += 32;
+	if (((unsigned long)rq & (1UL << 6)) != 0)
+		benchmark_duration += 64;
+	if (((unsigned long)rq & (1UL << 7)) != 0)
+		benchmark_duration += 128;
+	if (((unsigned long)rq & (1UL << 8)) != 0)
+		benchmark_duration += 256;
+	if (((unsigned long)rq & (1UL << 9)) != 0)
+		benchmark_duration += 512;
+
+
+	return (int)benchmark_duration;
+}
+
+SEC("fentry/blk_account_io_done")
+int BPF_PROG(blk_account_io_done, struct request *rq)
+{
+	return trace_done(rq);
+}
+
+char LICENSE[] SEC("license") = "GPL";

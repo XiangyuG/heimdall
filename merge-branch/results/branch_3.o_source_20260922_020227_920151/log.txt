@@ -1,0 +1,168 @@
+========================================================================
+benchmark: Original
+object: /Users/dajohnyu/Documents/heimdall/heimdall/merge-branch/bytes/branch_3.o
+entry: blk_account_io_done
+========================================================================
+[*] Detected program type 'fentry' from section 'fentry/blk_account_io_done'
+[*] Using context size 64 bytes for program type 'fentry'
+[*] Detected program type 'fentry' from section 'fentry/blk_account_io_done'
+[*] No BTF metadata from C binary
+[*] No BTF metadata available, using command-line map specs
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/merge-branch/bytes/branch_3.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'fentry/blk_account_io_done' for atomic instructions (offset 0x0-0xa8)
+    No atomic instructions found
+[*] Found entry 'blk_account_io_done' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x7 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x3 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x5 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x1 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x6 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x2 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x4 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 input_bpf_ctx_0_512[63:0]>
+[*] Exploration complete. deadended=8 errored=0
+    stash 'deadended': 8 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=3, map_entries=0
+[*] Path 2: constraints=3, map_entries=0
+[*] Path 3: constraints=3, map_entries=0
+[*] Path 4: constraints=3, map_entries=0
+[*] Path 5: constraints=3, map_entries=0
+[*] Path 6: constraints=3, map_entries=0
+[*] Path 7: constraints=3, map_entries=0
+[*] Path 8: constraints=3, map_entries=0
+[*] No BTF metadata from Rust binary
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/merge-branch/bytes/branch_3.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'fentry/blk_account_io_done' for atomic instructions (offset 0x0-0xa8)
+    No atomic instructions found
+[*] Found entry 'blk_account_io_done' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x7 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x3 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x5 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x1 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x6 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x2 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x4 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 input_bpf_ctx_0_512[63:0]>
+[*] Exploration complete. deadended=8 errored=0
+    stash 'deadended': 8 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=3, map_entries=0
+[*] Path 2: constraints=3, map_entries=0
+[*] Path 3: constraints=3, map_entries=0
+[*] Path 4: constraints=3, map_entries=0
+[*] Path 5: constraints=3, map_entries=0
+[*] Path 6: constraints=3, map_entries=0
+[*] Path 7: constraints=3, map_entries=0
+[*] Path 8: constraints=3, map_entries=0
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    8 paths converted
+[*] Converting Rust program paths to Z3...
+    8 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 0 maps via ITE semantics
+    [?] Solver checking 1 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+
+equivalent: True
+result_type: equivalent
+total_seconds: 0.381012
+
+========================================================================
+benchmark: Source optimization
+object: /Users/dajohnyu/Documents/heimdall/heimdall/merge-branch/bytes/branch_3_MERGED.o
+entry: blk_account_io_done
+========================================================================
+[*] Detected program type 'fentry' from section 'fentry/blk_account_io_done'
+[*] Using context size 64 bytes for program type 'fentry'
+[*] Detected program type 'fentry' from section 'fentry/blk_account_io_done'
+[*] No BTF metadata from C binary
+[*] No BTF metadata available, using command-line map specs
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/merge-branch/bytes/branch_3_MERGED.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'fentry/blk_account_io_done' for atomic instructions (offset 0x0-0x40)
+    No atomic instructions found
+[*] Found entry 'blk_account_io_done' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 (0x0 .. input_bpf_ctx_3_512[2:0]) + input_bpf_ctx_3_512[63:0]>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=0, map_entries=0
+[*] No BTF metadata from Rust binary
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/merge-branch/bytes/branch_3_MERGED.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'fentry/blk_account_io_done' for atomic instructions (offset 0x0-0x40)
+    No atomic instructions found
+[*] Found entry 'blk_account_io_done' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 (0x0 .. input_bpf_ctx_3_512[2:0]) + input_bpf_ctx_3_512[63:0]>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=0, map_entries=0
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 0 maps via ITE semantics
+    [?] Solver checking 1 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+
+equivalent: True
+result_type: equivalent
+total_seconds: 0.047562
+

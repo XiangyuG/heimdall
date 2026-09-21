@@ -1,0 +1,22 @@
+{
+  "case": "bitesize.o",
+  "test": "source",
+  "entry": "block_rq_issue",
+  "log": "/Users/dajohnyu/Documents/heimdall/heimdall/merge-branch/results/bitesize.o_source_20260922_004926_970676/log.txt",
+  "benchmarks": [
+    {
+      "label": "Original",
+      "object": "/Users/dajohnyu/Documents/heimdall/heimdall/merge-branch/bytes/bitesize.o",
+      "equivalent": true,
+      "result_type": "equivalent",
+      "total_seconds": 2.5523407500004396
+    },
+    {
+      "label": "Source optimization",
+      "object": "/Users/dajohnyu/Documents/heimdall/heimdall/merge-branch/bytes/bitesize_MERGED.o",
+      "equivalent": true,
+      "result_type": "equivalent",
+      "total_seconds": 2.0769370420021005
+    }
+  ]
+}

@@ -1,0 +1,1160 @@
+========================================================================
+benchmark: Original
+object: /Users/dajohnyu/Documents/heimdall/heimdall/merge-branch/bytes/branch_8.o
+entry: blk_account_io_done
+========================================================================
+[*] Detected program type 'fentry' from section 'fentry/blk_account_io_done'
+[*] Using context size 64 bytes for program type 'fentry'
+[*] Detected program type 'fentry' from section 'fentry/blk_account_io_done'
+[*] No BTF metadata from C binary
+[*] No BTF metadata available, using command-line map specs
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/merge-branch/bytes/branch_8.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'fentry/blk_account_io_done' for atomic instructions (offset 0x0-0x198)
+    No atomic instructions found
+[*] Found entry 'blk_account_io_done' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0xff + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x7f + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xbf + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x3f + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xdf + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x5f + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x9f + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x1f + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xef + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x6f + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xaf + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x2f + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xcf + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x4f + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x8f + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xf + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xf7 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x77 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xb7 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x37 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xd7 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x57 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x97 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x17 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xe7 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x67 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xa7 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x27 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xc7 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x47 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x87 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x7 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xfb + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x7b + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xbb + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x3b + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xdb + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x5b + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x9b + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x1b + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xeb + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x6b + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xab + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x2b + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xcb + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x4b + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x8b + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xb + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xf3 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x73 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xb3 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x33 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xd3 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x53 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x93 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x13 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xe3 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x63 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xa3 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x23 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xc3 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x43 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x83 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x3 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xfd + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x7d + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xbd + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x3d + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xdd + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x5d + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x9d + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x1d + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xed + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x6d + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xad + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x2d + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xcd + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x4d + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x8d + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xd + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xf5 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x75 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xb5 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x35 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xd5 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x55 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x95 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x15 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xe5 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x65 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xa5 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x25 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xc5 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x45 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x85 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x5 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xf9 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x79 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xb9 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x39 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xd9 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x59 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x99 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x19 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xe9 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x69 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xa9 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x29 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xc9 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x49 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x89 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x9 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xf1 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x71 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xb1 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x31 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xd1 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x51 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x91 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x11 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xe1 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x61 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xa1 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x21 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xc1 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x41 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x81 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x1 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xfe + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x7e + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xbe + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x3e + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xde + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x5e + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x9e + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x1e + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xee + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x6e + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xae + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x2e + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xce + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x4e + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x8e + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xe + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xf6 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x76 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xb6 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x36 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xd6 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x56 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x96 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x16 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xe6 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x66 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xa6 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x26 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xc6 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x46 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x86 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x6 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xfa + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x7a + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xba + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x3a + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xda + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x5a + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x9a + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x1a + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xea + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x6a + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xaa + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x2a + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xca + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x4a + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x8a + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xa + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xf2 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x72 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xb2 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x32 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xd2 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x52 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x92 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x12 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xe2 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x62 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xa2 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x22 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xc2 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x42 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x82 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x2 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xfc + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x7c + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xbc + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x3c + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xdc + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x5c + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x9c + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x1c + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xec + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x6c + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xac + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x2c + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xcc + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x4c + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x8c + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xc + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xf4 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x74 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xb4 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x34 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xd4 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x54 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x94 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x14 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xe4 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x64 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xa4 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x24 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xc4 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x44 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x84 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x4 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xf8 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x78 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xb8 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x38 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xd8 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x58 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x98 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xe8 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x68 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xa8 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x28 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xc8 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x48 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x88 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x8 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xf0 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x70 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xb0 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x30 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xd0 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x50 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x90 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x10 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xe0 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x60 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xa0 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x20 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xc0 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x40 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x80 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 input_bpf_ctx_0_512[63:0]>
+[*] Exploration complete. deadended=256 errored=0
+    stash 'deadended': 256 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=8, map_entries=0
+[*] Path 2: constraints=8, map_entries=0
+[*] Path 3: constraints=8, map_entries=0
+[*] Path 4: constraints=8, map_entries=0
+[*] Path 5: constraints=8, map_entries=0
+[*] Path 6: constraints=8, map_entries=0
+[*] Path 7: constraints=8, map_entries=0
+[*] Path 8: constraints=8, map_entries=0
+[*] Path 9: constraints=8, map_entries=0
+[*] Path 10: constraints=8, map_entries=0
+[*] Path 11: constraints=8, map_entries=0
+[*] Path 12: constraints=8, map_entries=0
+[*] Path 13: constraints=8, map_entries=0
+[*] Path 14: constraints=8, map_entries=0
+[*] Path 15: constraints=8, map_entries=0
+[*] Path 16: constraints=8, map_entries=0
+[*] Path 17: constraints=8, map_entries=0
+[*] Path 18: constraints=8, map_entries=0
+[*] Path 19: constraints=8, map_entries=0
+[*] Path 20: constraints=8, map_entries=0
+[*] Path 21: constraints=8, map_entries=0
+[*] Path 22: constraints=8, map_entries=0
+[*] Path 23: constraints=8, map_entries=0
+[*] Path 24: constraints=8, map_entries=0
+[*] Path 25: constraints=8, map_entries=0
+[*] Path 26: constraints=8, map_entries=0
+[*] Path 27: constraints=8, map_entries=0
+[*] Path 28: constraints=8, map_entries=0
+[*] Path 29: constraints=8, map_entries=0
+[*] Path 30: constraints=8, map_entries=0
+[*] Path 31: constraints=8, map_entries=0
+[*] Path 32: constraints=8, map_entries=0
+[*] Path 33: constraints=8, map_entries=0
+[*] Path 34: constraints=8, map_entries=0
+[*] Path 35: constraints=8, map_entries=0
+[*] Path 36: constraints=8, map_entries=0
+[*] Path 37: constraints=8, map_entries=0
+[*] Path 38: constraints=8, map_entries=0
+[*] Path 39: constraints=8, map_entries=0
+[*] Path 40: constraints=8, map_entries=0
+[*] Path 41: constraints=8, map_entries=0
+[*] Path 42: constraints=8, map_entries=0
+[*] Path 43: constraints=8, map_entries=0
+[*] Path 44: constraints=8, map_entries=0
+[*] Path 45: constraints=8, map_entries=0
+[*] Path 46: constraints=8, map_entries=0
+[*] Path 47: constraints=8, map_entries=0
+[*] Path 48: constraints=8, map_entries=0
+[*] Path 49: constraints=8, map_entries=0
+[*] Path 50: constraints=8, map_entries=0
+[*] Path 51: constraints=8, map_entries=0
+[*] Path 52: constraints=8, map_entries=0
+[*] Path 53: constraints=8, map_entries=0
+[*] Path 54: constraints=8, map_entries=0
+[*] Path 55: constraints=8, map_entries=0
+[*] Path 56: constraints=8, map_entries=0
+[*] Path 57: constraints=8, map_entries=0
+[*] Path 58: constraints=8, map_entries=0
+[*] Path 59: constraints=8, map_entries=0
+[*] Path 60: constraints=8, map_entries=0
+[*] Path 61: constraints=8, map_entries=0
+[*] Path 62: constraints=8, map_entries=0
+[*] Path 63: constraints=8, map_entries=0
+[*] Path 64: constraints=8, map_entries=0
+[*] Path 65: constraints=8, map_entries=0
+[*] Path 66: constraints=8, map_entries=0
+[*] Path 67: constraints=8, map_entries=0
+[*] Path 68: constraints=8, map_entries=0
+[*] Path 69: constraints=8, map_entries=0
+[*] Path 70: constraints=8, map_entries=0
+[*] Path 71: constraints=8, map_entries=0
+[*] Path 72: constraints=8, map_entries=0
+[*] Path 73: constraints=8, map_entries=0
+[*] Path 74: constraints=8, map_entries=0
+[*] Path 75: constraints=8, map_entries=0
+[*] Path 76: constraints=8, map_entries=0
+[*] Path 77: constraints=8, map_entries=0
+[*] Path 78: constraints=8, map_entries=0
+[*] Path 79: constraints=8, map_entries=0
+[*] Path 80: constraints=8, map_entries=0
+[*] Path 81: constraints=8, map_entries=0
+[*] Path 82: constraints=8, map_entries=0
+[*] Path 83: constraints=8, map_entries=0
+[*] Path 84: constraints=8, map_entries=0
+[*] Path 85: constraints=8, map_entries=0
+[*] Path 86: constraints=8, map_entries=0
+[*] Path 87: constraints=8, map_entries=0
+[*] Path 88: constraints=8, map_entries=0
+[*] Path 89: constraints=8, map_entries=0
+[*] Path 90: constraints=8, map_entries=0
+[*] Path 91: constraints=8, map_entries=0
+[*] Path 92: constraints=8, map_entries=0
+[*] Path 93: constraints=8, map_entries=0
+[*] Path 94: constraints=8, map_entries=0
+[*] Path 95: constraints=8, map_entries=0
+[*] Path 96: constraints=8, map_entries=0
+[*] Path 97: constraints=8, map_entries=0
+[*] Path 98: constraints=8, map_entries=0
+[*] Path 99: constraints=8, map_entries=0
+[*] Path 100: constraints=8, map_entries=0
+[*] Path 101: constraints=8, map_entries=0
+[*] Path 102: constraints=8, map_entries=0
+[*] Path 103: constraints=8, map_entries=0
+[*] Path 104: constraints=8, map_entries=0
+[*] Path 105: constraints=8, map_entries=0
+[*] Path 106: constraints=8, map_entries=0
+[*] Path 107: constraints=8, map_entries=0
+[*] Path 108: constraints=8, map_entries=0
+[*] Path 109: constraints=8, map_entries=0
+[*] Path 110: constraints=8, map_entries=0
+[*] Path 111: constraints=8, map_entries=0
+[*] Path 112: constraints=8, map_entries=0
+[*] Path 113: constraints=8, map_entries=0
+[*] Path 114: constraints=8, map_entries=0
+[*] Path 115: constraints=8, map_entries=0
+[*] Path 116: constraints=8, map_entries=0
+[*] Path 117: constraints=8, map_entries=0
+[*] Path 118: constraints=8, map_entries=0
+[*] Path 119: constraints=8, map_entries=0
+[*] Path 120: constraints=8, map_entries=0
+[*] Path 121: constraints=8, map_entries=0
+[*] Path 122: constraints=8, map_entries=0
+[*] Path 123: constraints=8, map_entries=0
+[*] Path 124: constraints=8, map_entries=0
+[*] Path 125: constraints=8, map_entries=0
+[*] Path 126: constraints=8, map_entries=0
+[*] Path 127: constraints=8, map_entries=0
+[*] Path 128: constraints=8, map_entries=0
+[*] Path 129: constraints=8, map_entries=0
+[*] Path 130: constraints=8, map_entries=0
+[*] Path 131: constraints=8, map_entries=0
+[*] Path 132: constraints=8, map_entries=0
+[*] Path 133: constraints=8, map_entries=0
+[*] Path 134: constraints=8, map_entries=0
+[*] Path 135: constraints=8, map_entries=0
+[*] Path 136: constraints=8, map_entries=0
+[*] Path 137: constraints=8, map_entries=0
+[*] Path 138: constraints=8, map_entries=0
+[*] Path 139: constraints=8, map_entries=0
+[*] Path 140: constraints=8, map_entries=0
+[*] Path 141: constraints=8, map_entries=0
+[*] Path 142: constraints=8, map_entries=0
+[*] Path 143: constraints=8, map_entries=0
+[*] Path 144: constraints=8, map_entries=0
+[*] Path 145: constraints=8, map_entries=0
+[*] Path 146: constraints=8, map_entries=0
+[*] Path 147: constraints=8, map_entries=0
+[*] Path 148: constraints=8, map_entries=0
+[*] Path 149: constraints=8, map_entries=0
+[*] Path 150: constraints=8, map_entries=0
+[*] Path 151: constraints=8, map_entries=0
+[*] Path 152: constraints=8, map_entries=0
+[*] Path 153: constraints=8, map_entries=0
+[*] Path 154: constraints=8, map_entries=0
+[*] Path 155: constraints=8, map_entries=0
+[*] Path 156: constraints=8, map_entries=0
+[*] Path 157: constraints=8, map_entries=0
+[*] Path 158: constraints=8, map_entries=0
+[*] Path 159: constraints=8, map_entries=0
+[*] Path 160: constraints=8, map_entries=0
+[*] Path 161: constraints=8, map_entries=0
+[*] Path 162: constraints=8, map_entries=0
+[*] Path 163: constraints=8, map_entries=0
+[*] Path 164: constraints=8, map_entries=0
+[*] Path 165: constraints=8, map_entries=0
+[*] Path 166: constraints=8, map_entries=0
+[*] Path 167: constraints=8, map_entries=0
+[*] Path 168: constraints=8, map_entries=0
+[*] Path 169: constraints=8, map_entries=0
+[*] Path 170: constraints=8, map_entries=0
+[*] Path 171: constraints=8, map_entries=0
+[*] Path 172: constraints=8, map_entries=0
+[*] Path 173: constraints=8, map_entries=0
+[*] Path 174: constraints=8, map_entries=0
+[*] Path 175: constraints=8, map_entries=0
+[*] Path 176: constraints=8, map_entries=0
+[*] Path 177: constraints=8, map_entries=0
+[*] Path 178: constraints=8, map_entries=0
+[*] Path 179: constraints=8, map_entries=0
+[*] Path 180: constraints=8, map_entries=0
+[*] Path 181: constraints=8, map_entries=0
+[*] Path 182: constraints=8, map_entries=0
+[*] Path 183: constraints=8, map_entries=0
+[*] Path 184: constraints=8, map_entries=0
+[*] Path 185: constraints=8, map_entries=0
+[*] Path 186: constraints=8, map_entries=0
+[*] Path 187: constraints=8, map_entries=0
+[*] Path 188: constraints=8, map_entries=0
+[*] Path 189: constraints=8, map_entries=0
+[*] Path 190: constraints=8, map_entries=0
+[*] Path 191: constraints=8, map_entries=0
+[*] Path 192: constraints=8, map_entries=0
+[*] Path 193: constraints=8, map_entries=0
+[*] Path 194: constraints=8, map_entries=0
+[*] Path 195: constraints=8, map_entries=0
+[*] Path 196: constraints=8, map_entries=0
+[*] Path 197: constraints=8, map_entries=0
+[*] Path 198: constraints=8, map_entries=0
+[*] Path 199: constraints=8, map_entries=0
+[*] Path 200: constraints=8, map_entries=0
+[*] Path 201: constraints=8, map_entries=0
+[*] Path 202: constraints=8, map_entries=0
+[*] Path 203: constraints=8, map_entries=0
+[*] Path 204: constraints=8, map_entries=0
+[*] Path 205: constraints=8, map_entries=0
+[*] Path 206: constraints=8, map_entries=0
+[*] Path 207: constraints=8, map_entries=0
+[*] Path 208: constraints=8, map_entries=0
+[*] Path 209: constraints=8, map_entries=0
+[*] Path 210: constraints=8, map_entries=0
+[*] Path 211: constraints=8, map_entries=0
+[*] Path 212: constraints=8, map_entries=0
+[*] Path 213: constraints=8, map_entries=0
+[*] Path 214: constraints=8, map_entries=0
+[*] Path 215: constraints=8, map_entries=0
+[*] Path 216: constraints=8, map_entries=0
+[*] Path 217: constraints=8, map_entries=0
+[*] Path 218: constraints=8, map_entries=0
+[*] Path 219: constraints=8, map_entries=0
+[*] Path 220: constraints=8, map_entries=0
+[*] Path 221: constraints=8, map_entries=0
+[*] Path 222: constraints=8, map_entries=0
+[*] Path 223: constraints=8, map_entries=0
+[*] Path 224: constraints=8, map_entries=0
+[*] Path 225: constraints=8, map_entries=0
+[*] Path 226: constraints=8, map_entries=0
+[*] Path 227: constraints=8, map_entries=0
+[*] Path 228: constraints=8, map_entries=0
+[*] Path 229: constraints=8, map_entries=0
+[*] Path 230: constraints=8, map_entries=0
+[*] Path 231: constraints=8, map_entries=0
+[*] Path 232: constraints=8, map_entries=0
+[*] Path 233: constraints=8, map_entries=0
+[*] Path 234: constraints=8, map_entries=0
+[*] Path 235: constraints=8, map_entries=0
+[*] Path 236: constraints=8, map_entries=0
+[*] Path 237: constraints=8, map_entries=0
+[*] Path 238: constraints=8, map_entries=0
+[*] Path 239: constraints=8, map_entries=0
+[*] Path 240: constraints=8, map_entries=0
+[*] Path 241: constraints=8, map_entries=0
+[*] Path 242: constraints=8, map_entries=0
+[*] Path 243: constraints=8, map_entries=0
+[*] Path 244: constraints=8, map_entries=0
+[*] Path 245: constraints=8, map_entries=0
+[*] Path 246: constraints=8, map_entries=0
+[*] Path 247: constraints=8, map_entries=0
+[*] Path 248: constraints=8, map_entries=0
+[*] Path 249: constraints=8, map_entries=0
+[*] Path 250: constraints=8, map_entries=0
+[*] Path 251: constraints=8, map_entries=0
+[*] Path 252: constraints=8, map_entries=0
+[*] Path 253: constraints=8, map_entries=0
+[*] Path 254: constraints=8, map_entries=0
+[*] Path 255: constraints=8, map_entries=0
+[*] Path 256: constraints=8, map_entries=0
+[*] No BTF metadata from Rust binary
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/merge-branch/bytes/branch_8.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'fentry/blk_account_io_done' for atomic instructions (offset 0x0-0x198)
+    No atomic instructions found
+[*] Found entry 'blk_account_io_done' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0xff + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x7f + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xbf + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x3f + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xdf + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x5f + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x9f + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x1f + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xef + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x6f + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xaf + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x2f + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xcf + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x4f + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x8f + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xf + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xf7 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x77 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xb7 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x37 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xd7 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x57 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x97 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x17 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xe7 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x67 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xa7 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x27 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xc7 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x47 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x87 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x7 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xfb + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x7b + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xbb + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x3b + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xdb + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x5b + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x9b + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x1b + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xeb + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x6b + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xab + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x2b + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xcb + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x4b + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x8b + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xb + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xf3 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x73 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xb3 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x33 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xd3 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x53 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x93 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x13 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xe3 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x63 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xa3 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x23 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xc3 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x43 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x83 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x3 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xfd + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x7d + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xbd + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x3d + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xdd + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x5d + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x9d + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x1d + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xed + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x6d + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xad + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x2d + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xcd + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x4d + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x8d + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xd + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xf5 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x75 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xb5 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x35 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xd5 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x55 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x95 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x15 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xe5 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x65 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xa5 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x25 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xc5 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x45 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x85 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x5 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xf9 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x79 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xb9 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x39 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xd9 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x59 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x99 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x19 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xe9 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x69 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xa9 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x29 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xc9 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x49 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x89 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x9 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xf1 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x71 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xb1 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x31 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xd1 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x51 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x91 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x11 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xe1 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x61 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xa1 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x21 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xc1 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x41 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x81 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x1 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xfe + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x7e + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xbe + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x3e + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xde + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x5e + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x9e + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x1e + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xee + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x6e + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xae + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x2e + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xce + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x4e + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x8e + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xe + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xf6 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x76 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xb6 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x36 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xd6 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x56 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x96 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x16 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xe6 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x66 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xa6 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x26 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xc6 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x46 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x86 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x6 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xfa + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x7a + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xba + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x3a + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xda + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x5a + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x9a + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x1a + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xea + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x6a + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xaa + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x2a + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xca + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x4a + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x8a + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xa + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xf2 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x72 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xb2 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x32 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xd2 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x52 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x92 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x12 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xe2 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x62 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xa2 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x22 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xc2 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x42 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x82 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x2 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xfc + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x7c + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xbc + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x3c + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xdc + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x5c + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x9c + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x1c + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xec + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x6c + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xac + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x2c + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xcc + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x4c + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x8c + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xc + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xf4 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x74 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xb4 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x34 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xd4 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x54 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x94 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x14 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xe4 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x64 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xa4 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x24 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xc4 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x44 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x84 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x4 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xf8 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x78 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xb8 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x38 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xd8 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x58 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x98 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xe8 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x68 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xa8 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x28 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xc8 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x48 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x88 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x8 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xf0 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x70 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xb0 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x30 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xd0 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x50 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x90 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x10 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xe0 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x60 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xa0 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x20 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0xc0 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x40 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x80 + input_bpf_ctx_0_512[63:0]>
+[*] BpfProgramExit: program terminating with R0=<BV64 input_bpf_ctx_0_512[63:0]>
+[*] Exploration complete. deadended=256 errored=0
+    stash 'deadended': 256 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=8, map_entries=0
+[*] Path 2: constraints=8, map_entries=0
+[*] Path 3: constraints=8, map_entries=0
+[*] Path 4: constraints=8, map_entries=0
+[*] Path 5: constraints=8, map_entries=0
+[*] Path 6: constraints=8, map_entries=0
+[*] Path 7: constraints=8, map_entries=0
+[*] Path 8: constraints=8, map_entries=0
+[*] Path 9: constraints=8, map_entries=0
+[*] Path 10: constraints=8, map_entries=0
+[*] Path 11: constraints=8, map_entries=0
+[*] Path 12: constraints=8, map_entries=0
+[*] Path 13: constraints=8, map_entries=0
+[*] Path 14: constraints=8, map_entries=0
+[*] Path 15: constraints=8, map_entries=0
+[*] Path 16: constraints=8, map_entries=0
+[*] Path 17: constraints=8, map_entries=0
+[*] Path 18: constraints=8, map_entries=0
+[*] Path 19: constraints=8, map_entries=0
+[*] Path 20: constraints=8, map_entries=0
+[*] Path 21: constraints=8, map_entries=0
+[*] Path 22: constraints=8, map_entries=0
+[*] Path 23: constraints=8, map_entries=0
+[*] Path 24: constraints=8, map_entries=0
+[*] Path 25: constraints=8, map_entries=0
+[*] Path 26: constraints=8, map_entries=0
+[*] Path 27: constraints=8, map_entries=0
+[*] Path 28: constraints=8, map_entries=0
+[*] Path 29: constraints=8, map_entries=0
+[*] Path 30: constraints=8, map_entries=0
+[*] Path 31: constraints=8, map_entries=0
+[*] Path 32: constraints=8, map_entries=0
+[*] Path 33: constraints=8, map_entries=0
+[*] Path 34: constraints=8, map_entries=0
+[*] Path 35: constraints=8, map_entries=0
+[*] Path 36: constraints=8, map_entries=0
+[*] Path 37: constraints=8, map_entries=0
+[*] Path 38: constraints=8, map_entries=0
+[*] Path 39: constraints=8, map_entries=0
+[*] Path 40: constraints=8, map_entries=0
+[*] Path 41: constraints=8, map_entries=0
+[*] Path 42: constraints=8, map_entries=0
+[*] Path 43: constraints=8, map_entries=0
+[*] Path 44: constraints=8, map_entries=0
+[*] Path 45: constraints=8, map_entries=0
+[*] Path 46: constraints=8, map_entries=0
+[*] Path 47: constraints=8, map_entries=0
+[*] Path 48: constraints=8, map_entries=0
+[*] Path 49: constraints=8, map_entries=0
+[*] Path 50: constraints=8, map_entries=0
+[*] Path 51: constraints=8, map_entries=0
+[*] Path 52: constraints=8, map_entries=0
+[*] Path 53: constraints=8, map_entries=0
+[*] Path 54: constraints=8, map_entries=0
+[*] Path 55: constraints=8, map_entries=0
+[*] Path 56: constraints=8, map_entries=0
+[*] Path 57: constraints=8, map_entries=0
+[*] Path 58: constraints=8, map_entries=0
+[*] Path 59: constraints=8, map_entries=0
+[*] Path 60: constraints=8, map_entries=0
+[*] Path 61: constraints=8, map_entries=0
+[*] Path 62: constraints=8, map_entries=0
+[*] Path 63: constraints=8, map_entries=0
+[*] Path 64: constraints=8, map_entries=0
+[*] Path 65: constraints=8, map_entries=0
+[*] Path 66: constraints=8, map_entries=0
+[*] Path 67: constraints=8, map_entries=0
+[*] Path 68: constraints=8, map_entries=0
+[*] Path 69: constraints=8, map_entries=0
+[*] Path 70: constraints=8, map_entries=0
+[*] Path 71: constraints=8, map_entries=0
+[*] Path 72: constraints=8, map_entries=0
+[*] Path 73: constraints=8, map_entries=0
+[*] Path 74: constraints=8, map_entries=0
+[*] Path 75: constraints=8, map_entries=0
+[*] Path 76: constraints=8, map_entries=0
+[*] Path 77: constraints=8, map_entries=0
+[*] Path 78: constraints=8, map_entries=0
+[*] Path 79: constraints=8, map_entries=0
+[*] Path 80: constraints=8, map_entries=0
+[*] Path 81: constraints=8, map_entries=0
+[*] Path 82: constraints=8, map_entries=0
+[*] Path 83: constraints=8, map_entries=0
+[*] Path 84: constraints=8, map_entries=0
+[*] Path 85: constraints=8, map_entries=0
+[*] Path 86: constraints=8, map_entries=0
+[*] Path 87: constraints=8, map_entries=0
+[*] Path 88: constraints=8, map_entries=0
+[*] Path 89: constraints=8, map_entries=0
+[*] Path 90: constraints=8, map_entries=0
+[*] Path 91: constraints=8, map_entries=0
+[*] Path 92: constraints=8, map_entries=0
+[*] Path 93: constraints=8, map_entries=0
+[*] Path 94: constraints=8, map_entries=0
+[*] Path 95: constraints=8, map_entries=0
+[*] Path 96: constraints=8, map_entries=0
+[*] Path 97: constraints=8, map_entries=0
+[*] Path 98: constraints=8, map_entries=0
+[*] Path 99: constraints=8, map_entries=0
+[*] Path 100: constraints=8, map_entries=0
+[*] Path 101: constraints=8, map_entries=0
+[*] Path 102: constraints=8, map_entries=0
+[*] Path 103: constraints=8, map_entries=0
+[*] Path 104: constraints=8, map_entries=0
+[*] Path 105: constraints=8, map_entries=0
+[*] Path 106: constraints=8, map_entries=0
+[*] Path 107: constraints=8, map_entries=0
+[*] Path 108: constraints=8, map_entries=0
+[*] Path 109: constraints=8, map_entries=0
+[*] Path 110: constraints=8, map_entries=0
+[*] Path 111: constraints=8, map_entries=0
+[*] Path 112: constraints=8, map_entries=0
+[*] Path 113: constraints=8, map_entries=0
+[*] Path 114: constraints=8, map_entries=0
+[*] Path 115: constraints=8, map_entries=0
+[*] Path 116: constraints=8, map_entries=0
+[*] Path 117: constraints=8, map_entries=0
+[*] Path 118: constraints=8, map_entries=0
+[*] Path 119: constraints=8, map_entries=0
+[*] Path 120: constraints=8, map_entries=0
+[*] Path 121: constraints=8, map_entries=0
+[*] Path 122: constraints=8, map_entries=0
+[*] Path 123: constraints=8, map_entries=0
+[*] Path 124: constraints=8, map_entries=0
+[*] Path 125: constraints=8, map_entries=0
+[*] Path 126: constraints=8, map_entries=0
+[*] Path 127: constraints=8, map_entries=0
+[*] Path 128: constraints=8, map_entries=0
+[*] Path 129: constraints=8, map_entries=0
+[*] Path 130: constraints=8, map_entries=0
+[*] Path 131: constraints=8, map_entries=0
+[*] Path 132: constraints=8, map_entries=0
+[*] Path 133: constraints=8, map_entries=0
+[*] Path 134: constraints=8, map_entries=0
+[*] Path 135: constraints=8, map_entries=0
+[*] Path 136: constraints=8, map_entries=0
+[*] Path 137: constraints=8, map_entries=0
+[*] Path 138: constraints=8, map_entries=0
+[*] Path 139: constraints=8, map_entries=0
+[*] Path 140: constraints=8, map_entries=0
+[*] Path 141: constraints=8, map_entries=0
+[*] Path 142: constraints=8, map_entries=0
+[*] Path 143: constraints=8, map_entries=0
+[*] Path 144: constraints=8, map_entries=0
+[*] Path 145: constraints=8, map_entries=0
+[*] Path 146: constraints=8, map_entries=0
+[*] Path 147: constraints=8, map_entries=0
+[*] Path 148: constraints=8, map_entries=0
+[*] Path 149: constraints=8, map_entries=0
+[*] Path 150: constraints=8, map_entries=0
+[*] Path 151: constraints=8, map_entries=0
+[*] Path 152: constraints=8, map_entries=0
+[*] Path 153: constraints=8, map_entries=0
+[*] Path 154: constraints=8, map_entries=0
+[*] Path 155: constraints=8, map_entries=0
+[*] Path 156: constraints=8, map_entries=0
+[*] Path 157: constraints=8, map_entries=0
+[*] Path 158: constraints=8, map_entries=0
+[*] Path 159: constraints=8, map_entries=0
+[*] Path 160: constraints=8, map_entries=0
+[*] Path 161: constraints=8, map_entries=0
+[*] Path 162: constraints=8, map_entries=0
+[*] Path 163: constraints=8, map_entries=0
+[*] Path 164: constraints=8, map_entries=0
+[*] Path 165: constraints=8, map_entries=0
+[*] Path 166: constraints=8, map_entries=0
+[*] Path 167: constraints=8, map_entries=0
+[*] Path 168: constraints=8, map_entries=0
+[*] Path 169: constraints=8, map_entries=0
+[*] Path 170: constraints=8, map_entries=0
+[*] Path 171: constraints=8, map_entries=0
+[*] Path 172: constraints=8, map_entries=0
+[*] Path 173: constraints=8, map_entries=0
+[*] Path 174: constraints=8, map_entries=0
+[*] Path 175: constraints=8, map_entries=0
+[*] Path 176: constraints=8, map_entries=0
+[*] Path 177: constraints=8, map_entries=0
+[*] Path 178: constraints=8, map_entries=0
+[*] Path 179: constraints=8, map_entries=0
+[*] Path 180: constraints=8, map_entries=0
+[*] Path 181: constraints=8, map_entries=0
+[*] Path 182: constraints=8, map_entries=0
+[*] Path 183: constraints=8, map_entries=0
+[*] Path 184: constraints=8, map_entries=0
+[*] Path 185: constraints=8, map_entries=0
+[*] Path 186: constraints=8, map_entries=0
+[*] Path 187: constraints=8, map_entries=0
+[*] Path 188: constraints=8, map_entries=0
+[*] Path 189: constraints=8, map_entries=0
+[*] Path 190: constraints=8, map_entries=0
+[*] Path 191: constraints=8, map_entries=0
+[*] Path 192: constraints=8, map_entries=0
+[*] Path 193: constraints=8, map_entries=0
+[*] Path 194: constraints=8, map_entries=0
+[*] Path 195: constraints=8, map_entries=0
+[*] Path 196: constraints=8, map_entries=0
+[*] Path 197: constraints=8, map_entries=0
+[*] Path 198: constraints=8, map_entries=0
+[*] Path 199: constraints=8, map_entries=0
+[*] Path 200: constraints=8, map_entries=0
+[*] Path 201: constraints=8, map_entries=0
+[*] Path 202: constraints=8, map_entries=0
+[*] Path 203: constraints=8, map_entries=0
+[*] Path 204: constraints=8, map_entries=0
+[*] Path 205: constraints=8, map_entries=0
+[*] Path 206: constraints=8, map_entries=0
+[*] Path 207: constraints=8, map_entries=0
+[*] Path 208: constraints=8, map_entries=0
+[*] Path 209: constraints=8, map_entries=0
+[*] Path 210: constraints=8, map_entries=0
+[*] Path 211: constraints=8, map_entries=0
+[*] Path 212: constraints=8, map_entries=0
+[*] Path 213: constraints=8, map_entries=0
+[*] Path 214: constraints=8, map_entries=0
+[*] Path 215: constraints=8, map_entries=0
+[*] Path 216: constraints=8, map_entries=0
+[*] Path 217: constraints=8, map_entries=0
+[*] Path 218: constraints=8, map_entries=0
+[*] Path 219: constraints=8, map_entries=0
+[*] Path 220: constraints=8, map_entries=0
+[*] Path 221: constraints=8, map_entries=0
+[*] Path 222: constraints=8, map_entries=0
+[*] Path 223: constraints=8, map_entries=0
+[*] Path 224: constraints=8, map_entries=0
+[*] Path 225: constraints=8, map_entries=0
+[*] Path 226: constraints=8, map_entries=0
+[*] Path 227: constraints=8, map_entries=0
+[*] Path 228: constraints=8, map_entries=0
+[*] Path 229: constraints=8, map_entries=0
+[*] Path 230: constraints=8, map_entries=0
+[*] Path 231: constraints=8, map_entries=0
+[*] Path 232: constraints=8, map_entries=0
+[*] Path 233: constraints=8, map_entries=0
+[*] Path 234: constraints=8, map_entries=0
+[*] Path 235: constraints=8, map_entries=0
+[*] Path 236: constraints=8, map_entries=0
+[*] Path 237: constraints=8, map_entries=0
+[*] Path 238: constraints=8, map_entries=0
+[*] Path 239: constraints=8, map_entries=0
+[*] Path 240: constraints=8, map_entries=0
+[*] Path 241: constraints=8, map_entries=0
+[*] Path 242: constraints=8, map_entries=0
+[*] Path 243: constraints=8, map_entries=0
+[*] Path 244: constraints=8, map_entries=0
+[*] Path 245: constraints=8, map_entries=0
+[*] Path 246: constraints=8, map_entries=0
+[*] Path 247: constraints=8, map_entries=0
+[*] Path 248: constraints=8, map_entries=0
+[*] Path 249: constraints=8, map_entries=0
+[*] Path 250: constraints=8, map_entries=0
+[*] Path 251: constraints=8, map_entries=0
+[*] Path 252: constraints=8, map_entries=0
+[*] Path 253: constraints=8, map_entries=0
+[*] Path 254: constraints=8, map_entries=0
+[*] Path 255: constraints=8, map_entries=0
+[*] Path 256: constraints=8, map_entries=0
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    256 paths converted
+[*] Converting Rust program paths to Z3...
+    256 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 0 maps via ITE semantics
+    [?] Solver checking 1 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+
+equivalent: True
+result_type: equivalent
+total_seconds: 31.208278
+
+========================================================================
+benchmark: Source optimization
+object: /Users/dajohnyu/Documents/heimdall/heimdall/merge-branch/bytes/branch_8_MERGED.o
+entry: blk_account_io_done
+========================================================================
+[*] Detected program type 'fentry' from section 'fentry/blk_account_io_done'
+[*] Using context size 64 bytes for program type 'fentry'
+[*] Detected program type 'fentry' from section 'fentry/blk_account_io_done'
+[*] No BTF metadata from C binary
+[*] No BTF metadata available, using command-line map specs
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/merge-branch/bytes/branch_8_MERGED.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'fentry/blk_account_io_done' for atomic instructions (offset 0x0-0x40)
+    No atomic instructions found
+[*] Found entry 'blk_account_io_done' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 (0x0 .. input_bpf_ctx_3_512[7:0]) + input_bpf_ctx_3_512[63:0]>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=0, map_entries=0
+[*] No BTF metadata from Rust binary
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/merge-branch/bytes/branch_8_MERGED.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'fentry/blk_account_io_done' for atomic instructions (offset 0x0-0x40)
+    No atomic instructions found
+[*] Found entry 'blk_account_io_done' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 (0x0 .. input_bpf_ctx_3_512[7:0]) + input_bpf_ctx_3_512[63:0]>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=0, map_entries=0
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 0 maps via ITE semantics
+    [?] Solver checking 1 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+
+equivalent: True
+result_type: equivalent
+total_seconds: 0.087580
+

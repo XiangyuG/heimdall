@@ -1,0 +1,794 @@
+========================================================================
+benchmark: Original
+object: /Users/dajohnyu/Documents/heimdall/heimdall/merge-branch/bytes/biolatency.o
+entry: block_rq_complete
+========================================================================
+[*] Detected program type 'tp_btf' from section 'tp_btf/block_rq_insert'
+[*] Using context size 64 bytes for program type 'tp_btf'
+[*] Detected program type 'tp_btf' from section 'tp_btf/block_rq_insert'
+[*] Parsed BTF metadata from C binary: 3 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - start: type=hash, key_size=8, value_size=8, max_entries=10240
+    - hists: type=hash, key_size=8, value_size=108, max_entries=10240
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/merge-branch/bytes/biolatency.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400eb0: S=0x400000 A=0 imm=-471
+    - Patching call <anon> @ 0x400ec8: S=0x400000 A=1152 imm=-330
+    - Patching call <anon> @ 0x400ee8: S=0x400000 A=2624 imm=-150
+    - Patching call <anon> @ 0x400f00: S=0x400000 A=0 imm=-481
+    - Patching call <anon> @ 0x400f18: S=0x400000 A=1152 imm=-340
+    - Patching call <anon> @ 0x400f38: S=0x400000 A=2624 imm=-160
+[*] Patching complete.
+[*] Scanning section 'raw_tp/block_rq_complete' for atomic instructions (offset 0x0-0x20)
+    No atomic instructions found
+[*] Found 1 .data global(s): initial_hist
+[*] Found entry 'block_rq_complete' at 0x400f30
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x400f68
+[*] Initializing map 'start' from BTF: type=hash, key_size=8, value_size=8, max_entries=10240 at 0x400f88
+[*] Initializing map 'hists' from BTF: type=hash, key_size=8, value_size=108, max_entries=10240 at 0x400fa8
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_ktime_get_ns called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'start', slot 0, addr=0xdeaf0000
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'hists', slot 0, addr=0xdeaf0008
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Updating existing slot 0 in map 'hists'
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'hists'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=36 errored=0
+    stash 'deadended': 36 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=2, map_entries=1
+[*] Path 2: constraints=3, map_entries=1
+[*] Path 3: constraints=4, map_entries=2
+[*] Path 4: constraints=5, map_entries=2
+[*] Path 5: constraints=5, map_entries=2
+[*] Path 6: constraints=6, map_entries=2
+[*] Path 7: constraints=6, map_entries=2
+[*] Path 8: constraints=6, map_entries=2
+[*] Path 9: constraints=6, map_entries=2
+[*] Path 10: constraints=6, map_entries=2
+[*] Path 11: constraints=6, map_entries=2
+[*] Path 12: constraints=5, map_entries=2
+[*] Path 13: constraints=6, map_entries=2
+[*] Path 14: constraints=6, map_entries=2
+[*] Path 15: constraints=6, map_entries=2
+[*] Path 16: constraints=6, map_entries=2
+[*] Path 17: constraints=6, map_entries=2
+[*] Path 18: constraints=5, map_entries=2
+[*] Path 19: constraints=5, map_entries=2
+[*] Path 20: constraints=4, map_entries=2
+[*] Path 21: constraints=5, map_entries=2
+[*] Path 22: constraints=6, map_entries=2
+[*] Path 23: constraints=6, map_entries=2
+[*] Path 24: constraints=6, map_entries=2
+[*] Path 25: constraints=6, map_entries=2
+[*] Path 26: constraints=6, map_entries=2
+[*] Path 27: constraints=6, map_entries=2
+[*] Path 28: constraints=5, map_entries=2
+[*] Path 29: constraints=6, map_entries=2
+[*] Path 30: constraints=6, map_entries=2
+[*] Path 31: constraints=6, map_entries=2
+[*] Path 32: constraints=6, map_entries=2
+[*] Path 33: constraints=6, map_entries=2
+[*] Path 34: constraints=10, map_entries=2
+[*] Path 35: constraints=10, map_entries=2
+[*] Path 36: constraints=10, map_entries=2
+[*] Parsed BTF metadata from Rust binary: 3 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - start: type=hash, key_size=8, value_size=8, max_entries=10240
+    - hists: type=hash, key_size=8, value_size=108, max_entries=10240
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/merge-branch/bytes/biolatency.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400eb0: S=0x400000 A=0 imm=-471
+    - Patching call <anon> @ 0x400ec8: S=0x400000 A=1152 imm=-330
+    - Patching call <anon> @ 0x400ee8: S=0x400000 A=2624 imm=-150
+    - Patching call <anon> @ 0x400f00: S=0x400000 A=0 imm=-481
+    - Patching call <anon> @ 0x400f18: S=0x400000 A=1152 imm=-340
+    - Patching call <anon> @ 0x400f38: S=0x400000 A=2624 imm=-160
+[*] Patching complete.
+[*] Scanning section 'raw_tp/block_rq_complete' for atomic instructions (offset 0x0-0x20)
+    No atomic instructions found
+[*] Found 1 .data global(s): initial_hist
+[*] Found entry 'block_rq_complete' at 0x400f30
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x400f68
+[*] Initializing map 'start' from BTF: type=hash, key_size=8, value_size=8, max_entries=10240 at 0x400f88
+[*] Initializing map 'hists' from BTF: type=hash, key_size=8, value_size=108, max_entries=10240 at 0x400fa8
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_ktime_get_ns called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'start', slot 0, addr=0xdeaf0000
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'hists', slot 0, addr=0xdeaf0008
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Updating existing slot 0 in map 'hists'
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'hists'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=36 errored=0
+    stash 'deadended': 36 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=2, map_entries=1
+[*] Path 2: constraints=3, map_entries=1
+[*] Path 3: constraints=4, map_entries=2
+[*] Path 4: constraints=5, map_entries=2
+[*] Path 5: constraints=5, map_entries=2
+[*] Path 6: constraints=6, map_entries=2
+[*] Path 7: constraints=6, map_entries=2
+[*] Path 8: constraints=6, map_entries=2
+[*] Path 9: constraints=6, map_entries=2
+[*] Path 10: constraints=6, map_entries=2
+[*] Path 11: constraints=6, map_entries=2
+[*] Path 12: constraints=5, map_entries=2
+[*] Path 13: constraints=6, map_entries=2
+[*] Path 14: constraints=6, map_entries=2
+[*] Path 15: constraints=6, map_entries=2
+[*] Path 16: constraints=6, map_entries=2
+[*] Path 17: constraints=6, map_entries=2
+[*] Path 18: constraints=5, map_entries=2
+[*] Path 19: constraints=5, map_entries=2
+[*] Path 20: constraints=4, map_entries=2
+[*] Path 21: constraints=5, map_entries=2
+[*] Path 22: constraints=6, map_entries=2
+[*] Path 23: constraints=6, map_entries=2
+[*] Path 24: constraints=6, map_entries=2
+[*] Path 25: constraints=6, map_entries=2
+[*] Path 26: constraints=6, map_entries=2
+[*] Path 27: constraints=6, map_entries=2
+[*] Path 28: constraints=5, map_entries=2
+[*] Path 29: constraints=6, map_entries=2
+[*] Path 30: constraints=6, map_entries=2
+[*] Path 31: constraints=6, map_entries=2
+[*] Path 32: constraints=6, map_entries=2
+[*] Path 33: constraints=6, map_entries=2
+[*] Path 34: constraints=10, map_entries=2
+[*] Path 35: constraints=10, map_entries=2
+[*] Path 36: constraints=10, map_entries=2
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    36 paths converted
+[*] Converting Rust program paths to Z3...
+    36 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 3 maps via ITE semantics
+[!] .data symbol 'initial_hist': too large (108B > 64B), skipping value comparison
+    [?] Solver checking 7 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+
+equivalent: True
+result_type: equivalent
+total_seconds: 73.660827
+
+========================================================================
+benchmark: Source optimization
+object: /Users/dajohnyu/Documents/heimdall/heimdall/merge-branch/bytes/biolatency_MERGED.o
+entry: block_rq_complete
+========================================================================
+[*] Detected program type 'tp_btf' from section 'tp_btf/block_rq_insert'
+[*] Using context size 64 bytes for program type 'tp_btf'
+[*] Detected program type 'tp_btf' from section 'tp_btf/block_rq_insert'
+[*] Parsed BTF metadata from C binary: 3 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - start: type=hash, key_size=8, value_size=8, max_entries=10240
+    - hists: type=hash, key_size=8, value_size=108, max_entries=10240
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/merge-branch/bytes/biolatency_MERGED.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400eb0: S=0x400000 A=0 imm=-471
+    - Patching call <anon> @ 0x400ec8: S=0x400000 A=1152 imm=-330
+    - Patching call <anon> @ 0x400ee8: S=0x400000 A=2624 imm=-150
+    - Patching call <anon> @ 0x400f00: S=0x400000 A=0 imm=-481
+    - Patching call <anon> @ 0x400f18: S=0x400000 A=1152 imm=-340
+    - Patching call <anon> @ 0x400f38: S=0x400000 A=2624 imm=-160
+[*] Patching complete.
+[*] Scanning section 'raw_tp/block_rq_complete' for atomic instructions (offset 0x0-0x20)
+    No atomic instructions found
+[*] Found 1 .data global(s): initial_hist
+[*] Found entry 'block_rq_complete' at 0x400f30
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x400f68
+[*] Initializing map 'start' from BTF: type=hash, key_size=8, value_size=8, max_entries=10240 at 0x400f88
+[*] Initializing map 'hists' from BTF: type=hash, key_size=8, value_size=108, max_entries=10240 at 0x400fa8
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_ktime_get_ns called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'start', slot 0, addr=0xdeaf0000
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'hists', slot 0, addr=0xdeaf0008
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Updating existing slot 0 in map 'hists'
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'hists'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=36 errored=0
+    stash 'deadended': 36 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=2, map_entries=1
+[*] Path 2: constraints=3, map_entries=1
+[*] Path 3: constraints=4, map_entries=2
+[*] Path 4: constraints=5, map_entries=2
+[*] Path 5: constraints=5, map_entries=2
+[*] Path 6: constraints=6, map_entries=2
+[*] Path 7: constraints=6, map_entries=2
+[*] Path 8: constraints=6, map_entries=2
+[*] Path 9: constraints=6, map_entries=2
+[*] Path 10: constraints=6, map_entries=2
+[*] Path 11: constraints=6, map_entries=2
+[*] Path 12: constraints=5, map_entries=2
+[*] Path 13: constraints=6, map_entries=2
+[*] Path 14: constraints=6, map_entries=2
+[*] Path 15: constraints=6, map_entries=2
+[*] Path 16: constraints=6, map_entries=2
+[*] Path 17: constraints=6, map_entries=2
+[*] Path 18: constraints=5, map_entries=2
+[*] Path 19: constraints=5, map_entries=2
+[*] Path 20: constraints=4, map_entries=2
+[*] Path 21: constraints=5, map_entries=2
+[*] Path 22: constraints=6, map_entries=2
+[*] Path 23: constraints=6, map_entries=2
+[*] Path 24: constraints=6, map_entries=2
+[*] Path 25: constraints=6, map_entries=2
+[*] Path 26: constraints=6, map_entries=2
+[*] Path 27: constraints=6, map_entries=2
+[*] Path 28: constraints=5, map_entries=2
+[*] Path 29: constraints=6, map_entries=2
+[*] Path 30: constraints=6, map_entries=2
+[*] Path 31: constraints=6, map_entries=2
+[*] Path 32: constraints=6, map_entries=2
+[*] Path 33: constraints=6, map_entries=2
+[*] Path 34: constraints=10, map_entries=2
+[*] Path 35: constraints=10, map_entries=2
+[*] Path 36: constraints=10, map_entries=2
+[*] Parsed BTF metadata from Rust binary: 3 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - start: type=hash, key_size=8, value_size=8, max_entries=10240
+    - hists: type=hash, key_size=8, value_size=108, max_entries=10240
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/merge-branch/bytes/biolatency_MERGED.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400eb0: S=0x400000 A=0 imm=-471
+    - Patching call <anon> @ 0x400ec8: S=0x400000 A=1152 imm=-330
+    - Patching call <anon> @ 0x400ee8: S=0x400000 A=2624 imm=-150
+    - Patching call <anon> @ 0x400f00: S=0x400000 A=0 imm=-481
+    - Patching call <anon> @ 0x400f18: S=0x400000 A=1152 imm=-340
+    - Patching call <anon> @ 0x400f38: S=0x400000 A=2624 imm=-160
+[*] Patching complete.
+[*] Scanning section 'raw_tp/block_rq_complete' for atomic instructions (offset 0x0-0x20)
+    No atomic instructions found
+[*] Found 1 .data global(s): initial_hist
+[*] Found entry 'block_rq_complete' at 0x400f30
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x400f68
+[*] Initializing map 'start' from BTF: type=hash, key_size=8, value_size=8, max_entries=10240 at 0x400f88
+[*] Initializing map 'hists' from BTF: type=hash, key_size=8, value_size=108, max_entries=10240 at 0x400fa8
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_ktime_get_ns called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'start', slot 0, addr=0xdeaf0000
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'hists', slot 0, addr=0xdeaf0008
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Updating existing slot 0 in map 'hists'
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'hists'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=36 errored=0
+    stash 'deadended': 36 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=2, map_entries=1
+[*] Path 2: constraints=3, map_entries=1
+[*] Path 3: constraints=4, map_entries=2
+[*] Path 4: constraints=5, map_entries=2
+[*] Path 5: constraints=5, map_entries=2
+[*] Path 6: constraints=6, map_entries=2
+[*] Path 7: constraints=6, map_entries=2
+[*] Path 8: constraints=6, map_entries=2
+[*] Path 9: constraints=6, map_entries=2
+[*] Path 10: constraints=6, map_entries=2
+[*] Path 11: constraints=6, map_entries=2
+[*] Path 12: constraints=5, map_entries=2
+[*] Path 13: constraints=6, map_entries=2
+[*] Path 14: constraints=6, map_entries=2
+[*] Path 15: constraints=6, map_entries=2
+[*] Path 16: constraints=6, map_entries=2
+[*] Path 17: constraints=6, map_entries=2
+[*] Path 18: constraints=5, map_entries=2
+[*] Path 19: constraints=5, map_entries=2
+[*] Path 20: constraints=4, map_entries=2
+[*] Path 21: constraints=5, map_entries=2
+[*] Path 22: constraints=6, map_entries=2
+[*] Path 23: constraints=6, map_entries=2
+[*] Path 24: constraints=6, map_entries=2
+[*] Path 25: constraints=6, map_entries=2
+[*] Path 26: constraints=6, map_entries=2
+[*] Path 27: constraints=6, map_entries=2
+[*] Path 28: constraints=5, map_entries=2
+[*] Path 29: constraints=6, map_entries=2
+[*] Path 30: constraints=6, map_entries=2
+[*] Path 31: constraints=6, map_entries=2
+[*] Path 32: constraints=6, map_entries=2
+[*] Path 33: constraints=6, map_entries=2
+[*] Path 34: constraints=10, map_entries=2
+[*] Path 35: constraints=10, map_entries=2
+[*] Path 36: constraints=10, map_entries=2
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    36 paths converted
+[*] Converting Rust program paths to Z3...
+    36 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 3 maps via ITE semantics
+[!] .data symbol 'initial_hist': too large (108B > 64B), skipping value comparison
+    [?] Solver checking 7 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+
+equivalent: True
+result_type: equivalent
+total_seconds: 77.670783
+

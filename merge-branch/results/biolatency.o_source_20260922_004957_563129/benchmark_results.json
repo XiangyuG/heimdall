@@ -1,0 +1,22 @@
+{
+  "case": "biolatency.o",
+  "test": "source",
+  "entry": "block_rq_complete",
+  "log": "/Users/dajohnyu/Documents/heimdall/heimdall/merge-branch/results/biolatency.o_source_20260922_004957_563129/log.txt",
+  "benchmarks": [
+    {
+      "label": "Original",
+      "object": "/Users/dajohnyu/Documents/heimdall/heimdall/merge-branch/bytes/biolatency.o",
+      "equivalent": true,
+      "result_type": "equivalent",
+      "total_seconds": 73.66082695795922
+    },
+    {
+      "label": "Source optimization",
+      "object": "/Users/dajohnyu/Documents/heimdall/heimdall/merge-branch/bytes/biolatency_MERGED.o",
+      "equivalent": true,
+      "result_type": "equivalent",
+      "total_seconds": 77.67078266700264
+    }
+  ]
+}
