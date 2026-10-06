@@ -1,0 +1,12 @@
+; Program formula for /Users/dajohnyu/Documents/heimdall/heimdall/Clang-opt-experiment/chain-of-updates/default.o
+; Entry: blk_account_io_done
+; Includes input constraints; excludes the equivalence comparison.
+; benchmark generated from python API
+(set-info :status unknown)
+(declare-fun shared_input_bpf_ctx () (_ BitVec 512))
+(declare-fun outcome_return_c () (_ BitVec 64))
+(assert
+ (let ((?x16 ((_ extract 63 0) shared_input_bpf_ctx)))
+ (let ((?x20 (concat (_ bv0 59) ((_ extract 4 0) shared_input_bpf_ctx))))
+ (= outcome_return_c (bvadd ?x20 ?x16)))))
+(check-sat)

@@ -1,0 +1,25 @@
+; Program formula for /Users/dajohnyu/Documents/heimdall/heimdall/Clang-opt-experiment/identical-branches/no-opt.o
+; Entry: blk_account_io_done
+; Includes input constraints; excludes the equivalence comparison.
+; benchmark generated from python API
+(set-info :status unknown)
+(declare-fun shared_input_bpf_ctx () (_ BitVec 512))
+(declare-fun outcome_return_c () (_ BitVec 64))
+(assert
+ (let (($x697 (= outcome_return_c (concat (_ bv0 32) (bvadd (_ bv15 32) ((_ extract 31 0) shared_input_bpf_ctx))))))
+ (let ((?x700 (concat (concat (_ bv0 59) ((_ extract 4 4) shared_input_bpf_ctx)) (_ bv0 4))))
+ (let (($x701 (and (distinct (_ bv0 64) ?x700) true)))
+ (let ((?x704 (concat (concat (_ bv0 60) ((_ extract 3 3) shared_input_bpf_ctx)) (_ bv0 3))))
+ (let (($x705 (and (distinct (_ bv0 64) ?x704) true)))
+ (let ((?x708 (concat (concat (_ bv0 61) ((_ extract 2 2) shared_input_bpf_ctx)) (_ bv0 2))))
+ (let (($x709 (and (distinct (_ bv0 64) ?x708) true)))
+ (let ((?x712 (concat (concat (_ bv0 62) ((_ extract 1 1) shared_input_bpf_ctx)) (_ bv0 1))))
+ (let (($x713 (and (distinct (_ bv0 64) ?x712) true)))
+ (let ((?x714 ((_ extract 0 0) shared_input_bpf_ctx)))
+ (let (($x715 (and (distinct (_ bv0 1) ?x714) true)))
+ (let (($x723 (= (_ bv0 64) ?x704)))
+ (let (($x721 (= (_ bv0 64) ?x708)))
+ (let (($x719 (= (_ bv0 64) ?x712)))
+ (let (($x717 (= (_ bv0 1) ?x714)))
+ (or (and $x717 $x719 $x721 $x723 (= (_ bv0 64) ?x700) $x697) (and $x715 $x719 $x721 $x723 (= (_ bv0 64) ?x700) $x697) (and $x717 $x713 $x721 $x723 (= (_ bv0 64) ?x700) $x697) (and $x717 $x719 $x709 $x723 (= (_ bv0 64) ?x700) $x697) (and $x717 $x719 $x721 $x705 (= (_ bv0 64) ?x700) $x697) (and $x717 $x719 $x721 $x723 $x701 $x697) (and $x715 $x713 $x721 $x723 (= (_ bv0 64) ?x700) $x697) (and $x715 $x719 $x709 $x723 (= (_ bv0 64) ?x700) $x697) (and $x715 $x719 $x721 $x705 (= (_ bv0 64) ?x700) $x697) (and $x715 $x719 $x721 $x723 $x701 $x697) (and $x717 $x713 $x709 $x723 (= (_ bv0 64) ?x700) $x697) (and $x717 $x713 $x721 $x705 (= (_ bv0 64) ?x700) $x697) (and $x717 $x713 $x721 $x723 $x701 $x697) (and $x717 $x719 $x709 $x705 (= (_ bv0 64) ?x700) $x697) (and $x717 $x719 $x709 $x723 $x701 $x697) (and $x717 $x719 $x721 $x705 $x701 $x697) (and $x715 $x713 $x709 $x723 (= (_ bv0 64) ?x700) $x697) (and $x715 $x713 $x721 $x705 (= (_ bv0 64) ?x700) $x697) (and $x715 $x713 $x721 $x723 $x701 $x697) (and $x715 $x719 $x709 $x705 (= (_ bv0 64) ?x700) $x697) (and $x715 $x719 $x709 $x723 $x701 $x697) (and $x715 $x719 $x721 $x705 $x701 $x697) (and $x717 $x713 $x709 $x705 (= (_ bv0 64) ?x700) $x697) (and $x717 $x713 $x709 $x723 $x701 $x697) (and $x717 $x713 $x721 $x705 $x701 $x697) (and $x717 $x719 $x709 $x705 $x701 $x697) (and $x715 $x713 $x709 $x705 (= (_ bv0 64) ?x700) $x697) (and $x715 $x713 $x709 $x723 $x701 $x697) (and $x715 $x713 $x721 $x705 $x701 $x697) (and $x715 $x719 $x709 $x705 $x701 $x697) (and $x717 $x713 $x709 $x705 $x701 $x697) (and $x715 $x713 $x709 $x705 $x701 $x697))))))))))))))))))
+(check-sat)

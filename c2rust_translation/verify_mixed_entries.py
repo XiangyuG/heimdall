@@ -13,6 +13,7 @@ Example:
 """
 
 import argparse
+from pathlib import Path
 import sys
 
 sys.setrecursionlimit(20000)
@@ -22,6 +23,7 @@ from verify_equivalence import (
     prepare_verification,
     generate_c_formula,
     run_verification_rust_only,
+    Z3VariableUnifier,
 )
 
 def parse_args() -> argparse.Namespace:
@@ -49,6 +51,12 @@ def parse_args() -> argparse.Namespace:
         default=None,
         help="Also write the final verdict as JSON to this path: "
              '{"equivalent": bool|null, "result_type": str, "counter_example": str|null}.',
+    )
+    parser.add_argument(
+        "--z3-output",
+        default=None,
+        help="Write the first object's program formula and input constraints "
+             "as an SMT-LIB2 file (not the full equivalence query).",
     )
     parser.add_argument(
         "--max-steps",
@@ -157,6 +165,25 @@ def main() -> int:
         if err.counter_example:
             print(f"    detail: {err.counter_example}")
         return _finish(2, err.equivalent, err.result_type, err.counter_example or None)
+
+    if args.z3_output:
+        import z3
+        unifier = Z3VariableUnifier()
+        solver = z3.Solver()
+        for constraint in vctx.shared_vars.get("ctx_constraints", []):
+            solver.add(unifier.convert_and_unify(constraint, "c"))
+        solver.add(unifier.convert_and_unify(vctx.c_formula, "c"))
+        try:
+            Path(args.z3_output).write_text(
+                "; Program formula for " + args.c_obj + "\n"
+                "; Entry: " + args.c_entry + "\n"
+                "; Includes input constraints; excludes the equivalence comparison.\n"
+                + solver.to_smt2()
+            )
+        except OSError as exc:
+            print(f"[!] Could not write Z3 formula: {exc}")
+            return _finish(2, None, "z3_output_error", str(exc))
+        print(f"[*] Wrote Z3 program formula: {args.z3_output}")
 
     print(f"[*] Verifying Rust object with entry '{args.rust_entry}'...")
     result = run_verification_rust_only(vctx, args.rust_obj, args.rust_entry, max_steps=args.max_steps,

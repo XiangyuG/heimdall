@@ -53,15 +53,15 @@ def resolve_original(case_argument: str) -> Path:
         raise ValueError("--case must be a file name from bytes/, not a path")
     if Path(case_argument).suffix != ".o":
         raise ValueError("--case must name an .o file")
-    if Path(case_argument).stem.endswith("_MERGED"):
-        raise ValueError("--case must name the original object, not a _MERGED.o file")
+    if Path(case_argument).stem.endswith("_SOURCE_OPT"):
+        raise ValueError("--case must name the original object, not a _SOURCE_OPT.o file")
 
     object_path = BYTES_DIR / case_argument
     if not object_path.is_file():
         available = ", ".join(
             path.name
             for path in sorted(BYTES_DIR.glob("*.o"))
-            if not path.stem.endswith("_MERGED")
+            if not path.stem.endswith("_SOURCE_OPT")
         )
         raise FileNotFoundError(
             f"original object file {case_argument!r} was not found in {BYTES_DIR}; "
@@ -73,7 +73,7 @@ def resolve_original(case_argument: str) -> Path:
 def resolve_source_optimized(original_path: Path) -> Path:
     """Return the source-optimized companion for an original object."""
 
-    optimized_path = original_path.with_name(f"{original_path.stem}_MERGED.o")
+    optimized_path = original_path.with_name(f"{original_path.stem}_SOURCE_OPT.o")
     if not optimized_path.is_file():
         raise FileNotFoundError(
             "source-optimized object file "

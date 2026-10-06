@@ -1,0 +1,15 @@
+; Program formula for /Users/dajohnyu/Documents/heimdall/heimdall/Clang-opt-experiment/impossible-bit-tests/no-opt.o
+; Entry: blk_account_io_done
+; Includes input constraints; excludes the equivalence comparison.
+; benchmark generated from python API
+(set-info :status unknown)
+(declare-fun shared_input_bpf_ctx () (_ BitVec 512))
+(declare-fun outcome_return_c () (_ BitVec 64))
+(assert
+ (let (($x121 (= outcome_return_c (concat (_ bv0 32) ((_ extract 31 0) shared_input_bpf_ctx)))))
+ (let (($x125 (and (distinct (_ bv32 64) (concat (concat (_ bv0 59) ((_ extract 4 4) shared_input_bpf_ctx)) (_ bv0 4))) true)))
+ (let (($x129 (and (distinct (_ bv16 64) (concat (concat (_ bv0 60) ((_ extract 3 3) shared_input_bpf_ctx)) (_ bv0 3))) true)))
+ (let (($x133 (and (distinct (_ bv8 64) (concat (concat (_ bv0 61) ((_ extract 2 2) shared_input_bpf_ctx)) (_ bv0 2))) true)))
+ (let (($x137 (and (distinct (_ bv4 64) (concat (concat (_ bv0 62) ((_ extract 1 1) shared_input_bpf_ctx)) (_ bv0 1))) true)))
+ (and $x137 $x133 $x129 $x125 $x121)))))))
+(check-sat)

@@ -752,7 +752,7 @@ def output_path_for(source_path: Path) -> Path:
         base = name[:-len(".c")]
     else:
         base = name
-    return GENERATED_DIR / f"{base}_MERGED.bpf.c"
+    return GENERATED_DIR / f"{base}_SOURCE_OPT.bpf.c"
 
 
 def write_generated(output_path: Path, contents: bytes) -> None:

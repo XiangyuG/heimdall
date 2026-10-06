@@ -1,0 +1,14 @@
+; Program formula for /Users/dajohnyu/Documents/heimdall/heimdall/Clang-opt-experiment/repeated-condition/default.o
+; Entry: blk_account_io_done
+; Includes input constraints; excludes the equivalence comparison.
+; benchmark generated from python API
+(set-info :status unknown)
+(declare-fun shared_input_bpf_ctx () (_ BitVec 512))
+(declare-fun outcome_return_c () (_ BitVec 64))
+(assert
+ (let (($x73 (= outcome_return_c ((_ extract 63 0) shared_input_bpf_ctx))))
+ (let ((?x74 ((_ extract 0 0) shared_input_bpf_ctx)))
+ (let (($x75 (= (_ bv0 1) ?x74)))
+ (let ((?x81 (concat (_ bv0 32) (bvadd (bvadd (_ bv14 32) ((_ extract 31 0) shared_input_bpf_ctx)) (concat (_ bv0 31) ?x74)))))
+ (or (and (and (distinct (_ bv0 1) ?x74) true) (= outcome_return_c ?x81)) (and $x75 $x73)))))))
+(check-sat)

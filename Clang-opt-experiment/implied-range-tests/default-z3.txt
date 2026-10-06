@@ -1,0 +1,14 @@
+; Program formula for /Users/dajohnyu/Documents/heimdall/heimdall/Clang-opt-experiment/implied-range-tests/default.o
+; Entry: blk_account_io_done
+; Includes input constraints; excludes the equivalence comparison.
+; benchmark generated from python API
+(set-info :status unknown)
+(declare-fun shared_input_bpf_ctx () (_ BitVec 512))
+(declare-fun outcome_return_c () (_ BitVec 64))
+(assert
+ (let (($x68 (= outcome_return_c (concat (_ bv0 32) (bvadd (_ bv10 32) ((_ extract 31 0) shared_input_bpf_ctx))))))
+ (let ((?x69 ((_ extract 63 0) shared_input_bpf_ctx)))
+ (let (($x74 (bvsle (_ bv8 64) ?x69)))
+ (let (($x75 (and $x74 (= outcome_return_c (concat (_ bv0 32) ((_ extract 31 0) shared_input_bpf_ctx))))))
+ (or $x75 (and (bvsgt (_ bv8 64) ?x69) $x68)))))))
+(check-sat)

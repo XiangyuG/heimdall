@@ -1,3 +1,8 @@
+'''
+This script is not meant to be used as a complete implementation,
+the current progress of this project is still on source level merging
+'''
+
 """Benchmark-scoped online state merging for map-free eBPF programs."""
 
 from __future__ import annotations
