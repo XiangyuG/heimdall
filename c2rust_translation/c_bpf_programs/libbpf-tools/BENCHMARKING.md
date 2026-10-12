@@ -40,7 +40,7 @@ recompiling the `*.bpf.c` programs).
 ```sh
 # 1. start a workload in the background
 fio --name=w --filename=/tmp/bpfbench.data --size=1G --rw=randrw --bs=4k \
-    --time_based --runtime=120 --numjobs=4 --group_reporting &
+    --time_based --runtime=120 --numjobs=1 --group_reporting &
 
 # 2. measure for 60 s
 sudo ./filetop_runner filetop.o 60 256
