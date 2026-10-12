@@ -1,0 +1,4133 @@
+Homebrew clang version 22.1.8
+Target: arm64-apple-darwin27.0.0
+Thread model: posix
+InstalledDir: /opt/homebrew/Cellar/llvm/22.1.8/bin
+Configuration file: /opt/homebrew/Cellar/llvm/22.1.8/etc/clang/arm64-apple-darwin27.cfg
+{"flags": ["-target", "bpfel", "-O2", "-g", "-D__TARGET_ARCH_x86", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/libbpf-tools"], "trials": 7, "warmups": 1, "timeout_seconds": 120, "timing": "run_verification only; imports and compilation excluded", "input_assumptions": [{"id": "fusion_n_8", "expression": {"eq": {"left": {"truncate": {"value": "original.ctx.r15", "width": 32}}, "right": {"value": 8, "type": "u32"}}}, "description": "Controlled experiment input: ctx[0] = 8; other context bits remain symbolic.", "provenance": {"kind": "experiment_input"}}]}
+
+--- original source: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/cases/fusion_08.bpf.c ---
+// SPDX-License-Identifier: GPL-2.0
+// Standalone loop-fusion case: repeated updates are observed through b[0].
+typedef unsigned int u32;
+typedef unsigned short u16;
+typedef unsigned char u8;
+
+// restrict excludes overlapping arrays; only same-index dependencies exist.
+// Keep this boundary to test optimization within the helper independently.
+__attribute__((noinline))
+static void kernel(u32 *restrict a, u32 *restrict b, u32 n)
+{
+    for (u32 i = 0; i < n; i++) {
+        a[i] += 1;
+    }
+    for (u32 i = 0; i < n; i++) {
+        b[i] = a[i] * 3;
+    }
+}
+
+__attribute__((section("kprobe/test")))
+u32 entry(const u32 *ctx)
+{
+    u32 a[8] = {0};
+    u32 b[8] = {0};
+    const u32 n = *ctx;
+
+    for (u32 r = 0; r < 8; r++)
+        kernel(a, b, n);
+
+    return b[0];
+}
+
+--- optimized source: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/source_level_opt/generated/fusion_08_SOURCE_OPT.bpf.c ---
+// SPDX-License-Identifier: GPL-2.0
+// Standalone loop-fusion case: repeated updates are observed through b[0].
+typedef unsigned int u32;
+typedef unsigned short u16;
+typedef unsigned char u8;
+
+// restrict excludes overlapping arrays; only same-index dependencies exist.
+// Keep this boundary to test optimization within the helper independently.
+__attribute__((noinline))
+static void kernel(u32 *restrict a, u32 *restrict b, u32 n)
+{
+    for (u32 i = 0; i < n; i++) {
+        a[i] += 1;
+        b[i] = a[i] * 3;
+    }
+}
+
+__attribute__((section("kprobe/test")))
+u32 entry(const u32 *ctx)
+{
+    u32 a[8] = {0};
+    u32 b[8] = {0};
+    const u32 n = *ctx;
+
+    for (u32 r = 0; r < 8; r++)
+        kernel(a, b, n);
+
+    return b[0];
+}
+
+--- Parser analysis (no source mutation) ---
+{"pass": "loop_fusion", "replacement_count": 1, "skipped": []}
+{"pass": "aligned_load", "replacement_count": 0, "skipped": []}
+{"pass": "invariant_bound", "replacement_count": 0, "skipped": []}
+$ /opt/homebrew/opt/llvm/bin/clang -target bpfel -O2 -g -D__TARGET_ARCH_x86 -I /Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include -I /Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/libbpf-tools -c /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/cases/fusion_08.bpf.c -o /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/.fusion_08.9kng3pdn
+/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08.o
+$ /opt/homebrew/opt/llvm/bin/clang -target bpfel -O2 -g -D__TARGET_ARCH_x86 -I /Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include -I /Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/libbpf-tools -c /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/source_level_opt/generated/fusion_08_SOURCE_OPT.bpf.c -o /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/.fusion_08_SOURCE_OPT.y3_kfa0v
+/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08_SOURCE_OPT.o
+{"object": "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08.o", "instructions": 67, "code_sha256": "41c724364c3a406e5fa47d42f3f1c926dd4cf32d773dd9d32522f7d94414323f"}
+{"object": "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08_SOURCE_OPT.o", "instructions": 61, "code_sha256": "d142b4cc44b7b3a4a4b58ad921b26c734c29fd1b78bec3e74a16859342938c14"}
+
+--- original assembly (-O2) ---
+	.file	"fusion_08.bpf.c"
+	.section	"kprobe/test","ax",@progbits
+	.globl	entry                           # -- Begin function entry
+	.p2align	3
+	.type	entry,@function
+entry:                                  # @entry
+.Lfunc_begin0:
+	.file	0 "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment" "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/cases/fusion_08.bpf.c" md5 0x2e488923e9017a1f45384eeab8dc1c72
+	.file	1 "cases" "fusion_08.bpf.c" md5 0x2e488923e9017a1f45384eeab8dc1c72
+	.loc	1 22 0                          # cases/fusion_08.bpf.c:22:0
+	.cfi_sections .debug_frame
+	.cfi_startproc
+# %bb.0:
+	#DEBUG_VALUE: entry:ctx <- $r1
+	r2 = 0
+.Ltmp0:
+	.loc	1 23 9 prologue_end             # cases/fusion_08.bpf.c:23:9
+.Ltmp1:
+.Ltmp2:
+	*(u64 *)(r10 - 8) = r2
+	*(u64 *)(r10 - 16) = r2
+	*(u64 *)(r10 - 24) = r2
+	*(u64 *)(r10 - 32) = r2
+	.loc	1 24 9                          # cases/fusion_08.bpf.c:24:9
+.Ltmp3:
+	*(u64 *)(r10 - 40) = r2
+	*(u64 *)(r10 - 48) = r2
+	*(u64 *)(r10 - 56) = r2
+	*(u64 *)(r10 - 64) = r2
+	.loc	1 25 19                         # cases/fusion_08.bpf.c:25:19
+.Ltmp4:
+	w6 = *(u32 *)(r1 + 0)
+.Ltmp5:
+.Ltmp6:
+	#DEBUG_VALUE: entry:n <- $w6
+	#DEBUG_VALUE: r <- 0
+	.loc	1 0 19 is_stmt 0                # cases/fusion_08.bpf.c:0:19
+	r7 = r10
+	r7 += -32
+	r8 = r10
+	r8 += -64
+.Ltmp7:
+	.loc	1 28 9 is_stmt 1                # cases/fusion_08.bpf.c:28:9
+.Ltmp8:
+.Ltmp9:
+	r1 = r7
+.Ltmp10:
+.Ltmp11:
+	r2 = r8
+	w3 = w6
+	call kernel
+.Ltmp12:
+.Ltmp13:
+	#DEBUG_VALUE: r <- 1
+	.loc	1 28 9                          # cases/fusion_08.bpf.c:28:9
+	r1 = r7
+	r2 = r8
+	w3 = w6
+	call kernel
+.Ltmp14:
+.Ltmp15:
+	#DEBUG_VALUE: r <- 2
+	.loc	1 28 9                          # cases/fusion_08.bpf.c:28:9
+	r1 = r7
+	r2 = r8
+	w3 = w6
+	call kernel
+.Ltmp16:
+.Ltmp17:
+	#DEBUG_VALUE: r <- 3
+	.loc	1 28 9                          # cases/fusion_08.bpf.c:28:9
+	r1 = r7
+	r2 = r8
+	w3 = w6
+	call kernel
+.Ltmp18:
+.Ltmp19:
+	#DEBUG_VALUE: r <- 4
+	.loc	1 28 9                          # cases/fusion_08.bpf.c:28:9
+	r1 = r7
+	r2 = r8
+	w3 = w6
+	call kernel
+.Ltmp20:
+.Ltmp21:
+	#DEBUG_VALUE: r <- 5
+	.loc	1 28 9                          # cases/fusion_08.bpf.c:28:9
+	r1 = r7
+	r2 = r8
+	w3 = w6
+	call kernel
+.Ltmp22:
+.Ltmp23:
+	#DEBUG_VALUE: r <- 6
+	.loc	1 28 9                          # cases/fusion_08.bpf.c:28:9
+	r1 = r7
+	r2 = r8
+	w3 = w6
+	call kernel
+.Ltmp24:
+.Ltmp25:
+	#DEBUG_VALUE: r <- 7
+	.loc	1 28 9                          # cases/fusion_08.bpf.c:28:9
+	r1 = r7
+	r2 = r8
+	w3 = w6
+	call kernel
+.Ltmp26:
+.Ltmp27:
+	#DEBUG_VALUE: r <- 8
+	.loc	1 30 12                         # cases/fusion_08.bpf.c:30:12
+.Ltmp28:
+	w0 = *(u32 *)(r10 - 64)
+	.loc	1 30 5 is_stmt 0                # cases/fusion_08.bpf.c:30:5
+.Ltmp29:
+	exit
+.Ltmp30:
+.Ltmp31:
+.Lfunc_end0:
+	.size	entry, .Lfunc_end0-entry
+	.cfi_endproc
+                                        # -- End function
+	.text
+	.p2align	3                               # -- Begin function kernel
+	.type	kernel,@function
+kernel:                                 # @kernel
+.Lfunc_begin1:
+	.cfi_startproc
+# %bb.0:
+	#DEBUG_VALUE: kernel:a <- $r1
+	#DEBUG_VALUE: kernel:b <- $r2
+	#DEBUG_VALUE: kernel:n <- $w3
+	#DEBUG_VALUE: i <- 0
+	.loc	1 12 5 prologue_end is_stmt 1   # cases/fusion_08.bpf.c:12:5
+.Ltmp32:
+	if w3 == 0 goto LBB1_3
+.Ltmp33:
+.Ltmp34:
+# %bb.1:
+	#DEBUG_VALUE: i <- 0
+	#DEBUG_VALUE: kernel:n <- $w3
+	#DEBUG_VALUE: kernel:b <- $r2
+	#DEBUG_VALUE: kernel:a <- $r1
+	.loc	1 0 5 is_stmt 0                 # cases/fusion_08.bpf.c:0:5
+	r4 = 0
+	.loc	1 12 5                          # cases/fusion_08.bpf.c:12:5
+.Ltmp35:
+	r3 = w3
+.Ltmp36:
+.Ltmp37:
+	.loc	1 0 5                           # cases/fusion_08.bpf.c:0:5
+	r5 = r1
+.Ltmp38:
+.Ltmp39:
+LBB1_2:                                 # =>This Inner Loop Header: Depth=1
+	#DEBUG_VALUE: kernel:b <- $r2
+	#DEBUG_VALUE: kernel:a <- $r1
+	#DEBUG_VALUE: i <- $r4
+	.loc	1 13 14 is_stmt 1               # cases/fusion_08.bpf.c:13:14
+.Ltmp40:
+	w0 = *(u32 *)(r5 + 0)
+.Ltmp41:
+	w0 += 1
+.Ltmp42:
+	*(u32 *)(r5 + 0) = w0
+.Ltmp43:
+.Ltmp44:
+	.loc	1 12 23                         # cases/fusion_08.bpf.c:12:23
+.Ltmp45:
+	r5 += 4
+	.loc	1 12 29                         # cases/fusion_08.bpf.c:12:29
+.Ltmp46:
+	r4 += 1
+.Ltmp47:
+.Ltmp48:
+	#DEBUG_VALUE: i <- $r4
+	.loc	1 12 5                          # cases/fusion_08.bpf.c:12:5
+.Ltmp49:
+	if r4 < r3 goto LBB1_2
+.Ltmp50:
+.Ltmp51:
+# %bb.4:
+	#DEBUG_VALUE: i <- $r4
+	#DEBUG_VALUE: kernel:b <- $r2
+	#DEBUG_VALUE: kernel:a <- $r1
+	#DEBUG_VALUE: i <- 0
+	.loc	1 0 5 is_stmt 0                 # cases/fusion_08.bpf.c:0:5
+	r4 = 0
+.Ltmp52:
+.Ltmp53:
+LBB1_5:                                 # =>This Inner Loop Header: Depth=1
+	#DEBUG_VALUE: i <- $r4
+	.loc	1 16 16 is_stmt 1               # cases/fusion_08.bpf.c:16:16
+.Ltmp54:
+	w5 = *(u32 *)(r1 + 0)
+	.loc	1 16 21 is_stmt 0               # cases/fusion_08.bpf.c:16:21
+.Ltmp55:
+	w5 *= 3
+	.loc	1 16 14                         # cases/fusion_08.bpf.c:16:14
+.Ltmp56:
+	*(u32 *)(r2 + 0) = w5
+.Ltmp57:
+.Ltmp58:
+	.loc	1 15 23 is_stmt 1               # cases/fusion_08.bpf.c:15:23
+.Ltmp59:
+	r2 += 4
+	r1 += 4
+	.loc	1 15 29                         # cases/fusion_08.bpf.c:15:29
+.Ltmp60:
+	r4 += 1
+.Ltmp61:
+.Ltmp62:
+	#DEBUG_VALUE: i <- $r4
+	.loc	1 15 5                          # cases/fusion_08.bpf.c:15:5
+.Ltmp63:
+	if r4 < r3 goto LBB1_5
+.Ltmp64:
+.Ltmp65:
+LBB1_3:
+	.loc	1 18 1                          # cases/fusion_08.bpf.c:18:1
+.Ltmp66:
+	exit
+.Ltmp67:
+.Ltmp68:
+.Lfunc_end1:
+	.size	kernel, .Lfunc_end1-kernel
+	.cfi_endproc
+                                        # -- End function
+	.section	.debug_loclists,"",@progbits
+	.long	.Ldebug_list_header_end0-.Ldebug_list_header_start0 # Length
+.Ldebug_list_header_start0:
+	.short	5                               # Version
+	.byte	8                               # Address size
+	.byte	0                               # Segment selector size
+	.long	7                               # Offset entry count
+.Lloclists_table_base0:
+	.long	.Ldebug_loc0-.Lloclists_table_base0
+	.long	.Ldebug_loc1-.Lloclists_table_base0
+	.long	.Ldebug_loc2-.Lloclists_table_base0
+	.long	.Ldebug_loc3-.Lloclists_table_base0
+	.long	.Ldebug_loc4-.Lloclists_table_base0
+	.long	.Ldebug_loc5-.Lloclists_table_base0
+	.long	.Ldebug_loc6-.Lloclists_table_base0
+.Ldebug_loc0:
+	.byte	3                               # DW_LLE_startx_length
+	.byte	0                               #   start index
+	.uleb128 .Ltmp10-.Lfunc_begin0          #   length
+	.byte	1                               # Loc expr size
+	.byte	81                              # DW_OP_reg1
+	.byte	0                               # DW_LLE_end_of_list
+.Ldebug_loc1:
+	.byte	1                               # DW_LLE_base_addressx
+	.byte	0                               #   base address index
+	.byte	4                               # DW_LLE_offset_pair
+	.uleb128 .Ltmp5-.Lfunc_begin0           #   starting offset
+	.uleb128 .Lfunc_end0-.Lfunc_begin0      #   ending offset
+	.byte	1                               # Loc expr size
+	.byte	86                              # DW_OP_reg6
+	.byte	0                               # DW_LLE_end_of_list
+.Ldebug_loc2:
+	.byte	1                               # DW_LLE_base_addressx
+	.byte	0                               #   base address index
+	.byte	4                               # DW_LLE_offset_pair
+	.uleb128 .Ltmp5-.Lfunc_begin0           #   starting offset
+	.uleb128 .Ltmp12-.Lfunc_begin0          #   ending offset
+	.byte	2                               # Loc expr size
+	.byte	48                              # DW_OP_lit0
+	.byte	159                             # DW_OP_stack_value
+	.byte	4                               # DW_LLE_offset_pair
+	.uleb128 .Ltmp12-.Lfunc_begin0          #   starting offset
+	.uleb128 .Ltmp14-.Lfunc_begin0          #   ending offset
+	.byte	2                               # Loc expr size
+	.byte	49                              # DW_OP_lit1
+	.byte	159                             # DW_OP_stack_value
+	.byte	4                               # DW_LLE_offset_pair
+	.uleb128 .Ltmp14-.Lfunc_begin0          #   starting offset
+	.uleb128 .Ltmp16-.Lfunc_begin0          #   ending offset
+	.byte	2                               # Loc expr size
+	.byte	50                              # DW_OP_lit2
+	.byte	159                             # DW_OP_stack_value
+	.byte	4                               # DW_LLE_offset_pair
+	.uleb128 .Ltmp16-.Lfunc_begin0          #   starting offset
+	.uleb128 .Ltmp18-.Lfunc_begin0          #   ending offset
+	.byte	2                               # Loc expr size
+	.byte	51                              # DW_OP_lit3
+	.byte	159                             # DW_OP_stack_value
+	.byte	4                               # DW_LLE_offset_pair
+	.uleb128 .Ltmp18-.Lfunc_begin0          #   starting offset
+	.uleb128 .Ltmp20-.Lfunc_begin0          #   ending offset
+	.byte	2                               # Loc expr size
+	.byte	52                              # DW_OP_lit4
+	.byte	159                             # DW_OP_stack_value
+	.byte	4                               # DW_LLE_offset_pair
+	.uleb128 .Ltmp20-.Lfunc_begin0          #   starting offset
+	.uleb128 .Ltmp22-.Lfunc_begin0          #   ending offset
+	.byte	2                               # Loc expr size
+	.byte	53                              # DW_OP_lit5
+	.byte	159                             # DW_OP_stack_value
+	.byte	4                               # DW_LLE_offset_pair
+	.uleb128 .Ltmp22-.Lfunc_begin0          #   starting offset
+	.uleb128 .Ltmp24-.Lfunc_begin0          #   ending offset
+	.byte	2                               # Loc expr size
+	.byte	54                              # DW_OP_lit6
+	.byte	159                             # DW_OP_stack_value
+	.byte	4                               # DW_LLE_offset_pair
+	.uleb128 .Ltmp24-.Lfunc_begin0          #   starting offset
+	.uleb128 .Ltmp26-.Lfunc_begin0          #   ending offset
+	.byte	2                               # Loc expr size
+	.byte	55                              # DW_OP_lit7
+	.byte	159                             # DW_OP_stack_value
+	.byte	4                               # DW_LLE_offset_pair
+	.uleb128 .Ltmp26-.Lfunc_begin0          #   starting offset
+	.uleb128 .Lfunc_end0-.Lfunc_begin0      #   ending offset
+	.byte	2                               # Loc expr size
+	.byte	56                              # DW_OP_lit8
+	.byte	159                             # DW_OP_stack_value
+	.byte	0                               # DW_LLE_end_of_list
+.Ldebug_loc3:
+	.byte	3                               # DW_LLE_startx_length
+	.byte	10                              #   start index
+	.uleb128 .Ltmp52-.Lfunc_begin1          #   length
+	.byte	1                               # Loc expr size
+	.byte	81                              # DW_OP_reg1
+	.byte	0                               # DW_LLE_end_of_list
+.Ldebug_loc4:
+	.byte	3                               # DW_LLE_startx_length
+	.byte	10                              #   start index
+	.uleb128 .Ltmp52-.Lfunc_begin1          #   length
+	.byte	1                               # Loc expr size
+	.byte	82                              # DW_OP_reg2
+	.byte	0                               # DW_LLE_end_of_list
+.Ldebug_loc5:
+	.byte	3                               # DW_LLE_startx_length
+	.byte	10                              #   start index
+	.uleb128 .Ltmp36-.Lfunc_begin1          #   length
+	.byte	1                               # Loc expr size
+	.byte	83                              # DW_OP_reg3
+	.byte	0                               # DW_LLE_end_of_list
+.Ldebug_loc6:
+	.byte	1                               # DW_LLE_base_addressx
+	.byte	10                              #   base address index
+	.byte	4                               # DW_LLE_offset_pair
+	.uleb128 .Lfunc_begin1-.Lfunc_begin1    #   starting offset
+	.uleb128 .Ltmp38-.Lfunc_begin1          #   ending offset
+	.byte	2                               # Loc expr size
+	.byte	48                              # DW_OP_lit0
+	.byte	159                             # DW_OP_stack_value
+	.byte	4                               # DW_LLE_offset_pair
+	.uleb128 .Ltmp38-.Lfunc_begin1          #   starting offset
+	.uleb128 .Ltmp50-.Lfunc_begin1          #   ending offset
+	.byte	1                               # Loc expr size
+	.byte	84                              # DW_OP_reg4
+	.byte	0                               # DW_LLE_end_of_list
+.Ldebug_list_header_end0:
+	.section	.debug_abbrev,"",@progbits
+	.byte	1                               # Abbreviation Code
+	.byte	17                              # DW_TAG_compile_unit
+	.byte	1                               # DW_CHILDREN_yes
+	.byte	37                              # DW_AT_producer
+	.byte	37                              # DW_FORM_strx1
+	.byte	19                              # DW_AT_language
+	.byte	5                               # DW_FORM_data2
+	.byte	3                               # DW_AT_name
+	.byte	37                              # DW_FORM_strx1
+	.byte	114                             # DW_AT_str_offsets_base
+	.byte	23                              # DW_FORM_sec_offset
+	.byte	16                              # DW_AT_stmt_list
+	.byte	23                              # DW_FORM_sec_offset
+	.byte	27                              # DW_AT_comp_dir
+	.byte	37                              # DW_FORM_strx1
+	.byte	17                              # DW_AT_low_pc
+	.byte	1                               # DW_FORM_addr
+	.byte	85                              # DW_AT_ranges
+	.byte	35                              # DW_FORM_rnglistx
+	.byte	115                             # DW_AT_addr_base
+	.byte	23                              # DW_FORM_sec_offset
+	.byte	116                             # DW_AT_rnglists_base
+	.byte	23                              # DW_FORM_sec_offset
+	.ascii	"\214\001"                      # DW_AT_loclists_base
+	.byte	23                              # DW_FORM_sec_offset
+	.byte	0                               # EOM(1)
+	.byte	0                               # EOM(2)
+	.byte	2                               # Abbreviation Code
+	.byte	46                              # DW_TAG_subprogram
+	.byte	1                               # DW_CHILDREN_yes
+	.byte	17                              # DW_AT_low_pc
+	.byte	27                              # DW_FORM_addrx
+	.byte	18                              # DW_AT_high_pc
+	.byte	6                               # DW_FORM_data4
+	.byte	64                              # DW_AT_frame_base
+	.byte	24                              # DW_FORM_exprloc
+	.byte	122                             # DW_AT_call_all_calls
+	.byte	25                              # DW_FORM_flag_present
+	.byte	3                               # DW_AT_name
+	.byte	37                              # DW_FORM_strx1
+	.byte	58                              # DW_AT_decl_file
+	.byte	11                              # DW_FORM_data1
+	.byte	59                              # DW_AT_decl_line
+	.byte	11                              # DW_FORM_data1
+	.byte	39                              # DW_AT_prototyped
+	.byte	25                              # DW_FORM_flag_present
+	.byte	73                              # DW_AT_type
+	.byte	19                              # DW_FORM_ref4
+	.byte	63                              # DW_AT_external
+	.byte	25                              # DW_FORM_flag_present
+	.byte	0                               # EOM(1)
+	.byte	0                               # EOM(2)
+	.byte	3                               # Abbreviation Code
+	.byte	5                               # DW_TAG_formal_parameter
+	.byte	0                               # DW_CHILDREN_no
+	.byte	2                               # DW_AT_location
+	.byte	34                              # DW_FORM_loclistx
+	.byte	3                               # DW_AT_name
+	.byte	37                              # DW_FORM_strx1
+	.byte	58                              # DW_AT_decl_file
+	.byte	11                              # DW_FORM_data1
+	.byte	59                              # DW_AT_decl_line
+	.byte	11                              # DW_FORM_data1
+	.byte	73                              # DW_AT_type
+	.byte	19                              # DW_FORM_ref4
+	.byte	0                               # EOM(1)
+	.byte	0                               # EOM(2)
+	.byte	4                               # Abbreviation Code
+	.byte	52                              # DW_TAG_variable
+	.byte	0                               # DW_CHILDREN_no
+	.byte	2                               # DW_AT_location
+	.byte	24                              # DW_FORM_exprloc
+	.byte	3                               # DW_AT_name
+	.byte	37                              # DW_FORM_strx1
+	.byte	58                              # DW_AT_decl_file
+	.byte	11                              # DW_FORM_data1
+	.byte	59                              # DW_AT_decl_line
+	.byte	11                              # DW_FORM_data1
+	.byte	73                              # DW_AT_type
+	.byte	19                              # DW_FORM_ref4
+	.byte	0                               # EOM(1)
+	.byte	0                               # EOM(2)
+	.byte	5                               # Abbreviation Code
+	.byte	52                              # DW_TAG_variable
+	.byte	0                               # DW_CHILDREN_no
+	.byte	2                               # DW_AT_location
+	.byte	34                              # DW_FORM_loclistx
+	.byte	3                               # DW_AT_name
+	.byte	37                              # DW_FORM_strx1
+	.byte	58                              # DW_AT_decl_file
+	.byte	11                              # DW_FORM_data1
+	.byte	59                              # DW_AT_decl_line
+	.byte	11                              # DW_FORM_data1
+	.byte	73                              # DW_AT_type
+	.byte	19                              # DW_FORM_ref4
+	.byte	0                               # EOM(1)
+	.byte	0                               # EOM(2)
+	.byte	6                               # Abbreviation Code
+	.byte	11                              # DW_TAG_lexical_block
+	.byte	1                               # DW_CHILDREN_yes
+	.byte	17                              # DW_AT_low_pc
+	.byte	27                              # DW_FORM_addrx
+	.byte	18                              # DW_AT_high_pc
+	.byte	6                               # DW_FORM_data4
+	.byte	0                               # EOM(1)
+	.byte	0                               # EOM(2)
+	.byte	7                               # Abbreviation Code
+	.byte	72                              # DW_TAG_call_site
+	.byte	0                               # DW_CHILDREN_no
+	.byte	127                             # DW_AT_call_origin
+	.byte	19                              # DW_FORM_ref4
+	.byte	125                             # DW_AT_call_return_pc
+	.byte	27                              # DW_FORM_addrx
+	.byte	0                               # EOM(1)
+	.byte	0                               # EOM(2)
+	.byte	8                               # Abbreviation Code
+	.byte	46                              # DW_TAG_subprogram
+	.byte	1                               # DW_CHILDREN_yes
+	.byte	17                              # DW_AT_low_pc
+	.byte	27                              # DW_FORM_addrx
+	.byte	18                              # DW_AT_high_pc
+	.byte	6                               # DW_FORM_data4
+	.byte	64                              # DW_AT_frame_base
+	.byte	24                              # DW_FORM_exprloc
+	.byte	122                             # DW_AT_call_all_calls
+	.byte	25                              # DW_FORM_flag_present
+	.byte	3                               # DW_AT_name
+	.byte	37                              # DW_FORM_strx1
+	.byte	58                              # DW_AT_decl_file
+	.byte	11                              # DW_FORM_data1
+	.byte	59                              # DW_AT_decl_line
+	.byte	11                              # DW_FORM_data1
+	.byte	39                              # DW_AT_prototyped
+	.byte	25                              # DW_FORM_flag_present
+	.byte	0                               # EOM(1)
+	.byte	0                               # EOM(2)
+	.byte	9                               # Abbreviation Code
+	.byte	22                              # DW_TAG_typedef
+	.byte	0                               # DW_CHILDREN_no
+	.byte	73                              # DW_AT_type
+	.byte	19                              # DW_FORM_ref4
+	.byte	3                               # DW_AT_name
+	.byte	37                              # DW_FORM_strx1
+	.byte	58                              # DW_AT_decl_file
+	.byte	11                              # DW_FORM_data1
+	.byte	59                              # DW_AT_decl_line
+	.byte	11                              # DW_FORM_data1
+	.byte	0                               # EOM(1)
+	.byte	0                               # EOM(2)
+	.byte	10                              # Abbreviation Code
+	.byte	36                              # DW_TAG_base_type
+	.byte	0                               # DW_CHILDREN_no
+	.byte	3                               # DW_AT_name
+	.byte	37                              # DW_FORM_strx1
+	.byte	62                              # DW_AT_encoding
+	.byte	11                              # DW_FORM_data1
+	.byte	11                              # DW_AT_byte_size
+	.byte	11                              # DW_FORM_data1
+	.byte	0                               # EOM(1)
+	.byte	0                               # EOM(2)
+	.byte	11                              # Abbreviation Code
+	.byte	1                               # DW_TAG_array_type
+	.byte	1                               # DW_CHILDREN_yes
+	.byte	73                              # DW_AT_type
+	.byte	19                              # DW_FORM_ref4
+	.byte	0                               # EOM(1)
+	.byte	0                               # EOM(2)
+	.byte	12                              # Abbreviation Code
+	.byte	33                              # DW_TAG_subrange_type
+	.byte	0                               # DW_CHILDREN_no
+	.byte	73                              # DW_AT_type
+	.byte	19                              # DW_FORM_ref4
+	.byte	55                              # DW_AT_count
+	.byte	11                              # DW_FORM_data1
+	.byte	0                               # EOM(1)
+	.byte	0                               # EOM(2)
+	.byte	13                              # Abbreviation Code
+	.byte	36                              # DW_TAG_base_type
+	.byte	0                               # DW_CHILDREN_no
+	.byte	3                               # DW_AT_name
+	.byte	37                              # DW_FORM_strx1
+	.byte	11                              # DW_AT_byte_size
+	.byte	11                              # DW_FORM_data1
+	.byte	62                              # DW_AT_encoding
+	.byte	11                              # DW_FORM_data1
+	.byte	0                               # EOM(1)
+	.byte	0                               # EOM(2)
+	.byte	14                              # Abbreviation Code
+	.byte	15                              # DW_TAG_pointer_type
+	.byte	0                               # DW_CHILDREN_no
+	.byte	73                              # DW_AT_type
+	.byte	19                              # DW_FORM_ref4
+	.byte	0                               # EOM(1)
+	.byte	0                               # EOM(2)
+	.byte	15                              # Abbreviation Code
+	.byte	38                              # DW_TAG_const_type
+	.byte	0                               # DW_CHILDREN_no
+	.byte	73                              # DW_AT_type
+	.byte	19                              # DW_FORM_ref4
+	.byte	0                               # EOM(1)
+	.byte	0                               # EOM(2)
+	.byte	16                              # Abbreviation Code
+	.byte	55                              # DW_TAG_restrict_type
+	.byte	0                               # DW_CHILDREN_no
+	.byte	73                              # DW_AT_type
+	.byte	19                              # DW_FORM_ref4
+	.byte	0                               # EOM(1)
+	.byte	0                               # EOM(2)
+	.byte	0                               # EOM(3)
+	.section	.debug_info,"",@progbits
+.Lcu_begin0:
+	.long	.Ldebug_info_end0-.Ldebug_info_start0 # Length of Unit
+.Ldebug_info_start0:
+	.short	5                               # DWARF version number
+	.byte	1                               # DWARF Unit Type
+	.byte	8                               # Address Size (in bytes)
+	.long	.debug_abbrev                   # Offset Into Abbrev. Section
+	.byte	1                               # Abbrev [1] 0xc:0x114 DW_TAG_compile_unit
+	.byte	0                               # DW_AT_producer
+	.short	29                              # DW_AT_language
+	.byte	1                               # DW_AT_name
+	.long	.Lstr_offsets_base0             # DW_AT_str_offsets_base
+	.long	.Lline_table_start0             # DW_AT_stmt_list
+	.byte	2                               # DW_AT_comp_dir
+	.quad	0                               # DW_AT_low_pc
+	.byte	0                               # DW_AT_ranges
+	.long	.Laddr_table_base0              # DW_AT_addr_base
+	.long	.Lrnglists_table_base0          # DW_AT_rnglists_base
+	.long	.Lloclists_table_base0          # DW_AT_loclists_base
+	.byte	2                               # Abbrev [2] 0x2f:0x78 DW_TAG_subprogram
+	.byte	0                               # DW_AT_low_pc
+	.long	.Lfunc_end0-.Lfunc_begin0       # DW_AT_high_pc
+	.byte	1                               # DW_AT_frame_base
+	.byte	90
+                                        # DW_AT_call_all_calls
+	.byte	3                               # DW_AT_name
+	.byte	1                               # DW_AT_decl_file
+	.byte	21                              # DW_AT_decl_line
+                                        # DW_AT_prototyped
+	.long	239                             # DW_AT_type
+                                        # DW_AT_external
+	.byte	3                               # Abbrev [3] 0x3e:0x9 DW_TAG_formal_parameter
+	.byte	0                               # DW_AT_location
+	.byte	10                              # DW_AT_name
+	.byte	1                               # DW_AT_decl_file
+	.byte	21                              # DW_AT_decl_line
+	.long	267                             # DW_AT_type
+	.byte	4                               # Abbrev [4] 0x47:0xb DW_TAG_variable
+	.byte	2                               # DW_AT_location
+	.byte	145
+	.byte	32
+	.byte	7                               # DW_AT_name
+	.byte	1                               # DW_AT_decl_file
+	.byte	23                              # DW_AT_decl_line
+	.long	251                             # DW_AT_type
+	.byte	4                               # Abbrev [4] 0x52:0xb DW_TAG_variable
+	.byte	2                               # DW_AT_location
+	.byte	145
+	.byte	0
+	.byte	9                               # DW_AT_name
+	.byte	1                               # DW_AT_decl_file
+	.byte	24                              # DW_AT_decl_line
+	.long	251                             # DW_AT_type
+	.byte	5                               # Abbrev [5] 0x5d:0x9 DW_TAG_variable
+	.byte	1                               # DW_AT_location
+	.byte	11                              # DW_AT_name
+	.byte	1                               # DW_AT_decl_file
+	.byte	25                              # DW_AT_decl_line
+	.long	272                             # DW_AT_type
+	.byte	6                               # Abbrev [6] 0x66:0x10 DW_TAG_lexical_block
+	.byte	1                               # DW_AT_low_pc
+	.long	.Ltmp26-.Ltmp7                  # DW_AT_high_pc
+	.byte	5                               # Abbrev [5] 0x6c:0x9 DW_TAG_variable
+	.byte	2                               # DW_AT_location
+	.byte	12                              # DW_AT_name
+	.byte	1                               # DW_AT_decl_file
+	.byte	27                              # DW_AT_decl_line
+	.long	239                             # DW_AT_type
+	.byte	0                               # End Of Children Mark
+	.byte	7                               # Abbrev [7] 0x76:0x6 DW_TAG_call_site
+	.long	167                             # DW_AT_call_origin
+	.byte	2                               # DW_AT_call_return_pc
+	.byte	7                               # Abbrev [7] 0x7c:0x6 DW_TAG_call_site
+	.long	167                             # DW_AT_call_origin
+	.byte	3                               # DW_AT_call_return_pc
+	.byte	7                               # Abbrev [7] 0x82:0x6 DW_TAG_call_site
+	.long	167                             # DW_AT_call_origin
+	.byte	4                               # DW_AT_call_return_pc
+	.byte	7                               # Abbrev [7] 0x88:0x6 DW_TAG_call_site
+	.long	167                             # DW_AT_call_origin
+	.byte	5                               # DW_AT_call_return_pc
+	.byte	7                               # Abbrev [7] 0x8e:0x6 DW_TAG_call_site
+	.long	167                             # DW_AT_call_origin
+	.byte	6                               # DW_AT_call_return_pc
+	.byte	7                               # Abbrev [7] 0x94:0x6 DW_TAG_call_site
+	.long	167                             # DW_AT_call_origin
+	.byte	7                               # DW_AT_call_return_pc
+	.byte	7                               # Abbrev [7] 0x9a:0x6 DW_TAG_call_site
+	.long	167                             # DW_AT_call_origin
+	.byte	8                               # DW_AT_call_return_pc
+	.byte	7                               # Abbrev [7] 0xa0:0x6 DW_TAG_call_site
+	.long	167                             # DW_AT_call_origin
+	.byte	9                               # DW_AT_call_return_pc
+	.byte	0                               # End Of Children Mark
+	.byte	8                               # Abbrev [8] 0xa7:0x48 DW_TAG_subprogram
+	.byte	10                              # DW_AT_low_pc
+	.long	.Lfunc_end1-.Lfunc_begin1       # DW_AT_high_pc
+	.byte	1                               # DW_AT_frame_base
+	.byte	90
+                                        # DW_AT_call_all_calls
+	.byte	6                               # DW_AT_name
+	.byte	1                               # DW_AT_decl_file
+	.byte	10                              # DW_AT_decl_line
+                                        # DW_AT_prototyped
+	.byte	3                               # Abbrev [3] 0xb2:0x9 DW_TAG_formal_parameter
+	.byte	3                               # DW_AT_location
+	.byte	7                               # DW_AT_name
+	.byte	1                               # DW_AT_decl_file
+	.byte	10                              # DW_AT_decl_line
+	.long	277                             # DW_AT_type
+	.byte	3                               # Abbrev [3] 0xbb:0x9 DW_TAG_formal_parameter
+	.byte	4                               # DW_AT_location
+	.byte	9                               # DW_AT_name
+	.byte	1                               # DW_AT_decl_file
+	.byte	10                              # DW_AT_decl_line
+	.long	277                             # DW_AT_type
+	.byte	3                               # Abbrev [3] 0xc4:0x9 DW_TAG_formal_parameter
+	.byte	5                               # DW_AT_location
+	.byte	11                              # DW_AT_name
+	.byte	1                               # DW_AT_decl_file
+	.byte	10                              # DW_AT_decl_line
+	.long	239                             # DW_AT_type
+	.byte	6                               # Abbrev [6] 0xcd:0x10 DW_TAG_lexical_block
+	.byte	10                              # DW_AT_low_pc
+	.long	.Ltmp50-.Lfunc_begin1           # DW_AT_high_pc
+	.byte	5                               # Abbrev [5] 0xd3:0x9 DW_TAG_variable
+	.byte	6                               # DW_AT_location
+	.byte	13                              # DW_AT_name
+	.byte	1                               # DW_AT_decl_file
+	.byte	12                              # DW_AT_decl_line
+	.long	239                             # DW_AT_type
+	.byte	0                               # End Of Children Mark
+	.byte	6                               # Abbrev [6] 0xdd:0x11 DW_TAG_lexical_block
+	.byte	11                              # DW_AT_low_pc
+	.long	.Ltmp64-.Ltmp52                 # DW_AT_high_pc
+	.byte	4                               # Abbrev [4] 0xe3:0xa DW_TAG_variable
+	.byte	1                               # DW_AT_location
+	.byte	84
+	.byte	13                              # DW_AT_name
+	.byte	1                               # DW_AT_decl_file
+	.byte	15                              # DW_AT_decl_line
+	.long	239                             # DW_AT_type
+	.byte	0                               # End Of Children Mark
+	.byte	0                               # End Of Children Mark
+	.byte	9                               # Abbrev [9] 0xef:0x8 DW_TAG_typedef
+	.long	247                             # DW_AT_type
+	.byte	5                               # DW_AT_name
+	.byte	1                               # DW_AT_decl_file
+	.byte	3                               # DW_AT_decl_line
+	.byte	10                              # Abbrev [10] 0xf7:0x4 DW_TAG_base_type
+	.byte	4                               # DW_AT_name
+	.byte	7                               # DW_AT_encoding
+	.byte	4                               # DW_AT_byte_size
+	.byte	11                              # Abbrev [11] 0xfb:0xc DW_TAG_array_type
+	.long	239                             # DW_AT_type
+	.byte	12                              # Abbrev [12] 0x100:0x6 DW_TAG_subrange_type
+	.long	263                             # DW_AT_type
+	.byte	8                               # DW_AT_count
+	.byte	0                               # End Of Children Mark
+	.byte	13                              # Abbrev [13] 0x107:0x4 DW_TAG_base_type
+	.byte	8                               # DW_AT_name
+	.byte	8                               # DW_AT_byte_size
+	.byte	7                               # DW_AT_encoding
+	.byte	14                              # Abbrev [14] 0x10b:0x5 DW_TAG_pointer_type
+	.long	272                             # DW_AT_type
+	.byte	15                              # Abbrev [15] 0x110:0x5 DW_TAG_const_type
+	.long	239                             # DW_AT_type
+	.byte	16                              # Abbrev [16] 0x115:0x5 DW_TAG_restrict_type
+	.long	282                             # DW_AT_type
+	.byte	14                              # Abbrev [14] 0x11a:0x5 DW_TAG_pointer_type
+	.long	239                             # DW_AT_type
+	.byte	0                               # End Of Children Mark
+.Ldebug_info_end0:
+	.section	.debug_rnglists,"",@progbits
+	.long	.Ldebug_list_header_end1-.Ldebug_list_header_start1 # Length
+.Ldebug_list_header_start1:
+	.short	5                               # Version
+	.byte	8                               # Address size
+	.byte	0                               # Segment selector size
+	.long	1                               # Offset entry count
+.Lrnglists_table_base0:
+	.long	.Ldebug_ranges0-.Lrnglists_table_base0
+.Ldebug_ranges0:
+	.byte	3                               # DW_RLE_startx_length
+	.byte	0                               #   start index
+	.uleb128 .Lfunc_end0-.Lfunc_begin0      #   length
+	.byte	3                               # DW_RLE_startx_length
+	.byte	10                              #   start index
+	.uleb128 .Lfunc_end1-.Lfunc_begin1      #   length
+	.byte	0                               # DW_RLE_end_of_list
+.Ldebug_list_header_end1:
+	.section	.debug_str_offsets,"",@progbits
+	.long	60                              # Length of String Offsets Set
+	.short	5
+	.short	0
+.Lstr_offsets_base0:
+	.section	.debug_str,"MS",@progbits,1
+.Linfo_string0:
+	.asciz	"Homebrew clang version 22.1.8" # string offset=0
+.Linfo_string1:
+	.asciz	"/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/cases/fusion_08.bpf.c" # string offset=30
+.Linfo_string2:
+	.asciz	"/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment" # string offset=124
+.Linfo_string3:
+	.asciz	"entry"                         # string offset=196
+.Linfo_string4:
+	.asciz	"unsigned int"                  # string offset=202
+.Linfo_string5:
+	.asciz	"u32"                           # string offset=215
+.Linfo_string6:
+	.asciz	"kernel"                        # string offset=219
+.Linfo_string7:
+	.asciz	"a"                             # string offset=226
+.Linfo_string8:
+	.asciz	"__ARRAY_SIZE_TYPE__"           # string offset=228
+.Linfo_string9:
+	.asciz	"b"                             # string offset=248
+.Linfo_string10:
+	.asciz	"ctx"                           # string offset=250
+.Linfo_string11:
+	.asciz	"n"                             # string offset=254
+.Linfo_string12:
+	.asciz	"r"                             # string offset=256
+.Linfo_string13:
+	.asciz	"i"                             # string offset=258
+	.section	.debug_str_offsets,"",@progbits
+	.long	.Linfo_string0
+	.long	.Linfo_string1
+	.long	.Linfo_string2
+	.long	.Linfo_string3
+	.long	.Linfo_string4
+	.long	.Linfo_string5
+	.long	.Linfo_string6
+	.long	.Linfo_string7
+	.long	.Linfo_string8
+	.long	.Linfo_string9
+	.long	.Linfo_string10
+	.long	.Linfo_string11
+	.long	.Linfo_string12
+	.long	.Linfo_string13
+	.section	.debug_addr,"",@progbits
+	.long	.Ldebug_addr_end0-.Ldebug_addr_start0 # Length of contribution
+.Ldebug_addr_start0:
+	.short	5                               # DWARF version number
+	.byte	8                               # Address size
+	.byte	0                               # Segment selector size
+.Laddr_table_base0:
+	.quad	.Lfunc_begin0
+	.quad	.Ltmp7
+	.quad	.Ltmp12
+	.quad	.Ltmp14
+	.quad	.Ltmp16
+	.quad	.Ltmp18
+	.quad	.Ltmp20
+	.quad	.Ltmp22
+	.quad	.Ltmp24
+	.quad	.Ltmp26
+	.quad	.Lfunc_begin1
+	.quad	.Ltmp52
+.Ldebug_addr_end0:
+	.section	.BTF,"",@progbits
+	.short	60319                           # 0xeb9f
+	.byte	1
+	.byte	0
+	.long	24
+	.long	0
+	.long	156
+	.long	156
+	.long	365
+	.long	0                               # BTF_KIND_PTR(id = 1)
+	.long	33554432                        # 0x2000000
+	.long	2
+	.long	0                               # BTF_KIND_CONST(id = 2)
+	.long	167772160                       # 0xa000000
+	.long	3
+	.long	1                               # BTF_KIND_TYPEDEF(id = 3)
+	.long	134217728                       # 0x8000000
+	.long	4
+	.long	5                               # BTF_KIND_INT(id = 4)
+	.long	16777216                        # 0x1000000
+	.long	4
+	.long	32                              # 0x20
+	.long	0                               # BTF_KIND_FUNC_PROTO(id = 5)
+	.long	218103809                       # 0xd000001
+	.long	3
+	.long	18
+	.long	1
+	.long	22                              # BTF_KIND_FUNC(id = 6)
+	.long	201326593                       # 0xc000001
+	.long	5
+	.long	0                               # BTF_KIND_RESTRICT(id = 7)
+	.long	184549376                       # 0xb000000
+	.long	8
+	.long	0                               # BTF_KIND_PTR(id = 8)
+	.long	33554432                        # 0x2000000
+	.long	3
+	.long	0                               # BTF_KIND_FUNC_PROTO(id = 9)
+	.long	218103811                       # 0xd000003
+	.long	0
+	.long	266
+	.long	7
+	.long	268
+	.long	7
+	.long	270
+	.long	3
+	.long	272                             # BTF_KIND_FUNC(id = 10)
+	.long	201326592                       # 0xc000000
+	.long	9
+	.byte	0                               # string offset=0
+	.ascii	"u32"                           # string offset=1
+	.byte	0
+	.ascii	"unsigned int"                  # string offset=5
+	.byte	0
+	.ascii	"ctx"                           # string offset=18
+	.byte	0
+	.ascii	"entry"                         # string offset=22
+	.byte	0
+	.ascii	"kprobe/test"                   # string offset=28
+	.byte	0
+	.ascii	"/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/cases/fusion_08.bpf.c" # string offset=40
+	.byte	0
+	.ascii	"u32 entry(const u32 *ctx)"     # string offset=134
+	.byte	0
+	.ascii	"    u32 a[8] = {0};"           # string offset=160
+	.byte	0
+	.ascii	"    u32 b[8] = {0};"           # string offset=180
+	.byte	0
+	.ascii	"    const u32 n = *ctx;"       # string offset=200
+	.byte	0
+	.ascii	"        kernel(a, b, n);"      # string offset=224
+	.byte	0
+	.ascii	"    return b[0];"              # string offset=249
+	.byte	0
+	.byte	97                              # string offset=266
+	.byte	0
+	.byte	98                              # string offset=268
+	.byte	0
+	.byte	110                             # string offset=270
+	.byte	0
+	.ascii	"kernel"                        # string offset=272
+	.byte	0
+	.ascii	".text"                         # string offset=279
+	.byte	0
+	.ascii	"    for (u32 i = 0; i < n; i++) {" # string offset=285
+	.byte	0
+	.ascii	"        a[i] += 1;"            # string offset=319
+	.byte	0
+	.ascii	"        b[i] = a[i] * 3;"      # string offset=338
+	.byte	0
+	.byte	125                             # string offset=363
+	.byte	0
+	.section	.BTF.ext,"",@progbits
+	.short	60319                           # 0xeb9f
+	.byte	1
+	.byte	0
+	.long	32
+	.long	0
+	.long	36
+	.long	36
+	.long	372
+	.long	408
+	.long	0
+	.long	8                               # FuncInfo
+	.long	28                              # FuncInfo section string offset=28
+	.long	1
+	.long	.Lfunc_begin0
+	.long	6
+	.long	279                             # FuncInfo section string offset=279
+	.long	1
+	.long	.Lfunc_begin1
+	.long	10
+	.long	16                              # LineInfo
+	.long	28                              # LineInfo section string offset=28
+	.long	7
+	.long	.Lfunc_begin0
+	.long	40
+	.long	134
+	.long	21504                           # Line 21 Col 0
+	.long	.Ltmp2
+	.long	40
+	.long	160
+	.long	23561                           # Line 23 Col 9
+	.long	.Ltmp3
+	.long	40
+	.long	180
+	.long	24585                           # Line 24 Col 9
+	.long	.Ltmp4
+	.long	40
+	.long	200
+	.long	25619                           # Line 25 Col 19
+	.long	.Ltmp9
+	.long	40
+	.long	224
+	.long	28681                           # Line 28 Col 9
+	.long	.Ltmp28
+	.long	40
+	.long	249
+	.long	30732                           # Line 30 Col 12
+	.long	.Ltmp29
+	.long	40
+	.long	249
+	.long	30725                           # Line 30 Col 5
+	.long	279                             # LineInfo section string offset=279
+	.long	15
+	.long	.Ltmp32
+	.long	40
+	.long	285
+	.long	12293                           # Line 12 Col 5
+	.long	.Ltmp35
+	.long	40
+	.long	285
+	.long	12293                           # Line 12 Col 5
+	.long	.Ltmp40
+	.long	40
+	.long	319
+	.long	13326                           # Line 13 Col 14
+	.long	.Ltmp41
+	.long	40
+	.long	319
+	.long	13326                           # Line 13 Col 14
+	.long	.Ltmp42
+	.long	40
+	.long	319
+	.long	13326                           # Line 13 Col 14
+	.long	.Ltmp45
+	.long	40
+	.long	285
+	.long	12311                           # Line 12 Col 23
+	.long	.Ltmp46
+	.long	40
+	.long	285
+	.long	12317                           # Line 12 Col 29
+	.long	.Ltmp49
+	.long	40
+	.long	285
+	.long	12293                           # Line 12 Col 5
+	.long	.Ltmp54
+	.long	40
+	.long	338
+	.long	16400                           # Line 16 Col 16
+	.long	.Ltmp55
+	.long	40
+	.long	338
+	.long	16405                           # Line 16 Col 21
+	.long	.Ltmp56
+	.long	40
+	.long	338
+	.long	16398                           # Line 16 Col 14
+	.long	.Ltmp59
+	.long	40
+	.long	285
+	.long	15383                           # Line 15 Col 23
+	.long	.Ltmp60
+	.long	40
+	.long	285
+	.long	15389                           # Line 15 Col 29
+	.long	.Ltmp63
+	.long	40
+	.long	285
+	.long	15365                           # Line 15 Col 5
+	.long	.Ltmp66
+	.long	40
+	.long	363
+	.long	18433                           # Line 18 Col 1
+	.addrsig
+	.section	.debug_line,"",@progbits
+.Lline_table_start0:
+
+--- optimized assembly (-O2) ---
+	.file	"fusion_08_SOURCE_OPT.bpf.c"
+	.section	"kprobe/test","ax",@progbits
+	.globl	entry                           # -- Begin function entry
+	.p2align	3
+	.type	entry,@function
+entry:                                  # @entry
+.Lfunc_begin0:
+	.file	0 "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment" "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/source_level_opt/generated/fusion_08_SOURCE_OPT.bpf.c" md5 0xa3dfb80c9979f27e8ea1e8cba0de226b
+	.file	1 "source_level_opt/generated" "fusion_08_SOURCE_OPT.bpf.c" md5 0xa3dfb80c9979f27e8ea1e8cba0de226b
+	.loc	1 20 0                          # source_level_opt/generated/fusion_08_SOURCE_OPT.bpf.c:20:0
+	.cfi_sections .debug_frame
+	.cfi_startproc
+# %bb.0:
+	#DEBUG_VALUE: entry:ctx <- $r1
+	r2 = 0
+.Ltmp0:
+	.loc	1 21 9 prologue_end             # source_level_opt/generated/fusion_08_SOURCE_OPT.bpf.c:21:9
+.Ltmp1:
+.Ltmp2:
+	*(u64 *)(r10 - 8) = r2
+	*(u64 *)(r10 - 16) = r2
+	*(u64 *)(r10 - 24) = r2
+	*(u64 *)(r10 - 32) = r2
+	.loc	1 22 9                          # source_level_opt/generated/fusion_08_SOURCE_OPT.bpf.c:22:9
+.Ltmp3:
+	*(u64 *)(r10 - 40) = r2
+	*(u64 *)(r10 - 48) = r2
+	*(u64 *)(r10 - 56) = r2
+	*(u64 *)(r10 - 64) = r2
+	.loc	1 23 19                         # source_level_opt/generated/fusion_08_SOURCE_OPT.bpf.c:23:19
+.Ltmp4:
+	w6 = *(u32 *)(r1 + 0)
+.Ltmp5:
+.Ltmp6:
+	#DEBUG_VALUE: entry:n <- $w6
+	#DEBUG_VALUE: r <- 0
+	.loc	1 0 19 is_stmt 0                # source_level_opt/generated/fusion_08_SOURCE_OPT.bpf.c:0:19
+	r7 = r10
+	r7 += -32
+	r8 = r10
+	r8 += -64
+.Ltmp7:
+	.loc	1 26 9 is_stmt 1                # source_level_opt/generated/fusion_08_SOURCE_OPT.bpf.c:26:9
+.Ltmp8:
+.Ltmp9:
+	r1 = r7
+.Ltmp10:
+.Ltmp11:
+	r2 = r8
+	w3 = w6
+	call kernel
+.Ltmp12:
+.Ltmp13:
+	#DEBUG_VALUE: r <- 1
+	.loc	1 26 9                          # source_level_opt/generated/fusion_08_SOURCE_OPT.bpf.c:26:9
+	r1 = r7
+	r2 = r8
+	w3 = w6
+	call kernel
+.Ltmp14:
+.Ltmp15:
+	#DEBUG_VALUE: r <- 2
+	.loc	1 26 9                          # source_level_opt/generated/fusion_08_SOURCE_OPT.bpf.c:26:9
+	r1 = r7
+	r2 = r8
+	w3 = w6
+	call kernel
+.Ltmp16:
+.Ltmp17:
+	#DEBUG_VALUE: r <- 3
+	.loc	1 26 9                          # source_level_opt/generated/fusion_08_SOURCE_OPT.bpf.c:26:9
+	r1 = r7
+	r2 = r8
+	w3 = w6
+	call kernel
+.Ltmp18:
+.Ltmp19:
+	#DEBUG_VALUE: r <- 4
+	.loc	1 26 9                          # source_level_opt/generated/fusion_08_SOURCE_OPT.bpf.c:26:9
+	r1 = r7
+	r2 = r8
+	w3 = w6
+	call kernel
+.Ltmp20:
+.Ltmp21:
+	#DEBUG_VALUE: r <- 5
+	.loc	1 26 9                          # source_level_opt/generated/fusion_08_SOURCE_OPT.bpf.c:26:9
+	r1 = r7
+	r2 = r8
+	w3 = w6
+	call kernel
+.Ltmp22:
+.Ltmp23:
+	#DEBUG_VALUE: r <- 6
+	.loc	1 26 9                          # source_level_opt/generated/fusion_08_SOURCE_OPT.bpf.c:26:9
+	r1 = r7
+	r2 = r8
+	w3 = w6
+	call kernel
+.Ltmp24:
+.Ltmp25:
+	#DEBUG_VALUE: r <- 7
+	.loc	1 26 9                          # source_level_opt/generated/fusion_08_SOURCE_OPT.bpf.c:26:9
+	r1 = r7
+	r2 = r8
+	w3 = w6
+	call kernel
+.Ltmp26:
+.Ltmp27:
+	#DEBUG_VALUE: r <- 8
+	.loc	1 28 12                         # source_level_opt/generated/fusion_08_SOURCE_OPT.bpf.c:28:12
+.Ltmp28:
+	w0 = *(u32 *)(r10 - 64)
+	.loc	1 28 5 is_stmt 0                # source_level_opt/generated/fusion_08_SOURCE_OPT.bpf.c:28:5
+.Ltmp29:
+	exit
+.Ltmp30:
+.Ltmp31:
+.Lfunc_end0:
+	.size	entry, .Lfunc_end0-entry
+	.cfi_endproc
+                                        # -- End function
+	.text
+	.p2align	3                               # -- Begin function kernel
+	.type	kernel,@function
+kernel:                                 # @kernel
+.Lfunc_begin1:
+	.cfi_startproc
+# %bb.0:
+	#DEBUG_VALUE: kernel:a <- $r1
+	#DEBUG_VALUE: kernel:b <- $r2
+	#DEBUG_VALUE: kernel:n <- $w3
+	#DEBUG_VALUE: i <- 0
+	.loc	1 12 5 prologue_end is_stmt 1   # source_level_opt/generated/fusion_08_SOURCE_OPT.bpf.c:12:5
+.Ltmp32:
+	if w3 == 0 goto LBB1_3
+.Ltmp33:
+.Ltmp34:
+# %bb.1:
+	#DEBUG_VALUE: i <- 0
+	#DEBUG_VALUE: kernel:n <- $w3
+	#DEBUG_VALUE: kernel:b <- $r2
+	#DEBUG_VALUE: kernel:a <- $r1
+	.loc	1 0 5 is_stmt 0                 # source_level_opt/generated/fusion_08_SOURCE_OPT.bpf.c:0:5
+	r4 = 0
+	.loc	1 12 5                          # source_level_opt/generated/fusion_08_SOURCE_OPT.bpf.c:12:5
+.Ltmp35:
+	r3 = w3
+.Ltmp36:
+.Ltmp37:
+LBB1_2:                                 # =>This Inner Loop Header: Depth=1
+	#DEBUG_VALUE: i <- $r4
+	.loc	1 13 14 is_stmt 1               # source_level_opt/generated/fusion_08_SOURCE_OPT.bpf.c:13:14
+.Ltmp38:
+	w5 = *(u32 *)(r1 + 0)
+.Ltmp39:
+	w5 += 1
+.Ltmp40:
+	*(u32 *)(r1 + 0) = w5
+	.loc	1 14 21                         # source_level_opt/generated/fusion_08_SOURCE_OPT.bpf.c:14:21
+.Ltmp41:
+	w5 *= 3
+	.loc	1 14 14 is_stmt 0               # source_level_opt/generated/fusion_08_SOURCE_OPT.bpf.c:14:14
+.Ltmp42:
+	*(u32 *)(r2 + 0) = w5
+.Ltmp43:
+.Ltmp44:
+	.loc	1 12 23 is_stmt 1               # source_level_opt/generated/fusion_08_SOURCE_OPT.bpf.c:12:23
+.Ltmp45:
+	r2 += 4
+	r1 += 4
+	.loc	1 12 29                         # source_level_opt/generated/fusion_08_SOURCE_OPT.bpf.c:12:29
+.Ltmp46:
+	r4 += 1
+.Ltmp47:
+.Ltmp48:
+	#DEBUG_VALUE: i <- $r4
+	.loc	1 12 5                          # source_level_opt/generated/fusion_08_SOURCE_OPT.bpf.c:12:5
+.Ltmp49:
+	if r4 < r3 goto LBB1_2
+.Ltmp50:
+.Ltmp51:
+LBB1_3:
+	.loc	1 16 1                          # source_level_opt/generated/fusion_08_SOURCE_OPT.bpf.c:16:1
+.Ltmp52:
+	exit
+.Ltmp53:
+.Ltmp54:
+.Lfunc_end1:
+	.size	kernel, .Lfunc_end1-kernel
+	.cfi_endproc
+                                        # -- End function
+	.section	.debug_loclists,"",@progbits
+	.long	.Ldebug_list_header_end0-.Ldebug_list_header_start0 # Length
+.Ldebug_list_header_start0:
+	.short	5                               # Version
+	.byte	8                               # Address size
+	.byte	0                               # Segment selector size
+	.long	7                               # Offset entry count
+.Lloclists_table_base0:
+	.long	.Ldebug_loc0-.Lloclists_table_base0
+	.long	.Ldebug_loc1-.Lloclists_table_base0
+	.long	.Ldebug_loc2-.Lloclists_table_base0
+	.long	.Ldebug_loc3-.Lloclists_table_base0
+	.long	.Ldebug_loc4-.Lloclists_table_base0
+	.long	.Ldebug_loc5-.Lloclists_table_base0
+	.long	.Ldebug_loc6-.Lloclists_table_base0
+.Ldebug_loc0:
+	.byte	3                               # DW_LLE_startx_length
+	.byte	0                               #   start index
+	.uleb128 .Ltmp10-.Lfunc_begin0          #   length
+	.byte	1                               # Loc expr size
+	.byte	81                              # DW_OP_reg1
+	.byte	0                               # DW_LLE_end_of_list
+.Ldebug_loc1:
+	.byte	1                               # DW_LLE_base_addressx
+	.byte	0                               #   base address index
+	.byte	4                               # DW_LLE_offset_pair
+	.uleb128 .Ltmp5-.Lfunc_begin0           #   starting offset
+	.uleb128 .Lfunc_end0-.Lfunc_begin0      #   ending offset
+	.byte	1                               # Loc expr size
+	.byte	86                              # DW_OP_reg6
+	.byte	0                               # DW_LLE_end_of_list
+.Ldebug_loc2:
+	.byte	1                               # DW_LLE_base_addressx
+	.byte	0                               #   base address index
+	.byte	4                               # DW_LLE_offset_pair
+	.uleb128 .Ltmp5-.Lfunc_begin0           #   starting offset
+	.uleb128 .Ltmp12-.Lfunc_begin0          #   ending offset
+	.byte	2                               # Loc expr size
+	.byte	48                              # DW_OP_lit0
+	.byte	159                             # DW_OP_stack_value
+	.byte	4                               # DW_LLE_offset_pair
+	.uleb128 .Ltmp12-.Lfunc_begin0          #   starting offset
+	.uleb128 .Ltmp14-.Lfunc_begin0          #   ending offset
+	.byte	2                               # Loc expr size
+	.byte	49                              # DW_OP_lit1
+	.byte	159                             # DW_OP_stack_value
+	.byte	4                               # DW_LLE_offset_pair
+	.uleb128 .Ltmp14-.Lfunc_begin0          #   starting offset
+	.uleb128 .Ltmp16-.Lfunc_begin0          #   ending offset
+	.byte	2                               # Loc expr size
+	.byte	50                              # DW_OP_lit2
+	.byte	159                             # DW_OP_stack_value
+	.byte	4                               # DW_LLE_offset_pair
+	.uleb128 .Ltmp16-.Lfunc_begin0          #   starting offset
+	.uleb128 .Ltmp18-.Lfunc_begin0          #   ending offset
+	.byte	2                               # Loc expr size
+	.byte	51                              # DW_OP_lit3
+	.byte	159                             # DW_OP_stack_value
+	.byte	4                               # DW_LLE_offset_pair
+	.uleb128 .Ltmp18-.Lfunc_begin0          #   starting offset
+	.uleb128 .Ltmp20-.Lfunc_begin0          #   ending offset
+	.byte	2                               # Loc expr size
+	.byte	52                              # DW_OP_lit4
+	.byte	159                             # DW_OP_stack_value
+	.byte	4                               # DW_LLE_offset_pair
+	.uleb128 .Ltmp20-.Lfunc_begin0          #   starting offset
+	.uleb128 .Ltmp22-.Lfunc_begin0          #   ending offset
+	.byte	2                               # Loc expr size
+	.byte	53                              # DW_OP_lit5
+	.byte	159                             # DW_OP_stack_value
+	.byte	4                               # DW_LLE_offset_pair
+	.uleb128 .Ltmp22-.Lfunc_begin0          #   starting offset
+	.uleb128 .Ltmp24-.Lfunc_begin0          #   ending offset
+	.byte	2                               # Loc expr size
+	.byte	54                              # DW_OP_lit6
+	.byte	159                             # DW_OP_stack_value
+	.byte	4                               # DW_LLE_offset_pair
+	.uleb128 .Ltmp24-.Lfunc_begin0          #   starting offset
+	.uleb128 .Ltmp26-.Lfunc_begin0          #   ending offset
+	.byte	2                               # Loc expr size
+	.byte	55                              # DW_OP_lit7
+	.byte	159                             # DW_OP_stack_value
+	.byte	4                               # DW_LLE_offset_pair
+	.uleb128 .Ltmp26-.Lfunc_begin0          #   starting offset
+	.uleb128 .Lfunc_end0-.Lfunc_begin0      #   ending offset
+	.byte	2                               # Loc expr size
+	.byte	56                              # DW_OP_lit8
+	.byte	159                             # DW_OP_stack_value
+	.byte	0                               # DW_LLE_end_of_list
+.Ldebug_loc3:
+	.byte	3                               # DW_LLE_startx_length
+	.byte	10                              #   start index
+	.uleb128 .Ltmp36-.Lfunc_begin1          #   length
+	.byte	1                               # Loc expr size
+	.byte	81                              # DW_OP_reg1
+	.byte	0                               # DW_LLE_end_of_list
+.Ldebug_loc4:
+	.byte	3                               # DW_LLE_startx_length
+	.byte	10                              #   start index
+	.uleb128 .Ltmp36-.Lfunc_begin1          #   length
+	.byte	1                               # Loc expr size
+	.byte	82                              # DW_OP_reg2
+	.byte	0                               # DW_LLE_end_of_list
+.Ldebug_loc5:
+	.byte	3                               # DW_LLE_startx_length
+	.byte	10                              #   start index
+	.uleb128 .Ltmp36-.Lfunc_begin1          #   length
+	.byte	1                               # Loc expr size
+	.byte	83                              # DW_OP_reg3
+	.byte	0                               # DW_LLE_end_of_list
+.Ldebug_loc6:
+	.byte	1                               # DW_LLE_base_addressx
+	.byte	10                              #   base address index
+	.byte	4                               # DW_LLE_offset_pair
+	.uleb128 .Lfunc_begin1-.Lfunc_begin1    #   starting offset
+	.uleb128 .Ltmp36-.Lfunc_begin1          #   ending offset
+	.byte	2                               # Loc expr size
+	.byte	48                              # DW_OP_lit0
+	.byte	159                             # DW_OP_stack_value
+	.byte	4                               # DW_LLE_offset_pair
+	.uleb128 .Ltmp36-.Lfunc_begin1          #   starting offset
+	.uleb128 .Ltmp50-.Lfunc_begin1          #   ending offset
+	.byte	1                               # Loc expr size
+	.byte	84                              # DW_OP_reg4
+	.byte	0                               # DW_LLE_end_of_list
+.Ldebug_list_header_end0:
+	.section	.debug_abbrev,"",@progbits
+	.byte	1                               # Abbreviation Code
+	.byte	17                              # DW_TAG_compile_unit
+	.byte	1                               # DW_CHILDREN_yes
+	.byte	37                              # DW_AT_producer
+	.byte	37                              # DW_FORM_strx1
+	.byte	19                              # DW_AT_language
+	.byte	5                               # DW_FORM_data2
+	.byte	3                               # DW_AT_name
+	.byte	37                              # DW_FORM_strx1
+	.byte	114                             # DW_AT_str_offsets_base
+	.byte	23                              # DW_FORM_sec_offset
+	.byte	16                              # DW_AT_stmt_list
+	.byte	23                              # DW_FORM_sec_offset
+	.byte	27                              # DW_AT_comp_dir
+	.byte	37                              # DW_FORM_strx1
+	.byte	17                              # DW_AT_low_pc
+	.byte	1                               # DW_FORM_addr
+	.byte	85                              # DW_AT_ranges
+	.byte	35                              # DW_FORM_rnglistx
+	.byte	115                             # DW_AT_addr_base
+	.byte	23                              # DW_FORM_sec_offset
+	.byte	116                             # DW_AT_rnglists_base
+	.byte	23                              # DW_FORM_sec_offset
+	.ascii	"\214\001"                      # DW_AT_loclists_base
+	.byte	23                              # DW_FORM_sec_offset
+	.byte	0                               # EOM(1)
+	.byte	0                               # EOM(2)
+	.byte	2                               # Abbreviation Code
+	.byte	46                              # DW_TAG_subprogram
+	.byte	1                               # DW_CHILDREN_yes
+	.byte	17                              # DW_AT_low_pc
+	.byte	27                              # DW_FORM_addrx
+	.byte	18                              # DW_AT_high_pc
+	.byte	6                               # DW_FORM_data4
+	.byte	64                              # DW_AT_frame_base
+	.byte	24                              # DW_FORM_exprloc
+	.byte	122                             # DW_AT_call_all_calls
+	.byte	25                              # DW_FORM_flag_present
+	.byte	3                               # DW_AT_name
+	.byte	37                              # DW_FORM_strx1
+	.byte	58                              # DW_AT_decl_file
+	.byte	11                              # DW_FORM_data1
+	.byte	59                              # DW_AT_decl_line
+	.byte	11                              # DW_FORM_data1
+	.byte	39                              # DW_AT_prototyped
+	.byte	25                              # DW_FORM_flag_present
+	.byte	73                              # DW_AT_type
+	.byte	19                              # DW_FORM_ref4
+	.byte	63                              # DW_AT_external
+	.byte	25                              # DW_FORM_flag_present
+	.byte	0                               # EOM(1)
+	.byte	0                               # EOM(2)
+	.byte	3                               # Abbreviation Code
+	.byte	5                               # DW_TAG_formal_parameter
+	.byte	0                               # DW_CHILDREN_no
+	.byte	2                               # DW_AT_location
+	.byte	34                              # DW_FORM_loclistx
+	.byte	3                               # DW_AT_name
+	.byte	37                              # DW_FORM_strx1
+	.byte	58                              # DW_AT_decl_file
+	.byte	11                              # DW_FORM_data1
+	.byte	59                              # DW_AT_decl_line
+	.byte	11                              # DW_FORM_data1
+	.byte	73                              # DW_AT_type
+	.byte	19                              # DW_FORM_ref4
+	.byte	0                               # EOM(1)
+	.byte	0                               # EOM(2)
+	.byte	4                               # Abbreviation Code
+	.byte	52                              # DW_TAG_variable
+	.byte	0                               # DW_CHILDREN_no
+	.byte	2                               # DW_AT_location
+	.byte	24                              # DW_FORM_exprloc
+	.byte	3                               # DW_AT_name
+	.byte	37                              # DW_FORM_strx1
+	.byte	58                              # DW_AT_decl_file
+	.byte	11                              # DW_FORM_data1
+	.byte	59                              # DW_AT_decl_line
+	.byte	11                              # DW_FORM_data1
+	.byte	73                              # DW_AT_type
+	.byte	19                              # DW_FORM_ref4
+	.byte	0                               # EOM(1)
+	.byte	0                               # EOM(2)
+	.byte	5                               # Abbreviation Code
+	.byte	52                              # DW_TAG_variable
+	.byte	0                               # DW_CHILDREN_no
+	.byte	2                               # DW_AT_location
+	.byte	34                              # DW_FORM_loclistx
+	.byte	3                               # DW_AT_name
+	.byte	37                              # DW_FORM_strx1
+	.byte	58                              # DW_AT_decl_file
+	.byte	11                              # DW_FORM_data1
+	.byte	59                              # DW_AT_decl_line
+	.byte	11                              # DW_FORM_data1
+	.byte	73                              # DW_AT_type
+	.byte	19                              # DW_FORM_ref4
+	.byte	0                               # EOM(1)
+	.byte	0                               # EOM(2)
+	.byte	6                               # Abbreviation Code
+	.byte	11                              # DW_TAG_lexical_block
+	.byte	1                               # DW_CHILDREN_yes
+	.byte	17                              # DW_AT_low_pc
+	.byte	27                              # DW_FORM_addrx
+	.byte	18                              # DW_AT_high_pc
+	.byte	6                               # DW_FORM_data4
+	.byte	0                               # EOM(1)
+	.byte	0                               # EOM(2)
+	.byte	7                               # Abbreviation Code
+	.byte	72                              # DW_TAG_call_site
+	.byte	0                               # DW_CHILDREN_no
+	.byte	127                             # DW_AT_call_origin
+	.byte	19                              # DW_FORM_ref4
+	.byte	125                             # DW_AT_call_return_pc
+	.byte	27                              # DW_FORM_addrx
+	.byte	0                               # EOM(1)
+	.byte	0                               # EOM(2)
+	.byte	8                               # Abbreviation Code
+	.byte	46                              # DW_TAG_subprogram
+	.byte	1                               # DW_CHILDREN_yes
+	.byte	17                              # DW_AT_low_pc
+	.byte	27                              # DW_FORM_addrx
+	.byte	18                              # DW_AT_high_pc
+	.byte	6                               # DW_FORM_data4
+	.byte	64                              # DW_AT_frame_base
+	.byte	24                              # DW_FORM_exprloc
+	.byte	122                             # DW_AT_call_all_calls
+	.byte	25                              # DW_FORM_flag_present
+	.byte	3                               # DW_AT_name
+	.byte	37                              # DW_FORM_strx1
+	.byte	58                              # DW_AT_decl_file
+	.byte	11                              # DW_FORM_data1
+	.byte	59                              # DW_AT_decl_line
+	.byte	11                              # DW_FORM_data1
+	.byte	39                              # DW_AT_prototyped
+	.byte	25                              # DW_FORM_flag_present
+	.byte	0                               # EOM(1)
+	.byte	0                               # EOM(2)
+	.byte	9                               # Abbreviation Code
+	.byte	22                              # DW_TAG_typedef
+	.byte	0                               # DW_CHILDREN_no
+	.byte	73                              # DW_AT_type
+	.byte	19                              # DW_FORM_ref4
+	.byte	3                               # DW_AT_name
+	.byte	37                              # DW_FORM_strx1
+	.byte	58                              # DW_AT_decl_file
+	.byte	11                              # DW_FORM_data1
+	.byte	59                              # DW_AT_decl_line
+	.byte	11                              # DW_FORM_data1
+	.byte	0                               # EOM(1)
+	.byte	0                               # EOM(2)
+	.byte	10                              # Abbreviation Code
+	.byte	36                              # DW_TAG_base_type
+	.byte	0                               # DW_CHILDREN_no
+	.byte	3                               # DW_AT_name
+	.byte	37                              # DW_FORM_strx1
+	.byte	62                              # DW_AT_encoding
+	.byte	11                              # DW_FORM_data1
+	.byte	11                              # DW_AT_byte_size
+	.byte	11                              # DW_FORM_data1
+	.byte	0                               # EOM(1)
+	.byte	0                               # EOM(2)
+	.byte	11                              # Abbreviation Code
+	.byte	1                               # DW_TAG_array_type
+	.byte	1                               # DW_CHILDREN_yes
+	.byte	73                              # DW_AT_type
+	.byte	19                              # DW_FORM_ref4
+	.byte	0                               # EOM(1)
+	.byte	0                               # EOM(2)
+	.byte	12                              # Abbreviation Code
+	.byte	33                              # DW_TAG_subrange_type
+	.byte	0                               # DW_CHILDREN_no
+	.byte	73                              # DW_AT_type
+	.byte	19                              # DW_FORM_ref4
+	.byte	55                              # DW_AT_count
+	.byte	11                              # DW_FORM_data1
+	.byte	0                               # EOM(1)
+	.byte	0                               # EOM(2)
+	.byte	13                              # Abbreviation Code
+	.byte	36                              # DW_TAG_base_type
+	.byte	0                               # DW_CHILDREN_no
+	.byte	3                               # DW_AT_name
+	.byte	37                              # DW_FORM_strx1
+	.byte	11                              # DW_AT_byte_size
+	.byte	11                              # DW_FORM_data1
+	.byte	62                              # DW_AT_encoding
+	.byte	11                              # DW_FORM_data1
+	.byte	0                               # EOM(1)
+	.byte	0                               # EOM(2)
+	.byte	14                              # Abbreviation Code
+	.byte	15                              # DW_TAG_pointer_type
+	.byte	0                               # DW_CHILDREN_no
+	.byte	73                              # DW_AT_type
+	.byte	19                              # DW_FORM_ref4
+	.byte	0                               # EOM(1)
+	.byte	0                               # EOM(2)
+	.byte	15                              # Abbreviation Code
+	.byte	38                              # DW_TAG_const_type
+	.byte	0                               # DW_CHILDREN_no
+	.byte	73                              # DW_AT_type
+	.byte	19                              # DW_FORM_ref4
+	.byte	0                               # EOM(1)
+	.byte	0                               # EOM(2)
+	.byte	16                              # Abbreviation Code
+	.byte	55                              # DW_TAG_restrict_type
+	.byte	0                               # DW_CHILDREN_no
+	.byte	73                              # DW_AT_type
+	.byte	19                              # DW_FORM_ref4
+	.byte	0                               # EOM(1)
+	.byte	0                               # EOM(2)
+	.byte	0                               # EOM(3)
+	.section	.debug_info,"",@progbits
+.Lcu_begin0:
+	.long	.Ldebug_info_end0-.Ldebug_info_start0 # Length of Unit
+.Ldebug_info_start0:
+	.short	5                               # DWARF version number
+	.byte	1                               # DWARF Unit Type
+	.byte	8                               # Address Size (in bytes)
+	.long	.debug_abbrev                   # Offset Into Abbrev. Section
+	.byte	1                               # Abbrev [1] 0xc:0x103 DW_TAG_compile_unit
+	.byte	0                               # DW_AT_producer
+	.short	29                              # DW_AT_language
+	.byte	1                               # DW_AT_name
+	.long	.Lstr_offsets_base0             # DW_AT_str_offsets_base
+	.long	.Lline_table_start0             # DW_AT_stmt_list
+	.byte	2                               # DW_AT_comp_dir
+	.quad	0                               # DW_AT_low_pc
+	.byte	0                               # DW_AT_ranges
+	.long	.Laddr_table_base0              # DW_AT_addr_base
+	.long	.Lrnglists_table_base0          # DW_AT_rnglists_base
+	.long	.Lloclists_table_base0          # DW_AT_loclists_base
+	.byte	2                               # Abbrev [2] 0x2f:0x78 DW_TAG_subprogram
+	.byte	0                               # DW_AT_low_pc
+	.long	.Lfunc_end0-.Lfunc_begin0       # DW_AT_high_pc
+	.byte	1                               # DW_AT_frame_base
+	.byte	90
+                                        # DW_AT_call_all_calls
+	.byte	3                               # DW_AT_name
+	.byte	1                               # DW_AT_decl_file
+	.byte	19                              # DW_AT_decl_line
+                                        # DW_AT_prototyped
+	.long	222                             # DW_AT_type
+                                        # DW_AT_external
+	.byte	3                               # Abbrev [3] 0x3e:0x9 DW_TAG_formal_parameter
+	.byte	0                               # DW_AT_location
+	.byte	10                              # DW_AT_name
+	.byte	1                               # DW_AT_decl_file
+	.byte	19                              # DW_AT_decl_line
+	.long	250                             # DW_AT_type
+	.byte	4                               # Abbrev [4] 0x47:0xb DW_TAG_variable
+	.byte	2                               # DW_AT_location
+	.byte	145
+	.byte	32
+	.byte	7                               # DW_AT_name
+	.byte	1                               # DW_AT_decl_file
+	.byte	21                              # DW_AT_decl_line
+	.long	234                             # DW_AT_type
+	.byte	4                               # Abbrev [4] 0x52:0xb DW_TAG_variable
+	.byte	2                               # DW_AT_location
+	.byte	145
+	.byte	0
+	.byte	9                               # DW_AT_name
+	.byte	1                               # DW_AT_decl_file
+	.byte	22                              # DW_AT_decl_line
+	.long	234                             # DW_AT_type
+	.byte	5                               # Abbrev [5] 0x5d:0x9 DW_TAG_variable
+	.byte	1                               # DW_AT_location
+	.byte	11                              # DW_AT_name
+	.byte	1                               # DW_AT_decl_file
+	.byte	23                              # DW_AT_decl_line
+	.long	255                             # DW_AT_type
+	.byte	6                               # Abbrev [6] 0x66:0x10 DW_TAG_lexical_block
+	.byte	1                               # DW_AT_low_pc
+	.long	.Ltmp26-.Ltmp7                  # DW_AT_high_pc
+	.byte	5                               # Abbrev [5] 0x6c:0x9 DW_TAG_variable
+	.byte	2                               # DW_AT_location
+	.byte	12                              # DW_AT_name
+	.byte	1                               # DW_AT_decl_file
+	.byte	25                              # DW_AT_decl_line
+	.long	222                             # DW_AT_type
+	.byte	0                               # End Of Children Mark
+	.byte	7                               # Abbrev [7] 0x76:0x6 DW_TAG_call_site
+	.long	167                             # DW_AT_call_origin
+	.byte	2                               # DW_AT_call_return_pc
+	.byte	7                               # Abbrev [7] 0x7c:0x6 DW_TAG_call_site
+	.long	167                             # DW_AT_call_origin
+	.byte	3                               # DW_AT_call_return_pc
+	.byte	7                               # Abbrev [7] 0x82:0x6 DW_TAG_call_site
+	.long	167                             # DW_AT_call_origin
+	.byte	4                               # DW_AT_call_return_pc
+	.byte	7                               # Abbrev [7] 0x88:0x6 DW_TAG_call_site
+	.long	167                             # DW_AT_call_origin
+	.byte	5                               # DW_AT_call_return_pc
+	.byte	7                               # Abbrev [7] 0x8e:0x6 DW_TAG_call_site
+	.long	167                             # DW_AT_call_origin
+	.byte	6                               # DW_AT_call_return_pc
+	.byte	7                               # Abbrev [7] 0x94:0x6 DW_TAG_call_site
+	.long	167                             # DW_AT_call_origin
+	.byte	7                               # DW_AT_call_return_pc
+	.byte	7                               # Abbrev [7] 0x9a:0x6 DW_TAG_call_site
+	.long	167                             # DW_AT_call_origin
+	.byte	8                               # DW_AT_call_return_pc
+	.byte	7                               # Abbrev [7] 0xa0:0x6 DW_TAG_call_site
+	.long	167                             # DW_AT_call_origin
+	.byte	9                               # DW_AT_call_return_pc
+	.byte	0                               # End Of Children Mark
+	.byte	8                               # Abbrev [8] 0xa7:0x37 DW_TAG_subprogram
+	.byte	10                              # DW_AT_low_pc
+	.long	.Lfunc_end1-.Lfunc_begin1       # DW_AT_high_pc
+	.byte	1                               # DW_AT_frame_base
+	.byte	90
+                                        # DW_AT_call_all_calls
+	.byte	6                               # DW_AT_name
+	.byte	1                               # DW_AT_decl_file
+	.byte	10                              # DW_AT_decl_line
+                                        # DW_AT_prototyped
+	.byte	3                               # Abbrev [3] 0xb2:0x9 DW_TAG_formal_parameter
+	.byte	3                               # DW_AT_location
+	.byte	7                               # DW_AT_name
+	.byte	1                               # DW_AT_decl_file
+	.byte	10                              # DW_AT_decl_line
+	.long	260                             # DW_AT_type
+	.byte	3                               # Abbrev [3] 0xbb:0x9 DW_TAG_formal_parameter
+	.byte	4                               # DW_AT_location
+	.byte	9                               # DW_AT_name
+	.byte	1                               # DW_AT_decl_file
+	.byte	10                              # DW_AT_decl_line
+	.long	260                             # DW_AT_type
+	.byte	3                               # Abbrev [3] 0xc4:0x9 DW_TAG_formal_parameter
+	.byte	5                               # DW_AT_location
+	.byte	11                              # DW_AT_name
+	.byte	1                               # DW_AT_decl_file
+	.byte	10                              # DW_AT_decl_line
+	.long	222                             # DW_AT_type
+	.byte	6                               # Abbrev [6] 0xcd:0x10 DW_TAG_lexical_block
+	.byte	10                              # DW_AT_low_pc
+	.long	.Ltmp50-.Lfunc_begin1           # DW_AT_high_pc
+	.byte	5                               # Abbrev [5] 0xd3:0x9 DW_TAG_variable
+	.byte	6                               # DW_AT_location
+	.byte	13                              # DW_AT_name
+	.byte	1                               # DW_AT_decl_file
+	.byte	12                              # DW_AT_decl_line
+	.long	222                             # DW_AT_type
+	.byte	0                               # End Of Children Mark
+	.byte	0                               # End Of Children Mark
+	.byte	9                               # Abbrev [9] 0xde:0x8 DW_TAG_typedef
+	.long	230                             # DW_AT_type
+	.byte	5                               # DW_AT_name
+	.byte	1                               # DW_AT_decl_file
+	.byte	3                               # DW_AT_decl_line
+	.byte	10                              # Abbrev [10] 0xe6:0x4 DW_TAG_base_type
+	.byte	4                               # DW_AT_name
+	.byte	7                               # DW_AT_encoding
+	.byte	4                               # DW_AT_byte_size
+	.byte	11                              # Abbrev [11] 0xea:0xc DW_TAG_array_type
+	.long	222                             # DW_AT_type
+	.byte	12                              # Abbrev [12] 0xef:0x6 DW_TAG_subrange_type
+	.long	246                             # DW_AT_type
+	.byte	8                               # DW_AT_count
+	.byte	0                               # End Of Children Mark
+	.byte	13                              # Abbrev [13] 0xf6:0x4 DW_TAG_base_type
+	.byte	8                               # DW_AT_name
+	.byte	8                               # DW_AT_byte_size
+	.byte	7                               # DW_AT_encoding
+	.byte	14                              # Abbrev [14] 0xfa:0x5 DW_TAG_pointer_type
+	.long	255                             # DW_AT_type
+	.byte	15                              # Abbrev [15] 0xff:0x5 DW_TAG_const_type
+	.long	222                             # DW_AT_type
+	.byte	16                              # Abbrev [16] 0x104:0x5 DW_TAG_restrict_type
+	.long	265                             # DW_AT_type
+	.byte	14                              # Abbrev [14] 0x109:0x5 DW_TAG_pointer_type
+	.long	222                             # DW_AT_type
+	.byte	0                               # End Of Children Mark
+.Ldebug_info_end0:
+	.section	.debug_rnglists,"",@progbits
+	.long	.Ldebug_list_header_end1-.Ldebug_list_header_start1 # Length
+.Ldebug_list_header_start1:
+	.short	5                               # Version
+	.byte	8                               # Address size
+	.byte	0                               # Segment selector size
+	.long	1                               # Offset entry count
+.Lrnglists_table_base0:
+	.long	.Ldebug_ranges0-.Lrnglists_table_base0
+.Ldebug_ranges0:
+	.byte	3                               # DW_RLE_startx_length
+	.byte	0                               #   start index
+	.uleb128 .Lfunc_end0-.Lfunc_begin0      #   length
+	.byte	3                               # DW_RLE_startx_length
+	.byte	10                              #   start index
+	.uleb128 .Lfunc_end1-.Lfunc_begin1      #   length
+	.byte	0                               # DW_RLE_end_of_list
+.Ldebug_list_header_end1:
+	.section	.debug_str_offsets,"",@progbits
+	.long	60                              # Length of String Offsets Set
+	.short	5
+	.short	0
+.Lstr_offsets_base0:
+	.section	.debug_str,"MS",@progbits,1
+.Linfo_string0:
+	.asciz	"Homebrew clang version 22.1.8" # string offset=0
+.Linfo_string1:
+	.asciz	"/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/source_level_opt/generated/fusion_08_SOURCE_OPT.bpf.c" # string offset=30
+.Linfo_string2:
+	.asciz	"/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment" # string offset=156
+.Linfo_string3:
+	.asciz	"entry"                         # string offset=228
+.Linfo_string4:
+	.asciz	"unsigned int"                  # string offset=234
+.Linfo_string5:
+	.asciz	"u32"                           # string offset=247
+.Linfo_string6:
+	.asciz	"kernel"                        # string offset=251
+.Linfo_string7:
+	.asciz	"a"                             # string offset=258
+.Linfo_string8:
+	.asciz	"__ARRAY_SIZE_TYPE__"           # string offset=260
+.Linfo_string9:
+	.asciz	"b"                             # string offset=280
+.Linfo_string10:
+	.asciz	"ctx"                           # string offset=282
+.Linfo_string11:
+	.asciz	"n"                             # string offset=286
+.Linfo_string12:
+	.asciz	"r"                             # string offset=288
+.Linfo_string13:
+	.asciz	"i"                             # string offset=290
+	.section	.debug_str_offsets,"",@progbits
+	.long	.Linfo_string0
+	.long	.Linfo_string1
+	.long	.Linfo_string2
+	.long	.Linfo_string3
+	.long	.Linfo_string4
+	.long	.Linfo_string5
+	.long	.Linfo_string6
+	.long	.Linfo_string7
+	.long	.Linfo_string8
+	.long	.Linfo_string9
+	.long	.Linfo_string10
+	.long	.Linfo_string11
+	.long	.Linfo_string12
+	.long	.Linfo_string13
+	.section	.debug_addr,"",@progbits
+	.long	.Ldebug_addr_end0-.Ldebug_addr_start0 # Length of contribution
+.Ldebug_addr_start0:
+	.short	5                               # DWARF version number
+	.byte	8                               # Address size
+	.byte	0                               # Segment selector size
+.Laddr_table_base0:
+	.quad	.Lfunc_begin0
+	.quad	.Ltmp7
+	.quad	.Ltmp12
+	.quad	.Ltmp14
+	.quad	.Ltmp16
+	.quad	.Ltmp18
+	.quad	.Ltmp20
+	.quad	.Ltmp22
+	.quad	.Ltmp24
+	.quad	.Ltmp26
+	.quad	.Lfunc_begin1
+.Ldebug_addr_end0:
+	.section	.BTF,"",@progbits
+	.short	60319                           # 0xeb9f
+	.byte	1
+	.byte	0
+	.long	24
+	.long	0
+	.long	156
+	.long	156
+	.long	397
+	.long	0                               # BTF_KIND_PTR(id = 1)
+	.long	33554432                        # 0x2000000
+	.long	2
+	.long	0                               # BTF_KIND_CONST(id = 2)
+	.long	167772160                       # 0xa000000
+	.long	3
+	.long	1                               # BTF_KIND_TYPEDEF(id = 3)
+	.long	134217728                       # 0x8000000
+	.long	4
+	.long	5                               # BTF_KIND_INT(id = 4)
+	.long	16777216                        # 0x1000000
+	.long	4
+	.long	32                              # 0x20
+	.long	0                               # BTF_KIND_FUNC_PROTO(id = 5)
+	.long	218103809                       # 0xd000001
+	.long	3
+	.long	18
+	.long	1
+	.long	22                              # BTF_KIND_FUNC(id = 6)
+	.long	201326593                       # 0xc000001
+	.long	5
+	.long	0                               # BTF_KIND_RESTRICT(id = 7)
+	.long	184549376                       # 0xb000000
+	.long	8
+	.long	0                               # BTF_KIND_PTR(id = 8)
+	.long	33554432                        # 0x2000000
+	.long	3
+	.long	0                               # BTF_KIND_FUNC_PROTO(id = 9)
+	.long	218103811                       # 0xd000003
+	.long	0
+	.long	298
+	.long	7
+	.long	300
+	.long	7
+	.long	302
+	.long	3
+	.long	304                             # BTF_KIND_FUNC(id = 10)
+	.long	201326592                       # 0xc000000
+	.long	9
+	.byte	0                               # string offset=0
+	.ascii	"u32"                           # string offset=1
+	.byte	0
+	.ascii	"unsigned int"                  # string offset=5
+	.byte	0
+	.ascii	"ctx"                           # string offset=18
+	.byte	0
+	.ascii	"entry"                         # string offset=22
+	.byte	0
+	.ascii	"kprobe/test"                   # string offset=28
+	.byte	0
+	.ascii	"/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/source_level_opt/generated/fusion_08_SOURCE_OPT.bpf.c" # string offset=40
+	.byte	0
+	.ascii	"u32 entry(const u32 *ctx)"     # string offset=166
+	.byte	0
+	.ascii	"    u32 a[8] = {0};"           # string offset=192
+	.byte	0
+	.ascii	"    u32 b[8] = {0};"           # string offset=212
+	.byte	0
+	.ascii	"    const u32 n = *ctx;"       # string offset=232
+	.byte	0
+	.ascii	"        kernel(a, b, n);"      # string offset=256
+	.byte	0
+	.ascii	"    return b[0];"              # string offset=281
+	.byte	0
+	.byte	97                              # string offset=298
+	.byte	0
+	.byte	98                              # string offset=300
+	.byte	0
+	.byte	110                             # string offset=302
+	.byte	0
+	.ascii	"kernel"                        # string offset=304
+	.byte	0
+	.ascii	".text"                         # string offset=311
+	.byte	0
+	.ascii	"    for (u32 i = 0; i < n; i++) {" # string offset=317
+	.byte	0
+	.ascii	"        a[i] += 1;"            # string offset=351
+	.byte	0
+	.ascii	"        b[i] = a[i] * 3;"      # string offset=370
+	.byte	0
+	.byte	125                             # string offset=395
+	.byte	0
+	.section	.BTF.ext,"",@progbits
+	.short	60319                           # 0xeb9f
+	.byte	1
+	.byte	0
+	.long	32
+	.long	0
+	.long	36
+	.long	36
+	.long	308
+	.long	344
+	.long	0
+	.long	8                               # FuncInfo
+	.long	28                              # FuncInfo section string offset=28
+	.long	1
+	.long	.Lfunc_begin0
+	.long	6
+	.long	311                             # FuncInfo section string offset=311
+	.long	1
+	.long	.Lfunc_begin1
+	.long	10
+	.long	16                              # LineInfo
+	.long	28                              # LineInfo section string offset=28
+	.long	7
+	.long	.Lfunc_begin0
+	.long	40
+	.long	166
+	.long	19456                           # Line 19 Col 0
+	.long	.Ltmp2
+	.long	40
+	.long	192
+	.long	21513                           # Line 21 Col 9
+	.long	.Ltmp3
+	.long	40
+	.long	212
+	.long	22537                           # Line 22 Col 9
+	.long	.Ltmp4
+	.long	40
+	.long	232
+	.long	23571                           # Line 23 Col 19
+	.long	.Ltmp9
+	.long	40
+	.long	256
+	.long	26633                           # Line 26 Col 9
+	.long	.Ltmp28
+	.long	40
+	.long	281
+	.long	28684                           # Line 28 Col 12
+	.long	.Ltmp29
+	.long	40
+	.long	281
+	.long	28677                           # Line 28 Col 5
+	.long	311                             # LineInfo section string offset=311
+	.long	11
+	.long	.Ltmp32
+	.long	40
+	.long	317
+	.long	12293                           # Line 12 Col 5
+	.long	.Ltmp35
+	.long	40
+	.long	317
+	.long	12293                           # Line 12 Col 5
+	.long	.Ltmp38
+	.long	40
+	.long	351
+	.long	13326                           # Line 13 Col 14
+	.long	.Ltmp39
+	.long	40
+	.long	351
+	.long	13326                           # Line 13 Col 14
+	.long	.Ltmp40
+	.long	40
+	.long	351
+	.long	13326                           # Line 13 Col 14
+	.long	.Ltmp41
+	.long	40
+	.long	370
+	.long	14357                           # Line 14 Col 21
+	.long	.Ltmp42
+	.long	40
+	.long	370
+	.long	14350                           # Line 14 Col 14
+	.long	.Ltmp45
+	.long	40
+	.long	317
+	.long	12311                           # Line 12 Col 23
+	.long	.Ltmp46
+	.long	40
+	.long	317
+	.long	12317                           # Line 12 Col 29
+	.long	.Ltmp49
+	.long	40
+	.long	317
+	.long	12293                           # Line 12 Col 5
+	.long	.Ltmp52
+	.long	40
+	.long	395
+	.long	16385                           # Line 16 Col 1
+	.addrsig
+	.section	.debug_line,"",@progbits
+.Lline_table_start0:
+
+--- original_to_optimized_equivalence: fusion_08.o vs fusion_08_SOURCE_OPT.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] No BTF metadata from C binary
+[*] No BTF metadata available, using command-line map specs
+ASSUMPTION fusion_n_8 [experiment_input] (truncate(original.ctx.r15, 32) eq 8:u32)
+[*] witness: added 1 assumption constraint(s) from <benchmark controlled input>
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400120: S=0x400000 A=0 imm=-37
+    - Patching call <anon> @ 0x400140: S=0x400000 A=0 imm=-41
+    - Patching call <anon> @ 0x400160: S=0x400000 A=0 imm=-45
+    - Patching call <anon> @ 0x400180: S=0x400000 A=0 imm=-49
+    - Patching call <anon> @ 0x4001a0: S=0x400000 A=0 imm=-53
+    - Patching call <anon> @ 0x4001c0: S=0x400000 A=0 imm=-57
+    - Patching call <anon> @ 0x4001e0: S=0x400000 A=0 imm=-61
+    - Patching call <anon> @ 0x400200: S=0x400000 A=0 imm=-65
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400098
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+[*] No BTF metadata from Rust binary
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x4000f0: S=0x400000 A=0 imm=-31
+    - Patching call <anon> @ 0x400110: S=0x400000 A=0 imm=-35
+    - Patching call <anon> @ 0x400130: S=0x400000 A=0 imm=-39
+    - Patching call <anon> @ 0x400150: S=0x400000 A=0 imm=-43
+    - Patching call <anon> @ 0x400170: S=0x400000 A=0 imm=-47
+    - Patching call <anon> @ 0x400190: S=0x400000 A=0 imm=-51
+    - Patching call <anon> @ 0x4001b0: S=0x400000 A=0 imm=-55
+    - Patching call <anon> @ 0x4001d0: S=0x400000 A=0 imm=-59
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400068
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+
+[=] Starting ITE-based Z3 Verification [=]
+    [+] Adding 1 input constraints to solver
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 0 maps via ITE semantics
+    [?] Solver checking 1 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "original_to_optimized_equivalence", "seconds": 1.6014462910006841, "equivalent": true, "result_type": "equivalent"}
+
+--- warmup_original_self: fusion_08.o vs fusion_08.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] No BTF metadata from C binary
+[*] No BTF metadata available, using command-line map specs
+ASSUMPTION fusion_n_8 [experiment_input] (truncate(original.ctx.r15, 32) eq 8:u32)
+[*] witness: added 1 assumption constraint(s) from <benchmark controlled input>
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400120: S=0x400000 A=0 imm=-37
+    - Patching call <anon> @ 0x400140: S=0x400000 A=0 imm=-41
+    - Patching call <anon> @ 0x400160: S=0x400000 A=0 imm=-45
+    - Patching call <anon> @ 0x400180: S=0x400000 A=0 imm=-49
+    - Patching call <anon> @ 0x4001a0: S=0x400000 A=0 imm=-53
+    - Patching call <anon> @ 0x4001c0: S=0x400000 A=0 imm=-57
+    - Patching call <anon> @ 0x4001e0: S=0x400000 A=0 imm=-61
+    - Patching call <anon> @ 0x400200: S=0x400000 A=0 imm=-65
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400098
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+[*] No BTF metadata from Rust binary
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400120: S=0x400000 A=0 imm=-37
+    - Patching call <anon> @ 0x400140: S=0x400000 A=0 imm=-41
+    - Patching call <anon> @ 0x400160: S=0x400000 A=0 imm=-45
+    - Patching call <anon> @ 0x400180: S=0x400000 A=0 imm=-49
+    - Patching call <anon> @ 0x4001a0: S=0x400000 A=0 imm=-53
+    - Patching call <anon> @ 0x4001c0: S=0x400000 A=0 imm=-57
+    - Patching call <anon> @ 0x4001e0: S=0x400000 A=0 imm=-61
+    - Patching call <anon> @ 0x400200: S=0x400000 A=0 imm=-65
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400098
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+
+[=] Starting ITE-based Z3 Verification [=]
+    [+] Adding 1 input constraints to solver
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 0 maps via ITE semantics
+    [?] Solver checking 1 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "warmup_original_self", "seconds": 2.0049406660000386, "equivalent": true, "result_type": "equivalent"}
+
+--- warmup_optimized_self: fusion_08_SOURCE_OPT.o vs fusion_08_SOURCE_OPT.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] No BTF metadata from C binary
+[*] No BTF metadata available, using command-line map specs
+ASSUMPTION fusion_n_8 [experiment_input] (truncate(original.ctx.r15, 32) eq 8:u32)
+[*] witness: added 1 assumption constraint(s) from <benchmark controlled input>
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x4000f0: S=0x400000 A=0 imm=-31
+    - Patching call <anon> @ 0x400110: S=0x400000 A=0 imm=-35
+    - Patching call <anon> @ 0x400130: S=0x400000 A=0 imm=-39
+    - Patching call <anon> @ 0x400150: S=0x400000 A=0 imm=-43
+    - Patching call <anon> @ 0x400170: S=0x400000 A=0 imm=-47
+    - Patching call <anon> @ 0x400190: S=0x400000 A=0 imm=-51
+    - Patching call <anon> @ 0x4001b0: S=0x400000 A=0 imm=-55
+    - Patching call <anon> @ 0x4001d0: S=0x400000 A=0 imm=-59
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400068
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+[*] No BTF metadata from Rust binary
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x4000f0: S=0x400000 A=0 imm=-31
+    - Patching call <anon> @ 0x400110: S=0x400000 A=0 imm=-35
+    - Patching call <anon> @ 0x400130: S=0x400000 A=0 imm=-39
+    - Patching call <anon> @ 0x400150: S=0x400000 A=0 imm=-43
+    - Patching call <anon> @ 0x400170: S=0x400000 A=0 imm=-47
+    - Patching call <anon> @ 0x400190: S=0x400000 A=0 imm=-51
+    - Patching call <anon> @ 0x4001b0: S=0x400000 A=0 imm=-55
+    - Patching call <anon> @ 0x4001d0: S=0x400000 A=0 imm=-59
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400068
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+
+[=] Starting ITE-based Z3 Verification [=]
+    [+] Adding 1 input constraints to solver
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 0 maps via ITE semantics
+    [?] Solver checking 1 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "warmup_optimized_self", "seconds": 1.3125333749994752, "equivalent": true, "result_type": "equivalent"}
+
+--- warmup_original_fixed_reference: fusion_08.o vs fusion_08_SOURCE_OPT.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] No BTF metadata from C binary
+[*] No BTF metadata available, using command-line map specs
+ASSUMPTION fusion_n_8 [experiment_input] (truncate(original.ctx.r15, 32) eq 8:u32)
+[*] witness: added 1 assumption constraint(s) from <benchmark controlled input>
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400120: S=0x400000 A=0 imm=-37
+    - Patching call <anon> @ 0x400140: S=0x400000 A=0 imm=-41
+    - Patching call <anon> @ 0x400160: S=0x400000 A=0 imm=-45
+    - Patching call <anon> @ 0x400180: S=0x400000 A=0 imm=-49
+    - Patching call <anon> @ 0x4001a0: S=0x400000 A=0 imm=-53
+    - Patching call <anon> @ 0x4001c0: S=0x400000 A=0 imm=-57
+    - Patching call <anon> @ 0x4001e0: S=0x400000 A=0 imm=-61
+    - Patching call <anon> @ 0x400200: S=0x400000 A=0 imm=-65
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400098
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+[*] No BTF metadata from Rust binary
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x4000f0: S=0x400000 A=0 imm=-31
+    - Patching call <anon> @ 0x400110: S=0x400000 A=0 imm=-35
+    - Patching call <anon> @ 0x400130: S=0x400000 A=0 imm=-39
+    - Patching call <anon> @ 0x400150: S=0x400000 A=0 imm=-43
+    - Patching call <anon> @ 0x400170: S=0x400000 A=0 imm=-47
+    - Patching call <anon> @ 0x400190: S=0x400000 A=0 imm=-51
+    - Patching call <anon> @ 0x4001b0: S=0x400000 A=0 imm=-55
+    - Patching call <anon> @ 0x4001d0: S=0x400000 A=0 imm=-59
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400068
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+
+[=] Starting ITE-based Z3 Verification [=]
+    [+] Adding 1 input constraints to solver
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 0 maps via ITE semantics
+    [?] Solver checking 1 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "warmup_original_fixed_reference", "seconds": 1.6434351249990868, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_1_original_self: fusion_08.o vs fusion_08.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] No BTF metadata from C binary
+[*] No BTF metadata available, using command-line map specs
+ASSUMPTION fusion_n_8 [experiment_input] (truncate(original.ctx.r15, 32) eq 8:u32)
+[*] witness: added 1 assumption constraint(s) from <benchmark controlled input>
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400120: S=0x400000 A=0 imm=-37
+    - Patching call <anon> @ 0x400140: S=0x400000 A=0 imm=-41
+    - Patching call <anon> @ 0x400160: S=0x400000 A=0 imm=-45
+    - Patching call <anon> @ 0x400180: S=0x400000 A=0 imm=-49
+    - Patching call <anon> @ 0x4001a0: S=0x400000 A=0 imm=-53
+    - Patching call <anon> @ 0x4001c0: S=0x400000 A=0 imm=-57
+    - Patching call <anon> @ 0x4001e0: S=0x400000 A=0 imm=-61
+    - Patching call <anon> @ 0x400200: S=0x400000 A=0 imm=-65
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400098
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+[*] No BTF metadata from Rust binary
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400120: S=0x400000 A=0 imm=-37
+    - Patching call <anon> @ 0x400140: S=0x400000 A=0 imm=-41
+    - Patching call <anon> @ 0x400160: S=0x400000 A=0 imm=-45
+    - Patching call <anon> @ 0x400180: S=0x400000 A=0 imm=-49
+    - Patching call <anon> @ 0x4001a0: S=0x400000 A=0 imm=-53
+    - Patching call <anon> @ 0x4001c0: S=0x400000 A=0 imm=-57
+    - Patching call <anon> @ 0x4001e0: S=0x400000 A=0 imm=-61
+    - Patching call <anon> @ 0x400200: S=0x400000 A=0 imm=-65
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400098
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+
+[=] Starting ITE-based Z3 Verification [=]
+    [+] Adding 1 input constraints to solver
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 0 maps via ITE semantics
+    [?] Solver checking 1 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_1_original_self", "seconds": 1.9709314169995196, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_1_optimized_self: fusion_08_SOURCE_OPT.o vs fusion_08_SOURCE_OPT.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] No BTF metadata from C binary
+[*] No BTF metadata available, using command-line map specs
+ASSUMPTION fusion_n_8 [experiment_input] (truncate(original.ctx.r15, 32) eq 8:u32)
+[*] witness: added 1 assumption constraint(s) from <benchmark controlled input>
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x4000f0: S=0x400000 A=0 imm=-31
+    - Patching call <anon> @ 0x400110: S=0x400000 A=0 imm=-35
+    - Patching call <anon> @ 0x400130: S=0x400000 A=0 imm=-39
+    - Patching call <anon> @ 0x400150: S=0x400000 A=0 imm=-43
+    - Patching call <anon> @ 0x400170: S=0x400000 A=0 imm=-47
+    - Patching call <anon> @ 0x400190: S=0x400000 A=0 imm=-51
+    - Patching call <anon> @ 0x4001b0: S=0x400000 A=0 imm=-55
+    - Patching call <anon> @ 0x4001d0: S=0x400000 A=0 imm=-59
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400068
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+[*] No BTF metadata from Rust binary
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x4000f0: S=0x400000 A=0 imm=-31
+    - Patching call <anon> @ 0x400110: S=0x400000 A=0 imm=-35
+    - Patching call <anon> @ 0x400130: S=0x400000 A=0 imm=-39
+    - Patching call <anon> @ 0x400150: S=0x400000 A=0 imm=-43
+    - Patching call <anon> @ 0x400170: S=0x400000 A=0 imm=-47
+    - Patching call <anon> @ 0x400190: S=0x400000 A=0 imm=-51
+    - Patching call <anon> @ 0x4001b0: S=0x400000 A=0 imm=-55
+    - Patching call <anon> @ 0x4001d0: S=0x400000 A=0 imm=-59
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400068
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+
+[=] Starting ITE-based Z3 Verification [=]
+    [+] Adding 1 input constraints to solver
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 0 maps via ITE semantics
+    [?] Solver checking 1 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_1_optimized_self", "seconds": 1.304756499999712, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_1_original_fixed_reference: fusion_08.o vs fusion_08_SOURCE_OPT.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] No BTF metadata from C binary
+[*] No BTF metadata available, using command-line map specs
+ASSUMPTION fusion_n_8 [experiment_input] (truncate(original.ctx.r15, 32) eq 8:u32)
+[*] witness: added 1 assumption constraint(s) from <benchmark controlled input>
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400120: S=0x400000 A=0 imm=-37
+    - Patching call <anon> @ 0x400140: S=0x400000 A=0 imm=-41
+    - Patching call <anon> @ 0x400160: S=0x400000 A=0 imm=-45
+    - Patching call <anon> @ 0x400180: S=0x400000 A=0 imm=-49
+    - Patching call <anon> @ 0x4001a0: S=0x400000 A=0 imm=-53
+    - Patching call <anon> @ 0x4001c0: S=0x400000 A=0 imm=-57
+    - Patching call <anon> @ 0x4001e0: S=0x400000 A=0 imm=-61
+    - Patching call <anon> @ 0x400200: S=0x400000 A=0 imm=-65
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400098
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+[*] No BTF metadata from Rust binary
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x4000f0: S=0x400000 A=0 imm=-31
+    - Patching call <anon> @ 0x400110: S=0x400000 A=0 imm=-35
+    - Patching call <anon> @ 0x400130: S=0x400000 A=0 imm=-39
+    - Patching call <anon> @ 0x400150: S=0x400000 A=0 imm=-43
+    - Patching call <anon> @ 0x400170: S=0x400000 A=0 imm=-47
+    - Patching call <anon> @ 0x400190: S=0x400000 A=0 imm=-51
+    - Patching call <anon> @ 0x4001b0: S=0x400000 A=0 imm=-55
+    - Patching call <anon> @ 0x4001d0: S=0x400000 A=0 imm=-59
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400068
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+
+[=] Starting ITE-based Z3 Verification [=]
+    [+] Adding 1 input constraints to solver
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 0 maps via ITE semantics
+    [?] Solver checking 1 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_1_original_fixed_reference", "seconds": 1.5982782079991011, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_2_original_fixed_reference: fusion_08.o vs fusion_08_SOURCE_OPT.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] No BTF metadata from C binary
+[*] No BTF metadata available, using command-line map specs
+ASSUMPTION fusion_n_8 [experiment_input] (truncate(original.ctx.r15, 32) eq 8:u32)
+[*] witness: added 1 assumption constraint(s) from <benchmark controlled input>
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400120: S=0x400000 A=0 imm=-37
+    - Patching call <anon> @ 0x400140: S=0x400000 A=0 imm=-41
+    - Patching call <anon> @ 0x400160: S=0x400000 A=0 imm=-45
+    - Patching call <anon> @ 0x400180: S=0x400000 A=0 imm=-49
+    - Patching call <anon> @ 0x4001a0: S=0x400000 A=0 imm=-53
+    - Patching call <anon> @ 0x4001c0: S=0x400000 A=0 imm=-57
+    - Patching call <anon> @ 0x4001e0: S=0x400000 A=0 imm=-61
+    - Patching call <anon> @ 0x400200: S=0x400000 A=0 imm=-65
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400098
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+[*] No BTF metadata from Rust binary
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x4000f0: S=0x400000 A=0 imm=-31
+    - Patching call <anon> @ 0x400110: S=0x400000 A=0 imm=-35
+    - Patching call <anon> @ 0x400130: S=0x400000 A=0 imm=-39
+    - Patching call <anon> @ 0x400150: S=0x400000 A=0 imm=-43
+    - Patching call <anon> @ 0x400170: S=0x400000 A=0 imm=-47
+    - Patching call <anon> @ 0x400190: S=0x400000 A=0 imm=-51
+    - Patching call <anon> @ 0x4001b0: S=0x400000 A=0 imm=-55
+    - Patching call <anon> @ 0x4001d0: S=0x400000 A=0 imm=-59
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400068
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+
+[=] Starting ITE-based Z3 Verification [=]
+    [+] Adding 1 input constraints to solver
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 0 maps via ITE semantics
+    [?] Solver checking 1 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_2_original_fixed_reference", "seconds": 1.6336694170004193, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_2_optimized_self: fusion_08_SOURCE_OPT.o vs fusion_08_SOURCE_OPT.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] No BTF metadata from C binary
+[*] No BTF metadata available, using command-line map specs
+ASSUMPTION fusion_n_8 [experiment_input] (truncate(original.ctx.r15, 32) eq 8:u32)
+[*] witness: added 1 assumption constraint(s) from <benchmark controlled input>
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x4000f0: S=0x400000 A=0 imm=-31
+    - Patching call <anon> @ 0x400110: S=0x400000 A=0 imm=-35
+    - Patching call <anon> @ 0x400130: S=0x400000 A=0 imm=-39
+    - Patching call <anon> @ 0x400150: S=0x400000 A=0 imm=-43
+    - Patching call <anon> @ 0x400170: S=0x400000 A=0 imm=-47
+    - Patching call <anon> @ 0x400190: S=0x400000 A=0 imm=-51
+    - Patching call <anon> @ 0x4001b0: S=0x400000 A=0 imm=-55
+    - Patching call <anon> @ 0x4001d0: S=0x400000 A=0 imm=-59
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400068
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+[*] No BTF metadata from Rust binary
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x4000f0: S=0x400000 A=0 imm=-31
+    - Patching call <anon> @ 0x400110: S=0x400000 A=0 imm=-35
+    - Patching call <anon> @ 0x400130: S=0x400000 A=0 imm=-39
+    - Patching call <anon> @ 0x400150: S=0x400000 A=0 imm=-43
+    - Patching call <anon> @ 0x400170: S=0x400000 A=0 imm=-47
+    - Patching call <anon> @ 0x400190: S=0x400000 A=0 imm=-51
+    - Patching call <anon> @ 0x4001b0: S=0x400000 A=0 imm=-55
+    - Patching call <anon> @ 0x4001d0: S=0x400000 A=0 imm=-59
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400068
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+
+[=] Starting ITE-based Z3 Verification [=]
+    [+] Adding 1 input constraints to solver
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 0 maps via ITE semantics
+    [?] Solver checking 1 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_2_optimized_self", "seconds": 1.2892573329991137, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_2_original_self: fusion_08.o vs fusion_08.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] No BTF metadata from C binary
+[*] No BTF metadata available, using command-line map specs
+ASSUMPTION fusion_n_8 [experiment_input] (truncate(original.ctx.r15, 32) eq 8:u32)
+[*] witness: added 1 assumption constraint(s) from <benchmark controlled input>
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400120: S=0x400000 A=0 imm=-37
+    - Patching call <anon> @ 0x400140: S=0x400000 A=0 imm=-41
+    - Patching call <anon> @ 0x400160: S=0x400000 A=0 imm=-45
+    - Patching call <anon> @ 0x400180: S=0x400000 A=0 imm=-49
+    - Patching call <anon> @ 0x4001a0: S=0x400000 A=0 imm=-53
+    - Patching call <anon> @ 0x4001c0: S=0x400000 A=0 imm=-57
+    - Patching call <anon> @ 0x4001e0: S=0x400000 A=0 imm=-61
+    - Patching call <anon> @ 0x400200: S=0x400000 A=0 imm=-65
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400098
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+[*] No BTF metadata from Rust binary
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400120: S=0x400000 A=0 imm=-37
+    - Patching call <anon> @ 0x400140: S=0x400000 A=0 imm=-41
+    - Patching call <anon> @ 0x400160: S=0x400000 A=0 imm=-45
+    - Patching call <anon> @ 0x400180: S=0x400000 A=0 imm=-49
+    - Patching call <anon> @ 0x4001a0: S=0x400000 A=0 imm=-53
+    - Patching call <anon> @ 0x4001c0: S=0x400000 A=0 imm=-57
+    - Patching call <anon> @ 0x4001e0: S=0x400000 A=0 imm=-61
+    - Patching call <anon> @ 0x400200: S=0x400000 A=0 imm=-65
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400098
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+
+[=] Starting ITE-based Z3 Verification [=]
+    [+] Adding 1 input constraints to solver
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 0 maps via ITE semantics
+    [?] Solver checking 1 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_2_original_self", "seconds": 1.973455625000497, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_3_original_self: fusion_08.o vs fusion_08.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] No BTF metadata from C binary
+[*] No BTF metadata available, using command-line map specs
+ASSUMPTION fusion_n_8 [experiment_input] (truncate(original.ctx.r15, 32) eq 8:u32)
+[*] witness: added 1 assumption constraint(s) from <benchmark controlled input>
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400120: S=0x400000 A=0 imm=-37
+    - Patching call <anon> @ 0x400140: S=0x400000 A=0 imm=-41
+    - Patching call <anon> @ 0x400160: S=0x400000 A=0 imm=-45
+    - Patching call <anon> @ 0x400180: S=0x400000 A=0 imm=-49
+    - Patching call <anon> @ 0x4001a0: S=0x400000 A=0 imm=-53
+    - Patching call <anon> @ 0x4001c0: S=0x400000 A=0 imm=-57
+    - Patching call <anon> @ 0x4001e0: S=0x400000 A=0 imm=-61
+    - Patching call <anon> @ 0x400200: S=0x400000 A=0 imm=-65
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400098
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+[*] No BTF metadata from Rust binary
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400120: S=0x400000 A=0 imm=-37
+    - Patching call <anon> @ 0x400140: S=0x400000 A=0 imm=-41
+    - Patching call <anon> @ 0x400160: S=0x400000 A=0 imm=-45
+    - Patching call <anon> @ 0x400180: S=0x400000 A=0 imm=-49
+    - Patching call <anon> @ 0x4001a0: S=0x400000 A=0 imm=-53
+    - Patching call <anon> @ 0x4001c0: S=0x400000 A=0 imm=-57
+    - Patching call <anon> @ 0x4001e0: S=0x400000 A=0 imm=-61
+    - Patching call <anon> @ 0x400200: S=0x400000 A=0 imm=-65
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400098
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+
+[=] Starting ITE-based Z3 Verification [=]
+    [+] Adding 1 input constraints to solver
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 0 maps via ITE semantics
+    [?] Solver checking 1 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_3_original_self", "seconds": 1.996368584001175, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_3_optimized_self: fusion_08_SOURCE_OPT.o vs fusion_08_SOURCE_OPT.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] No BTF metadata from C binary
+[*] No BTF metadata available, using command-line map specs
+ASSUMPTION fusion_n_8 [experiment_input] (truncate(original.ctx.r15, 32) eq 8:u32)
+[*] witness: added 1 assumption constraint(s) from <benchmark controlled input>
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x4000f0: S=0x400000 A=0 imm=-31
+    - Patching call <anon> @ 0x400110: S=0x400000 A=0 imm=-35
+    - Patching call <anon> @ 0x400130: S=0x400000 A=0 imm=-39
+    - Patching call <anon> @ 0x400150: S=0x400000 A=0 imm=-43
+    - Patching call <anon> @ 0x400170: S=0x400000 A=0 imm=-47
+    - Patching call <anon> @ 0x400190: S=0x400000 A=0 imm=-51
+    - Patching call <anon> @ 0x4001b0: S=0x400000 A=0 imm=-55
+    - Patching call <anon> @ 0x4001d0: S=0x400000 A=0 imm=-59
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400068
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+[*] No BTF metadata from Rust binary
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x4000f0: S=0x400000 A=0 imm=-31
+    - Patching call <anon> @ 0x400110: S=0x400000 A=0 imm=-35
+    - Patching call <anon> @ 0x400130: S=0x400000 A=0 imm=-39
+    - Patching call <anon> @ 0x400150: S=0x400000 A=0 imm=-43
+    - Patching call <anon> @ 0x400170: S=0x400000 A=0 imm=-47
+    - Patching call <anon> @ 0x400190: S=0x400000 A=0 imm=-51
+    - Patching call <anon> @ 0x4001b0: S=0x400000 A=0 imm=-55
+    - Patching call <anon> @ 0x4001d0: S=0x400000 A=0 imm=-59
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400068
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+
+[=] Starting ITE-based Z3 Verification [=]
+    [+] Adding 1 input constraints to solver
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 0 maps via ITE semantics
+    [?] Solver checking 1 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_3_optimized_self", "seconds": 1.323454708999634, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_3_original_fixed_reference: fusion_08.o vs fusion_08_SOURCE_OPT.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] No BTF metadata from C binary
+[*] No BTF metadata available, using command-line map specs
+ASSUMPTION fusion_n_8 [experiment_input] (truncate(original.ctx.r15, 32) eq 8:u32)
+[*] witness: added 1 assumption constraint(s) from <benchmark controlled input>
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400120: S=0x400000 A=0 imm=-37
+    - Patching call <anon> @ 0x400140: S=0x400000 A=0 imm=-41
+    - Patching call <anon> @ 0x400160: S=0x400000 A=0 imm=-45
+    - Patching call <anon> @ 0x400180: S=0x400000 A=0 imm=-49
+    - Patching call <anon> @ 0x4001a0: S=0x400000 A=0 imm=-53
+    - Patching call <anon> @ 0x4001c0: S=0x400000 A=0 imm=-57
+    - Patching call <anon> @ 0x4001e0: S=0x400000 A=0 imm=-61
+    - Patching call <anon> @ 0x400200: S=0x400000 A=0 imm=-65
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400098
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+[*] No BTF metadata from Rust binary
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x4000f0: S=0x400000 A=0 imm=-31
+    - Patching call <anon> @ 0x400110: S=0x400000 A=0 imm=-35
+    - Patching call <anon> @ 0x400130: S=0x400000 A=0 imm=-39
+    - Patching call <anon> @ 0x400150: S=0x400000 A=0 imm=-43
+    - Patching call <anon> @ 0x400170: S=0x400000 A=0 imm=-47
+    - Patching call <anon> @ 0x400190: S=0x400000 A=0 imm=-51
+    - Patching call <anon> @ 0x4001b0: S=0x400000 A=0 imm=-55
+    - Patching call <anon> @ 0x4001d0: S=0x400000 A=0 imm=-59
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400068
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+
+[=] Starting ITE-based Z3 Verification [=]
+    [+] Adding 1 input constraints to solver
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 0 maps via ITE semantics
+    [?] Solver checking 1 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_3_original_fixed_reference", "seconds": 1.6513984579996759, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_4_original_fixed_reference: fusion_08.o vs fusion_08_SOURCE_OPT.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] No BTF metadata from C binary
+[*] No BTF metadata available, using command-line map specs
+ASSUMPTION fusion_n_8 [experiment_input] (truncate(original.ctx.r15, 32) eq 8:u32)
+[*] witness: added 1 assumption constraint(s) from <benchmark controlled input>
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400120: S=0x400000 A=0 imm=-37
+    - Patching call <anon> @ 0x400140: S=0x400000 A=0 imm=-41
+    - Patching call <anon> @ 0x400160: S=0x400000 A=0 imm=-45
+    - Patching call <anon> @ 0x400180: S=0x400000 A=0 imm=-49
+    - Patching call <anon> @ 0x4001a0: S=0x400000 A=0 imm=-53
+    - Patching call <anon> @ 0x4001c0: S=0x400000 A=0 imm=-57
+    - Patching call <anon> @ 0x4001e0: S=0x400000 A=0 imm=-61
+    - Patching call <anon> @ 0x400200: S=0x400000 A=0 imm=-65
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400098
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+[*] No BTF metadata from Rust binary
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x4000f0: S=0x400000 A=0 imm=-31
+    - Patching call <anon> @ 0x400110: S=0x400000 A=0 imm=-35
+    - Patching call <anon> @ 0x400130: S=0x400000 A=0 imm=-39
+    - Patching call <anon> @ 0x400150: S=0x400000 A=0 imm=-43
+    - Patching call <anon> @ 0x400170: S=0x400000 A=0 imm=-47
+    - Patching call <anon> @ 0x400190: S=0x400000 A=0 imm=-51
+    - Patching call <anon> @ 0x4001b0: S=0x400000 A=0 imm=-55
+    - Patching call <anon> @ 0x4001d0: S=0x400000 A=0 imm=-59
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400068
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+
+[=] Starting ITE-based Z3 Verification [=]
+    [+] Adding 1 input constraints to solver
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 0 maps via ITE semantics
+    [?] Solver checking 1 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_4_original_fixed_reference", "seconds": 1.659238500000356, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_4_optimized_self: fusion_08_SOURCE_OPT.o vs fusion_08_SOURCE_OPT.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] No BTF metadata from C binary
+[*] No BTF metadata available, using command-line map specs
+ASSUMPTION fusion_n_8 [experiment_input] (truncate(original.ctx.r15, 32) eq 8:u32)
+[*] witness: added 1 assumption constraint(s) from <benchmark controlled input>
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x4000f0: S=0x400000 A=0 imm=-31
+    - Patching call <anon> @ 0x400110: S=0x400000 A=0 imm=-35
+    - Patching call <anon> @ 0x400130: S=0x400000 A=0 imm=-39
+    - Patching call <anon> @ 0x400150: S=0x400000 A=0 imm=-43
+    - Patching call <anon> @ 0x400170: S=0x400000 A=0 imm=-47
+    - Patching call <anon> @ 0x400190: S=0x400000 A=0 imm=-51
+    - Patching call <anon> @ 0x4001b0: S=0x400000 A=0 imm=-55
+    - Patching call <anon> @ 0x4001d0: S=0x400000 A=0 imm=-59
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400068
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+[*] No BTF metadata from Rust binary
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x4000f0: S=0x400000 A=0 imm=-31
+    - Patching call <anon> @ 0x400110: S=0x400000 A=0 imm=-35
+    - Patching call <anon> @ 0x400130: S=0x400000 A=0 imm=-39
+    - Patching call <anon> @ 0x400150: S=0x400000 A=0 imm=-43
+    - Patching call <anon> @ 0x400170: S=0x400000 A=0 imm=-47
+    - Patching call <anon> @ 0x400190: S=0x400000 A=0 imm=-51
+    - Patching call <anon> @ 0x4001b0: S=0x400000 A=0 imm=-55
+    - Patching call <anon> @ 0x4001d0: S=0x400000 A=0 imm=-59
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400068
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+
+[=] Starting ITE-based Z3 Verification [=]
+    [+] Adding 1 input constraints to solver
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 0 maps via ITE semantics
+    [?] Solver checking 1 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_4_optimized_self", "seconds": 1.2948108749988023, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_4_original_self: fusion_08.o vs fusion_08.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] No BTF metadata from C binary
+[*] No BTF metadata available, using command-line map specs
+ASSUMPTION fusion_n_8 [experiment_input] (truncate(original.ctx.r15, 32) eq 8:u32)
+[*] witness: added 1 assumption constraint(s) from <benchmark controlled input>
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400120: S=0x400000 A=0 imm=-37
+    - Patching call <anon> @ 0x400140: S=0x400000 A=0 imm=-41
+    - Patching call <anon> @ 0x400160: S=0x400000 A=0 imm=-45
+    - Patching call <anon> @ 0x400180: S=0x400000 A=0 imm=-49
+    - Patching call <anon> @ 0x4001a0: S=0x400000 A=0 imm=-53
+    - Patching call <anon> @ 0x4001c0: S=0x400000 A=0 imm=-57
+    - Patching call <anon> @ 0x4001e0: S=0x400000 A=0 imm=-61
+    - Patching call <anon> @ 0x400200: S=0x400000 A=0 imm=-65
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400098
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+[*] No BTF metadata from Rust binary
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400120: S=0x400000 A=0 imm=-37
+    - Patching call <anon> @ 0x400140: S=0x400000 A=0 imm=-41
+    - Patching call <anon> @ 0x400160: S=0x400000 A=0 imm=-45
+    - Patching call <anon> @ 0x400180: S=0x400000 A=0 imm=-49
+    - Patching call <anon> @ 0x4001a0: S=0x400000 A=0 imm=-53
+    - Patching call <anon> @ 0x4001c0: S=0x400000 A=0 imm=-57
+    - Patching call <anon> @ 0x4001e0: S=0x400000 A=0 imm=-61
+    - Patching call <anon> @ 0x400200: S=0x400000 A=0 imm=-65
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400098
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+
+[=] Starting ITE-based Z3 Verification [=]
+    [+] Adding 1 input constraints to solver
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 0 maps via ITE semantics
+    [?] Solver checking 1 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_4_original_self", "seconds": 1.9980427909995342, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_5_original_self: fusion_08.o vs fusion_08.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] No BTF metadata from C binary
+[*] No BTF metadata available, using command-line map specs
+ASSUMPTION fusion_n_8 [experiment_input] (truncate(original.ctx.r15, 32) eq 8:u32)
+[*] witness: added 1 assumption constraint(s) from <benchmark controlled input>
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400120: S=0x400000 A=0 imm=-37
+    - Patching call <anon> @ 0x400140: S=0x400000 A=0 imm=-41
+    - Patching call <anon> @ 0x400160: S=0x400000 A=0 imm=-45
+    - Patching call <anon> @ 0x400180: S=0x400000 A=0 imm=-49
+    - Patching call <anon> @ 0x4001a0: S=0x400000 A=0 imm=-53
+    - Patching call <anon> @ 0x4001c0: S=0x400000 A=0 imm=-57
+    - Patching call <anon> @ 0x4001e0: S=0x400000 A=0 imm=-61
+    - Patching call <anon> @ 0x400200: S=0x400000 A=0 imm=-65
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400098
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+[*] No BTF metadata from Rust binary
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400120: S=0x400000 A=0 imm=-37
+    - Patching call <anon> @ 0x400140: S=0x400000 A=0 imm=-41
+    - Patching call <anon> @ 0x400160: S=0x400000 A=0 imm=-45
+    - Patching call <anon> @ 0x400180: S=0x400000 A=0 imm=-49
+    - Patching call <anon> @ 0x4001a0: S=0x400000 A=0 imm=-53
+    - Patching call <anon> @ 0x4001c0: S=0x400000 A=0 imm=-57
+    - Patching call <anon> @ 0x4001e0: S=0x400000 A=0 imm=-61
+    - Patching call <anon> @ 0x400200: S=0x400000 A=0 imm=-65
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400098
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+
+[=] Starting ITE-based Z3 Verification [=]
+    [+] Adding 1 input constraints to solver
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 0 maps via ITE semantics
+    [?] Solver checking 1 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_5_original_self", "seconds": 2.0304307919996063, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_5_optimized_self: fusion_08_SOURCE_OPT.o vs fusion_08_SOURCE_OPT.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] No BTF metadata from C binary
+[*] No BTF metadata available, using command-line map specs
+ASSUMPTION fusion_n_8 [experiment_input] (truncate(original.ctx.r15, 32) eq 8:u32)
+[*] witness: added 1 assumption constraint(s) from <benchmark controlled input>
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x4000f0: S=0x400000 A=0 imm=-31
+    - Patching call <anon> @ 0x400110: S=0x400000 A=0 imm=-35
+    - Patching call <anon> @ 0x400130: S=0x400000 A=0 imm=-39
+    - Patching call <anon> @ 0x400150: S=0x400000 A=0 imm=-43
+    - Patching call <anon> @ 0x400170: S=0x400000 A=0 imm=-47
+    - Patching call <anon> @ 0x400190: S=0x400000 A=0 imm=-51
+    - Patching call <anon> @ 0x4001b0: S=0x400000 A=0 imm=-55
+    - Patching call <anon> @ 0x4001d0: S=0x400000 A=0 imm=-59
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400068
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+[*] No BTF metadata from Rust binary
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x4000f0: S=0x400000 A=0 imm=-31
+    - Patching call <anon> @ 0x400110: S=0x400000 A=0 imm=-35
+    - Patching call <anon> @ 0x400130: S=0x400000 A=0 imm=-39
+    - Patching call <anon> @ 0x400150: S=0x400000 A=0 imm=-43
+    - Patching call <anon> @ 0x400170: S=0x400000 A=0 imm=-47
+    - Patching call <anon> @ 0x400190: S=0x400000 A=0 imm=-51
+    - Patching call <anon> @ 0x4001b0: S=0x400000 A=0 imm=-55
+    - Patching call <anon> @ 0x4001d0: S=0x400000 A=0 imm=-59
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400068
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+
+[=] Starting ITE-based Z3 Verification [=]
+    [+] Adding 1 input constraints to solver
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 0 maps via ITE semantics
+    [?] Solver checking 1 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_5_optimized_self", "seconds": 1.3232286670008762, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_5_original_fixed_reference: fusion_08.o vs fusion_08_SOURCE_OPT.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] No BTF metadata from C binary
+[*] No BTF metadata available, using command-line map specs
+ASSUMPTION fusion_n_8 [experiment_input] (truncate(original.ctx.r15, 32) eq 8:u32)
+[*] witness: added 1 assumption constraint(s) from <benchmark controlled input>
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400120: S=0x400000 A=0 imm=-37
+    - Patching call <anon> @ 0x400140: S=0x400000 A=0 imm=-41
+    - Patching call <anon> @ 0x400160: S=0x400000 A=0 imm=-45
+    - Patching call <anon> @ 0x400180: S=0x400000 A=0 imm=-49
+    - Patching call <anon> @ 0x4001a0: S=0x400000 A=0 imm=-53
+    - Patching call <anon> @ 0x4001c0: S=0x400000 A=0 imm=-57
+    - Patching call <anon> @ 0x4001e0: S=0x400000 A=0 imm=-61
+    - Patching call <anon> @ 0x400200: S=0x400000 A=0 imm=-65
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400098
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+[*] No BTF metadata from Rust binary
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x4000f0: S=0x400000 A=0 imm=-31
+    - Patching call <anon> @ 0x400110: S=0x400000 A=0 imm=-35
+    - Patching call <anon> @ 0x400130: S=0x400000 A=0 imm=-39
+    - Patching call <anon> @ 0x400150: S=0x400000 A=0 imm=-43
+    - Patching call <anon> @ 0x400170: S=0x400000 A=0 imm=-47
+    - Patching call <anon> @ 0x400190: S=0x400000 A=0 imm=-51
+    - Patching call <anon> @ 0x4001b0: S=0x400000 A=0 imm=-55
+    - Patching call <anon> @ 0x4001d0: S=0x400000 A=0 imm=-59
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400068
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+
+[=] Starting ITE-based Z3 Verification [=]
+    [+] Adding 1 input constraints to solver
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 0 maps via ITE semantics
+    [?] Solver checking 1 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_5_original_fixed_reference", "seconds": 1.6556282499986992, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_6_original_fixed_reference: fusion_08.o vs fusion_08_SOURCE_OPT.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] No BTF metadata from C binary
+[*] No BTF metadata available, using command-line map specs
+ASSUMPTION fusion_n_8 [experiment_input] (truncate(original.ctx.r15, 32) eq 8:u32)
+[*] witness: added 1 assumption constraint(s) from <benchmark controlled input>
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400120: S=0x400000 A=0 imm=-37
+    - Patching call <anon> @ 0x400140: S=0x400000 A=0 imm=-41
+    - Patching call <anon> @ 0x400160: S=0x400000 A=0 imm=-45
+    - Patching call <anon> @ 0x400180: S=0x400000 A=0 imm=-49
+    - Patching call <anon> @ 0x4001a0: S=0x400000 A=0 imm=-53
+    - Patching call <anon> @ 0x4001c0: S=0x400000 A=0 imm=-57
+    - Patching call <anon> @ 0x4001e0: S=0x400000 A=0 imm=-61
+    - Patching call <anon> @ 0x400200: S=0x400000 A=0 imm=-65
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400098
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+[*] No BTF metadata from Rust binary
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x4000f0: S=0x400000 A=0 imm=-31
+    - Patching call <anon> @ 0x400110: S=0x400000 A=0 imm=-35
+    - Patching call <anon> @ 0x400130: S=0x400000 A=0 imm=-39
+    - Patching call <anon> @ 0x400150: S=0x400000 A=0 imm=-43
+    - Patching call <anon> @ 0x400170: S=0x400000 A=0 imm=-47
+    - Patching call <anon> @ 0x400190: S=0x400000 A=0 imm=-51
+    - Patching call <anon> @ 0x4001b0: S=0x400000 A=0 imm=-55
+    - Patching call <anon> @ 0x4001d0: S=0x400000 A=0 imm=-59
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400068
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+
+[=] Starting ITE-based Z3 Verification [=]
+    [+] Adding 1 input constraints to solver
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 0 maps via ITE semantics
+    [?] Solver checking 1 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_6_original_fixed_reference", "seconds": 1.679528125001525, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_6_optimized_self: fusion_08_SOURCE_OPT.o vs fusion_08_SOURCE_OPT.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] No BTF metadata from C binary
+[*] No BTF metadata available, using command-line map specs
+ASSUMPTION fusion_n_8 [experiment_input] (truncate(original.ctx.r15, 32) eq 8:u32)
+[*] witness: added 1 assumption constraint(s) from <benchmark controlled input>
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x4000f0: S=0x400000 A=0 imm=-31
+    - Patching call <anon> @ 0x400110: S=0x400000 A=0 imm=-35
+    - Patching call <anon> @ 0x400130: S=0x400000 A=0 imm=-39
+    - Patching call <anon> @ 0x400150: S=0x400000 A=0 imm=-43
+    - Patching call <anon> @ 0x400170: S=0x400000 A=0 imm=-47
+    - Patching call <anon> @ 0x400190: S=0x400000 A=0 imm=-51
+    - Patching call <anon> @ 0x4001b0: S=0x400000 A=0 imm=-55
+    - Patching call <anon> @ 0x4001d0: S=0x400000 A=0 imm=-59
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400068
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+[*] No BTF metadata from Rust binary
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x4000f0: S=0x400000 A=0 imm=-31
+    - Patching call <anon> @ 0x400110: S=0x400000 A=0 imm=-35
+    - Patching call <anon> @ 0x400130: S=0x400000 A=0 imm=-39
+    - Patching call <anon> @ 0x400150: S=0x400000 A=0 imm=-43
+    - Patching call <anon> @ 0x400170: S=0x400000 A=0 imm=-47
+    - Patching call <anon> @ 0x400190: S=0x400000 A=0 imm=-51
+    - Patching call <anon> @ 0x4001b0: S=0x400000 A=0 imm=-55
+    - Patching call <anon> @ 0x4001d0: S=0x400000 A=0 imm=-59
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400068
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+
+[=] Starting ITE-based Z3 Verification [=]
+    [+] Adding 1 input constraints to solver
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 0 maps via ITE semantics
+    [?] Solver checking 1 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_6_optimized_self", "seconds": 1.3029292920000444, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_6_original_self: fusion_08.o vs fusion_08.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] No BTF metadata from C binary
+[*] No BTF metadata available, using command-line map specs
+ASSUMPTION fusion_n_8 [experiment_input] (truncate(original.ctx.r15, 32) eq 8:u32)
+[*] witness: added 1 assumption constraint(s) from <benchmark controlled input>
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400120: S=0x400000 A=0 imm=-37
+    - Patching call <anon> @ 0x400140: S=0x400000 A=0 imm=-41
+    - Patching call <anon> @ 0x400160: S=0x400000 A=0 imm=-45
+    - Patching call <anon> @ 0x400180: S=0x400000 A=0 imm=-49
+    - Patching call <anon> @ 0x4001a0: S=0x400000 A=0 imm=-53
+    - Patching call <anon> @ 0x4001c0: S=0x400000 A=0 imm=-57
+    - Patching call <anon> @ 0x4001e0: S=0x400000 A=0 imm=-61
+    - Patching call <anon> @ 0x400200: S=0x400000 A=0 imm=-65
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400098
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+[*] No BTF metadata from Rust binary
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400120: S=0x400000 A=0 imm=-37
+    - Patching call <anon> @ 0x400140: S=0x400000 A=0 imm=-41
+    - Patching call <anon> @ 0x400160: S=0x400000 A=0 imm=-45
+    - Patching call <anon> @ 0x400180: S=0x400000 A=0 imm=-49
+    - Patching call <anon> @ 0x4001a0: S=0x400000 A=0 imm=-53
+    - Patching call <anon> @ 0x4001c0: S=0x400000 A=0 imm=-57
+    - Patching call <anon> @ 0x4001e0: S=0x400000 A=0 imm=-61
+    - Patching call <anon> @ 0x400200: S=0x400000 A=0 imm=-65
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400098
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+
+[=] Starting ITE-based Z3 Verification [=]
+    [+] Adding 1 input constraints to solver
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 0 maps via ITE semantics
+    [?] Solver checking 1 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_6_original_self", "seconds": 2.029849832999389, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_7_original_self: fusion_08.o vs fusion_08.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] No BTF metadata from C binary
+[*] No BTF metadata available, using command-line map specs
+ASSUMPTION fusion_n_8 [experiment_input] (truncate(original.ctx.r15, 32) eq 8:u32)
+[*] witness: added 1 assumption constraint(s) from <benchmark controlled input>
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400120: S=0x400000 A=0 imm=-37
+    - Patching call <anon> @ 0x400140: S=0x400000 A=0 imm=-41
+    - Patching call <anon> @ 0x400160: S=0x400000 A=0 imm=-45
+    - Patching call <anon> @ 0x400180: S=0x400000 A=0 imm=-49
+    - Patching call <anon> @ 0x4001a0: S=0x400000 A=0 imm=-53
+    - Patching call <anon> @ 0x4001c0: S=0x400000 A=0 imm=-57
+    - Patching call <anon> @ 0x4001e0: S=0x400000 A=0 imm=-61
+    - Patching call <anon> @ 0x400200: S=0x400000 A=0 imm=-65
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400098
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+[*] No BTF metadata from Rust binary
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400120: S=0x400000 A=0 imm=-37
+    - Patching call <anon> @ 0x400140: S=0x400000 A=0 imm=-41
+    - Patching call <anon> @ 0x400160: S=0x400000 A=0 imm=-45
+    - Patching call <anon> @ 0x400180: S=0x400000 A=0 imm=-49
+    - Patching call <anon> @ 0x4001a0: S=0x400000 A=0 imm=-53
+    - Patching call <anon> @ 0x4001c0: S=0x400000 A=0 imm=-57
+    - Patching call <anon> @ 0x4001e0: S=0x400000 A=0 imm=-61
+    - Patching call <anon> @ 0x400200: S=0x400000 A=0 imm=-65
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400098
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+
+[=] Starting ITE-based Z3 Verification [=]
+    [+] Adding 1 input constraints to solver
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 0 maps via ITE semantics
+    [?] Solver checking 1 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_7_original_self", "seconds": 2.0440345420011, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_7_optimized_self: fusion_08_SOURCE_OPT.o vs fusion_08_SOURCE_OPT.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] No BTF metadata from C binary
+[*] No BTF metadata available, using command-line map specs
+ASSUMPTION fusion_n_8 [experiment_input] (truncate(original.ctx.r15, 32) eq 8:u32)
+[*] witness: added 1 assumption constraint(s) from <benchmark controlled input>
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x4000f0: S=0x400000 A=0 imm=-31
+    - Patching call <anon> @ 0x400110: S=0x400000 A=0 imm=-35
+    - Patching call <anon> @ 0x400130: S=0x400000 A=0 imm=-39
+    - Patching call <anon> @ 0x400150: S=0x400000 A=0 imm=-43
+    - Patching call <anon> @ 0x400170: S=0x400000 A=0 imm=-47
+    - Patching call <anon> @ 0x400190: S=0x400000 A=0 imm=-51
+    - Patching call <anon> @ 0x4001b0: S=0x400000 A=0 imm=-55
+    - Patching call <anon> @ 0x4001d0: S=0x400000 A=0 imm=-59
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400068
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+[*] No BTF metadata from Rust binary
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x4000f0: S=0x400000 A=0 imm=-31
+    - Patching call <anon> @ 0x400110: S=0x400000 A=0 imm=-35
+    - Patching call <anon> @ 0x400130: S=0x400000 A=0 imm=-39
+    - Patching call <anon> @ 0x400150: S=0x400000 A=0 imm=-43
+    - Patching call <anon> @ 0x400170: S=0x400000 A=0 imm=-47
+    - Patching call <anon> @ 0x400190: S=0x400000 A=0 imm=-51
+    - Patching call <anon> @ 0x4001b0: S=0x400000 A=0 imm=-55
+    - Patching call <anon> @ 0x4001d0: S=0x400000 A=0 imm=-59
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400068
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+
+[=] Starting ITE-based Z3 Verification [=]
+    [+] Adding 1 input constraints to solver
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 0 maps via ITE semantics
+    [?] Solver checking 1 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_7_optimized_self", "seconds": 1.3112125829993602, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_7_original_fixed_reference: fusion_08.o vs fusion_08_SOURCE_OPT.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/test'
+[*] No BTF metadata from C binary
+[*] No BTF metadata available, using command-line map specs
+ASSUMPTION fusion_n_8 [experiment_input] (truncate(original.ctx.r15, 32) eq 8:u32)
+[*] witness: added 1 assumption constraint(s) from <benchmark controlled input>
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400120: S=0x400000 A=0 imm=-37
+    - Patching call <anon> @ 0x400140: S=0x400000 A=0 imm=-41
+    - Patching call <anon> @ 0x400160: S=0x400000 A=0 imm=-45
+    - Patching call <anon> @ 0x400180: S=0x400000 A=0 imm=-49
+    - Patching call <anon> @ 0x4001a0: S=0x400000 A=0 imm=-53
+    - Patching call <anon> @ 0x4001c0: S=0x400000 A=0 imm=-57
+    - Patching call <anon> @ 0x4001e0: S=0x400000 A=0 imm=-61
+    - Patching call <anon> @ 0x400200: S=0x400000 A=0 imm=-65
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400098
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+[*] No BTF metadata from Rust binary
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/fusion_08_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x4000f0: S=0x400000 A=0 imm=-31
+    - Patching call <anon> @ 0x400110: S=0x400000 A=0 imm=-35
+    - Patching call <anon> @ 0x400130: S=0x400000 A=0 imm=-39
+    - Patching call <anon> @ 0x400150: S=0x400000 A=0 imm=-43
+    - Patching call <anon> @ 0x400170: S=0x400000 A=0 imm=-47
+    - Patching call <anon> @ 0x400190: S=0x400000 A=0 imm=-51
+    - Patching call <anon> @ 0x4001b0: S=0x400000 A=0 imm=-55
+    - Patching call <anon> @ 0x4001d0: S=0x400000 A=0 imm=-59
+[*] Patching complete.
+[*] Scanning section 'kprobe/test' for atomic instructions (offset 0x0-0x180)
+    No atomic instructions found
+[*] Found entry 'entry' at 0x400068
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x18>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=10, map_entries=0
+
+[=] Starting ITE-based Z3 Verification [=]
+    [+] Adding 1 input constraints to solver
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 0 maps via ITE semantics
+    [?] Solver checking 1 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_7_original_fixed_reference", "seconds": 1.7048556670015387, "equivalent": true, "result_type": "equivalent"}
+
+--- SUMMARY ---
+{
+  "raw_seconds": {
+    "original_self": [
+      1.9709314169995196,
+      1.973455625000497,
+      1.996368584001175,
+      1.9980427909995342,
+      2.0304307919996063,
+      2.029849832999389,
+      2.0440345420011
+    ],
+    "optimized_self": [
+      1.304756499999712,
+      1.2892573329991137,
+      1.323454708999634,
+      1.2948108749988023,
+      1.3232286670008762,
+      1.3029292920000444,
+      1.3112125829993602
+    ],
+    "original_fixed_reference": [
+      1.5982782079991011,
+      1.6336694170004193,
+      1.6513984579996759,
+      1.659238500000356,
+      1.6556282499986992,
+      1.679528125001525,
+      1.7048556670015387
+    ]
+  },
+  "median_seconds": {
+    "original_self": 1.9980427909995342,
+    "optimized_self": 1.304756499999712,
+    "original_fixed_reference": 1.6556282499986992
+  },
+  "self_reduction_percent": 34.69827043358771,
+  "self_reduction_ci95_percent": [
+    33.71821828868764,
+    35.8115427644821
+  ],
+  "fixed_reference_reduction_percent": 21.192665080416617,
+  "fixed_reference_reduction_ci95_percent": [
+    19.8722355231159,
+    22.4228952999009
+  ]
+}
