@@ -1,0 +1,29 @@
+--- KEN/dataset/libbpf/execsnoop.bpf.c
++++ ken_execsnoop_alignment.bpf.c
+@@ -2,7 +2,25 @@
+ #include <vmlinux.h>
+ #include <bpf/bpf_helpers.h>
+ #include <bpf/bpf_core_read.h>
+-#include "execsnoop.h"
++
++/* SPDX-License-Identifier: (LGPL-2.1 OR BSD-2-Clause) */
++#ifndef __EXECSNOOP_H
++#define __EXECSNOOP_H
++
++#define TASK_COMM_LEN 16
++
++struct event {
++	int pid;
++	int ppid;
++	int uid;
++	char comm[TASK_COMM_LEN];
++};
++
++#endif /* __EXECSNOOP_H */
++
++
++
++
+ 
+ struct {
+ 	__uint(type, BPF_MAP_TYPE_PERF_EVENT_ARRAY);

@@ -1,0 +1,605 @@
+[
+  {
+    "id": "softirqs",
+    "upstream": "c2rust_translation/c_bpf_programs/libbpf-tools/softirqs.bpf.c",
+    "upstream_sha256": "fbbfeb4943319f62830f91226044770500d491c64a6e9712838edd534740b474",
+    "original": "softirqs.original.bpf.c",
+    "optimized": "softirqs.optimized.bpf.c",
+    "timed_entry": "softirq_exit",
+    "build_preparation": [
+      "Inlined runtime-testing/include/bits.bpf.h unchanged in the original; replaced it with the complete previously proven carry-based log2l/log2 helper from runtime-testing/cases/hand-optimize/tcpsynbl.optimized.bpf.c in the optimized copy."
+    ],
+    "rewrite": "Complete bits.bpf.h log2l/log2 implementation replaced by the previously proven carry-based log2l/log2 implementation; no program body changed.",
+    "proofs": {
+      "softirq_exit": {
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/softirqs.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/softirqs.optimized.o",
+        "entry": "softirq_exit",
+        "passed": false,
+        "seconds": 1.1096933339995303,
+        "equivalent": false,
+        "result_type": "atomic_mismatch",
+        "counter_example": "ATOMIC OPERATION MISMATCH (total drop)\n\nThe C program uses 3 atomic operation(s), but the Rust translation uses NONE.\n\nC atomic operations:\n  offset=0x130: 64-bit atomic add (fetch=True)\n  offset=0x150: 64-bit atomic add (fetch=True)\n  offset=0x270: 32-bit atomic add (fetch=True)\n\nFIX INSTRUCTIONS:\nYou MUST use core::sync::atomic operations instead of plain pointer dereferences.\n\nRequired import:\n  use core::sync::atomic::{AtomicU32, AtomicU64, Ordering};\n\nTranslation patterns:\n  __sync_fetch_and_add(ptr, val) \u2192\n    unsafe { AtomicU32::from_ptr(ptr) }.fetch_add(val, Ordering::Relaxed)\n  __sync_fetch_and_add(ptr, val) \u2192\n    unsafe { AtomicU64::from_ptr(ptr) }.fetch_add(val, Ordering::Relaxed)\n\nExample (fetch_add):\n  // C:    __sync_fetch_and_add(val, 1);\n  // Rust: unsafe { AtomicU64::from_ptr(val) }.fetch_add(1, Ordering::Relaxed);",
+        "complete": true
+      },
+      "softirq_entry_btf": {
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/softirqs.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/softirqs.optimized.o",
+        "entry": "softirq_entry_btf",
+        "passed": true,
+        "seconds": 0.32358854100039025,
+        "equivalent": true,
+        "result_type": "equivalent",
+        "counter_example": "",
+        "complete": true
+      },
+      "softirq_exit_btf": {
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/softirqs.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/softirqs.optimized.o",
+        "entry": "softirq_exit_btf",
+        "passed": false,
+        "seconds": 1.2808093749999898,
+        "equivalent": false,
+        "result_type": "atomic_mismatch",
+        "counter_example": "ATOMIC OPERATION MISMATCH (total drop)\n\nThe C program uses 3 atomic operation(s), but the Rust translation uses NONE.\n\nC atomic operations:\n  offset=0x130: 64-bit atomic add (fetch=True)\n  offset=0x150: 64-bit atomic add (fetch=True)\n  offset=0x270: 32-bit atomic add (fetch=True)\n\nFIX INSTRUCTIONS:\nYou MUST use core::sync::atomic operations instead of plain pointer dereferences.\n\nRequired import:\n  use core::sync::atomic::{AtomicU32, AtomicU64, Ordering};\n\nTranslation patterns:\n  __sync_fetch_and_add(ptr, val) \u2192\n    unsafe { AtomicU32::from_ptr(ptr) }.fetch_add(val, Ordering::Relaxed)\n  __sync_fetch_and_add(ptr, val) \u2192\n    unsafe { AtomicU64::from_ptr(ptr) }.fetch_add(val, Ordering::Relaxed)\n\nExample (fetch_add):\n  // C:    __sync_fetch_and_add(val, 1);\n  // Rust: unsafe { AtomicU64::from_ptr(val) }.fetch_add(1, Ordering::Relaxed);",
+        "complete": true
+      },
+      "softirq_entry": {
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/softirqs.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/softirqs.optimized.o",
+        "entry": "softirq_entry",
+        "passed": true,
+        "seconds": 0.30284212500009744,
+        "equivalent": true,
+        "result_type": "equivalent",
+        "counter_example": "",
+        "complete": true
+      }
+    },
+    "trials": {
+      "original": [
+        0.995969999999943,
+        0.9658557080001628,
+        0.9713929999998072,
+        1.014058791000025,
+        1.0707109580007454
+      ],
+      "optimized": [
+        1.3973174169996128,
+        1.3716119999999137,
+        1.3643217499993625,
+        1.3086331249996874,
+        1.345577707999837
+      ]
+    },
+    "original_object": {
+      "instruction_slots": 208,
+      "conditional_jumps": 28,
+      "entries": [
+        "softirq_entry_btf",
+        "softirq_exit_btf",
+        "softirq_entry",
+        "softirq_exit"
+      ],
+      "executable_sha256": "9bbbbbe173f79c023f1ecf5191c21bc0d446f12e4b2a8469025642cafdca9439"
+    },
+    "original_source_sha256": "a9fdbd28011b91738339f46846418dfde5406cea23b3e78ce0c329e841cd3f16",
+    "optimized_object": {
+      "instruction_slots": 159,
+      "conditional_jumps": 11,
+      "entries": [
+        "softirq_entry_btf",
+        "softirq_exit_btf",
+        "softirq_entry",
+        "softirq_exit"
+      ],
+      "executable_sha256": "62af4d8313690294cc138ea0bb1d988639351bd16e64028222003126cbc58622"
+    },
+    "optimized_source_sha256": "4971dace4095d4233bf475f1729b3fab671aff2a82a2139aff18771b59effb73",
+    "proof_note": "selected-entry equivalence failed; timing still attempted",
+    "medians": {
+      "original": 0.995969999999943,
+      "optimized": 1.3643217499993625
+    },
+    "time_reduction_percent": -36.984221412235364,
+    "all_entries_equivalent": false,
+    "status": "failed_or_incomplete"
+  },
+  {
+    "id": "cpudist",
+    "upstream": "c2rust_translation/c_bpf_programs/libbpf-tools/cpudist.bpf.c",
+    "upstream_sha256": "92b4b5f3f937c688152b6fe0b7c2c28829388fa92c87fb954be1cf7de3d8bebe",
+    "original": "cpudist.original.bpf.c",
+    "optimized": "cpudist.optimized.bpf.c",
+    "timed_entry": "sched_switch_tp",
+    "build_preparation": [
+      "Inlined runtime-testing/include/bits.bpf.h unchanged in the original; replaced it with the complete previously proven carry-based log2l/log2 helper from runtime-testing/cases/hand-optimize/tcpsynbl.optimized.bpf.c in the optimized copy."
+    ],
+    "rewrite": "Complete bits.bpf.h log2l/log2 implementation replaced by the previously proven carry-based log2l/log2 implementation; no program body changed.",
+    "proofs": {
+      "sched_switch_tp": {
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/cpudist.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/cpudist.optimized.o",
+        "entry": "sched_switch_tp",
+        "passed": true,
+        "seconds": 38.187838834000104,
+        "equivalent": true,
+        "result_type": "equivalent",
+        "counter_example": "",
+        "complete": true
+      },
+      "sched_switch_btf": {
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/cpudist.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/cpudist.optimized.o",
+        "entry": "sched_switch_btf",
+        "passed": true,
+        "seconds": 49.80484999999953,
+        "equivalent": true,
+        "result_type": "equivalent",
+        "counter_example": "",
+        "complete": true
+      }
+    },
+    "trials": {
+      "original": [
+        78.12399008400007,
+        71.72538179099956,
+        80.73680383399915,
+        76.19358212499992,
+        70.45599204100017
+      ],
+      "optimized": [
+        7.500034874999983,
+        6.0409668330003115,
+        7.995600750000449,
+        8.788109915999485,
+        7.346840000000157
+      ]
+    },
+    "original_object": {
+      "instruction_slots": 365,
+      "conditional_jumps": 48,
+      "entries": [
+        "sched_switch_btf",
+        "sched_switch_tp"
+      ],
+      "executable_sha256": "975559526cbba7abcc6967eea202ac24c26419f9a74b546a795e895bc1661188"
+    },
+    "original_source_sha256": "f7f9f7b78b72403b0e07cb5f9d6639cf7e9d8d2557fd3a2df3f0f6449c8e3e86",
+    "optimized_object": {
+      "instruction_slots": 355,
+      "conditional_jumps": 30,
+      "entries": [
+        "sched_switch_btf",
+        "sched_switch_tp"
+      ],
+      "executable_sha256": "662e34ba635623ddf22cc53017812f656125e956a313b4f410b1b4832d575ecc"
+    },
+    "optimized_source_sha256": "d66d786e69e322c0595e5dbe72d99e6d2703fea6771497ee6c5855120cba3925",
+    "medians": {
+      "original": 76.19358212499992,
+      "optimized": 7.500034874999983
+    },
+    "time_reduction_percent": 90.15660549638453,
+    "all_entries_equivalent": true,
+    "status": "complete"
+  },
+  {
+    "id": "futexctn",
+    "upstream": "c2rust_translation/c_bpf_programs/libbpf-tools/futexctn.bpf.c",
+    "upstream_sha256": "1ed11bef0c9b6ee777ea6007aee1009dbbf2c2c57d01032acdf677b8011853eb",
+    "original": "futexctn.original.bpf.c",
+    "optimized": "futexctn.optimized.bpf.c",
+    "timed_entry": "futex_exit",
+    "build_preparation": [
+      "Inlined runtime-testing/include/bits.bpf.h unchanged in the original; replaced it with the complete previously proven carry-based log2l/log2 helper from runtime-testing/cases/hand-optimize/tcpsynbl.optimized.bpf.c in the optimized copy."
+    ],
+    "rewrite": "Complete bits.bpf.h log2l/log2 implementation replaced by the previously proven carry-based log2l/log2 implementation; no program body changed.",
+    "proofs": {
+      "futex_exit": {
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/futexctn.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/futexctn.optimized.o",
+        "entry": "futex_exit",
+        "passed": true,
+        "seconds": 89.59385770900008,
+        "equivalent": true,
+        "result_type": "equivalent",
+        "counter_example": "",
+        "complete": true
+      },
+      "futex_enter": {
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/futexctn.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/futexctn.optimized.o",
+        "entry": "futex_enter",
+        "passed": true,
+        "seconds": 0.8477900830002909,
+        "equivalent": true,
+        "result_type": "equivalent",
+        "counter_example": "",
+        "complete": true
+      }
+    },
+    "trials": {
+      "original": [],
+      "optimized": [
+        8.495365374999892,
+        8.672470167000029,
+        9.678587458000038,
+        9.193500792000123,
+        10.100431374999971
+      ]
+    },
+    "original_object": {
+      "instruction_slots": 197,
+      "conditional_jumps": 28,
+      "entries": [
+        "futex_enter",
+        "futex_exit"
+      ],
+      "executable_sha256": "0e90aa3f9441edfb281bd8a6dbe441415e0b2ed5b7b5def0d7199d96a38704b2"
+    },
+    "original_source_sha256": "666ff3b432e08bf6cb9fb111ecfa67b8ed0432138c9058f4bd106a48d03425d2",
+    "optimized_object": {
+      "instruction_slots": 192,
+      "conditional_jumps": 19,
+      "entries": [
+        "futex_enter",
+        "futex_exit"
+      ],
+      "executable_sha256": "ff1e525fbe580b3a4b36368cd2403b12b3cf03c1f5861cee37f953014daa61cf"
+    },
+    "optimized_source_sha256": "fd072435f6505ec8cb5b25fea5b94838c99677596193ed47f82400b9f2f007a4",
+    "failed_warmups": [
+      "original"
+    ],
+    "failed_trials": [
+      {
+        "trial": 1,
+        "variant": "original",
+        "result": {
+          "passed": false,
+          "error": "timeout",
+          "timeout_seconds": 120,
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/futexctn.original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/futexctn.original.o",
+          "entry": "futex_exit"
+        }
+      },
+      {
+        "trial": 2,
+        "variant": "original",
+        "result": {
+          "passed": false,
+          "error": "timeout",
+          "timeout_seconds": 120,
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/futexctn.original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/futexctn.original.o",
+          "entry": "futex_exit"
+        }
+      },
+      {
+        "trial": 3,
+        "variant": "original",
+        "result": {
+          "passed": false,
+          "error": "timeout",
+          "timeout_seconds": 120,
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/futexctn.original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/futexctn.original.o",
+          "entry": "futex_exit"
+        }
+      },
+      {
+        "trial": 4,
+        "variant": "original",
+        "result": {
+          "passed": false,
+          "error": "timeout",
+          "timeout_seconds": 120,
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/futexctn.original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/futexctn.original.o",
+          "entry": "futex_exit"
+        }
+      },
+      {
+        "trial": 5,
+        "variant": "original",
+        "result": {
+          "passed": false,
+          "error": "timeout",
+          "timeout_seconds": 120,
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/futexctn.original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/futexctn.original.o",
+          "entry": "futex_exit"
+        }
+      }
+    ],
+    "all_entries_equivalent": true,
+    "status": "failed_or_incomplete"
+  },
+  {
+    "id": "hardiqs",
+    "upstream": "c2rust_translation/c_bpf_programs/libbpf-tools/hardiqs.bpf.c",
+    "upstream_sha256": "8292771c6f6bd9a574393e4995d105ba1b08df76f71d57d17e1f7b595e127d71",
+    "original": "hardiqs.original.bpf.c",
+    "optimized": "hardiqs.optimized.bpf.c",
+    "timed_entry": "irq_handler_exit",
+    "build_preparation": [
+      "Inlined runtime-testing/include/bits.bpf.h unchanged in the original; replaced it with the complete previously proven carry-based log2l/log2 helper from runtime-testing/cases/hand-optimize/tcpsynbl.optimized.bpf.c in the optimized copy."
+    ],
+    "rewrite": "Complete bits.bpf.h log2l/log2 implementation replaced by the previously proven carry-based log2l/log2 implementation; no program body changed.",
+    "proofs": {
+      "irq_handler_exit": {
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/hardiqs.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/hardiqs.optimized.o",
+        "entry": "irq_handler_exit",
+        "passed": true,
+        "seconds": 2.213284333000047,
+        "equivalent": true,
+        "result_type": "equivalent",
+        "counter_example": "",
+        "complete": true
+      },
+      "irq_handler_entry_btf": {
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/hardiqs.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/hardiqs.optimized.o",
+        "entry": "irq_handler_entry_btf",
+        "passed": true,
+        "seconds": 0.4228779589993792,
+        "equivalent": true,
+        "result_type": "equivalent",
+        "counter_example": "",
+        "complete": true
+      },
+      "irq_handler_exit_btf": {
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/hardiqs.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/hardiqs.optimized.o",
+        "entry": "irq_handler_exit_btf",
+        "passed": true,
+        "seconds": 2.175741250000101,
+        "equivalent": true,
+        "result_type": "equivalent",
+        "counter_example": "",
+        "complete": true
+      },
+      "irq_handler_entry": {
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/hardiqs.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/hardiqs.optimized.o",
+        "entry": "irq_handler_entry",
+        "passed": true,
+        "seconds": 0.28013545900012105,
+        "equivalent": true,
+        "result_type": "equivalent",
+        "counter_example": "",
+        "complete": true
+      }
+    },
+    "trials": {
+      "original": [
+        2.280688750000081,
+        1.945725040999605,
+        1.8950189170000158,
+        2.0281064999999217,
+        2.1545019590002994
+      ],
+      "optimized": [
+        2.1838632089993553,
+        2.121972750000168,
+        2.1685562499997104,
+        2.067894249999881,
+        2.1070140419997188
+      ]
+    },
+    "original_object": {
+      "instruction_slots": 202,
+      "conditional_jumps": 27,
+      "entries": [
+        "irq_handler_entry_btf",
+        "irq_handler_exit_btf",
+        "irq_handler_entry",
+        "irq_handler_exit"
+      ],
+      "executable_sha256": "feebecef11e7f73fca8b53aa34c8412d67293a0b5cd909cc59f5541637532267"
+    },
+    "original_source_sha256": "fe17b9a8770979af6d648bb98bdc0211679817d1162c3a02b958cb6d8f6c02d6",
+    "optimized_object": {
+      "instruction_slots": 227,
+      "conditional_jumps": 22,
+      "entries": [
+        "irq_handler_entry_btf",
+        "irq_handler_exit_btf",
+        "irq_handler_entry",
+        "irq_handler_exit"
+      ],
+      "executable_sha256": "8a7a8cc36c281032bd1761a80a80f7475524753800e06585b8cec5c6a1147af2"
+    },
+    "optimized_source_sha256": "02eea7181ad5cb06163c202949840d20b2a747764c986a54fd41771aa2d1ec9e",
+    "medians": {
+      "original": 2.0281064999999217,
+      "optimized": 2.121972750000168
+    },
+    "time_reduction_percent": -4.628270260967571,
+    "all_entries_equivalent": true,
+    "status": "complete"
+  },
+  {
+    "id": "runqlat",
+    "upstream": "c2rust_translation/c_bpf_programs/libbpf-tools/runqlat.bpf.c",
+    "upstream_sha256": "160c2d8cc0ae8341acbb0a4a76143fc52e89f22a838c52798d32fdf12a6614cc",
+    "original": "runqlat.original.bpf.c",
+    "optimized": "runqlat.optimized.bpf.c",
+    "timed_entry": "handle_sched_switch",
+    "build_preparation": [
+      "Inlined runtime-testing/include/bits.bpf.h unchanged in the original; replaced it with the complete previously proven carry-based log2l/log2 helper from runtime-testing/cases/hand-optimize/tcpsynbl.optimized.bpf.c in the optimized copy."
+    ],
+    "rewrite": "Complete bits.bpf.h log2l/log2 implementation replaced by the previously proven carry-based log2l/log2 implementation; no program body changed.",
+    "proofs": {
+      "handle_sched_switch": {
+        "passed": false,
+        "error": "timeout",
+        "timeout_seconds": 120,
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/runqlat.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/runqlat.optimized.o",
+        "entry": "handle_sched_switch"
+      },
+      "sched_wakeup": {
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/runqlat.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/runqlat.optimized.o",
+        "entry": "sched_wakeup",
+        "passed": true,
+        "seconds": 0.5192721670000537,
+        "equivalent": true,
+        "result_type": "equivalent",
+        "counter_example": "",
+        "complete": true
+      },
+      "sched_wakeup_new": {
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/runqlat.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/runqlat.optimized.o",
+        "entry": "sched_wakeup_new",
+        "passed": true,
+        "seconds": 0.5382277499993506,
+        "equivalent": true,
+        "result_type": "equivalent",
+        "counter_example": "",
+        "complete": true
+      },
+      "sched_switch": {
+        "passed": false,
+        "error": "timeout",
+        "timeout_seconds": 120,
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/runqlat.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/runqlat.optimized.o",
+        "entry": "sched_switch"
+      },
+      "handle_sched_wakeup": {
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/runqlat.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/runqlat.optimized.o",
+        "entry": "handle_sched_wakeup",
+        "passed": true,
+        "seconds": 0.7231203330002245,
+        "equivalent": true,
+        "result_type": "equivalent",
+        "counter_example": "",
+        "complete": true
+      },
+      "handle_sched_wakeup_new": {
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/runqlat.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/runqlat.optimized.o",
+        "entry": "handle_sched_wakeup_new",
+        "passed": true,
+        "seconds": 0.5198873330000424,
+        "equivalent": true,
+        "result_type": "equivalent",
+        "counter_example": "",
+        "complete": true
+      }
+    },
+    "trials": {
+      "original": [],
+      "optimized": [
+        20.059181167000133,
+        20.290634167000462,
+        20.425946791999195,
+        19.035850416999892,
+        19.241671666999537
+      ]
+    },
+    "original_object": {
+      "instruction_slots": 381,
+      "conditional_jumps": 45,
+      "entries": [
+        "sched_wakeup",
+        "sched_wakeup_new",
+        "sched_switch",
+        "handle_sched_wakeup",
+        "handle_sched_wakeup_new",
+        "handle_sched_switch"
+      ],
+      "executable_sha256": "1f82d7db0ac3cc001015af52653b14692168728bf6058dbe6970693a989e74b7"
+    },
+    "original_source_sha256": "db121a4dd5d89b3b2d6882b4b35479836e7a431f5ae5d771c9ce52c88ff9c7c4",
+    "optimized_object": {
+      "instruction_slots": 400,
+      "conditional_jumps": 40,
+      "entries": [
+        "sched_wakeup",
+        "sched_wakeup_new",
+        "sched_switch",
+        "handle_sched_wakeup",
+        "handle_sched_wakeup_new",
+        "handle_sched_switch"
+      ],
+      "executable_sha256": "7e4a7349474b386de3cec566bded4643fa00e365672f2ba526dcffe290ad36ef"
+    },
+    "optimized_source_sha256": "221030428e00afab384262224db679cbb88ace7da1fc4ce2ec7843ca9f829cc6",
+    "proof_note": "selected-entry equivalence failed; timing still attempted",
+    "failed_warmups": [
+      "original"
+    ],
+    "failed_trials": [
+      {
+        "trial": 1,
+        "variant": "original",
+        "result": {
+          "passed": false,
+          "error": "timeout",
+          "timeout_seconds": 120,
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/runqlat.original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/runqlat.original.o",
+          "entry": "handle_sched_switch"
+        }
+      },
+      {
+        "trial": 2,
+        "variant": "original",
+        "result": {
+          "passed": false,
+          "error": "timeout",
+          "timeout_seconds": 120,
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/runqlat.original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/runqlat.original.o",
+          "entry": "handle_sched_switch"
+        }
+      },
+      {
+        "trial": 3,
+        "variant": "original",
+        "result": {
+          "passed": false,
+          "error": "timeout",
+          "timeout_seconds": 120,
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/runqlat.original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/runqlat.original.o",
+          "entry": "handle_sched_switch"
+        }
+      },
+      {
+        "trial": 4,
+        "variant": "original",
+        "result": {
+          "passed": false,
+          "error": "timeout",
+          "timeout_seconds": 120,
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/runqlat.original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/runqlat.original.o",
+          "entry": "handle_sched_switch"
+        }
+      },
+      {
+        "trial": 5,
+        "variant": "original",
+        "result": {
+          "passed": false,
+          "error": "timeout",
+          "timeout_seconds": 120,
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/runqlat.original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/runqlat.original.o",
+          "entry": "handle_sched_switch"
+        }
+      }
+    ],
+    "all_entries_equivalent": false,
+    "status": "failed_or_incomplete"
+  }
+]

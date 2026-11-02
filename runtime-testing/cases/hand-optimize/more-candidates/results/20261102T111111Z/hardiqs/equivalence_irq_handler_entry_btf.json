@@ -1,0 +1,11 @@
+{
+  "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/hardiqs.original.o",
+  "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/hardiqs.optimized.o",
+  "entry": "irq_handler_entry_btf",
+  "passed": true,
+  "seconds": 0.4228779589993792,
+  "equivalent": true,
+  "result_type": "equivalent",
+  "counter_example": "",
+  "complete": true
+}

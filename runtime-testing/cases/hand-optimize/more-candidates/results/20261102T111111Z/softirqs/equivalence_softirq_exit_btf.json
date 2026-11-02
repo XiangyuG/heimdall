@@ -1,0 +1,11 @@
+{
+  "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/softirqs.original.o",
+  "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/softirqs.optimized.o",
+  "entry": "softirq_exit_btf",
+  "passed": false,
+  "seconds": 1.2808093749999898,
+  "equivalent": false,
+  "result_type": "atomic_mismatch",
+  "counter_example": "ATOMIC OPERATION MISMATCH (total drop)\n\nThe C program uses 3 atomic operation(s), but the Rust translation uses NONE.\n\nC atomic operations:\n  offset=0x130: 64-bit atomic add (fetch=True)\n  offset=0x150: 64-bit atomic add (fetch=True)\n  offset=0x270: 32-bit atomic add (fetch=True)\n\nFIX INSTRUCTIONS:\nYou MUST use core::sync::atomic operations instead of plain pointer dereferences.\n\nRequired import:\n  use core::sync::atomic::{AtomicU32, AtomicU64, Ordering};\n\nTranslation patterns:\n  __sync_fetch_and_add(ptr, val) \u2192\n    unsafe { AtomicU32::from_ptr(ptr) }.fetch_add(val, Ordering::Relaxed)\n  __sync_fetch_and_add(ptr, val) \u2192\n    unsafe { AtomicU64::from_ptr(ptr) }.fetch_add(val, Ordering::Relaxed)\n\nExample (fetch_add):\n  // C:    __sync_fetch_and_add(val, 1);\n  // Rust: unsafe { AtomicU64::from_ptr(val) }.fetch_add(1, Ordering::Relaxed);",
+  "complete": true
+}

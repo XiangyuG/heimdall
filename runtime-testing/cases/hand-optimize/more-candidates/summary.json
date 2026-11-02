@@ -1,0 +1,128 @@
+{
+  "run": "results/20261102T111111Z",
+  "cases": [
+    {
+      "program": "softirqs",
+      "status": "failed_or_incomplete",
+      "timed_entry": "softirq_exit",
+      "conditional_jumps": {
+        "original": 28,
+        "optimized": 11
+      },
+      "cross_proofs": {
+        "passed": 2,
+        "total": 4,
+        "failures": {
+          "softirq_exit": "atomic_mismatch",
+          "softirq_exit_btf": "atomic_mismatch"
+        }
+      },
+      "timed_trials": {
+        "original_passed": 5,
+        "optimized_passed": 5,
+        "original_timeout": 0,
+        "optimized_timeout": 0,
+        "original_successful_median_seconds": 0.995969999999943,
+        "optimized_successful_median_seconds": 1.3643217499993625,
+        "paired_time_reduction_percent": null
+      }
+    },
+    {
+      "program": "cpudist",
+      "status": "complete",
+      "timed_entry": "sched_switch_tp",
+      "conditional_jumps": {
+        "original": 48,
+        "optimized": 30
+      },
+      "cross_proofs": {
+        "passed": 2,
+        "total": 2,
+        "failures": {}
+      },
+      "timed_trials": {
+        "original_passed": 5,
+        "optimized_passed": 5,
+        "original_timeout": 0,
+        "optimized_timeout": 0,
+        "original_successful_median_seconds": 76.19358212499992,
+        "optimized_successful_median_seconds": 7.500034874999983,
+        "paired_time_reduction_percent": 90.15660549638453
+      }
+    },
+    {
+      "program": "futexctn",
+      "status": "failed_or_incomplete",
+      "timed_entry": "futex_exit",
+      "conditional_jumps": {
+        "original": 28,
+        "optimized": 19
+      },
+      "cross_proofs": {
+        "passed": 2,
+        "total": 2,
+        "failures": {}
+      },
+      "timed_trials": {
+        "original_passed": 0,
+        "optimized_passed": 5,
+        "original_timeout": 5,
+        "optimized_timeout": 0,
+        "original_successful_median_seconds": null,
+        "optimized_successful_median_seconds": 9.193500792000123,
+        "paired_time_reduction_percent": null
+      }
+    },
+    {
+      "program": "hardiqs",
+      "status": "complete",
+      "timed_entry": "irq_handler_exit",
+      "conditional_jumps": {
+        "original": 27,
+        "optimized": 22
+      },
+      "cross_proofs": {
+        "passed": 4,
+        "total": 4,
+        "failures": {}
+      },
+      "timed_trials": {
+        "original_passed": 5,
+        "optimized_passed": 5,
+        "original_timeout": 0,
+        "optimized_timeout": 0,
+        "original_successful_median_seconds": 2.0281064999999217,
+        "optimized_successful_median_seconds": 2.121972750000168,
+        "paired_time_reduction_percent": -4.628270260967571
+      }
+    },
+    {
+      "program": "runqlat",
+      "status": "failed_or_incomplete",
+      "timed_entry": "handle_sched_switch",
+      "conditional_jumps": {
+        "original": 45,
+        "optimized": 40
+      },
+      "cross_proofs": {
+        "passed": 4,
+        "total": 6,
+        "failures": {
+          "handle_sched_switch": "timeout",
+          "sched_switch": "timeout"
+        }
+      },
+      "timed_trials": {
+        "original_passed": 0,
+        "optimized_passed": 5,
+        "original_timeout": 5,
+        "optimized_timeout": 0,
+        "original_successful_median_seconds": null,
+        "optimized_successful_median_seconds": 20.059181167000133,
+        "paired_time_reduction_percent": null
+      }
+    }
+  ],
+  "total_cross_proofs_passed": 14,
+  "total_cross_proofs": 18
+}

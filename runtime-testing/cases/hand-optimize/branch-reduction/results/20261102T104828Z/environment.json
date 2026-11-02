@@ -1,0 +1,88 @@
+{
+  "clang": "Homebrew clang version 22.1.8\nTarget: arm64-apple-darwin27.0.0\nThread model: posix\nInstalledDir: /opt/homebrew/Cellar/llvm/22.1.8/bin\nConfiguration file: /opt/homebrew/Cellar/llvm/22.1.8/etc/clang/arm64-apple-darwin27.cfg\n",
+  "python": "3.10.20 (main, Jun 11 2026, 15:14:28) [Clang 20.1.8 ]",
+  "manifest": {
+    "cases": [
+      {
+        "id": "bashreadline",
+        "upstream": "c2rust_translation/c_bpf_programs/libbpf-tools/bashreadline.bpf.c",
+        "upstream_sha256": "3d3889dc048e4d1cd087c675b4f9fbe9edad3c767162522f5ed022059fe5012d",
+        "original": "bashreadline.original.bpf.c",
+        "optimized": "bashreadline.optimized.bpf.c",
+        "timed_entry": "printret",
+        "build_preparation": [],
+        "rewrite": "if (comm[0] != 'b' || comm[1] != 'a' || comm[2] != 's' || comm[3] != 'h' || comm[4] != 0 ) -> if ((((unsigned char)comm[0] ^ 'b') | ((unsigned char)comm[1] ^ 'a') | ((unsigned char)comm[2] ^ 's') | ((unsigned char)comm[3] ^ 'h') | (unsigned char)comm[4]) != 0)"
+      },
+      {
+        "id": "tcptracer",
+        "upstream": "c2rust_translation/c_bpf_programs/libbpf-tools/tcptracer.bpf.c",
+        "upstream_sha256": "9612f74b481f6ee4e3855f4f9f7e29c13861f5d51a04884eb3b6547c62e6526a",
+        "original": "tcptracer.original.bpf.c",
+        "optimized": "tcptracer.optimized.bpf.c",
+        "timed_entry": "entry_trace_close",
+        "build_preparation": [
+          "Replaced unavailable bpf_endian.h with its little-endian bpf_ntohs expansion in both copies."
+        ],
+        "rewrite": "if (oldstate == TCP_SYN_SENT ||\n\t    oldstate == TCP_SYN_RECV ||\n\t    oldstate == TCP_NEW_SYN_RECV) -> if ((oldstate == TCP_SYN_SENT) |\n\t    (oldstate == TCP_SYN_RECV) |\n\t    (oldstate == TCP_NEW_SYN_RECV))"
+      },
+      {
+        "id": "bitesize",
+        "upstream": "c2rust_translation/c_bpf_programs/libbpf-tools/bitesize.bpf.c",
+        "upstream_sha256": "0003956b315e4521a146dced89fe44d6032803b8075380184cb0c8e0388f1085",
+        "original": "bitesize.original.bpf.c",
+        "optimized": "bitesize.optimized.bpf.c",
+        "timed_entry": "block_rq_issue",
+        "build_preparation": [
+          "Inlined runtime-testing/include/bits.bpf.h unchanged in both copies."
+        ],
+        "rewrite": "if (slot >= MAX_SLOTS)\n\t\tslot = MAX_SLOTS - 1; -> u64 over = (slot + (256ULL - MAX_SLOTS)) >> 8;\n\tu64 mask = 0ULL - over;\n\tslot = (slot & ~mask) | ((MAX_SLOTS - 1) & mask);"
+      },
+      {
+        "id": "cpufreq",
+        "upstream": "c2rust_translation/c_bpf_programs/libbpf-tools/cpufreq.bpf.c",
+        "upstream_sha256": "62e777c0babc74bf963a755fa70a3301c832d9307c00e5df5d670cd6eede0c41",
+        "original": "cpufreq.original.bpf.c",
+        "optimized": "cpufreq.optimized.bpf.c",
+        "timed_entry": "do_sample",
+        "build_preparation": [],
+        "rewrite": "if (slot >= MAX_SLOTS)\n\t\tslot = MAX_SLOTS - 1; -> u64 over = (slot + (0x100000000ULL - MAX_SLOTS)) >> 32;\n\tu64 mask = 0ULL - over;\n\tslot = (slot & ~mask) | ((MAX_SLOTS - 1) & mask);"
+      },
+      {
+        "id": "biotop",
+        "upstream": "c2rust_translation/c_bpf_programs/libbpf-tools/biotop.bpf.c",
+        "upstream_sha256": "4dc9dbe652b589e536be3f4c8c8b40c0bfa251d3e0d17e97eb78043bb5a15d8a",
+        "original": "biotop.original.bpf.c",
+        "optimized": "biotop.optimized.bpf.c",
+        "timed_entry": "blk_account_io_done",
+        "build_preparation": [],
+        "rewrite": "info.rwflag = !!((cmd_flags & REQ_OP_MASK) == REQ_OP_WRITE); -> info.rwflag = ((__u64)((cmd_flags & REQ_OP_MASK) ^ REQ_OP_WRITE) - 1) >> 63;"
+      },
+      {
+        "id": "capable",
+        "upstream": "c2rust_translation/c_bpf_programs/libbpf-tools/capable.bpf.c",
+        "upstream_sha256": "d9b122ee98021b10b77d34e3db3b146dee7a1b1b108471a64bbc326c7a2d27d9",
+        "original": "capable.original.bpf.c",
+        "optimized": "capable.optimized.bpf.c",
+        "timed_entry": "kprobe__cap_capable_exit",
+        "build_preparation": [],
+        "rewrite": "event.audit = (ap->cap_opt & 0b10) == 0;\n\t\tevent.insetid = (ap->cap_opt & 0b100) != 0; -> event.audit = 1 ^ (((unsigned int)ap->cap_opt >> 1) & 1);\n\t\tevent.insetid = ((unsigned int)ap->cap_opt >> 2) & 1;"
+      }
+    ],
+    "compiler_flags": [
+      "-target",
+      "bpfel",
+      "-O2",
+      "-g",
+      "-D__TARGET_ARCH_x86"
+    ],
+    "trials": 5,
+    "warmups": 1,
+    "verification_timeout_seconds": 120,
+    "input_assumptions": [],
+    "helper_fail_mode": "off",
+    "timing": "Heimdall self-equivalence; complete run_verification call, compilation and interpreter/import startup excluded.",
+    "protocol": "Selected entry original-to-optimized cross proof; one warmup per variant; five alternating self-equivalence trials, fresh process each; cross proof every other exported entry; incomplete/errored stashes fail.",
+    "original_bits_header_sha256": "593a6425c4cd04bd03cb55aa14dcbf3f1c2751b1b4746a4fb96e7219e081a263"
+  },
+  "worker_isolation": "Fresh process per verification call; imports and startup excluded from timings."
+}

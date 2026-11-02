@@ -1,0 +1,91 @@
+[*] Detected program type 'tp_btf' from section 'tp_btf/block_rq_insert'
+[*] Using context size 64 bytes for program type 'tp_btf'
+[*] Detected program type 'tp_btf' from section 'tp_btf/block_rq_insert'
+[*] Parsed BTF metadata from C binary: 3 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - start: type=hash, key_size=8, value_size=8, max_entries=10240
+    - hists: type=hash, key_size=8, value_size=108, max_entries=10240
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/biolatency/build/original.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400eb0: S=0x400000 A=0 imm=-471
+    - Patching call <anon> @ 0x400ec8: S=0x400000 A=1152 imm=-330
+    - Patching call <anon> @ 0x400ee8: S=0x400000 A=2624 imm=-150
+    - Patching call <anon> @ 0x400f00: S=0x400000 A=0 imm=-481
+    - Patching call <anon> @ 0x400f18: S=0x400000 A=1152 imm=-340
+    - Patching call <anon> @ 0x400f38: S=0x400000 A=2624 imm=-160
+[*] Patching complete.
+[*] Scanning section 'tp_btf/block_rq_issue' for atomic instructions (offset 0x0-0x18)
+    No atomic instructions found
+[*] Found 1 .data global(s): initial_hist
+[*] Found entry 'block_rq_issue_btf' at 0x400ec8
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x400f68
+[*] Initializing map 'start' from BTF: type=hash, key_size=8, value_size=8, max_entries=10240 at 0x400f88
+[*] Initializing map 'hists' from BTF: type=hash, key_size=8, value_size=108, max_entries=10240 at 0x400fa8
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_ktime_get_ns called.
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Creating new slot 0 in map 'start' via update
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=1, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 3 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - start: type=hash, key_size=8, value_size=8, max_entries=10240
+    - hists: type=hash, key_size=8, value_size=108, max_entries=10240
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/biolatency/build/optimized.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400f48: S=0x400000 A=0 imm=-490
+    - Patching call <anon> @ 0x400f60: S=0x400000 A=1152 imm=-349
+    - Patching call <anon> @ 0x400f80: S=0x400000 A=2624 imm=-169
+    - Patching call <anon> @ 0x400f98: S=0x400000 A=0 imm=-500
+    - Patching call <anon> @ 0x400fb0: S=0x400000 A=1152 imm=-359
+    - Patching call <anon> @ 0x400fd0: S=0x400000 A=2624 imm=-179
+[*] Patching complete.
+[*] Scanning section 'tp_btf/block_rq_issue' for atomic instructions (offset 0x0-0x18)
+    No atomic instructions found
+[*] Found 1 .data global(s): initial_hist
+[*] Found entry 'block_rq_issue_btf' at 0x400f60
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x401000
+[*] Initializing map 'start' from BTF: type=hash, key_size=8, value_size=8, max_entries=10240 at 0x401020
+[*] Initializing map 'hists' from BTF: type=hash, key_size=8, value_size=108, max_entries=10240 at 0x401040
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_ktime_get_ns called.
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Creating new slot 0 in map 'start' via update
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=1, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 3 maps via ITE semantics
+[!] .data symbol 'initial_hist': too large (108B > 64B), skipping value comparison
+    [?] Solver checking 7 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.

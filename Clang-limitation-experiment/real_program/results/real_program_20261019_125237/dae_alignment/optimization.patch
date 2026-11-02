@@ -1,0 +1,11 @@
+--- dae_alignment.bpf.c
++++ dae_alignment_SOURCE_OPT.bpf.c
+@@ -204,7 +204,7 @@
+ {
+ 	bool tracked = false;
+ 	u64 skb_addr = (u64) skb;
+-	struct event ev = {};
++	struct event ev __attribute__((aligned(8))) = {};
+ 	if (bpf_map_lookup_elem(&skb_addresses, &skb_addr)) {
+ 		tracked = true;
+ 		goto cont;

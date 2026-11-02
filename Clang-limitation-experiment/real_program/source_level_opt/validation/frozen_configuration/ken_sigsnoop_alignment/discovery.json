@@ -1,0 +1,51 @@
+{
+  "source": "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/cases/ken_sigsnoop_alignment.bpf.c",
+  "compiler": "/opt/homebrew/opt/llvm/bin/clang",
+  "objective": "strictly decrease total executable BPF instruction slots; no timing trials",
+  "flags": [
+    "-target",
+    "bpfel",
+    "-O2",
+    "-g",
+    "-D__TARGET_ARCH_x86",
+    "-I",
+    "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include",
+    "-I",
+    "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include/bpf",
+    "-I",
+    "/Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/libbpf-tools",
+    "-iquote",
+    "/Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/KEN/dataset/libbpf"
+  ],
+  "frozen_configuration": true,
+  "stack_addresses_unobserved": false,
+  "accepted": [
+    {
+      "pass": "local_alignment",
+      "reason": "probe_entry: strengthen automatic aggregate event to 8-byte alignment",
+      "slots": 64,
+      "edits": [
+        {
+          "start": 510,
+          "end": 510,
+          "text": "__attribute__((aligned(8))) "
+        }
+      ]
+    }
+  ],
+  "trials": [
+    {
+      "pass": "local_alignment",
+      "reason": "probe_entry: strengthen automatic aggregate event to 8-byte alignment",
+      "slots": 64
+    },
+    {
+      "pass": "map_alignment",
+      "reason": "Expose Linux hash/array map value-base alignment (8 bytes)",
+      "slots": 64
+    }
+  ],
+  "baseline_slots": 67,
+  "optimized_slots": 64,
+  "executable_code_changed": true
+}

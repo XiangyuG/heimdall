@@ -1,0 +1,11 @@
+{
+  "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/futexctn.optimized.o",
+  "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/futexctn.optimized.o",
+  "entry": "futex_exit",
+  "passed": true,
+  "seconds": 8.581546499999604,
+  "equivalent": true,
+  "result_type": "equivalent",
+  "counter_example": "",
+  "complete": true
+}

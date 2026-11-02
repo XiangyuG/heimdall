@@ -1,0 +1,161 @@
+[*] Detected program type 'fentry' from section 'fentry/dummy_fentry'
+[*] Using context size 64 bytes for program type 'fentry'
+[*] Detected program type 'fentry' from section 'fentry/dummy_fentry'
+[*] Parsed BTF metadata from C binary: 2 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - starts: type=hash, key_size=4, value_size=8, max_entries=102400
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results/20261027T214307Z/build/funclatency.original.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400410: S=0x400000 A=0 imm=-131
+    - Patching call <anon> @ 0x400428: S=0x400000 A=0 imm=-134
+[*] Patching complete.
+[*] Scanning section 'fexit/dummy_fexit' for atomic instructions (offset 0x0-0x18)
+    No atomic instructions found
+[*] Found 1 .data global(s): hist
+[*] Found entry 'dummy_fexit' at 0x400410
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x4004b8
+[*] Initializing map 'starts' from BTF: type=hash, key_size=4, value_size=8, max_entries=102400 at 0x4004d8
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_ktime_get_ns called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'starts', slot 0, addr=0xdeaf0000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'starts'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'starts'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'starts'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'starts'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'starts'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'starts'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'starts'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'starts'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'starts'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'starts'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'starts'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'starts'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'starts'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'starts'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'starts'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'starts'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'starts'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=18 errored=0
+    stash 'deadended': 18 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=4, map_entries=1
+[*] Path 2: constraints=5, map_entries=1
+[*] Path 3: constraints=6, map_entries=1
+[*] Path 4: constraints=7, map_entries=1
+[*] Path 5: constraints=7, map_entries=1
+[*] Path 6: constraints=7, map_entries=1
+[*] Path 7: constraints=7, map_entries=1
+[*] Path 8: constraints=7, map_entries=1
+[*] Path 9: constraints=7, map_entries=1
+[*] Path 10: constraints=6, map_entries=1
+[*] Path 11: constraints=7, map_entries=1
+[*] Path 12: constraints=7, map_entries=1
+[*] Path 13: constraints=7, map_entries=1
+[*] Path 14: constraints=7, map_entries=1
+[*] Path 15: constraints=10, map_entries=1
+[*] Path 16: constraints=10, map_entries=1
+[*] Path 17: constraints=10, map_entries=1
+[*] Path 18: constraints=10, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 2 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - starts: type=hash, key_size=4, value_size=8, max_entries=102400
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results/20261027T214307Z/build/funclatency.optimized.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x4004d8: S=0x400000 A=0 imm=-156
+    - Patching call <anon> @ 0x4004f0: S=0x400000 A=0 imm=-159
+[*] Patching complete.
+[*] Scanning section 'fexit/dummy_fexit' for atomic instructions (offset 0x0-0x18)
+    No atomic instructions found
+[*] Found 1 .data global(s): hist
+[*] Found entry 'dummy_fexit' at 0x4004d8
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x400580
+[*] Initializing map 'starts' from BTF: type=hash, key_size=4, value_size=8, max_entries=102400 at 0x4005a0
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_ktime_get_ns called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'starts', slot 0, addr=0xdeaf0000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'starts'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'starts'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=3 errored=0
+    stash 'deadended': 3 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=4, map_entries=1
+[*] Path 2: constraints=5, map_entries=1
+[*] Path 3: constraints=7, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    18 paths converted
+[*] Converting Rust program paths to Z3...
+    3 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 2 maps via ITE semantics
+[!] .data symbol 'hist': too large (100B > 64B), skipping value comparison
+    [?] Solver checking 5 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.

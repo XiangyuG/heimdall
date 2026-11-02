@@ -1,0 +1,26 @@
+{
+  "original": {
+    "instruction_slots": 471,
+    "conditional_jumps": 40,
+    "entries": [
+      "blk_account_io_merge_bio",
+      "blk_account_io_start",
+      "blk_account_io_done",
+      "block_io_start",
+      "block_io_done"
+    ],
+    "executable_sha256": "3dafd75bc752b190171e33c0ef2d9f3f4038d5e9ec39dd344d5784c6711910b7"
+  },
+  "optimized": {
+    "instruction_slots": 509,
+    "conditional_jumps": 30,
+    "entries": [
+      "blk_account_io_merge_bio",
+      "blk_account_io_start",
+      "blk_account_io_done",
+      "block_io_start",
+      "block_io_done"
+    ],
+    "executable_sha256": "2a02f96a6037734490dad44b731098278f384dabcc7fa8261e11f31af3ac3b83"
+  }
+}

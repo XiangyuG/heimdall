@@ -1,0 +1,7 @@
+{
+  "started_utc": "2026-11-02T13:43:58.235322+00:00",
+  "label": "trial_001_original",
+  "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/biolatency/build/original.o",
+  "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/biolatency/build/original.o",
+  "entry": "block_rq_complete_btf"
+}

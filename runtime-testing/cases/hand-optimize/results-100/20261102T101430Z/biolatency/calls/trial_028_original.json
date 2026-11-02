@@ -1,0 +1,14 @@
+{
+  "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/biolatency/build/original.o",
+  "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/biolatency/build/original.o",
+  "entry": "block_rq_complete_btf",
+  "passed": true,
+  "seconds": 37.69304037499933,
+  "equivalent": true,
+  "result_type": "equivalent",
+  "counter_example": "",
+  "complete": true,
+  "label": "trial_028_original",
+  "finished_utc": "2026-11-02T14:03:35.344531+00:00",
+  "process_wall_seconds": 38.36532074999923
+}

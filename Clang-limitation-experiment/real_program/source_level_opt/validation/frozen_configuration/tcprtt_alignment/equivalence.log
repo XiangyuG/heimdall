@@ -1,0 +1,360 @@
+
+--- equivalence: original.o vs optimized.o ---
+[*] Detected program type 'fentry' from section 'fentry/tcp_rcv_established'
+[*] Using context size 64 bytes for program type 'fentry'
+[*] Detected program type 'fentry' from section 'fentry/tcp_rcv_established'
+[*] Parsed BTF metadata from C binary: 1 maps
+    - hists: type=hash, key_size=18, value_size=128, max_entries=10240
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: heimdall/Clang-limitation-experiment/source_level_opt/validation/default/tcprtt_alignment/original.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400f18: S=0x400000 A=0 imm=-484
+    - Patching call <anon> @ 0x400f38: S=0x400000 A=0 imm=-488
+[*] Patching complete.
+[*] Scanning section 'fentry/tcp_rcv_established' for atomic instructions (offset 0x0-0x20)
+    No atomic instructions found
+[*] Found 1 .data global(s): zero
+[*] Found entry 'tcp_rcv' at 0x400f10
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'hists' from BTF: type=hash, key_size=18, value_size=128, max_entries=10240 at 0x400f90
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_probe_read called at source address:  16
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'hists', slot 0, addr=0xdeaf0000
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'hists', slot 0, addr=0xdeaf0000
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Updating existing slot 0 in map 'hists'
+[*] BPF Helper: bpf_probe_read called at source address:  1632
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Updating existing slot 0 in map 'hists'
+[*] BPF Helper: bpf_probe_read called at source address:  1632
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'hists'
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'hists'
+[*] BPF Helper: bpf_probe_read called at source address:  1632
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read called at source address:  1632
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=61 errored=0
+    stash 'deadended': 61 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=2, map_entries=0
+[*] Path 2: constraints=4, map_entries=1
+[*] Path 3: constraints=5, map_entries=1
+[*] Path 4: constraints=5, map_entries=1
+[*] Path 5: constraints=5, map_entries=1
+[*] Path 6: constraints=5, map_entries=1
+[*] Path 7: constraints=5, map_entries=1
+[*] Path 8: constraints=5, map_entries=1
+[*] Path 9: constraints=5, map_entries=1
+[*] Path 10: constraints=5, map_entries=1
+[*] Path 11: constraints=5, map_entries=1
+[*] Path 12: constraints=5, map_entries=1
+[*] Path 13: constraints=5, map_entries=1
+[*] Path 14: constraints=5, map_entries=1
+[*] Path 15: constraints=4, map_entries=1
+[*] Path 16: constraints=3, map_entries=1
+[*] Path 17: constraints=4, map_entries=1
+[*] Path 18: constraints=5, map_entries=1
+[*] Path 19: constraints=5, map_entries=1
+[*] Path 20: constraints=5, map_entries=1
+[*] Path 21: constraints=5, map_entries=1
+[*] Path 22: constraints=5, map_entries=1
+[*] Path 23: constraints=5, map_entries=1
+[*] Path 24: constraints=5, map_entries=1
+[*] Path 25: constraints=5, map_entries=1
+[*] Path 26: constraints=5, map_entries=1
+[*] Path 27: constraints=5, map_entries=1
+[*] Path 28: constraints=5, map_entries=1
+[*] Path 29: constraints=5, map_entries=1
+[*] Path 30: constraints=4, map_entries=1
+[*] Path 31: constraints=3, map_entries=1
+[*] Path 32: constraints=4, map_entries=1
+[*] Path 33: constraints=5, map_entries=1
+[*] Path 34: constraints=5, map_entries=1
+[*] Path 35: constraints=5, map_entries=1
+[*] Path 36: constraints=5, map_entries=1
+[*] Path 37: constraints=5, map_entries=1
+[*] Path 38: constraints=5, map_entries=1
+[*] Path 39: constraints=5, map_entries=1
+[*] Path 40: constraints=5, map_entries=1
+[*] Path 41: constraints=5, map_entries=1
+[*] Path 42: constraints=5, map_entries=1
+[*] Path 43: constraints=5, map_entries=1
+[*] Path 44: constraints=5, map_entries=1
+[*] Path 45: constraints=8, map_entries=1
+[*] Path 46: constraints=7, map_entries=1
+[*] Path 47: constraints=4, map_entries=1
+[*] Path 48: constraints=5, map_entries=1
+[*] Path 49: constraints=5, map_entries=1
+[*] Path 50: constraints=5, map_entries=1
+[*] Path 51: constraints=5, map_entries=1
+[*] Path 52: constraints=5, map_entries=1
+[*] Path 53: constraints=5, map_entries=1
+[*] Path 54: constraints=5, map_entries=1
+[*] Path 55: constraints=5, map_entries=1
+[*] Path 56: constraints=5, map_entries=1
+[*] Path 57: constraints=5, map_entries=1
+[*] Path 58: constraints=5, map_entries=1
+[*] Path 59: constraints=5, map_entries=1
+[*] Path 60: constraints=7, map_entries=1
+[*] Path 61: constraints=6, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 1 maps
+    - hists: type=hash, key_size=18, value_size=128, max_entries=10240
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: heimdall/Clang-limitation-experiment/source_level_opt/validation/default/tcprtt_alignment/optimized.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400ef8: S=0x400000 A=0 imm=-480
+    - Patching call <anon> @ 0x400f18: S=0x400000 A=0 imm=-484
+[*] Patching complete.
+[*] Scanning section 'fentry/tcp_rcv_established' for atomic instructions (offset 0x0-0x20)
+    No atomic instructions found
+[*] Found 1 .data global(s): zero
+[*] Found entry 'tcp_rcv' at 0x400ef0
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'hists' from BTF: type=hash, key_size=18, value_size=128, max_entries=10240 at 0x400f70
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_probe_read called at source address:  16
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'hists', slot 0, addr=0xdeaf0000
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'hists', slot 0, addr=0xdeaf0000
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Updating existing slot 0 in map 'hists'
+[*] BPF Helper: bpf_probe_read called at source address:  1632
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Updating existing slot 0 in map 'hists'
+[*] BPF Helper: bpf_probe_read called at source address:  1632
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'hists'
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'hists'
+[*] BPF Helper: bpf_probe_read called at source address:  1632
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read called at source address:  1632
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=61 errored=0
+    stash 'deadended': 61 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=2, map_entries=0
+[*] Path 2: constraints=4, map_entries=1
+[*] Path 3: constraints=5, map_entries=1
+[*] Path 4: constraints=5, map_entries=1
+[*] Path 5: constraints=5, map_entries=1
+[*] Path 6: constraints=5, map_entries=1
+[*] Path 7: constraints=5, map_entries=1
+[*] Path 8: constraints=5, map_entries=1
+[*] Path 9: constraints=5, map_entries=1
+[*] Path 10: constraints=5, map_entries=1
+[*] Path 11: constraints=5, map_entries=1
+[*] Path 12: constraints=5, map_entries=1
+[*] Path 13: constraints=5, map_entries=1
+[*] Path 14: constraints=5, map_entries=1
+[*] Path 15: constraints=4, map_entries=1
+[*] Path 16: constraints=3, map_entries=1
+[*] Path 17: constraints=4, map_entries=1
+[*] Path 18: constraints=5, map_entries=1
+[*] Path 19: constraints=5, map_entries=1
+[*] Path 20: constraints=5, map_entries=1
+[*] Path 21: constraints=5, map_entries=1
+[*] Path 22: constraints=5, map_entries=1
+[*] Path 23: constraints=5, map_entries=1
+[*] Path 24: constraints=5, map_entries=1
+[*] Path 25: constraints=5, map_entries=1
+[*] Path 26: constraints=5, map_entries=1
+[*] Path 27: constraints=5, map_entries=1
+[*] Path 28: constraints=5, map_entries=1
+[*] Path 29: constraints=5, map_entries=1
+[*] Path 30: constraints=4, map_entries=1
+[*] Path 31: constraints=3, map_entries=1
+[*] Path 32: constraints=4, map_entries=1
+[*] Path 33: constraints=5, map_entries=1
+[*] Path 34: constraints=5, map_entries=1
+[*] Path 35: constraints=5, map_entries=1
+[*] Path 36: constraints=5, map_entries=1
+[*] Path 37: constraints=5, map_entries=1
+[*] Path 38: constraints=5, map_entries=1
+[*] Path 39: constraints=5, map_entries=1
+[*] Path 40: constraints=5, map_entries=1
+[*] Path 41: constraints=5, map_entries=1
+[*] Path 42: constraints=5, map_entries=1
+[*] Path 43: constraints=5, map_entries=1
+[*] Path 44: constraints=5, map_entries=1
+[*] Path 45: constraints=8, map_entries=1
+[*] Path 46: constraints=7, map_entries=1
+[*] Path 47: constraints=4, map_entries=1
+[*] Path 48: constraints=5, map_entries=1
+[*] Path 49: constraints=5, map_entries=1
+[*] Path 50: constraints=5, map_entries=1
+[*] Path 51: constraints=5, map_entries=1
+[*] Path 52: constraints=5, map_entries=1
+[*] Path 53: constraints=5, map_entries=1
+[*] Path 54: constraints=5, map_entries=1
+[*] Path 55: constraints=5, map_entries=1
+[*] Path 56: constraints=5, map_entries=1
+[*] Path 57: constraints=5, map_entries=1
+[*] Path 58: constraints=5, map_entries=1
+[*] Path 59: constraints=5, map_entries=1
+[*] Path 60: constraints=7, map_entries=1
+[*] Path 61: constraints=6, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    61 paths converted
+[*] Converting Rust program paths to Z3...
+    61 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 1 maps via ITE semantics
+[!] .data symbol 'zero': too large (128B > 64B), skipping value comparison
+    [?] Solver checking 3 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "equivalence", "seconds": 24.108755916007794, "equivalent": true, "result_type": "equivalent"}

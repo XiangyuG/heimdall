@@ -1,0 +1,7 @@
+{
+  "started_utc": "2026-11-02T11:01:08.498414+00:00",
+  "label": "trial_067_optimized",
+  "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+  "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+  "entry": "dummy_kretprobe"
+}

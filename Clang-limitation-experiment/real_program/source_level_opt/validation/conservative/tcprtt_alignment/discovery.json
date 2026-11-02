@@ -1,0 +1,46 @@
+{
+  "source": "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/cases/tcprtt_alignment.bpf.c",
+  "compiler": "/opt/homebrew/opt/llvm/bin/clang",
+  "objective": "strictly decrease total executable BPF instruction slots; no timing trials",
+  "flags": [
+    "-target",
+    "bpfel",
+    "-O2",
+    "-g",
+    "-D__TARGET_ARCH_x86",
+    "-I",
+    "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include",
+    "-I",
+    "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include/bpf",
+    "-I",
+    "/Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/libbpf-tools",
+    "-iquote",
+    "/Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/libbpf-tools"
+  ],
+  "frozen_configuration": false,
+  "stack_addresses_unobserved": false,
+  "accepted": [
+    {
+      "pass": "local_alignment",
+      "reason": "handle_tcp_rcv_established: strengthen automatic aggregate key to 8-byte alignment",
+      "slots": 486,
+      "edits": [
+        {
+          "start": 2268,
+          "end": 2268,
+          "text": "__attribute__((aligned(8))) "
+        }
+      ]
+    }
+  ],
+  "trials": [
+    {
+      "pass": "local_alignment",
+      "reason": "handle_tcp_rcv_established: strengthen automatic aggregate key to 8-byte alignment",
+      "slots": 486
+    }
+  ],
+  "baseline_slots": 490,
+  "optimized_slots": 486,
+  "executable_code_changed": true
+}

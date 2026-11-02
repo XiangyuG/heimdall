@@ -1,0 +1,51 @@
+{
+  "source": "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/cases/execsnoop_bound.bpf.c",
+  "compiler": "/opt/homebrew/opt/llvm/bin/clang",
+  "objective": "strictly decrease total executable BPF instruction slots; no timing trials",
+  "flags": [
+    "-target",
+    "bpfel",
+    "-O2",
+    "-g",
+    "-D__TARGET_ARCH_x86",
+    "-I",
+    "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include",
+    "-I",
+    "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include/bpf",
+    "-I",
+    "/Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/libbpf-tools",
+    "-iquote",
+    "/Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/libbpf-tools"
+  ],
+  "frozen_configuration": true,
+  "stack_addresses_unobserved": false,
+  "accepted": [
+    {
+      "pass": "invariant_bound",
+      "reason": "tracepoint__syscalls__sys_enter_execve: cache max_args; requires loader-frozen configuration and excludes volatile-read traces",
+      "slots": 192,
+      "edits": [
+        {
+          "start": 2613,
+          "end": 2621,
+          "text": "_heimdall_cached_max_args"
+        },
+        {
+          "start": 2559,
+          "end": 2559,
+          "text": "const int _heimdall_cached_max_args = max_args;\n\t"
+        }
+      ]
+    }
+  ],
+  "trials": [
+    {
+      "pass": "invariant_bound",
+      "reason": "tracepoint__syscalls__sys_enter_execve: cache max_args; requires loader-frozen configuration and excludes volatile-read traces",
+      "slots": 192
+    }
+  ],
+  "baseline_slots": 1807,
+  "optimized_slots": 192,
+  "executable_code_changed": true
+}

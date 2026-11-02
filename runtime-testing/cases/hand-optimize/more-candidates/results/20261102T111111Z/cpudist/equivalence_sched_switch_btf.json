@@ -1,0 +1,11 @@
+{
+  "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/cpudist.original.o",
+  "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/cpudist.optimized.o",
+  "entry": "sched_switch_btf",
+  "passed": true,
+  "seconds": 49.80484999999953,
+  "equivalent": true,
+  "result_type": "equivalent",
+  "counter_example": "",
+  "complete": true
+}

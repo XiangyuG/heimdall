@@ -1,0 +1,16 @@
+--- libbpf-tools/tcprtt.bpf.c
++++ tcprtt_alignment.bpf.c
+@@ -4,7 +4,12 @@
+ #include <bpf/bpf_helpers.h>
+ #include <bpf/bpf_core_read.h>
+ #include <bpf/bpf_tracing.h>
+-#include <bpf/bpf_endian.h>
++#define bpf_htons(x) __builtin_bswap16(x)
++#define bpf_ntohs(x) __builtin_bswap16(x)
++#define bpf_htonl(x) __builtin_bswap32(x)
++#define bpf_ntohl(x) __builtin_bswap32(x)
++#define bpf_cpu_to_be64(x) __builtin_bswap64(x)
++#define bpf_be64_to_cpu(x) __builtin_bswap64(x)
+ #include "bits.bpf.h"
+ #include "maps.bpf.h"
+ 

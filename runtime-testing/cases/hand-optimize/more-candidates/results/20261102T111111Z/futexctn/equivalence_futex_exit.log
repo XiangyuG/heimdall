@@ -1,0 +1,879 @@
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_futex'
+[*] Using context size 64 bytes for program type 'tracepoint'
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_futex'
+[*] Parsed BTF metadata from C binary: 3 maps
+    - start: type=hash, key_size=8, value_size=16, max_entries=10240
+    - stackmap: type=stack_trace, key_size=4, value_size=1016, max_entries=1024
+    - hists: type=hash, key_size=24, value_size=192, max_entries=10240
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/futexctn.original.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_exit_futex' for atomic instructions (offset 0x0-0x4c8)
+    Found 7 atomic instruction(s)
+      offset=0x3f8 32-bit add fetch=True
+      offset=0x408 64-bit add fetch=True
+      offset=0x418 64-bit add fetch=True
+      offset=0x430 64-bit or fetch=True
+      offset=0x450 64-bit cmpxchg fetch=True
+      offset=0x458 64-bit or fetch=True
+      offset=0x470 64-bit cmpxchg fetch=True
+[*] Found 1 .data global(s): initial_hist
+[*] Found entry 'futex_exit' at 0x400160
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'start' from BTF: type=hash, key_size=8, value_size=16, max_entries=10240 at 0x400640
+[*] Initializing map 'stackmap' from BTF: type=stack_trace, key_size=4, value_size=1016, max_entries=1024 at 0x400660
+[*] Initializing map 'hists' from BTF: type=hash, key_size=24, value_size=192, max_entries=10240 at 0x400670
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_ktime_get_ns called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'start', slot 0, addr=0xdeaf0000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_get_stackid called.
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'hists', slot 0, addr=0xdeaf0010
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Updating existing slot 0 in map 'hists'
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'hists'
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=143 errored=0
+    stash 'deadended': 143 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=4, map_entries=1
+[*] Path 2: constraints=5, map_entries=1
+[*] Path 3: constraints=6, map_entries=1
+[*] Path 4: constraints=12, map_entries=2
+[*] Path 5: constraints=12, map_entries=2
+[*] Path 6: constraints=12, map_entries=2
+[*] Path 7: constraints=12, map_entries=2
+[*] Path 8: constraints=13, map_entries=2
+[*] Path 9: constraints=13, map_entries=2
+[*] Path 10: constraints=13, map_entries=2
+[*] Path 11: constraints=13, map_entries=2
+[*] Path 12: constraints=13, map_entries=2
+[*] Path 13: constraints=13, map_entries=2
+[*] Path 14: constraints=13, map_entries=2
+[*] Path 15: constraints=13, map_entries=2
+[*] Path 16: constraints=13, map_entries=2
+[*] Path 17: constraints=13, map_entries=2
+[*] Path 18: constraints=13, map_entries=2
+[*] Path 19: constraints=13, map_entries=2
+[*] Path 20: constraints=13, map_entries=2
+[*] Path 21: constraints=13, map_entries=2
+[*] Path 22: constraints=13, map_entries=2
+[*] Path 23: constraints=13, map_entries=2
+[*] Path 24: constraints=13, map_entries=2
+[*] Path 25: constraints=13, map_entries=2
+[*] Path 26: constraints=13, map_entries=2
+[*] Path 27: constraints=13, map_entries=2
+[*] Path 28: constraints=13, map_entries=2
+[*] Path 29: constraints=13, map_entries=2
+[*] Path 30: constraints=13, map_entries=2
+[*] Path 31: constraints=13, map_entries=2
+[*] Path 32: constraints=12, map_entries=2
+[*] Path 33: constraints=12, map_entries=2
+[*] Path 34: constraints=12, map_entries=2
+[*] Path 35: constraints=12, map_entries=2
+[*] Path 36: constraints=13, map_entries=2
+[*] Path 37: constraints=13, map_entries=2
+[*] Path 38: constraints=13, map_entries=2
+[*] Path 39: constraints=13, map_entries=2
+[*] Path 40: constraints=13, map_entries=2
+[*] Path 41: constraints=13, map_entries=2
+[*] Path 42: constraints=13, map_entries=2
+[*] Path 43: constraints=13, map_entries=2
+[*] Path 44: constraints=13, map_entries=2
+[*] Path 45: constraints=13, map_entries=2
+[*] Path 46: constraints=13, map_entries=2
+[*] Path 47: constraints=13, map_entries=2
+[*] Path 48: constraints=13, map_entries=2
+[*] Path 49: constraints=13, map_entries=2
+[*] Path 50: constraints=13, map_entries=2
+[*] Path 51: constraints=13, map_entries=2
+[*] Path 52: constraints=13, map_entries=2
+[*] Path 53: constraints=13, map_entries=2
+[*] Path 54: constraints=13, map_entries=2
+[*] Path 55: constraints=13, map_entries=2
+[*] Path 56: constraints=13, map_entries=2
+[*] Path 57: constraints=13, map_entries=2
+[*] Path 58: constraints=13, map_entries=2
+[*] Path 59: constraints=13, map_entries=2
+[*] Path 60: constraints=13, map_entries=2
+[*] Path 61: constraints=13, map_entries=2
+[*] Path 62: constraints=13, map_entries=2
+[*] Path 63: constraints=13, map_entries=2
+[*] Path 64: constraints=12, map_entries=2
+[*] Path 65: constraints=12, map_entries=2
+[*] Path 66: constraints=12, map_entries=2
+[*] Path 67: constraints=12, map_entries=2
+[*] Path 68: constraints=11, map_entries=2
+[*] Path 69: constraints=11, map_entries=2
+[*] Path 70: constraints=11, map_entries=2
+[*] Path 71: constraints=11, map_entries=2
+[*] Path 72: constraints=12, map_entries=2
+[*] Path 73: constraints=12, map_entries=2
+[*] Path 74: constraints=12, map_entries=2
+[*] Path 75: constraints=12, map_entries=2
+[*] Path 76: constraints=13, map_entries=2
+[*] Path 77: constraints=13, map_entries=2
+[*] Path 78: constraints=13, map_entries=2
+[*] Path 79: constraints=13, map_entries=2
+[*] Path 80: constraints=12, map_entries=2
+[*] Path 81: constraints=12, map_entries=2
+[*] Path 82: constraints=12, map_entries=2
+[*] Path 83: constraints=12, map_entries=2
+[*] Path 84: constraints=12, map_entries=2
+[*] Path 85: constraints=12, map_entries=2
+[*] Path 86: constraints=12, map_entries=2
+[*] Path 87: constraints=12, map_entries=2
+[*] Path 88: constraints=12, map_entries=2
+[*] Path 89: constraints=12, map_entries=2
+[*] Path 90: constraints=12, map_entries=2
+[*] Path 91: constraints=12, map_entries=2
+[*] Path 92: constraints=12, map_entries=2
+[*] Path 93: constraints=12, map_entries=2
+[*] Path 94: constraints=12, map_entries=2
+[*] Path 95: constraints=12, map_entries=2
+[*] Path 96: constraints=12, map_entries=2
+[*] Path 97: constraints=12, map_entries=2
+[*] Path 98: constraints=12, map_entries=2
+[*] Path 99: constraints=12, map_entries=2
+[*] Path 100: constraints=12, map_entries=2
+[*] Path 101: constraints=12, map_entries=2
+[*] Path 102: constraints=12, map_entries=2
+[*] Path 103: constraints=12, map_entries=2
+[*] Path 104: constraints=12, map_entries=2
+[*] Path 105: constraints=12, map_entries=2
+[*] Path 106: constraints=12, map_entries=2
+[*] Path 107: constraints=12, map_entries=2
+[*] Path 108: constraints=12, map_entries=2
+[*] Path 109: constraints=12, map_entries=2
+[*] Path 110: constraints=12, map_entries=2
+[*] Path 111: constraints=12, map_entries=2
+[*] Path 112: constraints=12, map_entries=2
+[*] Path 113: constraints=12, map_entries=2
+[*] Path 114: constraints=12, map_entries=2
+[*] Path 115: constraints=12, map_entries=2
+[*] Path 116: constraints=11, map_entries=2
+[*] Path 117: constraints=12, map_entries=2
+[*] Path 118: constraints=12, map_entries=2
+[*] Path 119: constraints=12, map_entries=2
+[*] Path 120: constraints=12, map_entries=2
+[*] Path 121: constraints=12, map_entries=2
+[*] Path 122: constraints=12, map_entries=2
+[*] Path 123: constraints=11, map_entries=2
+[*] Path 124: constraints=12, map_entries=2
+[*] Path 125: constraints=12, map_entries=2
+[*] Path 126: constraints=12, map_entries=2
+[*] Path 127: constraints=12, map_entries=2
+[*] Path 128: constraints=12, map_entries=2
+[*] Path 129: constraints=12, map_entries=2
+[*] Path 130: constraints=12, map_entries=2
+[*] Path 131: constraints=11, map_entries=2
+[*] Path 132: constraints=11, map_entries=2
+[*] Path 133: constraints=17, map_entries=2
+[*] Path 134: constraints=11, map_entries=2
+[*] Path 135: constraints=17, map_entries=2
+[*] Path 136: constraints=17, map_entries=2
+[*] Path 137: constraints=17, map_entries=2
+[*] Path 138: constraints=17, map_entries=2
+[*] Path 139: constraints=17, map_entries=2
+[*] Path 140: constraints=17, map_entries=2
+[*] Path 141: constraints=17, map_entries=2
+[*] Path 142: constraints=17, map_entries=2
+[*] Path 143: constraints=17, map_entries=2
+[*] Parsed BTF metadata from Rust binary: 3 maps
+    - start: type=hash, key_size=8, value_size=16, max_entries=10240
+    - stackmap: type=stack_trace, key_size=4, value_size=1016, max_entries=1024
+    - hists: type=hash, key_size=24, value_size=192, max_entries=10240
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/futexctn.optimized.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_exit_futex' for atomic instructions (offset 0x0-0x4a0)
+    Found 7 atomic instruction(s)
+      offset=0x3d0 32-bit add fetch=True
+      offset=0x3e0 64-bit add fetch=True
+      offset=0x3f0 64-bit add fetch=True
+      offset=0x408 64-bit or fetch=True
+      offset=0x428 64-bit cmpxchg fetch=True
+      offset=0x430 64-bit or fetch=True
+      offset=0x448 64-bit cmpxchg fetch=True
+[*] Found 1 .data global(s): initial_hist
+[*] Found entry 'futex_exit' at 0x400160
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'start' from BTF: type=hash, key_size=8, value_size=16, max_entries=10240 at 0x400618
+[*] Initializing map 'stackmap' from BTF: type=stack_trace, key_size=4, value_size=1016, max_entries=1024 at 0x400638
+[*] Initializing map 'hists' from BTF: type=hash, key_size=24, value_size=192, max_entries=10240 at 0x400648
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_ktime_get_ns called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'start', slot 0, addr=0xdeaf0000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_get_stackid called.
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'hists', slot 0, addr=0xdeaf0010
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Updating existing slot 0 in map 'hists'
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'hists'
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=13 errored=0
+    stash 'deadended': 13 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=4, map_entries=1
+[*] Path 2: constraints=5, map_entries=1
+[*] Path 3: constraints=6, map_entries=1
+[*] Path 4: constraints=12, map_entries=2
+[*] Path 5: constraints=12, map_entries=2
+[*] Path 6: constraints=12, map_entries=2
+[*] Path 7: constraints=12, map_entries=2
+[*] Path 8: constraints=29, map_entries=2
+[*] Path 9: constraints=29, map_entries=2
+[*] Path 10: constraints=29, map_entries=2
+[*] Path 11: constraints=29, map_entries=2
+[*] Path 12: constraints=12, map_entries=2
+[*] Path 13: constraints=13, map_entries=2
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    143 paths converted
+[*] Converting Rust program paths to Z3...
+    13 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 3 maps via ITE semantics
+[!] .data symbol 'initial_hist': too large (192B > 64B), skipping value comparison
+    [?] Solver checking 7 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.

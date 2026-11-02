@@ -1,0 +1,1164 @@
+Homebrew clang version 22.1.8
+Target: arm64-apple-darwin27.0.0
+Thread model: posix
+InstalledDir: /opt/homebrew/Cellar/llvm/22.1.8/bin
+Configuration file: /opt/homebrew/Cellar/llvm/22.1.8/etc/clang/arm64-apple-darwin27.cfg
+
+{"flags": ["-target", "bpfel", "-O2", "-g", "-D__TARGET_ARCH_x86", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include/bpf", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/libbpf-tools"], "entry": "md_flush_request", "trials": 5, "warmups": 1, "timeout_seconds": 60, "input_assumptions": [], "requirement": null}
+{"command": ["/opt/homebrew/opt/llvm/bin/clang", "-target", "bpfel", "-O2", "-g", "-D__TARGET_ARCH_x86", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include/bpf", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/libbpf-tools", "-iquote", "/Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/libbpf-tools", "-x", "c", "-c", "-o", "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/mdflush_alignment.o", "-"], "source": "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/cases/mdflush_alignment.bpf.c"}
+{"command": ["/opt/homebrew/opt/llvm/bin/clang", "-target", "bpfel", "-O2", "-g", "-D__TARGET_ARCH_x86", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include/bpf", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/libbpf-tools", "-iquote", "/Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/libbpf-tools", "-x", "c", "-c", "-o", "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/mdflush_alignment_SOURCE_OPT.o", "-"], "source": "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/source_level_opt/generated/mdflush_alignment_SOURCE_OPT.bpf.c"}
+
+--- equivalence: mdflush_alignment.o vs mdflush_alignment_SOURCE_OPT.o ---
+[*] Detected program type 'fentry' from section 'fentry/md_flush_request'
+[*] Using context size 64 bytes for program type 'fentry'
+[*] Detected program type 'fentry' from section 'fentry/md_flush_request'
+[*] Parsed BTF metadata from C binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/mdflush_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'fentry/md_flush_request' for atomic instructions (offset 0x0-0x1f8)
+    No atomic instructions found
+[*] Found entry 'md_flush_request' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400400
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  840
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_kernel_str called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=52)
+[*] Path 1: constraints=4, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/mdflush_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'fentry/md_flush_request' for atomic instructions (offset 0x0-0x1d8)
+    No atomic instructions found
+[*] Found entry 'md_flush_request' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4003c0
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  840
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_kernel_str called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=52)
+[*] Path 1: constraints=4, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 1 maps via ITE semantics
+    [?] Solver checking 3 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "equivalence", "seconds": 1.1432832079881337, "equivalent": true, "result_type": "equivalent"}
+
+--- warmup_original_self: mdflush_alignment.o vs mdflush_alignment.o ---
+[*] Detected program type 'fentry' from section 'fentry/md_flush_request'
+[*] Using context size 64 bytes for program type 'fentry'
+[*] Detected program type 'fentry' from section 'fentry/md_flush_request'
+[*] Parsed BTF metadata from C binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/mdflush_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'fentry/md_flush_request' for atomic instructions (offset 0x0-0x1f8)
+    No atomic instructions found
+[*] Found entry 'md_flush_request' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400400
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  840
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_kernel_str called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=52)
+[*] Path 1: constraints=4, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/mdflush_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'fentry/md_flush_request' for atomic instructions (offset 0x0-0x1f8)
+    No atomic instructions found
+[*] Found entry 'md_flush_request' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400400
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  840
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_kernel_str called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=52)
+[*] Path 1: constraints=4, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 1 maps via ITE semantics
+    [?] Solver checking 3 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "warmup_original_self", "seconds": 1.0026173329970334, "equivalent": true, "result_type": "equivalent"}
+
+--- warmup_optimized_self: mdflush_alignment_SOURCE_OPT.o vs mdflush_alignment_SOURCE_OPT.o ---
+[*] Detected program type 'fentry' from section 'fentry/md_flush_request'
+[*] Using context size 64 bytes for program type 'fentry'
+[*] Detected program type 'fentry' from section 'fentry/md_flush_request'
+[*] Parsed BTF metadata from C binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/mdflush_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'fentry/md_flush_request' for atomic instructions (offset 0x0-0x1d8)
+    No atomic instructions found
+[*] Found entry 'md_flush_request' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4003c0
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  840
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_kernel_str called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=52)
+[*] Path 1: constraints=4, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/mdflush_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'fentry/md_flush_request' for atomic instructions (offset 0x0-0x1d8)
+    No atomic instructions found
+[*] Found entry 'md_flush_request' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4003c0
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  840
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_kernel_str called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=52)
+[*] Path 1: constraints=4, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 1 maps via ITE semantics
+    [?] Solver checking 3 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "warmup_optimized_self", "seconds": 0.6737743749981746, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_1_original_self: mdflush_alignment.o vs mdflush_alignment.o ---
+[*] Detected program type 'fentry' from section 'fentry/md_flush_request'
+[*] Using context size 64 bytes for program type 'fentry'
+[*] Detected program type 'fentry' from section 'fentry/md_flush_request'
+[*] Parsed BTF metadata from C binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/mdflush_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'fentry/md_flush_request' for atomic instructions (offset 0x0-0x1f8)
+    No atomic instructions found
+[*] Found entry 'md_flush_request' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400400
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  840
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_kernel_str called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=52)
+[*] Path 1: constraints=4, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/mdflush_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'fentry/md_flush_request' for atomic instructions (offset 0x0-0x1f8)
+    No atomic instructions found
+[*] Found entry 'md_flush_request' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400400
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  840
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_kernel_str called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=52)
+[*] Path 1: constraints=4, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 1 maps via ITE semantics
+    [?] Solver checking 3 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_1_original_self", "seconds": 0.7549186249962077, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_1_optimized_self: mdflush_alignment_SOURCE_OPT.o vs mdflush_alignment_SOURCE_OPT.o ---
+[*] Detected program type 'fentry' from section 'fentry/md_flush_request'
+[*] Using context size 64 bytes for program type 'fentry'
+[*] Detected program type 'fentry' from section 'fentry/md_flush_request'
+[*] Parsed BTF metadata from C binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/mdflush_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'fentry/md_flush_request' for atomic instructions (offset 0x0-0x1d8)
+    No atomic instructions found
+[*] Found entry 'md_flush_request' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4003c0
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  840
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_kernel_str called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=52)
+[*] Path 1: constraints=4, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/mdflush_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'fentry/md_flush_request' for atomic instructions (offset 0x0-0x1d8)
+    No atomic instructions found
+[*] Found entry 'md_flush_request' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4003c0
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  840
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_kernel_str called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=52)
+[*] Path 1: constraints=4, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 1 maps via ITE semantics
+    [?] Solver checking 3 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_1_optimized_self", "seconds": 0.6541012910020072, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_2_optimized_self: mdflush_alignment_SOURCE_OPT.o vs mdflush_alignment_SOURCE_OPT.o ---
+[*] Detected program type 'fentry' from section 'fentry/md_flush_request'
+[*] Using context size 64 bytes for program type 'fentry'
+[*] Detected program type 'fentry' from section 'fentry/md_flush_request'
+[*] Parsed BTF metadata from C binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/mdflush_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'fentry/md_flush_request' for atomic instructions (offset 0x0-0x1d8)
+    No atomic instructions found
+[*] Found entry 'md_flush_request' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4003c0
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  840
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_kernel_str called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=52)
+[*] Path 1: constraints=4, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/mdflush_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'fentry/md_flush_request' for atomic instructions (offset 0x0-0x1d8)
+    No atomic instructions found
+[*] Found entry 'md_flush_request' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4003c0
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  840
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_kernel_str called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=52)
+[*] Path 1: constraints=4, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 1 maps via ITE semantics
+    [?] Solver checking 3 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_2_optimized_self", "seconds": 1.089707292005187, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_2_original_self: mdflush_alignment.o vs mdflush_alignment.o ---
+[*] Detected program type 'fentry' from section 'fentry/md_flush_request'
+[*] Using context size 64 bytes for program type 'fentry'
+[*] Detected program type 'fentry' from section 'fentry/md_flush_request'
+[*] Parsed BTF metadata from C binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/mdflush_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'fentry/md_flush_request' for atomic instructions (offset 0x0-0x1f8)
+    No atomic instructions found
+[*] Found entry 'md_flush_request' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400400
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  840
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_kernel_str called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=52)
+[*] Path 1: constraints=4, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/mdflush_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'fentry/md_flush_request' for atomic instructions (offset 0x0-0x1f8)
+    No atomic instructions found
+[*] Found entry 'md_flush_request' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400400
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  840
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_kernel_str called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=52)
+[*] Path 1: constraints=4, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 1 maps via ITE semantics
+    [?] Solver checking 3 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_2_original_self", "seconds": 0.8071643750008661, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_3_original_self: mdflush_alignment.o vs mdflush_alignment.o ---
+[*] Detected program type 'fentry' from section 'fentry/md_flush_request'
+[*] Using context size 64 bytes for program type 'fentry'
+[*] Detected program type 'fentry' from section 'fentry/md_flush_request'
+[*] Parsed BTF metadata from C binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/mdflush_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'fentry/md_flush_request' for atomic instructions (offset 0x0-0x1f8)
+    No atomic instructions found
+[*] Found entry 'md_flush_request' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400400
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  840
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_kernel_str called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=52)
+[*] Path 1: constraints=4, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/mdflush_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'fentry/md_flush_request' for atomic instructions (offset 0x0-0x1f8)
+    No atomic instructions found
+[*] Found entry 'md_flush_request' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400400
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  840
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_kernel_str called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=52)
+[*] Path 1: constraints=4, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 1 maps via ITE semantics
+    [?] Solver checking 3 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_3_original_self", "seconds": 0.7590038330090465, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_3_optimized_self: mdflush_alignment_SOURCE_OPT.o vs mdflush_alignment_SOURCE_OPT.o ---
+[*] Detected program type 'fentry' from section 'fentry/md_flush_request'
+[*] Using context size 64 bytes for program type 'fentry'
+[*] Detected program type 'fentry' from section 'fentry/md_flush_request'
+[*] Parsed BTF metadata from C binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/mdflush_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'fentry/md_flush_request' for atomic instructions (offset 0x0-0x1d8)
+    No atomic instructions found
+[*] Found entry 'md_flush_request' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4003c0
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  840
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_kernel_str called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=52)
+[*] Path 1: constraints=4, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/mdflush_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'fentry/md_flush_request' for atomic instructions (offset 0x0-0x1d8)
+    No atomic instructions found
+[*] Found entry 'md_flush_request' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4003c0
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  840
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_kernel_str called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=52)
+[*] Path 1: constraints=4, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 1 maps via ITE semantics
+    [?] Solver checking 3 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_3_optimized_self", "seconds": 0.635719625002821, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_4_optimized_self: mdflush_alignment_SOURCE_OPT.o vs mdflush_alignment_SOURCE_OPT.o ---
+[*] Detected program type 'fentry' from section 'fentry/md_flush_request'
+[*] Using context size 64 bytes for program type 'fentry'
+[*] Detected program type 'fentry' from section 'fentry/md_flush_request'
+[*] Parsed BTF metadata from C binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/mdflush_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'fentry/md_flush_request' for atomic instructions (offset 0x0-0x1d8)
+    No atomic instructions found
+[*] Found entry 'md_flush_request' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4003c0
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  840
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_kernel_str called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=52)
+[*] Path 1: constraints=4, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/mdflush_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'fentry/md_flush_request' for atomic instructions (offset 0x0-0x1d8)
+    No atomic instructions found
+[*] Found entry 'md_flush_request' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4003c0
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  840
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_kernel_str called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=52)
+[*] Path 1: constraints=4, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 1 maps via ITE semantics
+    [?] Solver checking 3 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_4_optimized_self", "seconds": 0.6426210420031566, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_4_original_self: mdflush_alignment.o vs mdflush_alignment.o ---
+[*] Detected program type 'fentry' from section 'fentry/md_flush_request'
+[*] Using context size 64 bytes for program type 'fentry'
+[*] Detected program type 'fentry' from section 'fentry/md_flush_request'
+[*] Parsed BTF metadata from C binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/mdflush_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'fentry/md_flush_request' for atomic instructions (offset 0x0-0x1f8)
+    No atomic instructions found
+[*] Found entry 'md_flush_request' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400400
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  840
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_kernel_str called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=52)
+[*] Path 1: constraints=4, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/mdflush_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'fentry/md_flush_request' for atomic instructions (offset 0x0-0x1f8)
+    No atomic instructions found
+[*] Found entry 'md_flush_request' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400400
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  840
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_kernel_str called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=52)
+[*] Path 1: constraints=4, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 1 maps via ITE semantics
+    [?] Solver checking 3 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_4_original_self", "seconds": 0.745901166999829, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_5_original_self: mdflush_alignment.o vs mdflush_alignment.o ---
+[*] Detected program type 'fentry' from section 'fentry/md_flush_request'
+[*] Using context size 64 bytes for program type 'fentry'
+[*] Detected program type 'fentry' from section 'fentry/md_flush_request'
+[*] Parsed BTF metadata from C binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/mdflush_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'fentry/md_flush_request' for atomic instructions (offset 0x0-0x1f8)
+    No atomic instructions found
+[*] Found entry 'md_flush_request' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400400
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  840
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_kernel_str called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=52)
+[*] Path 1: constraints=4, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/mdflush_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'fentry/md_flush_request' for atomic instructions (offset 0x0-0x1f8)
+    No atomic instructions found
+[*] Found entry 'md_flush_request' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400400
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  840
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_kernel_str called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=52)
+[*] Path 1: constraints=4, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 1 maps via ITE semantics
+    [?] Solver checking 3 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_5_original_self", "seconds": 0.7405499170126859, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_5_optimized_self: mdflush_alignment_SOURCE_OPT.o vs mdflush_alignment_SOURCE_OPT.o ---
+[*] Detected program type 'fentry' from section 'fentry/md_flush_request'
+[*] Using context size 64 bytes for program type 'fentry'
+[*] Detected program type 'fentry' from section 'fentry/md_flush_request'
+[*] Parsed BTF metadata from C binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/mdflush_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'fentry/md_flush_request' for atomic instructions (offset 0x0-0x1d8)
+    No atomic instructions found
+[*] Found entry 'md_flush_request' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4003c0
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  840
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_kernel_str called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=52)
+[*] Path 1: constraints=4, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/mdflush_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'fentry/md_flush_request' for atomic instructions (offset 0x0-0x1d8)
+    No atomic instructions found
+[*] Found entry 'md_flush_request' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4003c0
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  840
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_kernel_str called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=52)
+[*] Path 1: constraints=4, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 1 maps via ITE semantics
+    [?] Solver checking 3 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_5_optimized_self", "seconds": 0.627752958011115, "equivalent": true, "result_type": "equivalent"}
+
+--- SUMMARY ---
+{
+  "id": "mdflush_alignment",
+  "program": "libbpf-tools/mdflush.bpf.c",
+  "entry": "md_flush_request",
+  "method": "Align local event buffer",
+  "variant": "combined",
+  "requirement": null,
+  "original_sha256": "d66d42f0b1e186de68a755ee077e51d6d6edc067d6fffdb8f0c1a43aeb8d020c",
+  "baseline_sha256": "d66d42f0b1e186de68a755ee077e51d6d6edc067d6fffdb8f0c1a43aeb8d020c",
+  "expected_instructions": [
+    126,
+    118
+  ],
+  "original_directory": "c2rust_translation/c_bpf_programs/libbpf-tools",
+  "label": "mdflush_alignment",
+  "status": "success",
+  "instructions": [
+    126,
+    118
+  ],
+  "equivalence": "passed for selected entry",
+  "raw_seconds": {
+    "original_self": [
+      0.7549186249962077,
+      0.8071643750008661,
+      0.7590038330090465,
+      0.745901166999829,
+      0.7405499170126859
+    ],
+    "optimized_self": [
+      0.6541012910020072,
+      1.089707292005187,
+      0.635719625002821,
+      0.6426210420031566,
+      0.627752958011115
+    ]
+  },
+  "median_seconds": {
+    "original_self": 0.7549186249962077,
+    "optimized_self": 0.6426210420031566
+  },
+  "speedup": 1.1747493089286352,
+  "reduction_percent": 14.87545535038497,
+  "reduction_ci95_percent": [
+    -35.00438395884575,
+    16.242896629055114
+  ]
+}

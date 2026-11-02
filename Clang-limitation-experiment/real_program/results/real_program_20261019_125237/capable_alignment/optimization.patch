@@ -1,0 +1,20 @@
+--- capable_alignment.bpf.c
++++ capable_alignment_SOURCE_OPT.bpf.c
+@@ -125,7 +125,7 @@
+ {
+ 	__u64 pid_tgid;
+ 	struct args_t *ap;
+-	struct key_t i_key;
++	struct key_t i_key __attribute__((aligned(8)));
+ 
+ 	pid_tgid = bpf_get_current_pid_tgid();
+ 	ap = bpf_map_lookup_elem(&start, &pid_tgid);
+@@ -134,7 +134,7 @@
+ 
+ 	bpf_map_delete_elem(&start, &pid_tgid);
+ 
+-	struct cap_event event = {};
++	struct cap_event event __attribute__((aligned(8))) = {};
+ 	event.pid = pid_tgid >> 32;
+ 	event.tgid = pid_tgid;
+ 	event.cap = ap->cap;

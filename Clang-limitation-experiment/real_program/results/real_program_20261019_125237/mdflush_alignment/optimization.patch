@@ -1,0 +1,20 @@
+--- mdflush_alignment.bpf.c
++++ mdflush_alignment_SOURCE_OPT.bpf.c
+@@ -23,7 +23,7 @@
+ int BPF_PROG(md_flush_request, void *mddev, void *bio)
+ {
+ 	__u64 pid = bpf_get_current_pid_tgid() >> 32;
+-	struct event event = {};
++	struct event event __attribute__((aligned(8))) = {};
+ 	struct gendisk *gendisk;
+ 
+ 	event.pid = pid;
+@@ -38,7 +38,7 @@
+ int BPF_KPROBE(kprobe_md_flush_request, void *mddev, void *bio)
+ {
+ 	__u64 pid = bpf_get_current_pid_tgid() >> 32;
+-	struct event event = {};
++	struct event event __attribute__((aligned(8))) = {};
+ 	struct gendisk *gendisk;
+ 
+ 	event.pid = pid;

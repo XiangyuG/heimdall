@@ -1,0 +1,32 @@
+{
+  "case": "execsnoop_bound",
+  "unique_attempts": 200,
+  "object_hashes_unchanged": true,
+  "variants": {
+    "original_self": {
+      "successful": 94,
+      "timeouts": 6,
+      "timeout_trials": [
+        86,
+        87,
+        88,
+        89,
+        91,
+        92
+      ],
+      "first20_success_median": 16.003242416511057,
+      "last20_success_median": 53.94929802051047,
+      "successful_over_configured_alarm": []
+    },
+    "optimized_self": {
+      "successful": 99,
+      "timeouts": 1,
+      "timeout_trials": [
+        91
+      ],
+      "first20_success_median": 11.679760250015534,
+      "last20_success_median": 49.15336075000232,
+      "successful_over_configured_alarm": []
+    }
+  }
+}

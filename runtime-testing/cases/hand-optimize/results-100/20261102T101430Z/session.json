@@ -1,0 +1,56 @@
+{
+  "directory": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z",
+  "case_order": [
+    "tcpsynbl",
+    "funclatency",
+    "fsdist",
+    "biostacks",
+    "biolatency"
+  ],
+  "policy": "Exactly one Luna case agent active; wait for run termination and written report before dispatching next case. No concurrent benchmark jobs.",
+  "trials_per_variant": 100,
+  "cases": {
+    "tcpsynbl": {
+      "status": "complete",
+      "directory": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/tcpsynbl",
+      "agent": "/root/luna_stability",
+      "report": "tcpsynbl/REPORT.md",
+      "agent_notes": "tcpsynbl/AGENT_NOTES.md"
+    },
+    "funclatency": {
+      "status": "complete",
+      "directory": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency",
+      "agent": "/root/luna_stability",
+      "report": "funclatency/REPORT.md",
+      "agent_notes": "funclatency/AGENT_NOTES.md"
+    },
+    "fsdist": {
+      "status": "complete",
+      "directory": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/fsdist",
+      "agent": "/root/luna_stability",
+      "report": "fsdist/REPORT.md",
+      "agent_notes": "fsdist/AGENT_NOTES.md"
+    },
+    "biostacks": {
+      "status": "complete",
+      "directory": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/biostacks",
+      "agent": "/root/luna_stability",
+      "report": "biostacks/REPORT.md",
+      "agent_notes": "biostacks/AGENT_NOTES.md"
+    },
+    "biolatency": {
+      "status": "complete",
+      "directory": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/biolatency",
+      "agent": "/root/luna_stability",
+      "report": "biolatency/REPORT.md",
+      "agent_notes": "biolatency/AGENT_NOTES.md"
+    }
+  },
+  "status": "complete",
+  "summary": "SUMMARY_100.md",
+  "audit": "audit.json",
+  "chart": "runtime-comparison-100.png",
+  "timed_calls": 1000,
+  "successful_timed_calls": 1000,
+  "proofs_passed": 39
+}

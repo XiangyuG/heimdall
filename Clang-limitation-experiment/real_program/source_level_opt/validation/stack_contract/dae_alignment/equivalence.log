@@ -1,0 +1,699 @@
+
+--- equivalence: original.o vs optimized.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/skb-1'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/skb-1'
+[*] Parsed BTF metadata from C binary: 2 maps
+    - skb_addresses: type=hash, key_size=8, value_size=1, max_entries=1024
+    - events: type=ringbuf, key_size=0, value_size=0, max_entries=536870912
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: heimdall/Clang-limitation-experiment/source_level_opt/validation/stack_contract/dae_alignment/original.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'kprobe/skb-1' for atomic instructions (offset 0x0-0xe90)
+    No atomic instructions found
+[*] Found entry 'kprobe_skb_1' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'skb_addresses' from BTF: type=hash, key_size=8, value_size=1, max_entries=1024 at 0x404918
+[*] Initializing map 'events' from BTF: type=ringbuf, key_size=0, value_size=0, max_entries=536870912 at 0x404938
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'skb_addresses', slot 0, addr=0xdeaf0000
+[*] BPF Helper: bpf_probe_read called at source address:  192
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_get_func_ip called.
+[*] BPF Helper: bpf_probe_read called at source address:  180
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read called at source address:  164
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  178
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v2
+[*] BPF Helper: bpf_probe_read called at source address:  16
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v3
+[*] BPF Helper: bpf_probe_read called at source address:  1328
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v2
+[*] BPF Helper: bpf_probe_read called at source address:  144
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v3
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_probe_read called at source address:  24
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v4
+[*] BPF Helper: bpf_probe_read called at source address:  16
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v4
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_probe_read called at source address:  208
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v5
+[*] BPF Helper: bpf_probe_read called at source address:  47
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v5
+[*] BPF Helper: bpf_probe_read called at source address:  16
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v5
+[*] BPF Helper: bpf_probe_read called at source address:  16
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v6
+[*] BPF Helper: bpf_probe_read called at source address:  144
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v6
+[*] BPF Helper: bpf_probe_read called at source address:  208
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v6
+[*] BPF Helper: bpf_probe_read_kernel_str called.
+[*] BPF Helper: bpf_probe_read called at source address:  16
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v7
+[*] BPF Helper: bpf_probe_read called at source address:  16
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v7
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  208
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v8
+[*] BPF Helper: bpf_probe_read_kernel_str called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198784
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v7
+[*] BPF Helper: bpf_probe_read called at source address:  16
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v9
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198600
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v8
+[*] BPF Helper: bpf_probe_read_kernel_str called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198784
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v8
+[*] BPF Helper: bpf_probe_read called at source address:  312
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v9
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198600
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v9
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198784
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v10
+[*] BPF Helper: bpf_probe_read called at source address:  312
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v10
+[*] BPF Helper: bpf_probe_read called at source address:  192
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v10
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198600
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v11
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read called at source address:  180
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v11
+[*] BPF Helper: bpf_probe_read called at source address:  312
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v12
+[*] BPF Helper: bpf_probe_read called at source address:  192
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v11
+[*] BPF Helper: bpf_probe_read called at source address:  178
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v12
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read called at source address:  180
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v12
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v13
+[*] BPF Helper: bpf_probe_read called at source address:  192
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v13
+[*] BPF Helper: bpf_probe_read called at source address:  178
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v13
+[*] BPF Helper: bpf_probe_read called at source address:  180
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v14
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v14
+[*] BPF Helper: bpf_probe_read called at source address:  8
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v14
+[*] BPF Helper: bpf_probe_read called at source address:  178
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v15
+[*] BPF Helper: bpf_probe_read called at source address:  12
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v14
+[*] BPF Helper: bpf_probe_read called at source address:  24
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v15
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v16
+[*] BPF Helper: bpf_probe_read called at source address:  8
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v15
+[*] BPF Helper: bpf_probe_read called at source address:  16
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v15
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BPF Helper: bpf_probe_read called at source address:  12
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v15
+[*] BPF Helper: bpf_probe_read called at source address:  6
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v16
+[*] BPF Helper: bpf_probe_read called at source address:  24
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v16
+[*] BPF Helper: bpf_probe_read called at source address:  9
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v16
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_probe_read called at source address:  16
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v16
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BPF Helper: bpf_probe_read called at source address:  4
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v17
+[*] BPF Helper: bpf_probe_read called at source address:  8
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v17
+[*] BPF Helper: bpf_probe_read called at source address:  6
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v17
+[*] BPF Helper: bpf_probe_read called at source address:  12
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v17
+[*] BPF Helper: bpf_probe_read called at source address:  9
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v17
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_probe_read called at source address:  2
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v17
+[*] BPF Helper: bpf_probe_read called at source address:  24
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v18
+[*] BPF Helper: bpf_probe_read called at source address:  4
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v18
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v18
+[*] BPF Helper: bpf_probe_read called at source address:  16
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v18
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v18
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BPF Helper: bpf_probe_read called at source address:  6
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v19
+[*] BPF Helper: bpf_probe_read called at source address:  2
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v18
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v18
+[*] BPF Helper: bpf_probe_read called at source address:  2
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v19
+[*] BPF Helper: bpf_probe_read called at source address:  9
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v19
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v19
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v18
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BPF Helper: bpf_probe_read called at source address:  2
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v19
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_probe_read called at source address:  4
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v20
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v19
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BPF Helper: bpf_probe_read called at source address:  2
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v19
+[*] BPF Helper: bpf_probe_read called at source address:  4
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v20
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v19
+[*] BPF Helper: bpf_probe_read called at source address:  2
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v20
+[*] BPF Helper: bpf_probe_read called at source address:  2
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v19
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_probe_read called at source address:  13
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v20
+[*] BPF Helper: bpf_probe_read called at source address:  2
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v20
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v19
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BPF Helper: bpf_probe_read called at source address:  2
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v20
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_probe_read called at source address:  4
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v20
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v21
+[*] BPF Helper: bpf_probe_read called at source address:  2
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v20
+[*] BPF Helper: bpf_probe_read called at source address:  4
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v21
+[*] BPF Helper: bpf_probe_read called at source address:  13
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v20
+[*] BPF Helper: bpf_probe_read called at source address:  12
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v21
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v21
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BPF Helper: bpf_probe_read called at source address:  2
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v20
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_probe_read called at source address:  13
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v21
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v21
+[*] BPF Helper: bpf_probe_read called at source address:  2
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v22
+[*] BPF Helper: bpf_probe_read called at source address:  4
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v21
+[*] BPF Helper: bpf_probe_read called at source address:  12
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v21
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v21
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BPF Helper: bpf_probe_read called at source address:  2
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v22
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_probe_read called at source address:  13
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v21
+[*] BPF Helper: bpf_probe_read called at source address:  12
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v22
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BPF Helper: bpf_probe_read called at source address:  2
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v22
+[*] BPF Helper: bpf_probe_read called at source address:  4
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v23
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_probe_read called at source address:  2
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v22
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_probe_read called at source address:  13
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v23
+[*] BPF Helper: bpf_probe_read called at source address:  12
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v22
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_probe_read called at source address:  4
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v23
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BPF Helper: bpf_probe_read called at source address:  13
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v23
+[*] BPF Helper: bpf_probe_read called at source address:  12
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v24
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_probe_read called at source address:  12
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v24
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=23 errored=0
+    stash 'deadended': 23 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__ringbuf_output' (type=array, value_size=130)
+[*] Path 1: constraints=2, map_entries=1
+[*] Path 2: constraints=2, map_entries=1
+[*] Path 3: constraints=10, map_entries=2
+[*] Path 4: constraints=11, map_entries=2
+[*] Path 5: constraints=11, map_entries=2
+[*] Path 6: constraints=11, map_entries=2
+[*] Path 7: constraints=12, map_entries=2
+[*] Path 8: constraints=12, map_entries=2
+[*] Path 9: constraints=13, map_entries=2
+[*] Path 10: constraints=10, map_entries=2
+[*] Path 11: constraints=12, map_entries=2
+[*] Path 12: constraints=11, map_entries=2
+[*] Path 13: constraints=13, map_entries=2
+[*] Path 14: constraints=11, map_entries=2
+[*] Path 15: constraints=11, map_entries=2
+[*] Path 16: constraints=12, map_entries=2
+[*] Path 17: constraints=12, map_entries=2
+[*] Path 18: constraints=12, map_entries=2
+[*] Path 19: constraints=11, map_entries=2
+[*] Path 20: constraints=13, map_entries=2
+[*] Path 21: constraints=12, map_entries=2
+[*] Path 22: constraints=12, map_entries=2
+[*] Path 23: constraints=13, map_entries=2
+[*] Parsed BTF metadata from Rust binary: 2 maps
+    - skb_addresses: type=hash, key_size=8, value_size=1, max_entries=1024
+    - events: type=ringbuf, key_size=0, value_size=0, max_entries=536870912
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: heimdall/Clang-limitation-experiment/source_level_opt/validation/stack_contract/dae_alignment/optimized.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'kprobe/skb-1' for atomic instructions (offset 0x0-0xe30)
+    No atomic instructions found
+[*] Found entry 'kprobe_skb_1' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'skb_addresses' from BTF: type=hash, key_size=8, value_size=1, max_entries=1024 at 0x404738
+[*] Initializing map 'events' from BTF: type=ringbuf, key_size=0, value_size=0, max_entries=536870912 at 0x404758
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'skb_addresses', slot 0, addr=0xdeaf0000
+[*] BPF Helper: bpf_probe_read called at source address:  192
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_get_func_ip called.
+[*] BPF Helper: bpf_probe_read called at source address:  180
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read called at source address:  164
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  178
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v2
+[*] BPF Helper: bpf_probe_read called at source address:  16
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v3
+[*] BPF Helper: bpf_probe_read called at source address:  1328
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v2
+[*] BPF Helper: bpf_probe_read called at source address:  144
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v3
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_probe_read called at source address:  24
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v4
+[*] BPF Helper: bpf_probe_read called at source address:  16
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v4
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_probe_read called at source address:  208
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v5
+[*] BPF Helper: bpf_probe_read called at source address:  47
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v5
+[*] BPF Helper: bpf_probe_read called at source address:  16
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v5
+[*] BPF Helper: bpf_probe_read called at source address:  16
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v6
+[*] BPF Helper: bpf_probe_read called at source address:  144
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v6
+[*] BPF Helper: bpf_probe_read called at source address:  208
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v6
+[*] BPF Helper: bpf_probe_read_kernel_str called.
+[*] BPF Helper: bpf_probe_read called at source address:  16
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v7
+[*] BPF Helper: bpf_probe_read called at source address:  16
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v7
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  208
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v8
+[*] BPF Helper: bpf_probe_read_kernel_str called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198784
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v7
+[*] BPF Helper: bpf_probe_read called at source address:  16
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v9
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198600
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v8
+[*] BPF Helper: bpf_probe_read_kernel_str called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198784
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v8
+[*] BPF Helper: bpf_probe_read called at source address:  312
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v9
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198600
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v9
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198784
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v10
+[*] BPF Helper: bpf_probe_read called at source address:  312
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v10
+[*] BPF Helper: bpf_probe_read called at source address:  192
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v10
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198600
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v11
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read called at source address:  180
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v11
+[*] BPF Helper: bpf_probe_read called at source address:  312
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v12
+[*] BPF Helper: bpf_probe_read called at source address:  192
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v11
+[*] BPF Helper: bpf_probe_read called at source address:  178
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v12
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read called at source address:  180
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v12
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v13
+[*] BPF Helper: bpf_probe_read called at source address:  192
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v13
+[*] BPF Helper: bpf_probe_read called at source address:  178
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v13
+[*] BPF Helper: bpf_probe_read called at source address:  180
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v14
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v14
+[*] BPF Helper: bpf_probe_read called at source address:  8
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v14
+[*] BPF Helper: bpf_probe_read called at source address:  178
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v15
+[*] BPF Helper: bpf_probe_read called at source address:  12
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v14
+[*] BPF Helper: bpf_probe_read called at source address:  24
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v15
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v16
+[*] BPF Helper: bpf_probe_read called at source address:  8
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v15
+[*] BPF Helper: bpf_probe_read called at source address:  16
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v15
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BPF Helper: bpf_probe_read called at source address:  12
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v15
+[*] BPF Helper: bpf_probe_read called at source address:  6
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v16
+[*] BPF Helper: bpf_probe_read called at source address:  24
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v16
+[*] BPF Helper: bpf_probe_read called at source address:  9
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v16
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_probe_read called at source address:  16
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v16
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BPF Helper: bpf_probe_read called at source address:  4
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v17
+[*] BPF Helper: bpf_probe_read called at source address:  8
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v17
+[*] BPF Helper: bpf_probe_read called at source address:  6
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v17
+[*] BPF Helper: bpf_probe_read called at source address:  12
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v17
+[*] BPF Helper: bpf_probe_read called at source address:  9
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v17
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_probe_read called at source address:  2
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v17
+[*] BPF Helper: bpf_probe_read called at source address:  24
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v18
+[*] BPF Helper: bpf_probe_read called at source address:  4
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v18
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v18
+[*] BPF Helper: bpf_probe_read called at source address:  16
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v18
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v18
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BPF Helper: bpf_probe_read called at source address:  6
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v19
+[*] BPF Helper: bpf_probe_read called at source address:  2
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v18
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v18
+[*] BPF Helper: bpf_probe_read called at source address:  2
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v19
+[*] BPF Helper: bpf_probe_read called at source address:  9
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v19
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v19
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v18
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BPF Helper: bpf_probe_read called at source address:  2
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v19
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_probe_read called at source address:  4
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v20
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v19
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BPF Helper: bpf_probe_read called at source address:  2
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v19
+[*] BPF Helper: bpf_probe_read called at source address:  4
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v20
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v19
+[*] BPF Helper: bpf_probe_read called at source address:  2
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v20
+[*] BPF Helper: bpf_probe_read called at source address:  2
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v19
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_probe_read called at source address:  13
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v20
+[*] BPF Helper: bpf_probe_read called at source address:  2
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v20
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v19
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BPF Helper: bpf_probe_read called at source address:  2
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v20
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_probe_read called at source address:  4
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v20
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v21
+[*] BPF Helper: bpf_probe_read called at source address:  2
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v20
+[*] BPF Helper: bpf_probe_read called at source address:  4
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v21
+[*] BPF Helper: bpf_probe_read called at source address:  13
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v20
+[*] BPF Helper: bpf_probe_read called at source address:  12
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v21
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v21
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BPF Helper: bpf_probe_read called at source address:  2
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v20
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_probe_read called at source address:  13
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v21
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v21
+[*] BPF Helper: bpf_probe_read called at source address:  2
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v22
+[*] BPF Helper: bpf_probe_read called at source address:  4
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v21
+[*] BPF Helper: bpf_probe_read called at source address:  12
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v21
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v21
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BPF Helper: bpf_probe_read called at source address:  2
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v22
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_probe_read called at source address:  13
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v21
+[*] BPF Helper: bpf_probe_read called at source address:  12
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v22
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BPF Helper: bpf_probe_read called at source address:  2
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v22
+[*] BPF Helper: bpf_probe_read called at source address:  4
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v23
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_probe_read called at source address:  2
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v22
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_probe_read called at source address:  13
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v23
+[*] BPF Helper: bpf_probe_read called at source address:  12
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v22
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_probe_read called at source address:  4
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v23
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BPF Helper: bpf_probe_read called at source address:  13
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v23
+[*] BPF Helper: bpf_probe_read called at source address:  12
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v24
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_probe_read called at source address:  12
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v24
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_ringbuf_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__ringbuf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=23 errored=0
+    stash 'deadended': 23 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__ringbuf_output' (type=array, value_size=130)
+[*] Path 1: constraints=2, map_entries=1
+[*] Path 2: constraints=2, map_entries=1
+[*] Path 3: constraints=10, map_entries=2
+[*] Path 4: constraints=11, map_entries=2
+[*] Path 5: constraints=11, map_entries=2
+[*] Path 6: constraints=11, map_entries=2
+[*] Path 7: constraints=12, map_entries=2
+[*] Path 8: constraints=12, map_entries=2
+[*] Path 9: constraints=13, map_entries=2
+[*] Path 10: constraints=10, map_entries=2
+[*] Path 11: constraints=12, map_entries=2
+[*] Path 12: constraints=11, map_entries=2
+[*] Path 13: constraints=13, map_entries=2
+[*] Path 14: constraints=11, map_entries=2
+[*] Path 15: constraints=11, map_entries=2
+[*] Path 16: constraints=12, map_entries=2
+[*] Path 17: constraints=12, map_entries=2
+[*] Path 18: constraints=12, map_entries=2
+[*] Path 19: constraints=11, map_entries=2
+[*] Path 20: constraints=13, map_entries=2
+[*] Path 21: constraints=12, map_entries=2
+[*] Path 22: constraints=12, map_entries=2
+[*] Path 23: constraints=13, map_entries=2
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    23 paths converted
+[*] Converting Rust program paths to Z3...
+    23 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 2 maps via ITE semantics
+    [?] Solver checking 5 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "equivalence", "seconds": 8.522929792001378, "equivalent": true, "result_type": "equivalent"}

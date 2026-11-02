@@ -1,0 +1,18 @@
+[
+  {
+    "id": "dae_alignment",
+    "expected": [
+      2339,
+      2279
+    ],
+    "frozen_configuration": false,
+    "stack_addresses_unobserved": true,
+    "actual": [
+      2339,
+      2279
+    ],
+    "matches_expected": true,
+    "code_changed": true,
+    "equivalence": "passed for selected entry"
+  }
+]

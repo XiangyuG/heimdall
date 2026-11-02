@@ -1,0 +1,9 @@
+{
+  "python": "/Users/dajohnyu/miniconda3/envs/c2rust/bin/python",
+  "python_version": "3.10.20 (main, Jun 11 2026, 15:14:28) [Clang 20.1.8 ]",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "comparisons": 10,
+  "global_bars": 20,
+  "legacy_comparisons": 9,
+  "all_experiments_bars": 38
+}

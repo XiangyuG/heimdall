@@ -1,0 +1,91 @@
+{
+  "distinct_case_processes": 4,
+  "sequential_confirmed": true,
+  "objects_unchanged": true,
+  "cases": [
+    {
+      "case": "ken_execsnoop_alignment",
+      "variants": {
+        "original_self": {
+          "successful": 100,
+          "timeouts": 0,
+          "first20_success_median": 0.3023505625023972,
+          "last20_success_median": 0.33708289597416297,
+          "increase_percent": 11.487438020390762,
+          "successful_over_configured_alarm": []
+        },
+        "optimized_self": {
+          "successful": 100,
+          "timeouts": 0,
+          "first20_success_median": 0.3000911669951165,
+          "last20_success_median": 0.33631047898961697,
+          "increase_percent": 12.069436217391182,
+          "successful_over_configured_alarm": []
+        }
+      }
+    },
+    {
+      "case": "mdflush_alignment",
+      "variants": {
+        "original_self": {
+          "successful": 100,
+          "timeouts": 0,
+          "first20_success_median": 0.501166457994259,
+          "last20_success_median": 0.5401934580004308,
+          "increase_percent": 7.78723304076725,
+          "successful_over_configured_alarm": []
+        },
+        "optimized_self": {
+          "successful": 100,
+          "timeouts": 0,
+          "first20_success_median": 0.5413883750152308,
+          "last20_success_median": 0.579441041991231,
+          "increase_percent": 7.028718888714525,
+          "successful_over_configured_alarm": []
+        }
+      }
+    },
+    {
+      "case": "tcprtt_alignment",
+      "variants": {
+        "original_self": {
+          "successful": 100,
+          "timeouts": 0,
+          "first20_success_median": 20.788906125497306,
+          "last20_success_median": 36.381866249997984,
+          "increase_percent": 75.00615968137028,
+          "successful_over_configured_alarm": []
+        },
+        "optimized_self": {
+          "successful": 100,
+          "timeouts": 0,
+          "first20_success_median": 20.71984110349149,
+          "last20_success_median": 36.47441664600046,
+          "increase_percent": 76.0361793501118,
+          "successful_over_configured_alarm": []
+        }
+      }
+    },
+    {
+      "case": "execsnoop_bound",
+      "variants": {
+        "original_self": {
+          "successful": 86,
+          "timeouts": 14,
+          "first20_success_median": 17.39421912499529,
+          "last20_success_median": 51.33216164550686,
+          "increase_percent": 195.11046903935542,
+          "successful_over_configured_alarm": []
+        },
+        "optimized_self": {
+          "successful": 95,
+          "timeouts": 5,
+          "first20_success_median": 13.486616604001028,
+          "last20_success_median": 48.98387770850968,
+          "increase_percent": 263.2036050759966,
+          "successful_over_configured_alarm": []
+        }
+      }
+    }
+  ]
+}

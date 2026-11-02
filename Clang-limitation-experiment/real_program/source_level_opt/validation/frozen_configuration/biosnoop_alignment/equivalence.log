@@ -1,0 +1,161 @@
+
+--- equivalence: original.o vs optimized.o ---
+[*] Detected program type 'fentry' from section 'fentry/blk_account_io_start'
+[*] Using context size 64 bytes for program type 'fentry'
+[*] Detected program type 'fentry' from section 'fentry/blk_account_io_start'
+[*] Parsed BTF metadata from C binary: 4 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - infobyreq: type=hash, key_size=8, value_size=20, max_entries=10240
+    - start: type=hash, key_size=8, value_size=24, max_entries=10240
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: heimdall/Clang-limitation-experiment/source_level_opt/validation/default/biosnoop_alignment/original.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tp_btf/block_rq_complete' for atomic instructions (offset 0x0-0x440)
+    No atomic instructions found
+[*] Found entry 'block_rq_complete' at 0x400cf8
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x401150
+[*] Initializing map 'infobyreq' from BTF: type=hash, key_size=8, value_size=20, max_entries=10240 at 0x401170
+[*] Initializing map 'start' from BTF: type=hash, key_size=8, value_size=24, max_entries=10240 at 0x401190
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4011b0
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_ktime_get_ns called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'start', slot 0, addr=0xdeaf0000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'infobyreq', slot 0, addr=0xdeaf0018
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Key not found for deletion in map 'infobyreq'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_probe_read called at source address:  48
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  48
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  40
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read called at source address:  40
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read called at source address:  24
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v2
+[*] BPF Helper: bpf_probe_read called at source address:  24
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v2
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'infobyreq'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'infobyreq'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=4 errored=0
+    stash 'deadended': 4 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=64)
+[*] Path 1: constraints=2, map_entries=1
+[*] Path 2: constraints=4, map_entries=1
+[*] Path 3: constraints=4, map_entries=3
+[*] Path 4: constraints=4, map_entries=3
+[*] Parsed BTF metadata from Rust binary: 4 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - infobyreq: type=hash, key_size=8, value_size=20, max_entries=10240
+    - start: type=hash, key_size=8, value_size=24, max_entries=10240
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: heimdall/Clang-limitation-experiment/source_level_opt/validation/default/biosnoop_alignment/optimized.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tp_btf/block_rq_complete' for atomic instructions (offset 0x0-0x410)
+    No atomic instructions found
+[*] Found entry 'block_rq_complete' at 0x400cf8
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x401120
+[*] Initializing map 'infobyreq' from BTF: type=hash, key_size=8, value_size=20, max_entries=10240 at 0x401140
+[*] Initializing map 'start' from BTF: type=hash, key_size=8, value_size=24, max_entries=10240 at 0x401160
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x401180
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_ktime_get_ns called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'start', slot 0, addr=0xdeaf0000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'infobyreq', slot 0, addr=0xdeaf0018
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Key not found for deletion in map 'infobyreq'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_probe_read called at source address:  48
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  48
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  40
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read called at source address:  40
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read called at source address:  24
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v2
+[*] BPF Helper: bpf_probe_read called at source address:  24
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v2
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'infobyreq'
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'infobyreq'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=4 errored=0
+    stash 'deadended': 4 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=64)
+[*] Path 1: constraints=2, map_entries=1
+[*] Path 2: constraints=4, map_entries=1
+[*] Path 3: constraints=4, map_entries=3
+[*] Path 4: constraints=4, map_entries=3
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    4 paths converted
+[*] Converting Rust program paths to Z3...
+    4 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 4 maps via ITE semantics
+    [?] Solver checking 9 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "equivalence", "seconds": 1.42558608300169, "equivalent": true, "result_type": "equivalent"}

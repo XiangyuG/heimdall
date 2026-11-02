@@ -1,0 +1,263 @@
+{
+  "started_utc": "2026-10-27T21:49:44.088412+00:00",
+  "trials_per_version": 10,
+  "entry": "tracepoint__syscalls__sys_enter_execve",
+  "timeout_seconds": 60,
+  "contract": "max_args = 20 for both versions",
+  "compiler": "Homebrew clang version 22.1.8\nTarget: arm64-apple-darwin27.0.0\nThread model: posix\nInstalledDir: /opt/homebrew/Cellar/llvm/22.1.8/bin\nConfiguration file: /opt/homebrew/Cellar/llvm/22.1.8/etc/clang/arm64-apple-darwin27.cfg\n",
+  "flags": [
+    "-target",
+    "bpfel",
+    "-O2",
+    "-g",
+    "-D__TARGET_ARCH_x86",
+    "-I",
+    "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include",
+    "-I",
+    "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include/bpf",
+    "-I",
+    "/Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/libbpf-tools"
+  ],
+  "baseline_path": "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/real_program/cases/execsnoop_bound.bpf.c",
+  "baseline_sha256": "75f03562dd74dec2375c0e21f002fd6e1e5f2fcf82d1d6dac946f38882aefecf",
+  "objects": {
+    "original_self": {
+      "path": "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/real_program/results/execsnoop_literal20_10trials_20261027_144907/execsnoop_original.bpf.o",
+      "sha256": "1ec9ce69603b936b1f0fa82c5bc18750086f96c84c504fb9fc0cf76a56d1662e",
+      "source_sha256": "75f03562dd74dec2375c0e21f002fd6e1e5f2fcf82d1d6dac946f38882aefecf",
+      "command": [
+        "/opt/homebrew/opt/llvm/bin/clang",
+        "-target",
+        "bpfel",
+        "-O2",
+        "-g",
+        "-D__TARGET_ARCH_x86",
+        "-I",
+        "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include",
+        "-I",
+        "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include/bpf",
+        "-I",
+        "/Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/libbpf-tools",
+        "-iquote",
+        "/Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/libbpf-tools",
+        "-x",
+        "c",
+        "-c",
+        "-o",
+        "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/real_program/results/execsnoop_literal20_10trials_20261027_144907/execsnoop_original.bpf.o",
+        "-"
+      ],
+      "instruction_slots": 1807,
+      "max_args_initializer": 20
+    },
+    "literal20_self": {
+      "path": "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/real_program/results/execsnoop_literal20_10trials_20261027_144907/execsnoop_literal20.bpf.o",
+      "sha256": "d58ba138958249c6fcfb96690cef9a77a82cfadd744b98b5956c0ff5eba67bce",
+      "source_sha256": "c77279f93485639890746067e8b8715d1a44b1dddd915e722367ac08a54fd93a",
+      "command": [
+        "/opt/homebrew/opt/llvm/bin/clang",
+        "-target",
+        "bpfel",
+        "-O2",
+        "-g",
+        "-D__TARGET_ARCH_x86",
+        "-I",
+        "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include",
+        "-I",
+        "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include/bpf",
+        "-I",
+        "/Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/libbpf-tools",
+        "-iquote",
+        "/Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/libbpf-tools",
+        "-x",
+        "c",
+        "-c",
+        "-o",
+        "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/real_program/results/execsnoop_literal20_10trials_20261027_144907/execsnoop_literal20.bpf.o",
+        "-"
+      ],
+      "instruction_slots": 612,
+      "max_args_initializer": 20
+    }
+  },
+  "preparation": [
+    {
+      "label": "equivalence_original_literal20",
+      "status": "success",
+      "seconds": 19.69677154198871
+    },
+    {
+      "label": "warmup_original",
+      "status": "success",
+      "seconds": 21.13758704101201
+    },
+    {
+      "label": "warmup_literal20",
+      "status": "success",
+      "seconds": 22.308010125008877
+    }
+  ],
+  "measurements": [
+    {
+      "trial": 1,
+      "variant": "original_self",
+      "started_utc": "2026-10-27T21:50:48.413209+00:00",
+      "status": "success",
+      "seconds": 24.01556758300285,
+      "error": ""
+    },
+    {
+      "trial": 1,
+      "variant": "literal20_self",
+      "started_utc": "2026-10-27T21:51:12.510811+00:00",
+      "status": "success",
+      "seconds": 21.49653262499487,
+      "error": ""
+    },
+    {
+      "trial": 2,
+      "variant": "literal20_self",
+      "started_utc": "2026-10-27T21:51:34.070821+00:00",
+      "status": "success",
+      "seconds": 21.27552866699989,
+      "error": ""
+    },
+    {
+      "trial": 2,
+      "variant": "original_self",
+      "started_utc": "2026-10-27T21:51:55.431666+00:00",
+      "status": "success",
+      "seconds": 21.95543516697944,
+      "error": ""
+    },
+    {
+      "trial": 3,
+      "variant": "original_self",
+      "started_utc": "2026-10-27T21:52:17.453465+00:00",
+      "status": "success",
+      "seconds": 21.939353624999058,
+      "error": ""
+    },
+    {
+      "trial": 3,
+      "variant": "literal20_self",
+      "started_utc": "2026-10-27T21:52:39.457850+00:00",
+      "status": "success",
+      "seconds": 21.282902708015172,
+      "error": ""
+    },
+    {
+      "trial": 4,
+      "variant": "literal20_self",
+      "started_utc": "2026-10-27T21:53:00.799663+00:00",
+      "status": "success",
+      "seconds": 20.92882462500711,
+      "error": ""
+    },
+    {
+      "trial": 4,
+      "variant": "original_self",
+      "started_utc": "2026-10-27T21:53:21.790789+00:00",
+      "status": "success",
+      "seconds": 22.846506959002,
+      "error": ""
+    },
+    {
+      "trial": 5,
+      "variant": "original_self",
+      "started_utc": "2026-10-27T21:53:44.728966+00:00",
+      "status": "success",
+      "seconds": 21.85915879200911,
+      "error": ""
+    },
+    {
+      "trial": 5,
+      "variant": "literal20_self",
+      "started_utc": "2026-10-27T21:54:06.652879+00:00",
+      "status": "success",
+      "seconds": 21.296620165987406,
+      "error": ""
+    },
+    {
+      "trial": 6,
+      "variant": "literal20_self",
+      "started_utc": "2026-10-27T21:54:28.012792+00:00",
+      "status": "success",
+      "seconds": 21.32285216700984,
+      "error": ""
+    },
+    {
+      "trial": 6,
+      "variant": "original_self",
+      "started_utc": "2026-10-27T21:54:49.396355+00:00",
+      "status": "success",
+      "seconds": 24.49638162498013,
+      "error": ""
+    },
+    {
+      "trial": 7,
+      "variant": "original_self",
+      "started_utc": "2026-10-27T21:55:13.981231+00:00",
+      "status": "success",
+      "seconds": 24.888684250006918,
+      "error": ""
+    },
+    {
+      "trial": 7,
+      "variant": "literal20_self",
+      "started_utc": "2026-10-27T21:55:38.953926+00:00",
+      "status": "success",
+      "seconds": 22.911105624982156,
+      "error": ""
+    },
+    {
+      "trial": 8,
+      "variant": "literal20_self",
+      "started_utc": "2026-10-27T21:56:01.983235+00:00",
+      "status": "success",
+      "seconds": 23.23829537499114,
+      "error": ""
+    },
+    {
+      "trial": 8,
+      "variant": "original_self",
+      "started_utc": "2026-10-27T21:56:25.385990+00:00",
+      "status": "success",
+      "seconds": 23.18608775001485,
+      "error": ""
+    },
+    {
+      "trial": 9,
+      "variant": "original_self",
+      "started_utc": "2026-10-27T21:56:48.695561+00:00",
+      "status": "success",
+      "seconds": 24.867684166994877,
+      "error": ""
+    },
+    {
+      "trial": 9,
+      "variant": "literal20_self",
+      "started_utc": "2026-10-27T21:57:13.710953+00:00",
+      "status": "success",
+      "seconds": 23.45847770801629,
+      "error": ""
+    },
+    {
+      "trial": 10,
+      "variant": "literal20_self",
+      "started_utc": "2026-10-27T21:57:37.325414+00:00",
+      "status": "success",
+      "seconds": 24.09560075000627,
+      "error": ""
+    },
+    {
+      "trial": 10,
+      "variant": "original_self",
+      "started_utc": "2026-10-27T21:58:01.554817+00:00",
+      "status": "success",
+      "seconds": 23.65873691701563,
+      "error": ""
+    }
+  ],
+  "finished_utc": "2026-10-27T21:58:25.430501+00:00"
+}

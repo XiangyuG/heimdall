@@ -1,0 +1,73 @@
+
+--- equivalence: original.o vs optimized.o ---
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_kill'
+[*] Using context size 64 bytes for program type 'tracepoint'
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_kill'
+[*] Parsed BTF metadata from C binary: 1 maps
+    - values: type=hash, key_size=4, value_size=32, max_entries=10240
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: heimdall/Clang-limitation-experiment/source_level_opt/validation/default/ken_sigsnoop_alignment/original.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_kill' for atomic instructions (offset 0x0-0xe8)
+    No atomic instructions found
+[*] Found entry 'kill_entry' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'values' from BTF: type=hash, key_size=4, value_size=32, max_entries=10240 at 0x400258
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Creating new slot 0 in map 'values' via update
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=2, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 1 maps
+    - values: type=hash, key_size=4, value_size=32, max_entries=10240
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: heimdall/Clang-limitation-experiment/source_level_opt/validation/default/ken_sigsnoop_alignment/optimized.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_kill' for atomic instructions (offset 0x0-0xd0)
+    No atomic instructions found
+[*] Found entry 'kill_entry' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'values' from BTF: type=hash, key_size=4, value_size=32, max_entries=10240 at 0x400240
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Creating new slot 0 in map 'values' via update
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=2, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 1 maps via ITE semantics
+    [?] Solver checking 3 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "equivalence", "seconds": 0.3409280000050785, "equivalent": true, "result_type": "equivalent"}

@@ -1,0 +1,11 @@
+{
+  "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/tcptracer.original.o",
+  "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/tcptracer.optimized.o",
+  "entry": "enter_tcp_set_state",
+  "passed": true,
+  "seconds": 3.9342934169999353,
+  "equivalent": true,
+  "result_type": "equivalent",
+  "counter_example": "",
+  "complete": true
+}

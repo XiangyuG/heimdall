@@ -1,0 +1,14 @@
+{
+  "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/fsdist/build/original.o",
+  "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/fsdist/build/original.o",
+  "entry": "file_read_exit",
+  "passed": true,
+  "seconds": 22.910651624999446,
+  "equivalent": true,
+  "result_type": "equivalent",
+  "counter_example": "",
+  "complete": true,
+  "label": "trial_064_original",
+  "finished_utc": "2026-11-02T11:34:52.542154+00:00",
+  "process_wall_seconds": 23.611746000000494
+}

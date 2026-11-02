@@ -1,0 +1,82 @@
+{
+  "cases": [
+    {
+      "id": "softirqs",
+      "upstream": "c2rust_translation/c_bpf_programs/libbpf-tools/softirqs.bpf.c",
+      "upstream_sha256": "fbbfeb4943319f62830f91226044770500d491c64a6e9712838edd534740b474",
+      "original": "softirqs.original.bpf.c",
+      "optimized": "softirqs.optimized.bpf.c",
+      "timed_entry": "softirq_exit",
+      "build_preparation": [
+        "Inlined runtime-testing/include/bits.bpf.h unchanged in the original; replaced it with the complete previously proven carry-based log2l/log2 helper from runtime-testing/cases/hand-optimize/tcpsynbl.optimized.bpf.c in the optimized copy."
+      ],
+      "rewrite": "Complete bits.bpf.h log2l/log2 implementation replaced by the previously proven carry-based log2l/log2 implementation; no program body changed."
+    },
+    {
+      "id": "cpudist",
+      "upstream": "c2rust_translation/c_bpf_programs/libbpf-tools/cpudist.bpf.c",
+      "upstream_sha256": "92b4b5f3f937c688152b6fe0b7c2c28829388fa92c87fb954be1cf7de3d8bebe",
+      "original": "cpudist.original.bpf.c",
+      "optimized": "cpudist.optimized.bpf.c",
+      "timed_entry": "sched_switch_tp",
+      "build_preparation": [
+        "Inlined runtime-testing/include/bits.bpf.h unchanged in the original; replaced it with the complete previously proven carry-based log2l/log2 helper from runtime-testing/cases/hand-optimize/tcpsynbl.optimized.bpf.c in the optimized copy."
+      ],
+      "rewrite": "Complete bits.bpf.h log2l/log2 implementation replaced by the previously proven carry-based log2l/log2 implementation; no program body changed."
+    },
+    {
+      "id": "futexctn",
+      "upstream": "c2rust_translation/c_bpf_programs/libbpf-tools/futexctn.bpf.c",
+      "upstream_sha256": "1ed11bef0c9b6ee777ea6007aee1009dbbf2c2c57d01032acdf677b8011853eb",
+      "original": "futexctn.original.bpf.c",
+      "optimized": "futexctn.optimized.bpf.c",
+      "timed_entry": "futex_exit",
+      "build_preparation": [
+        "Inlined runtime-testing/include/bits.bpf.h unchanged in the original; replaced it with the complete previously proven carry-based log2l/log2 helper from runtime-testing/cases/hand-optimize/tcpsynbl.optimized.bpf.c in the optimized copy."
+      ],
+      "rewrite": "Complete bits.bpf.h log2l/log2 implementation replaced by the previously proven carry-based log2l/log2 implementation; no program body changed."
+    },
+    {
+      "id": "hardiqs",
+      "upstream": "c2rust_translation/c_bpf_programs/libbpf-tools/hardiqs.bpf.c",
+      "upstream_sha256": "8292771c6f6bd9a574393e4995d105ba1b08df76f71d57d17e1f7b595e127d71",
+      "original": "hardiqs.original.bpf.c",
+      "optimized": "hardiqs.optimized.bpf.c",
+      "timed_entry": "irq_handler_exit",
+      "build_preparation": [
+        "Inlined runtime-testing/include/bits.bpf.h unchanged in the original; replaced it with the complete previously proven carry-based log2l/log2 helper from runtime-testing/cases/hand-optimize/tcpsynbl.optimized.bpf.c in the optimized copy."
+      ],
+      "rewrite": "Complete bits.bpf.h log2l/log2 implementation replaced by the previously proven carry-based log2l/log2 implementation; no program body changed."
+    },
+    {
+      "id": "runqlat",
+      "upstream": "c2rust_translation/c_bpf_programs/libbpf-tools/runqlat.bpf.c",
+      "upstream_sha256": "160c2d8cc0ae8341acbb0a4a76143fc52e89f22a838c52798d32fdf12a6614cc",
+      "original": "runqlat.original.bpf.c",
+      "optimized": "runqlat.optimized.bpf.c",
+      "timed_entry": "handle_sched_switch",
+      "build_preparation": [
+        "Inlined runtime-testing/include/bits.bpf.h unchanged in the original; replaced it with the complete previously proven carry-based log2l/log2 helper from runtime-testing/cases/hand-optimize/tcpsynbl.optimized.bpf.c in the optimized copy."
+      ],
+      "rewrite": "Complete bits.bpf.h log2l/log2 implementation replaced by the previously proven carry-based log2l/log2 implementation; no program body changed."
+    }
+  ],
+  "compiler_flags": [
+    "-target",
+    "bpfel",
+    "-O2",
+    "-g",
+    "-D__TARGET_ARCH_x86"
+  ],
+  "trials": 5,
+  "warmups": 1,
+  "verification_timeout_seconds": 120,
+  "input_assumptions": [],
+  "helper_fail_mode": "off",
+  "timing": "Heimdall self-equivalence; complete run_verification call, compilation and interpreter/import startup excluded.",
+  "protocol": "Selected entry original-to-optimized cross proof; one warmup per variant; five alternating self-equivalence trials, fresh process each; cross proof every other exported entry; incomplete/errored stashes fail.",
+  "original_bits_header_sha256": "593a6425c4cd04bd03cb55aa14dcbf3f1c2751b1b4746a4fb96e7219e081a263",
+  "carry_helper_source": "runtime-testing/cases/hand-optimize/tcpsynbl.optimized.bpf.c",
+  "carry_helper_sha256": "c09fe876cb2f2ea73fa7103d780558bafa689f589901d20facff40b531fc8141",
+  "carry_helper_sha256_span": "SHA-256 of the exact UTF-8 substring in carry_helper_source starting at the inlined /* SPDX-License-Identifier: (LGPL... header comment and ending immediately before #include \"maps.bpf.h\"; includes include guard, macros, both helper definitions, and trailing newline. This is not the hash of the full referenced file."
+}

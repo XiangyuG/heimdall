@@ -1,0 +1,329 @@
+{
+  "version": 1,
+  "flags": [
+    "-target",
+    "bpfel",
+    "-O2",
+    "-g",
+    "-D__TARGET_ARCH_x86",
+    "-I",
+    "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include",
+    "-I",
+    "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include/bpf",
+    "-I",
+    "/Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/libbpf-tools"
+  ],
+  "cases": [
+    {
+      "id": "ken_execsnoop_alignment",
+      "program": "KEN/dataset/libbpf/execsnoop.bpf.c",
+      "entry": "tracepoint__syscalls__sys_enter_execve",
+      "method": "Align local event buffer",
+      "variant": "combined",
+      "requirement": null,
+      "original_sha256": "99d062a7773b3d26f92e665682a563496db1cad780adf5b6bc9e4b85f39cb2cc",
+      "baseline_sha256": "d54ffed6062ae86d4d1265c416517b607da535993ce8d111c4692d9f56f6bf58",
+      "expected_instructions": [
+        44,
+        43
+      ],
+      "replacements": [
+        {
+          "start": 689,
+          "end": 689,
+          "expected": "",
+          "replacement": " __attribute__((aligned(8)))"
+        }
+      ],
+      "original_directory": "c2rust_translation/c_bpf_programs/KEN/dataset/libbpf"
+    },
+    {
+      "id": "ken_sigsnoop_alignment",
+      "program": "KEN/dataset/libbpf/sigsnoop.bpf.c",
+      "entry": "kill_entry",
+      "method": "Align local event buffer",
+      "variant": "combined",
+      "requirement": null,
+      "original_sha256": "f19eaa6019a91096e9d2de254d13056ebc70bfceaa93d93d59656d8d3c43c57b",
+      "baseline_sha256": "f19eaa6019a91096e9d2de254d13056ebc70bfceaa93d93d59656d8d3c43c57b",
+      "expected_instructions": [
+        67,
+        64
+      ],
+      "replacements": [
+        {
+          "start": 528,
+          "end": 528,
+          "expected": "",
+          "replacement": " __attribute__((aligned(8)))"
+        }
+      ],
+      "original_directory": "c2rust_translation/c_bpf_programs/KEN/dataset/libbpf"
+    },
+    {
+      "id": "dae_alignment",
+      "program": "ebpf-se/dae/dae_kern.c",
+      "entry": "kprobe_skb_1",
+      "method": "Align local event buffer",
+      "variant": "combined",
+      "requirement": null,
+      "original_sha256": "774b6298f3209068e032337d38276aa568c333621e1c421939d47ceda6fadad7",
+      "baseline_sha256": "f0950cdd5044c05aa72f195cbd72579c2f7cbe6fa5023750d7de9fabec0ac55e",
+      "expected_instructions": [
+        2339,
+        2279
+      ],
+      "replacements": [
+        {
+          "start": 5621,
+          "end": 5621,
+          "expected": "",
+          "replacement": "__attribute__((aligned(8))) "
+        }
+      ],
+      "original_directory": "c2rust_translation/c_bpf_programs/ebpf-se/dae"
+    },
+    {
+      "id": "biosnoop_alignment",
+      "program": "libbpf-tools/biosnoop.bpf.c",
+      "entry": "block_rq_complete",
+      "method": "Expose hash-map value alignment",
+      "variant": "combined",
+      "requirement": null,
+      "original_sha256": "27e7457ff697bb2eec993ddf3a4918628d1b204f92b49af1fc6357f3bdef33a1",
+      "baseline_sha256": "27e7457ff697bb2eec993ddf3a4918628d1b204f92b49af1fc6357f3bdef33a1",
+      "expected_instructions": [
+        551,
+        545
+      ],
+      "replacements": [
+        {
+          "start": 2569,
+          "end": 2569,
+          "expected": "",
+          "replacement": "__builtin_assume_aligned("
+        },
+        {
+          "start": 2600,
+          "end": 2600,
+          "expected": "",
+          "replacement": "), 8"
+        },
+        {
+          "start": 4529,
+          "end": 4529,
+          "expected": "",
+          "replacement": "__builtin_assume_aligned("
+        },
+        {
+          "start": 4560,
+          "end": 4560,
+          "expected": "",
+          "replacement": "), 8"
+        },
+        {
+          "start": 4687,
+          "end": 4687,
+          "expected": "",
+          "replacement": "__builtin_assume_aligned("
+        },
+        {
+          "start": 4722,
+          "end": 4722,
+          "expected": "",
+          "replacement": "), 8"
+        }
+      ],
+      "original_directory": "c2rust_translation/c_bpf_programs/libbpf-tools"
+    },
+    {
+      "id": "capable_alignment",
+      "program": "libbpf-tools/capable.bpf.c",
+      "entry": "kprobe__cap_capable_exit",
+      "method": "Align event and i_key",
+      "variant": "combined",
+      "requirement": null,
+      "original_sha256": "d9b122ee98021b10b77d34e3db3b146dee7a1b1b108471a64bbc326c7a2d27d9",
+      "baseline_sha256": "d9b122ee98021b10b77d34e3db3b146dee7a1b1b108471a64bbc326c7a2d27d9",
+      "expected_instructions": [
+        175,
+        171
+      ],
+      "replacements": [
+        {
+          "start": 2508,
+          "end": 2508,
+          "expected": "",
+          "replacement": " __attribute__((aligned(8)))"
+        },
+        {
+          "start": 2706,
+          "end": 2706,
+          "expected": "",
+          "replacement": " __attribute__((aligned(8)))"
+        }
+      ],
+      "original_directory": "c2rust_translation/c_bpf_programs/libbpf-tools"
+    },
+    {
+      "id": "execsnoop_alignment",
+      "program": "libbpf-tools/execsnoop.bpf.c",
+      "entry": "tracepoint__syscalls__sys_enter_execve",
+      "method": "Expose hash-map value alignment",
+      "variant": "combined",
+      "requirement": null,
+      "original_sha256": "75f03562dd74dec2375c0e21f002fd6e1e5f2fcf82d1d6dac946f38882aefecf",
+      "baseline_sha256": "75f03562dd74dec2375c0e21f002fd6e1e5f2fcf82d1d6dac946f38882aefecf",
+      "expected_instructions": [
+        1807,
+        1806
+      ],
+      "replacements": [
+        {
+          "start": 2020,
+          "end": 2020,
+          "expected": "",
+          "replacement": "__builtin_assume_aligned("
+        },
+        {
+          "start": 2052,
+          "end": 2052,
+          "expected": "",
+          "replacement": "), 8"
+        },
+        {
+          "start": 3605,
+          "end": 3605,
+          "expected": "",
+          "replacement": "__builtin_assume_aligned("
+        },
+        {
+          "start": 3637,
+          "end": 3637,
+          "expected": "",
+          "replacement": "), 8"
+        }
+      ],
+      "original_directory": "c2rust_translation/c_bpf_programs/libbpf-tools"
+    },
+    {
+      "id": "mdflush_alignment",
+      "program": "libbpf-tools/mdflush.bpf.c",
+      "entry": "md_flush_request",
+      "method": "Align local event buffer",
+      "variant": "combined",
+      "requirement": null,
+      "original_sha256": "d66d42f0b1e186de68a755ee077e51d6d6edc067d6fffdb8f0c1a43aeb8d020c",
+      "baseline_sha256": "d66d42f0b1e186de68a755ee077e51d6d6edc067d6fffdb8f0c1a43aeb8d020c",
+      "expected_instructions": [
+        126,
+        118
+      ],
+      "replacements": [
+        {
+          "start": 553,
+          "end": 553,
+          "expected": "",
+          "replacement": "__attribute__((aligned(8))) "
+        },
+        {
+          "start": 1003,
+          "end": 1003,
+          "expected": "",
+          "replacement": "__attribute__((aligned(8))) "
+        }
+      ],
+      "original_directory": "c2rust_translation/c_bpf_programs/libbpf-tools"
+    },
+    {
+      "id": "tcprtt_alignment",
+      "program": "libbpf-tools/tcprtt.bpf.c",
+      "entry": "tcp_rcv",
+      "method": "Align local key",
+      "variant": "combined",
+      "requirement": null,
+      "original_sha256": "1f632ef78dc0c8dc7a913d6478a769b58c2607be37d71adea667b13dafa786b4",
+      "baseline_sha256": "8817e5f7620bf7211ff073d85295c467962da0c4dce9c62448a847cdf65ffea2",
+      "expected_instructions": [
+        490,
+        486
+      ],
+      "replacements": [
+        {
+          "start": 2287,
+          "end": 2287,
+          "expected": "",
+          "replacement": " __attribute__((aligned(8)))"
+        }
+      ],
+      "original_directory": "c2rust_translation/c_bpf_programs/libbpf-tools"
+    },
+    {
+      "id": "execsnoop_bound",
+      "program": "libbpf-tools/execsnoop.bpf.c",
+      "entry": "tracepoint__syscalls__sys_enter_execve",
+      "method": "Cache max_args (conditional)",
+      "variant": "conditional_config_bound",
+      "requirement": "loader-frozen configuration; volatile read trace is not an observation",
+      "original_sha256": "75f03562dd74dec2375c0e21f002fd6e1e5f2fcf82d1d6dac946f38882aefecf",
+      "baseline_sha256": "75f03562dd74dec2375c0e21f002fd6e1e5f2fcf82d1d6dac946f38882aefecf",
+      "expected_instructions": [
+        1807,
+        192
+      ],
+      "replacements": [
+        {
+          "start": 2559,
+          "end": 2559,
+          "expected": "",
+          "replacement": "const int cached_max_args = max_args;\n\t"
+        },
+        {
+          "start": 2613,
+          "end": 2613,
+          "expected": "",
+          "replacement": "cached_"
+        }
+      ],
+      "original_directory": "c2rust_translation/c_bpf_programs/libbpf-tools"
+    },
+    {
+      "id": "tcpconnect_bound",
+      "program": "libbpf-tools/tcpconnect.bpf.c",
+      "entry": "tcp_v4_connect_ret",
+      "method": "Cache filter_ports_len (conditional)",
+      "variant": "conditional_config_bound",
+      "requirement": "loader-frozen configuration; volatile read trace is not an observation",
+      "original_sha256": "c0fe59431993fe03e24d15ce92625a46a019ff7cf8867e43b89495697b7d2c72",
+      "baseline_sha256": "c0fe59431993fe03e24d15ce92625a46a019ff7cf8867e43b89495697b7d2c72",
+      "expected_instructions": [
+        393,
+        381
+      ],
+      "replacements": [
+        {
+          "start": 1874,
+          "end": 1874,
+          "expected": "",
+          "replacement": "const int cached_filter_ports_len = filter_ports_len;\n\t"
+        },
+        {
+          "start": 1878,
+          "end": 1878,
+          "expected": "",
+          "replacement": "cached_"
+        },
+        {
+          "start": 1935,
+          "end": 1935,
+          "expected": "",
+          "replacement": "cached_"
+        }
+      ],
+      "original_directory": "c2rust_translation/c_bpf_programs/libbpf-tools"
+    }
+  ],
+  "timing": "selected-entry Heimdall self-equivalence; not C-to-Rust verification",
+  "trials": 5,
+  "timeout_seconds": 60
+}

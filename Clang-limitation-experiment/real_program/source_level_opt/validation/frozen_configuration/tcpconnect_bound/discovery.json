@@ -1,0 +1,56 @@
+{
+  "source": "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/cases/tcpconnect_bound.bpf.c",
+  "compiler": "/opt/homebrew/opt/llvm/bin/clang",
+  "objective": "strictly decrease total executable BPF instruction slots; no timing trials",
+  "flags": [
+    "-target",
+    "bpfel",
+    "-O2",
+    "-g",
+    "-D__TARGET_ARCH_x86",
+    "-I",
+    "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include",
+    "-I",
+    "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include/bpf",
+    "-I",
+    "/Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/libbpf-tools",
+    "-iquote",
+    "/Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/libbpf-tools"
+  ],
+  "frozen_configuration": true,
+  "stack_addresses_unobserved": false,
+  "accepted": [
+    {
+      "pass": "invariant_bound",
+      "reason": "filter_port: cache filter_ports_len; requires loader-frozen configuration and excludes volatile-read traces",
+      "slots": 381,
+      "edits": [
+        {
+          "start": 1935,
+          "end": 1951,
+          "text": "_heimdall_cached_filter_ports_len"
+        },
+        {
+          "start": 1878,
+          "end": 1894,
+          "text": "_heimdall_cached_filter_ports_len"
+        },
+        {
+          "start": 1874,
+          "end": 1874,
+          "text": "const int _heimdall_cached_filter_ports_len = filter_ports_len;\n\t"
+        }
+      ]
+    }
+  ],
+  "trials": [
+    {
+      "pass": "invariant_bound",
+      "reason": "filter_port: cache filter_ports_len; requires loader-frozen configuration and excludes volatile-read traces",
+      "slots": 381
+    }
+  ],
+  "baseline_slots": 393,
+  "optimized_slots": 381,
+  "executable_code_changed": true
+}

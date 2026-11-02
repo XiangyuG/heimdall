@@ -1,0 +1,11 @@
+{
+  "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/bashreadline.original.o",
+  "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/bashreadline.original.o",
+  "entry": "printret",
+  "passed": true,
+  "seconds": 0.9042790000003151,
+  "equivalent": true,
+  "result_type": "equivalent",
+  "counter_example": "",
+  "complete": true
+}

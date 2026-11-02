@@ -1,0 +1,75 @@
+[*] Detected program type 'tp_btf' from section 'tp_btf/softirq_entry'
+[*] Using context size 64 bytes for program type 'tp_btf'
+[*] Detected program type 'tp_btf' from section 'tp_btf/softirq_entry'
+[*] Parsed BTF metadata from C binary: 1 maps
+    - start: type=percpu_array, key_size=4, value_size=8, max_entries=1
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/softirqs.original.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tp_btf/softirq_entry' for atomic instructions (offset 0x0-0xb8)
+    No atomic instructions found
+[*] Found 3 .data global(s): counts, hists, time
+[*] Found entry 'softirq_entry_btf' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'start' from BTF: type=percpu_array, key_size=4, value_size=8, max_entries=1 at 0x400a50
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_ktime_get_ns called.
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=1, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 1 maps
+    - start: type=percpu_array, key_size=4, value_size=8, max_entries=1
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/softirqs.optimized.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400408: S=0x400000 A=0 imm=-130
+    - Patching call <anon> @ 0x4004e0: S=0x400000 A=0 imm=-157
+[*] Patching complete.
+[*] Scanning section 'tp_btf/softirq_entry' for atomic instructions (offset 0x0-0xb8)
+    No atomic instructions found
+[*] Found 3 .data global(s): counts, hists, time
+[*] Found entry 'softirq_entry_btf' at 0x400348
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'start' from BTF: type=percpu_array, key_size=4, value_size=8, max_entries=1 at 0x4008c8
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_ktime_get_ns called.
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=1, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 1 maps via ITE semantics
+[!] .data symbol 'counts': too large (80B > 64B), skipping value comparison
+[!] .data symbol 'hists': too large (800B > 64B), skipping value comparison
+[!] .data symbol 'time': too large (80B > 64B), skipping value comparison
+    [?] Solver checking 3 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.

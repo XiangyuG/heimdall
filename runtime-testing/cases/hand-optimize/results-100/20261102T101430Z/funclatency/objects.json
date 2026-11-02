@@ -1,0 +1,24 @@
+{
+  "original": {
+    "instruction_slots": 136,
+    "conditional_jumps": 19,
+    "entries": [
+      "dummy_fentry",
+      "dummy_kprobe",
+      "dummy_fexit",
+      "dummy_kretprobe"
+    ],
+    "executable_sha256": "37ec147a497e2cd1ac34c82fedf220dc3584901e79d6cb4524bf253b88a49ad6"
+  },
+  "optimized": {
+    "instruction_slots": 161,
+    "conditional_jumps": 14,
+    "entries": [
+      "dummy_fentry",
+      "dummy_kprobe",
+      "dummy_fexit",
+      "dummy_kretprobe"
+    ],
+    "executable_sha256": "c7e9e8d2d3b38ecb5d4a69553fe4f0b4716fa81d8567e7f1b465831361b90ab7"
+  }
+}

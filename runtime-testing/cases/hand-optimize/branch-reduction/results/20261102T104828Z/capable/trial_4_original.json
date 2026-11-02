@@ -1,0 +1,11 @@
+{
+  "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/capable.original.o",
+  "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/capable.original.o",
+  "entry": "kprobe__cap_capable_exit",
+  "passed": true,
+  "seconds": 1.0387030000001687,
+  "equivalent": true,
+  "result_type": "equivalent",
+  "counter_example": "",
+  "complete": true
+}

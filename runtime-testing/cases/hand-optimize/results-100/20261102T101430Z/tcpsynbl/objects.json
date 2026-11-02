@@ -1,0 +1,24 @@
+{
+  "original": {
+    "instruction_slots": 84,
+    "conditional_jumps": 9,
+    "entries": [
+      "tcp_v4_syn_recv_kprobe",
+      "tcp_v6_syn_recv_kprobe",
+      "tcp_v4_syn_recv",
+      "tcp_v6_syn_recv"
+    ],
+    "executable_sha256": "5ec6d14792917a1440a53edf00e1336c72f44cf551b2afce210563eab4166765"
+  },
+  "optimized": {
+    "instruction_slots": 96,
+    "conditional_jumps": 5,
+    "entries": [
+      "tcp_v4_syn_recv_kprobe",
+      "tcp_v6_syn_recv_kprobe",
+      "tcp_v4_syn_recv",
+      "tcp_v6_syn_recv"
+    ],
+    "executable_sha256": "35033d39c5d499c2119cdd8c2b153939fc4f2174cb7025fc46982044cfff66ab"
+  }
+}

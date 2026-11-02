@@ -1,0 +1,11 @@
+{
+  "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/biotop.original.o",
+  "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/biotop.original.o",
+  "entry": "blk_account_io_done",
+  "passed": true,
+  "seconds": 3.9894084999996267,
+  "equivalent": true,
+  "result_type": "equivalent",
+  "counter_example": "",
+  "complete": true
+}

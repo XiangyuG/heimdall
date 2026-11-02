@@ -1,0 +1,28 @@
+{
+  "original": {
+    "instruction_slots": 490,
+    "conditional_jumps": 47,
+    "entries": [
+      "block_rq_insert_btf",
+      "block_rq_issue_btf",
+      "block_rq_complete_btf",
+      "block_rq_insert",
+      "block_rq_issue",
+      "block_rq_complete"
+    ],
+    "executable_sha256": "7f594da76d3e7578cf02c49af269f3dd8034fef7cf9574666bde2a6823f65c2d"
+  },
+  "optimized": {
+    "instruction_slots": 509,
+    "conditional_jumps": 42,
+    "entries": [
+      "block_rq_insert_btf",
+      "block_rq_issue_btf",
+      "block_rq_complete_btf",
+      "block_rq_insert",
+      "block_rq_issue",
+      "block_rq_complete"
+    ],
+    "executable_sha256": "f05d174b1245b777ae8e8ec8772c3412fc7eb4f1986cf291563763cc27598cd0"
+  }
+}

@@ -1,0 +1,1502 @@
+Homebrew clang version 22.1.8
+Target: arm64-apple-darwin27.0.0
+Thread model: posix
+InstalledDir: /opt/homebrew/Cellar/llvm/22.1.8/bin
+Configuration file: /opt/homebrew/Cellar/llvm/22.1.8/etc/clang/arm64-apple-darwin27.cfg
+
+{"flags": ["-target", "bpfel", "-O2", "-g", "-D__TARGET_ARCH_x86", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include/bpf", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/libbpf-tools"], "entry": "kprobe__cap_capable_exit", "trials": 5, "warmups": 1, "timeout_seconds": 60, "input_assumptions": [], "requirement": null}
+{"command": ["/opt/homebrew/opt/llvm/bin/clang", "-target", "bpfel", "-O2", "-g", "-D__TARGET_ARCH_x86", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include/bpf", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/libbpf-tools", "-iquote", "/Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/libbpf-tools", "-x", "c", "-c", "-o", "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/capable_alignment.o", "-"], "source": "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/cases/capable_alignment.bpf.c"}
+{"command": ["/opt/homebrew/opt/llvm/bin/clang", "-target", "bpfel", "-O2", "-g", "-D__TARGET_ARCH_x86", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include/bpf", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/libbpf-tools", "-iquote", "/Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/libbpf-tools", "-x", "c", "-c", "-o", "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/capable_alignment_SOURCE_OPT.o", "-"], "source": "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/source_level_opt/generated/capable_alignment_SOURCE_OPT.bpf.c"}
+
+--- equivalence: capable_alignment.o vs capable_alignment_SOURCE_OPT.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/cap_capable'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/cap_capable'
+[*] Parsed BTF metadata from C binary: 6 maps
+    - start: type=hash, key_size=8, value_size=8, max_entries=10240
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+    - stackmap: type=stack_trace, key_size=4, value_size=1016, max_entries=1024
+    - info: type=hash, key_size=16, value_size=44, max_entries=10240
+    - seen: type=hash, key_size=16, value_size=8, max_entries=10240
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/capable_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'kretprobe/cap_capable' for atomic instructions (offset 0x0-0x458)
+    No atomic instructions found
+[*] Found entry 'kprobe__cap_capable_exit' at 0x400120
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'start' from BTF: type=hash, key_size=8, value_size=8, max_entries=10240 at 0x400590
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x4005b0
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4005d0
+[*] Initializing map 'stackmap' from BTF: type=stack_trace, key_size=4, value_size=1016, max_entries=1024 at 0x4005e8
+[*] Initializing map 'info' from BTF: type=hash, key_size=16, value_size=44, max_entries=10240 at 0x4005f8
+[*] Initializing map 'seen' from BTF: type=hash, key_size=16, value_size=8, max_entries=10240 at 0x400618
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'start', slot 0, addr=0xdeaf0000
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=2 errored=0
+    stash 'deadended': 2 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=44)
+[*] Path 1: constraints=3, map_entries=1
+[*] Path 2: constraints=4, map_entries=2
+[*] Parsed BTF metadata from Rust binary: 6 maps
+    - start: type=hash, key_size=8, value_size=8, max_entries=10240
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+    - stackmap: type=stack_trace, key_size=4, value_size=1016, max_entries=1024
+    - info: type=hash, key_size=16, value_size=44, max_entries=10240
+    - seen: type=hash, key_size=16, value_size=8, max_entries=10240
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/capable_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'kretprobe/cap_capable' for atomic instructions (offset 0x0-0x438)
+    No atomic instructions found
+[*] Found entry 'kprobe__cap_capable_exit' at 0x400120
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'start' from BTF: type=hash, key_size=8, value_size=8, max_entries=10240 at 0x400570
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x400590
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4005b0
+[*] Initializing map 'stackmap' from BTF: type=stack_trace, key_size=4, value_size=1016, max_entries=1024 at 0x4005c8
+[*] Initializing map 'info' from BTF: type=hash, key_size=16, value_size=44, max_entries=10240 at 0x4005d8
+[*] Initializing map 'seen' from BTF: type=hash, key_size=16, value_size=8, max_entries=10240 at 0x4005f8
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'start', slot 0, addr=0xdeaf0000
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=2 errored=0
+    stash 'deadended': 2 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=44)
+[*] Path 1: constraints=3, map_entries=1
+[*] Path 2: constraints=4, map_entries=2
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    2 paths converted
+[*] Converting Rust program paths to Z3...
+    2 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 6 maps via ITE semantics
+    [?] Solver checking 13 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "equivalence", "seconds": 0.8517616669996642, "equivalent": true, "result_type": "equivalent"}
+
+--- warmup_original_self: capable_alignment.o vs capable_alignment.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/cap_capable'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/cap_capable'
+[*] Parsed BTF metadata from C binary: 6 maps
+    - start: type=hash, key_size=8, value_size=8, max_entries=10240
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+    - stackmap: type=stack_trace, key_size=4, value_size=1016, max_entries=1024
+    - info: type=hash, key_size=16, value_size=44, max_entries=10240
+    - seen: type=hash, key_size=16, value_size=8, max_entries=10240
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/capable_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'kretprobe/cap_capable' for atomic instructions (offset 0x0-0x458)
+    No atomic instructions found
+[*] Found entry 'kprobe__cap_capable_exit' at 0x400120
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'start' from BTF: type=hash, key_size=8, value_size=8, max_entries=10240 at 0x400590
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x4005b0
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4005d0
+[*] Initializing map 'stackmap' from BTF: type=stack_trace, key_size=4, value_size=1016, max_entries=1024 at 0x4005e8
+[*] Initializing map 'info' from BTF: type=hash, key_size=16, value_size=44, max_entries=10240 at 0x4005f8
+[*] Initializing map 'seen' from BTF: type=hash, key_size=16, value_size=8, max_entries=10240 at 0x400618
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'start', slot 0, addr=0xdeaf0000
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=2 errored=0
+    stash 'deadended': 2 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=44)
+[*] Path 1: constraints=3, map_entries=1
+[*] Path 2: constraints=4, map_entries=2
+[*] Parsed BTF metadata from Rust binary: 6 maps
+    - start: type=hash, key_size=8, value_size=8, max_entries=10240
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+    - stackmap: type=stack_trace, key_size=4, value_size=1016, max_entries=1024
+    - info: type=hash, key_size=16, value_size=44, max_entries=10240
+    - seen: type=hash, key_size=16, value_size=8, max_entries=10240
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/capable_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'kretprobe/cap_capable' for atomic instructions (offset 0x0-0x458)
+    No atomic instructions found
+[*] Found entry 'kprobe__cap_capable_exit' at 0x400120
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'start' from BTF: type=hash, key_size=8, value_size=8, max_entries=10240 at 0x400590
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x4005b0
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4005d0
+[*] Initializing map 'stackmap' from BTF: type=stack_trace, key_size=4, value_size=1016, max_entries=1024 at 0x4005e8
+[*] Initializing map 'info' from BTF: type=hash, key_size=16, value_size=44, max_entries=10240 at 0x4005f8
+[*] Initializing map 'seen' from BTF: type=hash, key_size=16, value_size=8, max_entries=10240 at 0x400618
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'start', slot 0, addr=0xdeaf0000
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=2 errored=0
+    stash 'deadended': 2 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=44)
+[*] Path 1: constraints=3, map_entries=1
+[*] Path 2: constraints=4, map_entries=2
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    2 paths converted
+[*] Converting Rust program paths to Z3...
+    2 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 6 maps via ITE semantics
+    [?] Solver checking 13 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "warmup_original_self", "seconds": 0.7744652919936925, "equivalent": true, "result_type": "equivalent"}
+
+--- warmup_optimized_self: capable_alignment_SOURCE_OPT.o vs capable_alignment_SOURCE_OPT.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/cap_capable'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/cap_capable'
+[*] Parsed BTF metadata from C binary: 6 maps
+    - start: type=hash, key_size=8, value_size=8, max_entries=10240
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+    - stackmap: type=stack_trace, key_size=4, value_size=1016, max_entries=1024
+    - info: type=hash, key_size=16, value_size=44, max_entries=10240
+    - seen: type=hash, key_size=16, value_size=8, max_entries=10240
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/capable_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'kretprobe/cap_capable' for atomic instructions (offset 0x0-0x438)
+    No atomic instructions found
+[*] Found entry 'kprobe__cap_capable_exit' at 0x400120
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'start' from BTF: type=hash, key_size=8, value_size=8, max_entries=10240 at 0x400570
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x400590
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4005b0
+[*] Initializing map 'stackmap' from BTF: type=stack_trace, key_size=4, value_size=1016, max_entries=1024 at 0x4005c8
+[*] Initializing map 'info' from BTF: type=hash, key_size=16, value_size=44, max_entries=10240 at 0x4005d8
+[*] Initializing map 'seen' from BTF: type=hash, key_size=16, value_size=8, max_entries=10240 at 0x4005f8
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'start', slot 0, addr=0xdeaf0000
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=2 errored=0
+    stash 'deadended': 2 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=44)
+[*] Path 1: constraints=3, map_entries=1
+[*] Path 2: constraints=4, map_entries=2
+[*] Parsed BTF metadata from Rust binary: 6 maps
+    - start: type=hash, key_size=8, value_size=8, max_entries=10240
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+    - stackmap: type=stack_trace, key_size=4, value_size=1016, max_entries=1024
+    - info: type=hash, key_size=16, value_size=44, max_entries=10240
+    - seen: type=hash, key_size=16, value_size=8, max_entries=10240
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/capable_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'kretprobe/cap_capable' for atomic instructions (offset 0x0-0x438)
+    No atomic instructions found
+[*] Found entry 'kprobe__cap_capable_exit' at 0x400120
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'start' from BTF: type=hash, key_size=8, value_size=8, max_entries=10240 at 0x400570
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x400590
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4005b0
+[*] Initializing map 'stackmap' from BTF: type=stack_trace, key_size=4, value_size=1016, max_entries=1024 at 0x4005c8
+[*] Initializing map 'info' from BTF: type=hash, key_size=16, value_size=44, max_entries=10240 at 0x4005d8
+[*] Initializing map 'seen' from BTF: type=hash, key_size=16, value_size=8, max_entries=10240 at 0x4005f8
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'start', slot 0, addr=0xdeaf0000
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=2 errored=0
+    stash 'deadended': 2 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=44)
+[*] Path 1: constraints=3, map_entries=1
+[*] Path 2: constraints=4, map_entries=2
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    2 paths converted
+[*] Converting Rust program paths to Z3...
+    2 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 6 maps via ITE semantics
+    [?] Solver checking 13 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "warmup_optimized_self", "seconds": 0.7301661249948665, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_1_original_self: capable_alignment.o vs capable_alignment.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/cap_capable'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/cap_capable'
+[*] Parsed BTF metadata from C binary: 6 maps
+    - start: type=hash, key_size=8, value_size=8, max_entries=10240
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+    - stackmap: type=stack_trace, key_size=4, value_size=1016, max_entries=1024
+    - info: type=hash, key_size=16, value_size=44, max_entries=10240
+    - seen: type=hash, key_size=16, value_size=8, max_entries=10240
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/capable_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'kretprobe/cap_capable' for atomic instructions (offset 0x0-0x458)
+    No atomic instructions found
+[*] Found entry 'kprobe__cap_capable_exit' at 0x400120
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'start' from BTF: type=hash, key_size=8, value_size=8, max_entries=10240 at 0x400590
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x4005b0
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4005d0
+[*] Initializing map 'stackmap' from BTF: type=stack_trace, key_size=4, value_size=1016, max_entries=1024 at 0x4005e8
+[*] Initializing map 'info' from BTF: type=hash, key_size=16, value_size=44, max_entries=10240 at 0x4005f8
+[*] Initializing map 'seen' from BTF: type=hash, key_size=16, value_size=8, max_entries=10240 at 0x400618
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'start', slot 0, addr=0xdeaf0000
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=2 errored=0
+    stash 'deadended': 2 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=44)
+[*] Path 1: constraints=3, map_entries=1
+[*] Path 2: constraints=4, map_entries=2
+[*] Parsed BTF metadata from Rust binary: 6 maps
+    - start: type=hash, key_size=8, value_size=8, max_entries=10240
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+    - stackmap: type=stack_trace, key_size=4, value_size=1016, max_entries=1024
+    - info: type=hash, key_size=16, value_size=44, max_entries=10240
+    - seen: type=hash, key_size=16, value_size=8, max_entries=10240
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/capable_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'kretprobe/cap_capable' for atomic instructions (offset 0x0-0x458)
+    No atomic instructions found
+[*] Found entry 'kprobe__cap_capable_exit' at 0x400120
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'start' from BTF: type=hash, key_size=8, value_size=8, max_entries=10240 at 0x400590
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x4005b0
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4005d0
+[*] Initializing map 'stackmap' from BTF: type=stack_trace, key_size=4, value_size=1016, max_entries=1024 at 0x4005e8
+[*] Initializing map 'info' from BTF: type=hash, key_size=16, value_size=44, max_entries=10240 at 0x4005f8
+[*] Initializing map 'seen' from BTF: type=hash, key_size=16, value_size=8, max_entries=10240 at 0x400618
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'start', slot 0, addr=0xdeaf0000
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=2 errored=0
+    stash 'deadended': 2 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=44)
+[*] Path 1: constraints=3, map_entries=1
+[*] Path 2: constraints=4, map_entries=2
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    2 paths converted
+[*] Converting Rust program paths to Z3...
+    2 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 6 maps via ITE semantics
+    [?] Solver checking 13 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_1_original_self", "seconds": 0.7702641659998335, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_1_optimized_self: capable_alignment_SOURCE_OPT.o vs capable_alignment_SOURCE_OPT.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/cap_capable'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/cap_capable'
+[*] Parsed BTF metadata from C binary: 6 maps
+    - start: type=hash, key_size=8, value_size=8, max_entries=10240
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+    - stackmap: type=stack_trace, key_size=4, value_size=1016, max_entries=1024
+    - info: type=hash, key_size=16, value_size=44, max_entries=10240
+    - seen: type=hash, key_size=16, value_size=8, max_entries=10240
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/capable_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'kretprobe/cap_capable' for atomic instructions (offset 0x0-0x438)
+    No atomic instructions found
+[*] Found entry 'kprobe__cap_capable_exit' at 0x400120
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'start' from BTF: type=hash, key_size=8, value_size=8, max_entries=10240 at 0x400570
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x400590
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4005b0
+[*] Initializing map 'stackmap' from BTF: type=stack_trace, key_size=4, value_size=1016, max_entries=1024 at 0x4005c8
+[*] Initializing map 'info' from BTF: type=hash, key_size=16, value_size=44, max_entries=10240 at 0x4005d8
+[*] Initializing map 'seen' from BTF: type=hash, key_size=16, value_size=8, max_entries=10240 at 0x4005f8
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'start', slot 0, addr=0xdeaf0000
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=2 errored=0
+    stash 'deadended': 2 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=44)
+[*] Path 1: constraints=3, map_entries=1
+[*] Path 2: constraints=4, map_entries=2
+[*] Parsed BTF metadata from Rust binary: 6 maps
+    - start: type=hash, key_size=8, value_size=8, max_entries=10240
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+    - stackmap: type=stack_trace, key_size=4, value_size=1016, max_entries=1024
+    - info: type=hash, key_size=16, value_size=44, max_entries=10240
+    - seen: type=hash, key_size=16, value_size=8, max_entries=10240
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/capable_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'kretprobe/cap_capable' for atomic instructions (offset 0x0-0x438)
+    No atomic instructions found
+[*] Found entry 'kprobe__cap_capable_exit' at 0x400120
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'start' from BTF: type=hash, key_size=8, value_size=8, max_entries=10240 at 0x400570
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x400590
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4005b0
+[*] Initializing map 'stackmap' from BTF: type=stack_trace, key_size=4, value_size=1016, max_entries=1024 at 0x4005c8
+[*] Initializing map 'info' from BTF: type=hash, key_size=16, value_size=44, max_entries=10240 at 0x4005d8
+[*] Initializing map 'seen' from BTF: type=hash, key_size=16, value_size=8, max_entries=10240 at 0x4005f8
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'start', slot 0, addr=0xdeaf0000
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=2 errored=0
+    stash 'deadended': 2 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=44)
+[*] Path 1: constraints=3, map_entries=1
+[*] Path 2: constraints=4, map_entries=2
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    2 paths converted
+[*] Converting Rust program paths to Z3...
+    2 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 6 maps via ITE semantics
+    [?] Solver checking 13 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_1_optimized_self", "seconds": 0.732423999987077, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_2_optimized_self: capable_alignment_SOURCE_OPT.o vs capable_alignment_SOURCE_OPT.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/cap_capable'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/cap_capable'
+[*] Parsed BTF metadata from C binary: 6 maps
+    - start: type=hash, key_size=8, value_size=8, max_entries=10240
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+    - stackmap: type=stack_trace, key_size=4, value_size=1016, max_entries=1024
+    - info: type=hash, key_size=16, value_size=44, max_entries=10240
+    - seen: type=hash, key_size=16, value_size=8, max_entries=10240
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/capable_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'kretprobe/cap_capable' for atomic instructions (offset 0x0-0x438)
+    No atomic instructions found
+[*] Found entry 'kprobe__cap_capable_exit' at 0x400120
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'start' from BTF: type=hash, key_size=8, value_size=8, max_entries=10240 at 0x400570
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x400590
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4005b0
+[*] Initializing map 'stackmap' from BTF: type=stack_trace, key_size=4, value_size=1016, max_entries=1024 at 0x4005c8
+[*] Initializing map 'info' from BTF: type=hash, key_size=16, value_size=44, max_entries=10240 at 0x4005d8
+[*] Initializing map 'seen' from BTF: type=hash, key_size=16, value_size=8, max_entries=10240 at 0x4005f8
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'start', slot 0, addr=0xdeaf0000
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=2 errored=0
+    stash 'deadended': 2 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=44)
+[*] Path 1: constraints=3, map_entries=1
+[*] Path 2: constraints=4, map_entries=2
+[*] Parsed BTF metadata from Rust binary: 6 maps
+    - start: type=hash, key_size=8, value_size=8, max_entries=10240
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+    - stackmap: type=stack_trace, key_size=4, value_size=1016, max_entries=1024
+    - info: type=hash, key_size=16, value_size=44, max_entries=10240
+    - seen: type=hash, key_size=16, value_size=8, max_entries=10240
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/capable_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'kretprobe/cap_capable' for atomic instructions (offset 0x0-0x438)
+    No atomic instructions found
+[*] Found entry 'kprobe__cap_capable_exit' at 0x400120
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'start' from BTF: type=hash, key_size=8, value_size=8, max_entries=10240 at 0x400570
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x400590
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4005b0
+[*] Initializing map 'stackmap' from BTF: type=stack_trace, key_size=4, value_size=1016, max_entries=1024 at 0x4005c8
+[*] Initializing map 'info' from BTF: type=hash, key_size=16, value_size=44, max_entries=10240 at 0x4005d8
+[*] Initializing map 'seen' from BTF: type=hash, key_size=16, value_size=8, max_entries=10240 at 0x4005f8
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'start', slot 0, addr=0xdeaf0000
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=2 errored=0
+    stash 'deadended': 2 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=44)
+[*] Path 1: constraints=3, map_entries=1
+[*] Path 2: constraints=4, map_entries=2
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    2 paths converted
+[*] Converting Rust program paths to Z3...
+    2 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 6 maps via ITE semantics
+    [?] Solver checking 13 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_2_optimized_self", "seconds": 0.7359474580007372, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_2_original_self: capable_alignment.o vs capable_alignment.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/cap_capable'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/cap_capable'
+[*] Parsed BTF metadata from C binary: 6 maps
+    - start: type=hash, key_size=8, value_size=8, max_entries=10240
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+    - stackmap: type=stack_trace, key_size=4, value_size=1016, max_entries=1024
+    - info: type=hash, key_size=16, value_size=44, max_entries=10240
+    - seen: type=hash, key_size=16, value_size=8, max_entries=10240
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/capable_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'kretprobe/cap_capable' for atomic instructions (offset 0x0-0x458)
+    No atomic instructions found
+[*] Found entry 'kprobe__cap_capable_exit' at 0x400120
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'start' from BTF: type=hash, key_size=8, value_size=8, max_entries=10240 at 0x400590
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x4005b0
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4005d0
+[*] Initializing map 'stackmap' from BTF: type=stack_trace, key_size=4, value_size=1016, max_entries=1024 at 0x4005e8
+[*] Initializing map 'info' from BTF: type=hash, key_size=16, value_size=44, max_entries=10240 at 0x4005f8
+[*] Initializing map 'seen' from BTF: type=hash, key_size=16, value_size=8, max_entries=10240 at 0x400618
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'start', slot 0, addr=0xdeaf0000
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=2 errored=0
+    stash 'deadended': 2 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=44)
+[*] Path 1: constraints=3, map_entries=1
+[*] Path 2: constraints=4, map_entries=2
+[*] Parsed BTF metadata from Rust binary: 6 maps
+    - start: type=hash, key_size=8, value_size=8, max_entries=10240
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+    - stackmap: type=stack_trace, key_size=4, value_size=1016, max_entries=1024
+    - info: type=hash, key_size=16, value_size=44, max_entries=10240
+    - seen: type=hash, key_size=16, value_size=8, max_entries=10240
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/capable_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'kretprobe/cap_capable' for atomic instructions (offset 0x0-0x458)
+    No atomic instructions found
+[*] Found entry 'kprobe__cap_capable_exit' at 0x400120
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'start' from BTF: type=hash, key_size=8, value_size=8, max_entries=10240 at 0x400590
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x4005b0
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4005d0
+[*] Initializing map 'stackmap' from BTF: type=stack_trace, key_size=4, value_size=1016, max_entries=1024 at 0x4005e8
+[*] Initializing map 'info' from BTF: type=hash, key_size=16, value_size=44, max_entries=10240 at 0x4005f8
+[*] Initializing map 'seen' from BTF: type=hash, key_size=16, value_size=8, max_entries=10240 at 0x400618
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'start', slot 0, addr=0xdeaf0000
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=2 errored=0
+    stash 'deadended': 2 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=44)
+[*] Path 1: constraints=3, map_entries=1
+[*] Path 2: constraints=4, map_entries=2
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    2 paths converted
+[*] Converting Rust program paths to Z3...
+    2 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 6 maps via ITE semantics
+    [?] Solver checking 13 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_2_original_self", "seconds": 0.7862118750053924, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_3_original_self: capable_alignment.o vs capable_alignment.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/cap_capable'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/cap_capable'
+[*] Parsed BTF metadata from C binary: 6 maps
+    - start: type=hash, key_size=8, value_size=8, max_entries=10240
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+    - stackmap: type=stack_trace, key_size=4, value_size=1016, max_entries=1024
+    - info: type=hash, key_size=16, value_size=44, max_entries=10240
+    - seen: type=hash, key_size=16, value_size=8, max_entries=10240
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/capable_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'kretprobe/cap_capable' for atomic instructions (offset 0x0-0x458)
+    No atomic instructions found
+[*] Found entry 'kprobe__cap_capable_exit' at 0x400120
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'start' from BTF: type=hash, key_size=8, value_size=8, max_entries=10240 at 0x400590
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x4005b0
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4005d0
+[*] Initializing map 'stackmap' from BTF: type=stack_trace, key_size=4, value_size=1016, max_entries=1024 at 0x4005e8
+[*] Initializing map 'info' from BTF: type=hash, key_size=16, value_size=44, max_entries=10240 at 0x4005f8
+[*] Initializing map 'seen' from BTF: type=hash, key_size=16, value_size=8, max_entries=10240 at 0x400618
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'start', slot 0, addr=0xdeaf0000
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=2 errored=0
+    stash 'deadended': 2 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=44)
+[*] Path 1: constraints=3, map_entries=1
+[*] Path 2: constraints=4, map_entries=2
+[*] Parsed BTF metadata from Rust binary: 6 maps
+    - start: type=hash, key_size=8, value_size=8, max_entries=10240
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+    - stackmap: type=stack_trace, key_size=4, value_size=1016, max_entries=1024
+    - info: type=hash, key_size=16, value_size=44, max_entries=10240
+    - seen: type=hash, key_size=16, value_size=8, max_entries=10240
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/capable_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'kretprobe/cap_capable' for atomic instructions (offset 0x0-0x458)
+    No atomic instructions found
+[*] Found entry 'kprobe__cap_capable_exit' at 0x400120
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'start' from BTF: type=hash, key_size=8, value_size=8, max_entries=10240 at 0x400590
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x4005b0
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4005d0
+[*] Initializing map 'stackmap' from BTF: type=stack_trace, key_size=4, value_size=1016, max_entries=1024 at 0x4005e8
+[*] Initializing map 'info' from BTF: type=hash, key_size=16, value_size=44, max_entries=10240 at 0x4005f8
+[*] Initializing map 'seen' from BTF: type=hash, key_size=16, value_size=8, max_entries=10240 at 0x400618
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'start', slot 0, addr=0xdeaf0000
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=2 errored=0
+    stash 'deadended': 2 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=44)
+[*] Path 1: constraints=3, map_entries=1
+[*] Path 2: constraints=4, map_entries=2
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    2 paths converted
+[*] Converting Rust program paths to Z3...
+    2 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 6 maps via ITE semantics
+    [?] Solver checking 13 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_3_original_self", "seconds": 0.9079405420052353, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_3_optimized_self: capable_alignment_SOURCE_OPT.o vs capable_alignment_SOURCE_OPT.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/cap_capable'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/cap_capable'
+[*] Parsed BTF metadata from C binary: 6 maps
+    - start: type=hash, key_size=8, value_size=8, max_entries=10240
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+    - stackmap: type=stack_trace, key_size=4, value_size=1016, max_entries=1024
+    - info: type=hash, key_size=16, value_size=44, max_entries=10240
+    - seen: type=hash, key_size=16, value_size=8, max_entries=10240
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/capable_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'kretprobe/cap_capable' for atomic instructions (offset 0x0-0x438)
+    No atomic instructions found
+[*] Found entry 'kprobe__cap_capable_exit' at 0x400120
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'start' from BTF: type=hash, key_size=8, value_size=8, max_entries=10240 at 0x400570
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x400590
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4005b0
+[*] Initializing map 'stackmap' from BTF: type=stack_trace, key_size=4, value_size=1016, max_entries=1024 at 0x4005c8
+[*] Initializing map 'info' from BTF: type=hash, key_size=16, value_size=44, max_entries=10240 at 0x4005d8
+[*] Initializing map 'seen' from BTF: type=hash, key_size=16, value_size=8, max_entries=10240 at 0x4005f8
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'start', slot 0, addr=0xdeaf0000
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=2 errored=0
+    stash 'deadended': 2 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=44)
+[*] Path 1: constraints=3, map_entries=1
+[*] Path 2: constraints=4, map_entries=2
+[*] Parsed BTF metadata from Rust binary: 6 maps
+    - start: type=hash, key_size=8, value_size=8, max_entries=10240
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+    - stackmap: type=stack_trace, key_size=4, value_size=1016, max_entries=1024
+    - info: type=hash, key_size=16, value_size=44, max_entries=10240
+    - seen: type=hash, key_size=16, value_size=8, max_entries=10240
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/capable_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'kretprobe/cap_capable' for atomic instructions (offset 0x0-0x438)
+    No atomic instructions found
+[*] Found entry 'kprobe__cap_capable_exit' at 0x400120
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'start' from BTF: type=hash, key_size=8, value_size=8, max_entries=10240 at 0x400570
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x400590
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4005b0
+[*] Initializing map 'stackmap' from BTF: type=stack_trace, key_size=4, value_size=1016, max_entries=1024 at 0x4005c8
+[*] Initializing map 'info' from BTF: type=hash, key_size=16, value_size=44, max_entries=10240 at 0x4005d8
+[*] Initializing map 'seen' from BTF: type=hash, key_size=16, value_size=8, max_entries=10240 at 0x4005f8
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'start', slot 0, addr=0xdeaf0000
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=2 errored=0
+    stash 'deadended': 2 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=44)
+[*] Path 1: constraints=3, map_entries=1
+[*] Path 2: constraints=4, map_entries=2
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    2 paths converted
+[*] Converting Rust program paths to Z3...
+    2 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 6 maps via ITE semantics
+    [?] Solver checking 13 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_3_optimized_self", "seconds": 0.7517590829957044, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_4_optimized_self: capable_alignment_SOURCE_OPT.o vs capable_alignment_SOURCE_OPT.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/cap_capable'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/cap_capable'
+[*] Parsed BTF metadata from C binary: 6 maps
+    - start: type=hash, key_size=8, value_size=8, max_entries=10240
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+    - stackmap: type=stack_trace, key_size=4, value_size=1016, max_entries=1024
+    - info: type=hash, key_size=16, value_size=44, max_entries=10240
+    - seen: type=hash, key_size=16, value_size=8, max_entries=10240
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/capable_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'kretprobe/cap_capable' for atomic instructions (offset 0x0-0x438)
+    No atomic instructions found
+[*] Found entry 'kprobe__cap_capable_exit' at 0x400120
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'start' from BTF: type=hash, key_size=8, value_size=8, max_entries=10240 at 0x400570
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x400590
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4005b0
+[*] Initializing map 'stackmap' from BTF: type=stack_trace, key_size=4, value_size=1016, max_entries=1024 at 0x4005c8
+[*] Initializing map 'info' from BTF: type=hash, key_size=16, value_size=44, max_entries=10240 at 0x4005d8
+[*] Initializing map 'seen' from BTF: type=hash, key_size=16, value_size=8, max_entries=10240 at 0x4005f8
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'start', slot 0, addr=0xdeaf0000
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=2 errored=0
+    stash 'deadended': 2 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=44)
+[*] Path 1: constraints=3, map_entries=1
+[*] Path 2: constraints=4, map_entries=2
+[*] Parsed BTF metadata from Rust binary: 6 maps
+    - start: type=hash, key_size=8, value_size=8, max_entries=10240
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+    - stackmap: type=stack_trace, key_size=4, value_size=1016, max_entries=1024
+    - info: type=hash, key_size=16, value_size=44, max_entries=10240
+    - seen: type=hash, key_size=16, value_size=8, max_entries=10240
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/capable_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'kretprobe/cap_capable' for atomic instructions (offset 0x0-0x438)
+    No atomic instructions found
+[*] Found entry 'kprobe__cap_capable_exit' at 0x400120
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'start' from BTF: type=hash, key_size=8, value_size=8, max_entries=10240 at 0x400570
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x400590
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4005b0
+[*] Initializing map 'stackmap' from BTF: type=stack_trace, key_size=4, value_size=1016, max_entries=1024 at 0x4005c8
+[*] Initializing map 'info' from BTF: type=hash, key_size=16, value_size=44, max_entries=10240 at 0x4005d8
+[*] Initializing map 'seen' from BTF: type=hash, key_size=16, value_size=8, max_entries=10240 at 0x4005f8
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'start', slot 0, addr=0xdeaf0000
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=2 errored=0
+    stash 'deadended': 2 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=44)
+[*] Path 1: constraints=3, map_entries=1
+[*] Path 2: constraints=4, map_entries=2
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    2 paths converted
+[*] Converting Rust program paths to Z3...
+    2 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 6 maps via ITE semantics
+    [?] Solver checking 13 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_4_optimized_self", "seconds": 0.7238130839978112, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_4_original_self: capable_alignment.o vs capable_alignment.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/cap_capable'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/cap_capable'
+[*] Parsed BTF metadata from C binary: 6 maps
+    - start: type=hash, key_size=8, value_size=8, max_entries=10240
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+    - stackmap: type=stack_trace, key_size=4, value_size=1016, max_entries=1024
+    - info: type=hash, key_size=16, value_size=44, max_entries=10240
+    - seen: type=hash, key_size=16, value_size=8, max_entries=10240
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/capable_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'kretprobe/cap_capable' for atomic instructions (offset 0x0-0x458)
+    No atomic instructions found
+[*] Found entry 'kprobe__cap_capable_exit' at 0x400120
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'start' from BTF: type=hash, key_size=8, value_size=8, max_entries=10240 at 0x400590
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x4005b0
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4005d0
+[*] Initializing map 'stackmap' from BTF: type=stack_trace, key_size=4, value_size=1016, max_entries=1024 at 0x4005e8
+[*] Initializing map 'info' from BTF: type=hash, key_size=16, value_size=44, max_entries=10240 at 0x4005f8
+[*] Initializing map 'seen' from BTF: type=hash, key_size=16, value_size=8, max_entries=10240 at 0x400618
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'start', slot 0, addr=0xdeaf0000
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=2 errored=0
+    stash 'deadended': 2 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=44)
+[*] Path 1: constraints=3, map_entries=1
+[*] Path 2: constraints=4, map_entries=2
+[*] Parsed BTF metadata from Rust binary: 6 maps
+    - start: type=hash, key_size=8, value_size=8, max_entries=10240
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+    - stackmap: type=stack_trace, key_size=4, value_size=1016, max_entries=1024
+    - info: type=hash, key_size=16, value_size=44, max_entries=10240
+    - seen: type=hash, key_size=16, value_size=8, max_entries=10240
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/capable_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'kretprobe/cap_capable' for atomic instructions (offset 0x0-0x458)
+    No atomic instructions found
+[*] Found entry 'kprobe__cap_capable_exit' at 0x400120
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'start' from BTF: type=hash, key_size=8, value_size=8, max_entries=10240 at 0x400590
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x4005b0
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4005d0
+[*] Initializing map 'stackmap' from BTF: type=stack_trace, key_size=4, value_size=1016, max_entries=1024 at 0x4005e8
+[*] Initializing map 'info' from BTF: type=hash, key_size=16, value_size=44, max_entries=10240 at 0x4005f8
+[*] Initializing map 'seen' from BTF: type=hash, key_size=16, value_size=8, max_entries=10240 at 0x400618
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'start', slot 0, addr=0xdeaf0000
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=2 errored=0
+    stash 'deadended': 2 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=44)
+[*] Path 1: constraints=3, map_entries=1
+[*] Path 2: constraints=4, map_entries=2
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    2 paths converted
+[*] Converting Rust program paths to Z3...
+    2 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 6 maps via ITE semantics
+    [?] Solver checking 13 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_4_original_self", "seconds": 0.7677711669966811, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_5_original_self: capable_alignment.o vs capable_alignment.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/cap_capable'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/cap_capable'
+[*] Parsed BTF metadata from C binary: 6 maps
+    - start: type=hash, key_size=8, value_size=8, max_entries=10240
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+    - stackmap: type=stack_trace, key_size=4, value_size=1016, max_entries=1024
+    - info: type=hash, key_size=16, value_size=44, max_entries=10240
+    - seen: type=hash, key_size=16, value_size=8, max_entries=10240
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/capable_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'kretprobe/cap_capable' for atomic instructions (offset 0x0-0x458)
+    No atomic instructions found
+[*] Found entry 'kprobe__cap_capable_exit' at 0x400120
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'start' from BTF: type=hash, key_size=8, value_size=8, max_entries=10240 at 0x400590
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x4005b0
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4005d0
+[*] Initializing map 'stackmap' from BTF: type=stack_trace, key_size=4, value_size=1016, max_entries=1024 at 0x4005e8
+[*] Initializing map 'info' from BTF: type=hash, key_size=16, value_size=44, max_entries=10240 at 0x4005f8
+[*] Initializing map 'seen' from BTF: type=hash, key_size=16, value_size=8, max_entries=10240 at 0x400618
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'start', slot 0, addr=0xdeaf0000
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=2 errored=0
+    stash 'deadended': 2 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=44)
+[*] Path 1: constraints=3, map_entries=1
+[*] Path 2: constraints=4, map_entries=2
+[*] Parsed BTF metadata from Rust binary: 6 maps
+    - start: type=hash, key_size=8, value_size=8, max_entries=10240
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+    - stackmap: type=stack_trace, key_size=4, value_size=1016, max_entries=1024
+    - info: type=hash, key_size=16, value_size=44, max_entries=10240
+    - seen: type=hash, key_size=16, value_size=8, max_entries=10240
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/capable_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'kretprobe/cap_capable' for atomic instructions (offset 0x0-0x458)
+    No atomic instructions found
+[*] Found entry 'kprobe__cap_capable_exit' at 0x400120
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'start' from BTF: type=hash, key_size=8, value_size=8, max_entries=10240 at 0x400590
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x4005b0
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4005d0
+[*] Initializing map 'stackmap' from BTF: type=stack_trace, key_size=4, value_size=1016, max_entries=1024 at 0x4005e8
+[*] Initializing map 'info' from BTF: type=hash, key_size=16, value_size=44, max_entries=10240 at 0x4005f8
+[*] Initializing map 'seen' from BTF: type=hash, key_size=16, value_size=8, max_entries=10240 at 0x400618
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'start', slot 0, addr=0xdeaf0000
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=2 errored=0
+    stash 'deadended': 2 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=44)
+[*] Path 1: constraints=3, map_entries=1
+[*] Path 2: constraints=4, map_entries=2
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    2 paths converted
+[*] Converting Rust program paths to Z3...
+    2 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 6 maps via ITE semantics
+    [?] Solver checking 13 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_5_original_self", "seconds": 0.7529627500043716, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_5_optimized_self: capable_alignment_SOURCE_OPT.o vs capable_alignment_SOURCE_OPT.o ---
+[*] Detected program type 'kprobe' from section 'kprobe/cap_capable'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/cap_capable'
+[*] Parsed BTF metadata from C binary: 6 maps
+    - start: type=hash, key_size=8, value_size=8, max_entries=10240
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+    - stackmap: type=stack_trace, key_size=4, value_size=1016, max_entries=1024
+    - info: type=hash, key_size=16, value_size=44, max_entries=10240
+    - seen: type=hash, key_size=16, value_size=8, max_entries=10240
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/capable_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'kretprobe/cap_capable' for atomic instructions (offset 0x0-0x438)
+    No atomic instructions found
+[*] Found entry 'kprobe__cap_capable_exit' at 0x400120
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'start' from BTF: type=hash, key_size=8, value_size=8, max_entries=10240 at 0x400570
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x400590
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4005b0
+[*] Initializing map 'stackmap' from BTF: type=stack_trace, key_size=4, value_size=1016, max_entries=1024 at 0x4005c8
+[*] Initializing map 'info' from BTF: type=hash, key_size=16, value_size=44, max_entries=10240 at 0x4005d8
+[*] Initializing map 'seen' from BTF: type=hash, key_size=16, value_size=8, max_entries=10240 at 0x4005f8
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'start', slot 0, addr=0xdeaf0000
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=2 errored=0
+    stash 'deadended': 2 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=44)
+[*] Path 1: constraints=3, map_entries=1
+[*] Path 2: constraints=4, map_entries=2
+[*] Parsed BTF metadata from Rust binary: 6 maps
+    - start: type=hash, key_size=8, value_size=8, max_entries=10240
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+    - stackmap: type=stack_trace, key_size=4, value_size=1016, max_entries=1024
+    - info: type=hash, key_size=16, value_size=44, max_entries=10240
+    - seen: type=hash, key_size=16, value_size=8, max_entries=10240
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/capable_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'kretprobe/cap_capable' for atomic instructions (offset 0x0-0x438)
+    No atomic instructions found
+[*] Found entry 'kprobe__cap_capable_exit' at 0x400120
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'start' from BTF: type=hash, key_size=8, value_size=8, max_entries=10240 at 0x400570
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x400590
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4005b0
+[*] Initializing map 'stackmap' from BTF: type=stack_trace, key_size=4, value_size=1016, max_entries=1024 at 0x4005c8
+[*] Initializing map 'info' from BTF: type=hash, key_size=16, value_size=44, max_entries=10240 at 0x4005d8
+[*] Initializing map 'seen' from BTF: type=hash, key_size=16, value_size=8, max_entries=10240 at 0x4005f8
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'start', slot 0, addr=0xdeaf0000
+[*] BPF Helper: bpf_map_delete_elem called.
+[*] Map Manager: (hash) Deleting entry slot 0 in map 'start'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=2 errored=0
+    stash 'deadended': 2 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=44)
+[*] Path 1: constraints=3, map_entries=1
+[*] Path 2: constraints=4, map_entries=2
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    2 paths converted
+[*] Converting Rust program paths to Z3...
+    2 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 6 maps via ITE semantics
+    [?] Solver checking 13 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_5_optimized_self", "seconds": 0.7072052500006976, "equivalent": true, "result_type": "equivalent"}
+
+--- SUMMARY ---
+{
+  "id": "capable_alignment",
+  "program": "libbpf-tools/capable.bpf.c",
+  "entry": "kprobe__cap_capable_exit",
+  "method": "Align event and i_key",
+  "variant": "combined",
+  "requirement": null,
+  "original_sha256": "d9b122ee98021b10b77d34e3db3b146dee7a1b1b108471a64bbc326c7a2d27d9",
+  "baseline_sha256": "d9b122ee98021b10b77d34e3db3b146dee7a1b1b108471a64bbc326c7a2d27d9",
+  "expected_instructions": [
+    175,
+    171
+  ],
+  "original_directory": "c2rust_translation/c_bpf_programs/libbpf-tools",
+  "label": "capable_alignment",
+  "status": "success",
+  "instructions": [
+    175,
+    171
+  ],
+  "equivalence": "passed for selected entry",
+  "raw_seconds": {
+    "original_self": [
+      0.7702641659998335,
+      0.7862118750053924,
+      0.9079405420052353,
+      0.7677711669966811,
+      0.7529627500043716
+    ],
+    "optimized_self": [
+      0.732423999987077,
+      0.7359474580007372,
+      0.7517590829957044,
+      0.7238130839978112,
+      0.7072052500006976
+    ]
+  },
+  "median_seconds": {
+    "original_self": 0.7702641659998335,
+    "optimized_self": 0.732423999987077
+  },
+  "speedup": 1.0516642901016682,
+  "reduction_percent": 4.91262188779592,
+  "reduction_ci95_percent": [
+    4.91262188779592,
+    17.201727622449358
+  ]
+}

@@ -1,0 +1,162 @@
+[
+  {
+    "id": "ken_execsnoop_alignment",
+    "expected": [
+      44,
+      43
+    ],
+    "frozen_configuration": false,
+    "stack_addresses_unobserved": false,
+    "actual": [
+      44,
+      43
+    ],
+    "matches_expected": true,
+    "code_changed": true,
+    "equivalence": "not run"
+  },
+  {
+    "id": "ken_sigsnoop_alignment",
+    "expected": [
+      67,
+      64
+    ],
+    "frozen_configuration": false,
+    "stack_addresses_unobserved": false,
+    "actual": [
+      67,
+      64
+    ],
+    "matches_expected": true,
+    "code_changed": true,
+    "equivalence": "not run"
+  },
+  {
+    "id": "dae_alignment",
+    "expected": [
+      2339,
+      2279
+    ],
+    "frozen_configuration": false,
+    "stack_addresses_unobserved": false,
+    "actual": [
+      2339,
+      2339
+    ],
+    "matches_expected": false,
+    "code_changed": false,
+    "equivalence": "not run"
+  },
+  {
+    "id": "biosnoop_alignment",
+    "expected": [
+      551,
+      545
+    ],
+    "frozen_configuration": false,
+    "stack_addresses_unobserved": false,
+    "actual": [
+      551,
+      545
+    ],
+    "matches_expected": true,
+    "code_changed": true,
+    "equivalence": "not run"
+  },
+  {
+    "id": "capable_alignment",
+    "expected": [
+      175,
+      171
+    ],
+    "frozen_configuration": false,
+    "stack_addresses_unobserved": false,
+    "actual": [
+      175,
+      171
+    ],
+    "matches_expected": true,
+    "code_changed": true,
+    "equivalence": "not run"
+  },
+  {
+    "id": "execsnoop_alignment",
+    "expected": [
+      1807,
+      1806
+    ],
+    "frozen_configuration": false,
+    "stack_addresses_unobserved": false,
+    "actual": [
+      1807,
+      1806
+    ],
+    "matches_expected": true,
+    "code_changed": true,
+    "equivalence": "not run"
+  },
+  {
+    "id": "mdflush_alignment",
+    "expected": [
+      126,
+      118
+    ],
+    "frozen_configuration": false,
+    "stack_addresses_unobserved": false,
+    "actual": [
+      126,
+      118
+    ],
+    "matches_expected": true,
+    "code_changed": true,
+    "equivalence": "not run"
+  },
+  {
+    "id": "tcprtt_alignment",
+    "expected": [
+      490,
+      486
+    ],
+    "frozen_configuration": false,
+    "stack_addresses_unobserved": false,
+    "actual": [
+      490,
+      486
+    ],
+    "matches_expected": true,
+    "code_changed": true,
+    "equivalence": "not run"
+  },
+  {
+    "id": "execsnoop_bound",
+    "expected": [
+      1807,
+      192
+    ],
+    "frozen_configuration": false,
+    "stack_addresses_unobserved": false,
+    "actual": [
+      1807,
+      1807
+    ],
+    "matches_expected": false,
+    "code_changed": false,
+    "equivalence": "not run"
+  },
+  {
+    "id": "tcpconnect_bound",
+    "expected": [
+      393,
+      381
+    ],
+    "frozen_configuration": false,
+    "stack_addresses_unobserved": false,
+    "actual": [
+      393,
+      393
+    ],
+    "matches_expected": false,
+    "code_changed": false,
+    "equivalence": "not run"
+  }
+]

@@ -1,0 +1,1190 @@
+Homebrew clang version 22.1.8
+Target: arm64-apple-darwin27.0.0
+Thread model: posix
+InstalledDir: /opt/homebrew/Cellar/llvm/22.1.8/bin
+Configuration file: /opt/homebrew/Cellar/llvm/22.1.8/etc/clang/arm64-apple-darwin27.cfg
+
+{"flags": ["-target", "bpfel", "-O2", "-g", "-D__TARGET_ARCH_x86", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include/bpf", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/libbpf-tools"], "entry": "tracepoint__syscalls__sys_enter_execve", "trials": 5, "warmups": 1, "timeout_seconds": 60, "input_assumptions": [], "requirement": null}
+{"command": ["/opt/homebrew/opt/llvm/bin/clang", "-target", "bpfel", "-O2", "-g", "-D__TARGET_ARCH_x86", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include/bpf", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/libbpf-tools", "-iquote", "/Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/KEN/dataset/libbpf", "-x", "c", "-c", "-o", "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/ken_execsnoop_alignment.o", "-"], "source": "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/cases/ken_execsnoop_alignment.bpf.c"}
+{"command": ["/opt/homebrew/opt/llvm/bin/clang", "-target", "bpfel", "-O2", "-g", "-D__TARGET_ARCH_x86", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include/bpf", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/libbpf-tools", "-iquote", "/Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/KEN/dataset/libbpf", "-x", "c", "-c", "-o", "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/ken_execsnoop_alignment_SOURCE_OPT.o", "-"], "source": "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/source_level_opt/generated/ken_execsnoop_alignment_SOURCE_OPT.bpf.c"}
+
+--- equivalence: ken_execsnoop_alignment.o vs ken_execsnoop_alignment_SOURCE_OPT.o ---
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Using context size 64 bytes for program type 'tracepoint'
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Parsed BTF metadata from C binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/ken_execsnoop_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x160)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400160
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=28)
+[*] Path 1: constraints=4, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/ken_execsnoop_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x158)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400158
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=28)
+[*] Path 1: constraints=4, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 1 maps via ITE semantics
+    [?] Solver checking 3 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "equivalence", "seconds": 0.3792512919899309, "equivalent": true, "result_type": "equivalent"}
+
+--- warmup_original_self: ken_execsnoop_alignment.o vs ken_execsnoop_alignment.o ---
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Using context size 64 bytes for program type 'tracepoint'
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Parsed BTF metadata from C binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/ken_execsnoop_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x160)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400160
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=28)
+[*] Path 1: constraints=4, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/ken_execsnoop_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x160)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400160
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=28)
+[*] Path 1: constraints=4, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 1 maps via ITE semantics
+    [?] Solver checking 3 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "warmup_original_self", "seconds": 0.3036940419988241, "equivalent": true, "result_type": "equivalent"}
+
+--- warmup_optimized_self: ken_execsnoop_alignment_SOURCE_OPT.o vs ken_execsnoop_alignment_SOURCE_OPT.o ---
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Using context size 64 bytes for program type 'tracepoint'
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Parsed BTF metadata from C binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/ken_execsnoop_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x158)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400158
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=28)
+[*] Path 1: constraints=4, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/ken_execsnoop_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x158)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400158
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=28)
+[*] Path 1: constraints=4, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 1 maps via ITE semantics
+    [?] Solver checking 3 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "warmup_optimized_self", "seconds": 0.31201054199482314, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_1_original_self: ken_execsnoop_alignment.o vs ken_execsnoop_alignment.o ---
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Using context size 64 bytes for program type 'tracepoint'
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Parsed BTF metadata from C binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/ken_execsnoop_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x160)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400160
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=28)
+[*] Path 1: constraints=4, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/ken_execsnoop_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x160)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400160
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=28)
+[*] Path 1: constraints=4, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 1 maps via ITE semantics
+    [?] Solver checking 3 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_1_original_self", "seconds": 0.33281716700003017, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_1_optimized_self: ken_execsnoop_alignment_SOURCE_OPT.o vs ken_execsnoop_alignment_SOURCE_OPT.o ---
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Using context size 64 bytes for program type 'tracepoint'
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Parsed BTF metadata from C binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/ken_execsnoop_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x158)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400158
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=28)
+[*] Path 1: constraints=4, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/ken_execsnoop_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x158)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400158
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=28)
+[*] Path 1: constraints=4, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 1 maps via ITE semantics
+    [?] Solver checking 3 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_1_optimized_self", "seconds": 0.30493941700842697, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_2_optimized_self: ken_execsnoop_alignment_SOURCE_OPT.o vs ken_execsnoop_alignment_SOURCE_OPT.o ---
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Using context size 64 bytes for program type 'tracepoint'
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Parsed BTF metadata from C binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/ken_execsnoop_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x158)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400158
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=28)
+[*] Path 1: constraints=4, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/ken_execsnoop_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x158)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400158
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=28)
+[*] Path 1: constraints=4, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 1 maps via ITE semantics
+    [?] Solver checking 3 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_2_optimized_self", "seconds": 0.30589545900875237, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_2_original_self: ken_execsnoop_alignment.o vs ken_execsnoop_alignment.o ---
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Using context size 64 bytes for program type 'tracepoint'
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Parsed BTF metadata from C binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/ken_execsnoop_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x160)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400160
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=28)
+[*] Path 1: constraints=4, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/ken_execsnoop_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x160)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400160
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=28)
+[*] Path 1: constraints=4, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 1 maps via ITE semantics
+    [?] Solver checking 3 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_2_original_self", "seconds": 0.35468791700259317, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_3_original_self: ken_execsnoop_alignment.o vs ken_execsnoop_alignment.o ---
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Using context size 64 bytes for program type 'tracepoint'
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Parsed BTF metadata from C binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/ken_execsnoop_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x160)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400160
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=28)
+[*] Path 1: constraints=4, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/ken_execsnoop_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x160)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400160
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=28)
+[*] Path 1: constraints=4, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 1 maps via ITE semantics
+    [?] Solver checking 3 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_3_original_self", "seconds": 0.3290267909906106, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_3_optimized_self: ken_execsnoop_alignment_SOURCE_OPT.o vs ken_execsnoop_alignment_SOURCE_OPT.o ---
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Using context size 64 bytes for program type 'tracepoint'
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Parsed BTF metadata from C binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/ken_execsnoop_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x158)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400158
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=28)
+[*] Path 1: constraints=4, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/ken_execsnoop_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x158)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400158
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=28)
+[*] Path 1: constraints=4, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 1 maps via ITE semantics
+    [?] Solver checking 3 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_3_optimized_self", "seconds": 0.31376424999325536, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_4_optimized_self: ken_execsnoop_alignment_SOURCE_OPT.o vs ken_execsnoop_alignment_SOURCE_OPT.o ---
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Using context size 64 bytes for program type 'tracepoint'
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Parsed BTF metadata from C binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/ken_execsnoop_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x158)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400158
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=28)
+[*] Path 1: constraints=4, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/ken_execsnoop_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x158)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400158
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=28)
+[*] Path 1: constraints=4, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 1 maps via ITE semantics
+    [?] Solver checking 3 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_4_optimized_self", "seconds": 0.3533797089912696, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_4_original_self: ken_execsnoop_alignment.o vs ken_execsnoop_alignment.o ---
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Using context size 64 bytes for program type 'tracepoint'
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Parsed BTF metadata from C binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/ken_execsnoop_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x160)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400160
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=28)
+[*] Path 1: constraints=4, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/ken_execsnoop_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x160)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400160
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=28)
+[*] Path 1: constraints=4, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 1 maps via ITE semantics
+    [?] Solver checking 3 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_4_original_self", "seconds": 0.3681330420076847, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_5_original_self: ken_execsnoop_alignment.o vs ken_execsnoop_alignment.o ---
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Using context size 64 bytes for program type 'tracepoint'
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Parsed BTF metadata from C binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/ken_execsnoop_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x160)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400160
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=28)
+[*] Path 1: constraints=4, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/ken_execsnoop_alignment.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x160)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400160
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=28)
+[*] Path 1: constraints=4, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 1 maps via ITE semantics
+    [?] Solver checking 3 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_5_original_self", "seconds": 0.3465027909987839, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_5_optimized_self: ken_execsnoop_alignment_SOURCE_OPT.o vs ken_execsnoop_alignment_SOURCE_OPT.o ---
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Using context size 64 bytes for program type 'tracepoint'
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Parsed BTF metadata from C binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/ken_execsnoop_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x158)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400158
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=28)
+[*] Path 1: constraints=4, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 1 maps
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/ken_execsnoop_alignment_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x158)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x400158
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_get_current_comm called.
+[*] BPF Helper: bpf_perf_event_output called.
+[*] Map Manager: (array) Updating index <BV32 0x0> in map '__perf_output'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Auto-discovered synthetic map '__perf_output' (type=array, value_size=28)
+[*] Path 1: constraints=4, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 1 maps via ITE semantics
+    [?] Solver checking 3 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_5_optimized_self", "seconds": 0.3347555830114288, "equivalent": true, "result_type": "equivalent"}
+
+--- SUMMARY ---
+{
+  "id": "ken_execsnoop_alignment",
+  "program": "KEN/dataset/libbpf/execsnoop.bpf.c",
+  "entry": "tracepoint__syscalls__sys_enter_execve",
+  "method": "Align local event buffer",
+  "variant": "combined",
+  "requirement": null,
+  "original_sha256": "99d062a7773b3d26f92e665682a563496db1cad780adf5b6bc9e4b85f39cb2cc",
+  "baseline_sha256": "d54ffed6062ae86d4d1265c416517b607da535993ce8d111c4692d9f56f6bf58",
+  "expected_instructions": [
+    44,
+    43
+  ],
+  "original_directory": "c2rust_translation/c_bpf_programs/KEN/dataset/libbpf",
+  "label": "ken_execsnoop_alignment",
+  "status": "success",
+  "instructions": [
+    44,
+    43
+  ],
+  "equivalence": "passed for selected entry",
+  "raw_seconds": {
+    "original_self": [
+      0.33281716700003017,
+      0.35468791700259317,
+      0.3290267909906106,
+      0.3681330420076847,
+      0.3465027909987839
+    ],
+    "optimized_self": [
+      0.30493941700842697,
+      0.30589545900875237,
+      0.31376424999325536,
+      0.3533797089912696,
+      0.3347555830114288
+    ]
+  },
+  "median_seconds": {
+    "original_self": 0.3465027909987839,
+    "optimized_self": 0.31376424999325536
+  },
+  "speedup": 1.1043412084271305,
+  "reduction_percent": 9.44827627828355,
+  "reduction_ci95_percent": [
+    3.390220307748193,
+    13.756447754459044
+  ]
+}

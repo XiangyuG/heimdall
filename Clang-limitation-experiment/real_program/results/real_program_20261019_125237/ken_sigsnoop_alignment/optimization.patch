@@ -1,0 +1,11 @@
+--- ken_sigsnoop_alignment.bpf.c
++++ ken_sigsnoop_alignment_SOURCE_OPT.bpf.c
+@@ -25,7 +25,7 @@
+ 
+ static int probe_entry(pid_t tpid, int sig)
+ {
+-	struct event event = {};
++	struct event event __attribute__((aligned(8))) = {};
+ 	__u64 pid_tgid;
+ 	__u32 tid;
+ 

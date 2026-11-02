@@ -1,0 +1,88 @@
+[*] Detected program type 'kprobe' from section 'kprobe/tcp_v4_connect'
+[*] Using context size 168 bytes for program type 'kprobe'
+[*] Detected program type 'kprobe' from section 'kprobe/tcp_v4_connect'
+[*] Parsed BTF metadata from C binary: 3 maps
+    - tuplepid: type=hash, key_size=48, value_size=32, max_entries=8192
+    - sockets: type=hash, key_size=4, value_size=8, max_entries=8192
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/tcptracer.original.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'kprobe/tcp_v4_connect' for atomic instructions (offset 0x0-0x140)
+    No atomic instructions found
+[*] Found entry 'tcp_v4_connect' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'tuplepid' from BTF: type=hash, key_size=48, value_size=32, max_entries=8192 at 0x401a18
+[*] Initializing map 'sockets' from BTF: type=hash, key_size=4, value_size=8, max_entries=8192 at 0x401a38
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x401a58
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_probe_read called at source address:  16
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Creating new slot 0 in map 'sockets' via update
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=2 errored=0
+    stash 'deadended': 2 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=3, map_entries=0
+[*] Path 2: constraints=3, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 3 maps
+    - tuplepid: type=hash, key_size=48, value_size=32, max_entries=8192
+    - sockets: type=hash, key_size=4, value_size=8, max_entries=8192
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/tcptracer.optimized.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'kprobe/tcp_v4_connect' for atomic instructions (offset 0x0-0x140)
+    No atomic instructions found
+[*] Found entry 'tcp_v4_connect' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'tuplepid' from BTF: type=hash, key_size=48, value_size=32, max_entries=8192 at 0x401a20
+[*] Initializing map 'sockets' from BTF: type=hash, key_size=4, value_size=8, max_entries=8192 at 0x401a40
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x401a60
+[*] Storing symbolic context (168 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_probe_read called at source address:  16
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Creating new slot 0 in map 'sockets' via update
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=2 errored=0
+    stash 'deadended': 2 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=3, map_entries=0
+[*] Path 2: constraints=3, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    2 paths converted
+[*] Converting Rust program paths to Z3...
+    2 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 2 maps via ITE semantics
+    [?] Solver checking 5 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.

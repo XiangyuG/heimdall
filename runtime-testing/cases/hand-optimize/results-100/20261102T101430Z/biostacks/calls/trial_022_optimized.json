@@ -1,0 +1,14 @@
+{
+  "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/biostacks/build/optimized.o",
+  "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/biostacks/build/optimized.o",
+  "entry": "blk_account_io_done",
+  "passed": true,
+  "seconds": 3.2215059169993765,
+  "equivalent": true,
+  "result_type": "equivalent",
+  "counter_example": "",
+  "complete": true,
+  "label": "trial_022_optimized",
+  "finished_utc": "2026-11-02T12:18:15.070284+00:00",
+  "process_wall_seconds": 3.7440689579998434
+}

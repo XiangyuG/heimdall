@@ -1,0 +1,623 @@
+{
+  "audit": {
+    "audited_utc": "2026-11-02T21:23:57.515264+00:00",
+    "passed": true,
+    "timed_calls": 1000,
+    "untimed_warmups": 10,
+    "equivalence_proofs": 39,
+    "total_serial_calls": 1049,
+    "unique_attempts_and_results": true,
+    "alternating_order_confirmed": true,
+    "no_overlapping_calls": true,
+    "previous_case_notes_before_next_case_start": true,
+    "all_frozen_source_and_code_hashes_match": true,
+    "all_cases_share_compiler_dependencies_and_code": true
+  },
+  "cases": [
+    {
+      "case": "tcpsynbl",
+      "timed_entry": "tcp_v4_syn_recv_kprobe",
+      "complete": true,
+      "error": null,
+      "completed_utc": "2026-11-02T10:50:06.471087+00:00",
+      "planned_pairs": 100,
+      "recorded_pairs": 100,
+      "statistics": {
+        "original": {
+          "n": 100,
+          "median": 9.532666374499854,
+          "mean": 9.867794163310002,
+          "stdev": 1.1687568211597785,
+          "cv_percent": 11.844154851804658,
+          "min": 8.397212667000076,
+          "max": 14.19654591599965,
+          "p05": 8.676423500349893,
+          "p25": 9.219314708249954,
+          "p75": 10.147482458500235,
+          "p95": 12.418151293750087,
+          "iqr": 0.9281677502502816,
+          "mad": 0.4672993750000387,
+          "first_25_median": 9.441844665999724,
+          "last_25_median": 10.003087750000304
+        },
+        "optimized": {
+          "n": 100,
+          "median": 1.71576912550006,
+          "mean": 1.8097605550000002,
+          "stdev": 0.4406590804629524,
+          "cv_percent": 24.3490266845247,
+          "min": 1.5290979589999552,
+          "max": 5.613332082999932,
+          "p05": 1.5678040148999002,
+          "p25": 1.6510450832499828,
+          "p75": 1.8009842495001749,
+          "p95": 2.3263227937499096,
+          "iqr": 0.1499391662501921,
+          "mad": 0.07341152150013386,
+          "first_25_median": 1.7098054579998916,
+          "last_25_median": 1.812971708999612
+        }
+      },
+      "failed_rounds": {
+        "original": [],
+        "optimized": []
+      },
+      "complete_pairs": 100,
+      "median_time_reduction_percent": 82.00116254891925,
+      "paired_bootstrap_ci95_reduction_percent": [
+        81.73174805387191,
+        82.21490581758457
+      ],
+      "bootstrap_pairs_used": 100,
+      "block_medians": [
+        {
+          "first_round": 1,
+          "last_round": 10,
+          "original": 9.329695270499997,
+          "optimized": 1.6824642500000664
+        },
+        {
+          "first_round": 11,
+          "last_round": 20,
+          "original": 9.532666374499854,
+          "optimized": 1.728535812500013
+        },
+        {
+          "first_round": 21,
+          "last_round": 30,
+          "original": 9.560683666499926,
+          "optimized": 1.7290921460000845
+        },
+        {
+          "first_round": 31,
+          "last_round": 40,
+          "original": 10.093499540999801,
+          "optimized": 1.8033681454999169
+        },
+        {
+          "first_round": 41,
+          "last_round": 50,
+          "original": 9.196140395999919,
+          "optimized": 1.7087051244998293
+        },
+        {
+          "first_round": 51,
+          "last_round": 60,
+          "original": 8.749166228999911,
+          "optimized": 1.6257567289999315
+        },
+        {
+          "first_round": 61,
+          "last_round": 70,
+          "original": 8.8790693535002,
+          "optimized": 1.6480727919999936
+        },
+        {
+          "first_round": 71,
+          "last_round": 80,
+          "original": 9.596682167000154,
+          "optimized": 1.7518013124999925
+        },
+        {
+          "first_round": 81,
+          "last_round": 90,
+          "original": 9.962323875000038,
+          "optimized": 1.8136075629997777
+        },
+        {
+          "first_round": 91,
+          "last_round": 100,
+          "original": 12.086137479500167,
+          "optimized": 2.236211646000129
+        }
+      ],
+      "proofs_passed": 4,
+      "report": "tcpsynbl/REPORT.md",
+      "notes": "tcpsynbl/AGENT_NOTES.md"
+    },
+    {
+      "case": "funclatency",
+      "timed_entry": "dummy_kretprobe",
+      "complete": true,
+      "error": null,
+      "completed_utc": "2026-11-02T11:05:36.138826+00:00",
+      "planned_pairs": 100,
+      "recorded_pairs": 100,
+      "statistics": {
+        "original": {
+          "n": 100,
+          "median": 5.352412041500202,
+          "mean": 5.666222192830009,
+          "stdev": 0.7308374817854031,
+          "cv_percent": 12.898143717523093,
+          "min": 4.920738082999833,
+          "max": 7.97714783299989,
+          "p05": 5.046049937149837,
+          "p25": 5.180275062249962,
+          "p75": 5.819023802250172,
+          "p95": 7.24106368894993,
+          "iqr": 0.6387487400002101,
+          "mad": 0.2570410630000879,
+          "first_25_median": 6.585516333000214,
+          "last_25_median": 5.262265999999727
+        },
+        "optimized": {
+          "n": 100,
+          "median": 1.4479333960002805,
+          "mean": 1.5333579204700118,
+          "stdev": 0.2173764529391469,
+          "cv_percent": 14.176497870276476,
+          "min": 1.3198656670001583,
+          "max": 2.4731082499997683,
+          "p05": 1.355796483300196,
+          "p25": 1.4021021880000717,
+          "p75": 1.5696081667502995,
+          "p95": 1.9506779226001298,
+          "iqr": 0.16750597875022777,
+          "mad": 0.059569000000465167,
+          "first_25_median": 1.6169608750001316,
+          "last_25_median": 1.4532854170001883
+        }
+      },
+      "failed_rounds": {
+        "original": [],
+        "optimized": []
+      },
+      "complete_pairs": 100,
+      "median_time_reduction_percent": 72.94802072834351,
+      "paired_bootstrap_ci95_reduction_percent": [
+        72.36580008630575,
+        73.6264151647703
+      ],
+      "bootstrap_pairs_used": 100,
+      "block_medians": [
+        {
+          "first_round": 1,
+          "last_round": 10,
+          "original": 7.204318166499888,
+          "optimized": 1.9026760419999391
+        },
+        {
+          "first_round": 11,
+          "last_round": 20,
+          "original": 5.694722125000226,
+          "optimized": 1.5640923539999676
+        },
+        {
+          "first_round": 21,
+          "last_round": 30,
+          "original": 6.042055854500177,
+          "optimized": 1.6234979994999321
+        },
+        {
+          "first_round": 31,
+          "last_round": 40,
+          "original": 5.2285247915003765,
+          "optimized": 1.4002672505000646
+        },
+        {
+          "first_round": 41,
+          "last_round": 50,
+          "original": 5.412819791999937,
+          "optimized": 1.4025928335001936
+        },
+        {
+          "first_round": 51,
+          "last_round": 60,
+          "original": 5.615938979500015,
+          "optimized": 1.4976492710000002
+        },
+        {
+          "first_round": 61,
+          "last_round": 70,
+          "original": 5.072109437499876,
+          "optimized": 1.3993963749999239
+        },
+        {
+          "first_round": 71,
+          "last_round": 80,
+          "original": 5.295087040999988,
+          "optimized": 1.3976180419999764
+        },
+        {
+          "first_round": 81,
+          "last_round": 90,
+          "original": 5.282945292000022,
+          "optimized": 1.4564171040001384
+        },
+        {
+          "first_round": 91,
+          "last_round": 100,
+          "original": 5.294831603999683,
+          "optimized": 1.4558502294999016
+        }
+      ],
+      "proofs_passed": 4,
+      "report": "funclatency/REPORT.md",
+      "notes": "funclatency/AGENT_NOTES.md"
+    },
+    {
+      "case": "fsdist",
+      "timed_entry": "file_read_exit",
+      "complete": true,
+      "error": null,
+      "completed_utc": "2026-11-02T11:52:58.717043+00:00",
+      "planned_pairs": 100,
+      "recorded_pairs": 100,
+      "statistics": {
+        "original": {
+          "n": 100,
+          "median": 22.200430833000155,
+          "mean": 22.40649266495996,
+          "stdev": 2.1767585679527435,
+          "cv_percent": 9.714856316432035,
+          "min": 16.97491275000084,
+          "max": 29.774034334000135,
+          "p05": 18.803161376749994,
+          "p25": 21.81750553100005,
+          "p75": 22.937019978999615,
+          "p95": 26.297254077700153,
+          "iqr": 1.1195144479995633,
+          "mad": 0.47338491649998105,
+          "first_25_median": 21.766957332999482,
+          "last_25_median": 21.993864041999586
+        },
+        "optimized": {
+          "n": 100,
+          "median": 2.19033847899982,
+          "mean": 2.2243521163000057,
+          "stdev": 0.30265719402314595,
+          "cv_percent": 13.60653251817823,
+          "min": 1.6604077499996492,
+          "max": 3.724156166999819,
+          "p05": 1.7945460958499098,
+          "p25": 2.117302937499744,
+          "p75": 2.2756480104999355,
+          "p95": 2.8026606624999197,
+          "iqr": 0.1583450730001914,
+          "mad": 0.07675085450000552,
+          "first_25_median": 2.055007625000144,
+          "last_25_median": 2.1685107920002338
+        }
+      },
+      "failed_rounds": {
+        "original": [],
+        "optimized": []
+      },
+      "complete_pairs": 100,
+      "median_time_reduction_percent": 90.13380192719522,
+      "paired_bootstrap_ci95_reduction_percent": [
+        90.01491122797793,
+        90.23411295016525
+      ],
+      "bootstrap_pairs_used": 100,
+      "block_medians": [
+        {
+          "first_round": 1,
+          "last_round": 10,
+          "original": 18.892154749999918,
+          "optimized": 1.7859677084998111
+        },
+        {
+          "first_round": 11,
+          "last_round": 20,
+          "original": 22.133358145999864,
+          "optimized": 2.2916165625001668
+        },
+        {
+          "first_round": 21,
+          "last_round": 30,
+          "original": 22.29480183350006,
+          "optimized": 2.2038482294997266
+        },
+        {
+          "first_round": 31,
+          "last_round": 40,
+          "original": 25.18269875049964,
+          "optimized": 2.306648625499747
+        },
+        {
+          "first_round": 41,
+          "last_round": 50,
+          "original": 22.223446312500073,
+          "optimized": 2.156774312500147
+        },
+        {
+          "first_round": 51,
+          "last_round": 60,
+          "original": 23.28989472899957,
+          "optimized": 2.1969083335002324
+        },
+        {
+          "first_round": 61,
+          "last_round": 70,
+          "original": 22.544624436999584,
+          "optimized": 2.1947560624998914
+        },
+        {
+          "first_round": 71,
+          "last_round": 80,
+          "original": 24.516861645500285,
+          "optimized": 2.4235909794997497
+        },
+        {
+          "first_round": 81,
+          "last_round": 90,
+          "original": 21.964734604499426,
+          "optimized": 2.1667855000005147
+        },
+        {
+          "first_round": 91,
+          "last_round": 100,
+          "original": 21.782580729000074,
+          "optimized": 2.1662618544996803
+        }
+      ],
+      "proofs_passed": 20,
+      "report": "fsdist/REPORT.md",
+      "notes": "fsdist/AGENT_NOTES.md"
+    },
+    {
+      "case": "biostacks",
+      "timed_entry": "blk_account_io_done",
+      "complete": true,
+      "error": null,
+      "completed_utc": "2026-11-02T13:41:51.802538+00:00",
+      "planned_pairs": 100,
+      "recorded_pairs": 100,
+      "statistics": {
+        "original": {
+          "n": 100,
+          "median": 58.260161478999635,
+          "mean": 58.52359859666002,
+          "stdev": 2.9861995437909856,
+          "cv_percent": 5.1025562600338965,
+          "min": 51.28758766700048,
+          "max": 66.1457355420007,
+          "p05": 53.9208036006501,
+          "p25": 56.32497080224948,
+          "p75": 60.55806931250004,
+          "p95": 63.51045426395076,
+          "iqr": 4.2330985102505565,
+          "mad": 1.980496937499538,
+          "first_25_median": 58.92216012500012,
+          "last_25_median": 59.77123079199919
+        },
+        "optimized": {
+          "n": 100,
+          "median": 3.2635438959996463,
+          "mean": 3.282624727059947,
+          "stdev": 0.150444752698838,
+          "cv_percent": 4.583062799066358,
+          "min": 3.003125125000224,
+          "max": 4.054261249999399,
+          "p05": 3.101266259748809,
+          "p25": 3.1933786042500287,
+          "p75": 3.348950041498938,
+          "p95": 3.5128908955492077,
+          "iqr": 0.1555714372489092,
+          "mad": 0.08161183400034133,
+          "first_25_median": 3.2745634159991823,
+          "last_25_median": 3.2143947500007926
+        }
+      },
+      "failed_rounds": {
+        "original": [],
+        "optimized": []
+      },
+      "complete_pairs": 100,
+      "median_time_reduction_percent": 94.39832672421271,
+      "paired_bootstrap_ci95_reduction_percent": [
+        94.31756532133049,
+        94.51895465956221
+      ],
+      "bootstrap_pairs_used": 100,
+      "block_medians": [
+        {
+          "first_round": 1,
+          "last_round": 10,
+          "original": 59.944351749999896,
+          "optimized": 3.284763749499234
+        },
+        {
+          "first_round": 11,
+          "last_round": 20,
+          "original": 58.00820810449977,
+          "optimized": 3.271392103999915
+        },
+        {
+          "first_round": 21,
+          "last_round": 30,
+          "original": 58.48801047899997,
+          "optimized": 3.258214208000936
+        },
+        {
+          "first_round": 31,
+          "last_round": 40,
+          "original": 57.71579072900113,
+          "optimized": 3.3033497289998195
+        },
+        {
+          "first_round": 41,
+          "last_round": 50,
+          "original": 58.906953104499735,
+          "optimized": 3.255230937500528
+        },
+        {
+          "first_round": 51,
+          "last_round": 60,
+          "original": 56.158446874999754,
+          "optimized": 3.232645729500291
+        },
+        {
+          "first_round": 61,
+          "last_round": 70,
+          "original": 57.35009914550119,
+          "optimized": 3.269011354500435
+        },
+        {
+          "first_round": 71,
+          "last_round": 80,
+          "original": 59.02747925049971,
+          "optimized": 3.1761109580002085
+        },
+        {
+          "first_round": 81,
+          "last_round": 90,
+          "original": 60.215775479499825,
+          "optimized": 3.236124395999468
+        },
+        {
+          "first_round": 91,
+          "last_round": 100,
+          "original": 58.78425587499987,
+          "optimized": 3.245234979000088
+        }
+      ],
+      "proofs_passed": 5,
+      "report": "biostacks/REPORT.md",
+      "notes": "biostacks/AGENT_NOTES.md"
+    },
+    {
+      "case": "biolatency",
+      "timed_entry": "block_rq_complete_btf",
+      "complete": true,
+      "error": null,
+      "completed_utc": "2026-11-02T21:21:59.833843+00:00",
+      "planned_pairs": 100,
+      "recorded_pairs": 100,
+      "statistics": {
+        "original": {
+          "n": 100,
+          "median": 38.453196749999734,
+          "mean": 39.94992988540011,
+          "stdev": 4.292589432056127,
+          "cv_percent": 10.744923569001994,
+          "min": 35.91491549999955,
+          "max": 58.67948658400019,
+          "p05": 36.1413340850987,
+          "p25": 37.22533193775007,
+          "p75": 40.93457945850105,
+          "p95": 48.7315537288503,
+          "iqr": 3.709247520750978,
+          "mad": 1.6462803539998276,
+          "first_25_median": 37.450585750000755,
+          "last_25_median": 40.88793699999951
+        },
+        "optimized": {
+          "n": 100,
+          "median": 3.2137231460001203,
+          "mean": 3.254157843320172,
+          "stdev": 0.21872447623936073,
+          "cv_percent": 6.7213849717934755,
+          "min": 2.9338966670002264,
+          "max": 4.153589458001079,
+          "p05": 2.9907247041996925,
+          "p25": 3.0822484790005547,
+          "p75": 3.3494756457512267,
+          "p95": 3.6668573146002927,
+          "iqr": 0.26722716675067204,
+          "mad": 0.13226435400065384,
+          "first_25_median": 3.0836444160013343,
+          "last_25_median": 3.3242032500020287
+        }
+      },
+      "failed_rounds": {
+        "original": [],
+        "optimized": []
+      },
+      "complete_pairs": 100,
+      "median_time_reduction_percent": 91.64250720975457,
+      "paired_bootstrap_ci95_reduction_percent": [
+        91.48163246967742,
+        91.84471140404747
+      ],
+      "bootstrap_pairs_used": 100,
+      "block_medians": [
+        {
+          "first_round": 1,
+          "last_round": 10,
+          "original": 37.21827464600028,
+          "optimized": 3.06885085399972
+        },
+        {
+          "first_round": 11,
+          "last_round": 20,
+          "original": 37.37052702099936,
+          "optimized": 3.1511271460003627
+        },
+        {
+          "first_round": 21,
+          "last_round": 30,
+          "original": 37.66219089599963,
+          "optimized": 3.173001395999563
+        },
+        {
+          "first_round": 31,
+          "last_round": 40,
+          "original": 47.569408312499945,
+          "optimized": 3.2574102290000155
+        },
+        {
+          "first_round": 41,
+          "last_round": 50,
+          "original": 39.758159478999914,
+          "optimized": 3.2744102910000947
+        },
+        {
+          "first_round": 51,
+          "last_round": 60,
+          "original": 40.7159165005005,
+          "optimized": 3.3434980000001815
+        },
+        {
+          "first_round": 61,
+          "last_round": 70,
+          "original": 37.83740356300041,
+          "optimized": 3.1439082915003382
+        },
+        {
+          "first_round": 71,
+          "last_round": 80,
+          "original": 36.58415254149986,
+          "optimized": 3.0342482710002514
+        },
+        {
+          "first_round": 81,
+          "last_round": 90,
+          "original": 41.58002241650138,
+          "optimized": 3.3919834584994533
+        },
+        {
+          "first_round": 91,
+          "last_round": 100,
+          "original": 40.971577520998835,
+          "optimized": 3.329740708501049
+        }
+      ],
+      "proofs_passed": 6,
+      "report": "biolatency/REPORT.md",
+      "notes": "biolatency/AGENT_NOTES.md"
+    }
+  ]
+}

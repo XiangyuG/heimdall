@@ -1,0 +1,27 @@
+--- biosnoop_alignment.bpf.c
++++ biosnoop_alignment_SOURCE_OPT.bpf.c
+@@ -120,7 +120,7 @@
+ 	struct stage *stagep, stage = {};
+ 	u64 ts = bpf_ktime_get_ns();
+ 
+-	stagep = bpf_map_lookup_elem(&start, &rq);
++	stagep = __builtin_assume_aligned(bpf_map_lookup_elem(&start, &rq), 8);
+ 	if (!stagep) {
+ 		struct gendisk *disk = get_disk(rq);
+ 
+@@ -192,13 +192,13 @@
+ 	struct stage *stagep;
+ 	s64 delta;
+ 
+-	stagep = bpf_map_lookup_elem(&start, &rq);
++	stagep = __builtin_assume_aligned(bpf_map_lookup_elem(&start, &rq), 8);
+ 	if (!stagep)
+ 		return 0;
+ 	delta = (s64)(ts - stagep->issue);
+ 	if (delta < 0 || delta < min_ns)
+ 		goto cleanup;
+-	piddatap = bpf_map_lookup_elem(&infobyreq, &rq);
++	piddatap = __builtin_assume_aligned(bpf_map_lookup_elem(&infobyreq, &rq), 8);
+ 	if (!piddatap) {
+ 		event.comm[0] = '?';
+ 	} else {

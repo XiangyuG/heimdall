@@ -1,0 +1,3710 @@
+{
+  "case": "funclatency",
+  "stage": "complete",
+  "updated_utc": "2026-11-02T11:05:54.553319+00:00",
+  "rounds_recorded": 100,
+  "planned_rounds": 100,
+  "timed_failures": 0,
+  "rounds": [
+    {
+      "round": 1,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 7.497507083000073,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_001_original",
+          "finished_utc": "2026-11-02T10:51:43.808923+00:00",
+          "process_wall_seconds": 8.217473415999848
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 2.1002704590000576,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_001_optimized",
+          "finished_utc": "2026-11-02T10:51:46.633957+00:00",
+          "process_wall_seconds": 2.822865915999955
+        }
+      }
+    },
+    {
+      "round": 2,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 2.056705707999754,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_002_optimized",
+          "finished_utc": "2026-11-02T10:51:49.597494+00:00",
+          "process_wall_seconds": 2.961963332999858
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 7.442779999999857,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_002_original",
+          "finished_utc": "2026-11-02T10:51:58.005081+00:00",
+          "process_wall_seconds": 8.406209082999794
+        }
+      }
+    },
+    {
+      "round": 3,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 7.792619291999927,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_003_original",
+          "finished_utc": "2026-11-02T10:52:06.520305+00:00",
+          "process_wall_seconds": 8.513663541999904
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 2.3473767089999455,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_003_optimized",
+          "finished_utc": "2026-11-02T10:52:09.638384+00:00",
+          "process_wall_seconds": 3.1170551660002275
+        }
+      }
+    },
+    {
+      "round": 4,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.8384362910001073,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_004_optimized",
+          "finished_utc": "2026-11-02T10:52:12.202465+00:00",
+          "process_wall_seconds": 2.5622824590000164
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 7.654399750000266,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_004_original",
+          "finished_utc": "2026-11-02T10:52:20.589182+00:00",
+          "process_wall_seconds": 8.385484708999684
+        }
+      }
+    },
+    {
+      "round": 5,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 7.222949874999813,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_005_original",
+          "finished_utc": "2026-11-02T10:52:28.562465+00:00",
+          "process_wall_seconds": 7.970698457999788
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.8279859169997508,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_005_optimized",
+          "finished_utc": "2026-11-02T10:52:31.096638+00:00",
+          "process_wall_seconds": 2.5332132500002444
+        }
+      }
+    },
+    {
+      "round": 6,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.9062927089998993,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_006_optimized",
+          "finished_utc": "2026-11-02T10:52:33.708411+00:00",
+          "process_wall_seconds": 2.6098532920000252
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 7.185686457999964,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_006_original",
+          "finished_utc": "2026-11-02T10:52:41.606894+00:00",
+          "process_wall_seconds": 7.897151457999826
+        }
+      }
+    },
+    {
+      "round": 7,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 7.091246832999786,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_007_original",
+          "finished_utc": "2026-11-02T10:52:49.408932+00:00",
+          "process_wall_seconds": 7.800183082999865
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.949556333000146,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_007_optimized",
+          "finished_utc": "2026-11-02T10:52:52.070858+00:00",
+          "process_wall_seconds": 2.660592125000221
+        }
+      }
+    },
+    {
+      "round": 8,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.899059374999979,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_008_optimized",
+          "finished_utc": "2026-11-02T10:52:54.676872+00:00",
+          "process_wall_seconds": 2.6041366250001374
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 7.0891246659998615,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_008_original",
+          "finished_utc": "2026-11-02T10:53:02.490513+00:00",
+          "process_wall_seconds": 7.812372958000196
+        }
+      }
+    },
+    {
+      "round": 9,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 6.699973249999857,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_009_original",
+          "finished_utc": "2026-11-02T10:53:09.892168+00:00",
+          "process_wall_seconds": 7.399864667000202
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.4331197500000599,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_009_optimized",
+          "finished_utc": "2026-11-02T10:53:11.880803+00:00",
+          "process_wall_seconds": 1.9873489589999735
+        }
+      }
+    },
+    {
+      "round": 10,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.468607792000057,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_010_optimized",
+          "finished_utc": "2026-11-02T10:53:13.876311+00:00",
+          "process_wall_seconds": 1.99371016699979
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.063481208000212,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_010_original",
+          "finished_utc": "2026-11-02T10:53:19.484150+00:00",
+          "process_wall_seconds": 5.606697375000294
+        }
+      }
+    },
+    {
+      "round": 11,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.270897832999708,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_011_original",
+          "finished_utc": "2026-11-02T10:53:25.324859+00:00",
+          "process_wall_seconds": 5.839100042000155
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.595355292000022,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_011_optimized",
+          "finished_utc": "2026-11-02T10:53:27.476004+00:00",
+          "process_wall_seconds": 2.149976125000194
+        }
+      }
+    },
+    {
+      "round": 12,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.5059784999998556,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_012_optimized",
+          "finished_utc": "2026-11-02T10:53:29.525490+00:00",
+          "process_wall_seconds": 2.0480461250003827
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.300013375000162,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_012_original",
+          "finished_utc": "2026-11-02T10:53:35.368260+00:00",
+          "process_wall_seconds": 5.841942000000017
+        }
+      }
+    },
+    {
+      "round": 13,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.251608708000276,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_013_original",
+          "finished_utc": "2026-11-02T10:53:41.148178+00:00",
+          "process_wall_seconds": 5.778041375000157
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.4144393330002458,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_013_optimized",
+          "finished_utc": "2026-11-02T10:53:43.088073+00:00",
+          "process_wall_seconds": 1.938393041999916
+        }
+      }
+    },
+    {
+      "round": 14,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.3985776249996889,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_014_optimized",
+          "finished_utc": "2026-11-02T10:53:45.009273+00:00",
+          "process_wall_seconds": 1.9185842090000733
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 6.585516333000214,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_014_original",
+          "finished_utc": "2026-11-02T10:53:52.140844+00:00",
+          "process_wall_seconds": 7.130438374999812
+        }
+      }
+    },
+    {
+      "round": 15,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 6.623186332999921,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_015_original",
+          "finished_utc": "2026-11-02T10:53:59.431780+00:00",
+          "process_wall_seconds": 7.288806958999885
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.8102304999997614,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_015_optimized",
+          "finished_utc": "2026-11-02T10:54:01.907586+00:00",
+          "process_wall_seconds": 2.4744500420001714
+        }
+      }
+    },
+    {
+      "round": 16,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.7390757909997774,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_016_optimized",
+          "finished_utc": "2026-11-02T10:54:04.325445+00:00",
+          "process_wall_seconds": 2.4151069579997966
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.480936457999633,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_016_original",
+          "finished_utc": "2026-11-02T10:54:10.501314+00:00",
+          "process_wall_seconds": 6.174959332999606
+        }
+      }
+    },
+    {
+      "round": 17,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.818339667000146,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_017_original",
+          "finished_utc": "2026-11-02T10:54:16.907500+00:00",
+          "process_wall_seconds": 6.404208917000233
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.4480697920002967,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_017_optimized",
+          "finished_utc": "2026-11-02T10:54:18.918241+00:00",
+          "process_wall_seconds": 2.00956429200005
+        }
+      }
+    },
+    {
+      "round": 18,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.610760499999742,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_018_optimized",
+          "finished_utc": "2026-11-02T10:54:21.112321+00:00",
+          "process_wall_seconds": 2.1921203329998207
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.809752500000286,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_018_original",
+          "finished_utc": "2026-11-02T10:54:27.525345+00:00",
+          "process_wall_seconds": 6.411932958000307
+        }
+      }
+    },
+    {
+      "round": 19,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.5796917500001655,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_019_original",
+          "finished_utc": "2026-11-02T10:54:33.737867+00:00",
+          "process_wall_seconds": 6.210278084000038
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.6169608750001316,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_019_optimized",
+          "finished_utc": "2026-11-02T10:54:35.944350+00:00",
+          "process_wall_seconds": 2.2052385000001777
+        }
+      }
+    },
+    {
+      "round": 20,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.5328294159999132,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_020_optimized",
+          "finished_utc": "2026-11-02T10:54:38.050874+00:00",
+          "process_wall_seconds": 2.104804416999741
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 6.067961958000069,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_020_original",
+          "finished_utc": "2026-11-02T10:54:44.679517+00:00",
+          "process_wall_seconds": 6.627508375000161
+        }
+      }
+    },
+    {
+      "round": 21,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 6.865730041999996,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_021_original",
+          "finished_utc": "2026-11-02T10:54:52.117396+00:00",
+          "process_wall_seconds": 7.435820124999736
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.6587057080000704,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_021_optimized",
+          "finished_utc": "2026-11-02T10:54:54.355030+00:00",
+          "process_wall_seconds": 2.236380915999689
+        }
+      }
+    },
+    {
+      "round": 22,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.47251016600012,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_022_optimized",
+          "finished_utc": "2026-11-02T10:54:56.390752+00:00",
+          "process_wall_seconds": 2.033622416000071
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.786856624999928,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_022_original",
+          "finished_utc": "2026-11-02T10:55:02.755562+00:00",
+          "process_wall_seconds": 6.363534790999893
+        }
+      }
+    },
+    {
+      "round": 23,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 6.117764000000079,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_023_original",
+          "finished_utc": "2026-11-02T10:55:09.443309+00:00",
+          "process_wall_seconds": 6.685335625000334
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.4357417500000338,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_023_optimized",
+          "finished_utc": "2026-11-02T10:55:11.458089+00:00",
+          "process_wall_seconds": 2.0139071250000598
+        }
+      }
+    },
+    {
+      "round": 24,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.5167248750003637,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_024_optimized",
+          "finished_utc": "2026-11-02T10:55:13.530926+00:00",
+          "process_wall_seconds": 2.0701751669998885
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.82107620800025,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_024_original",
+          "finished_utc": "2026-11-02T10:55:19.947290+00:00",
+          "process_wall_seconds": 6.415630916999817
+        }
+      }
+    },
+    {
+      "round": 25,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 7.194815082999867,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_025_original",
+          "finished_utc": "2026-11-02T10:55:27.750865+00:00",
+          "process_wall_seconds": 7.801052791999609
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.9719881249998252,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_025_optimized",
+          "finished_utc": "2026-11-02T10:55:30.478565+00:00",
+          "process_wall_seconds": 2.726808957999765
+        }
+      }
+    },
+    {
+      "round": 26,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.8550755420001224,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_026_optimized",
+          "finished_utc": "2026-11-02T10:55:33.102378+00:00",
+          "process_wall_seconds": 2.6189088339997397
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 7.97714783299989,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_026_original",
+          "finished_utc": "2026-11-02T10:55:41.802756+00:00",
+          "process_wall_seconds": 8.699184374999732
+        }
+      }
+    },
+    {
+      "round": 27,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 6.070451334000154,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_027_original",
+          "finished_utc": "2026-11-02T10:55:48.572148+00:00",
+          "process_wall_seconds": 6.767157833000056
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.5882902909997938,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_027_optimized",
+          "finished_utc": "2026-11-02T10:55:50.756577+00:00",
+          "process_wall_seconds": 2.1825790830002916
+        }
+      }
+    },
+    {
+      "round": 28,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.6683651670000472,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_028_optimized",
+          "finished_utc": "2026-11-02T10:55:53.036286+00:00",
+          "process_wall_seconds": 2.2765020840001853
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.788822125000024,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_028_original",
+          "finished_utc": "2026-11-02T10:55:59.402758+00:00",
+          "process_wall_seconds": 6.364960124999925
+        }
+      }
+    },
+    {
+      "round": 29,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 6.0136603750002,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_029_original",
+          "finished_utc": "2026-11-02T10:56:06.010981+00:00",
+          "process_wall_seconds": 6.606090917000074
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.4477970000002642,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_029_optimized",
+          "finished_utc": "2026-11-02T10:56:07.996049+00:00",
+          "process_wall_seconds": 1.9837964580001426
+        }
+      }
+    },
+    {
+      "round": 30,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.863391207999939,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_030_optimized",
+          "finished_utc": "2026-11-02T10:56:10.392796+00:00",
+          "process_wall_seconds": 2.3949855410000964
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.238877208000304,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_030_original",
+          "finished_utc": "2026-11-02T10:56:16.160855+00:00",
+          "process_wall_seconds": 5.76628487500011
+        }
+      }
+    },
+    {
+      "round": 31,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 4.920738082999833,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_031_original",
+          "finished_utc": "2026-11-02T10:56:21.615817+00:00",
+          "process_wall_seconds": 5.452054374999989
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.3846198340002047,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_031_optimized",
+          "finished_utc": "2026-11-02T10:56:23.526710+00:00",
+          "process_wall_seconds": 1.9091325839999627
+        }
+      }
+    },
+    {
+      "round": 32,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.4159146669999245,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_032_optimized",
+          "finished_utc": "2026-11-02T10:56:25.462955+00:00",
+          "process_wall_seconds": 1.9343069999999898
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.109723166000094,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_032_original",
+          "finished_utc": "2026-11-02T10:56:31.093113+00:00",
+          "process_wall_seconds": 5.628838833000373
+        }
+      }
+    },
+    {
+      "round": 33,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.24659204100044,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_033_original",
+          "finished_utc": "2026-11-02T10:56:36.878053+00:00",
+          "process_wall_seconds": 5.782155417000013
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.4276013339999736,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_033_optimized",
+          "finished_utc": "2026-11-02T10:56:38.834734+00:00",
+          "process_wall_seconds": 1.9558816660000957
+        }
+      }
+    },
+    {
+      "round": 34,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.371176082999682,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_034_optimized",
+          "finished_utc": "2026-11-02T10:56:40.719454+00:00",
+          "process_wall_seconds": 1.8821487909999632
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.69621587499978,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_034_original",
+          "finished_utc": "2026-11-02T10:56:47.006449+00:00",
+          "process_wall_seconds": 6.285822833999646
+        }
+      }
+    },
+    {
+      "round": 35,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.162252666999848,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_035_original",
+          "finished_utc": "2026-11-02T10:56:52.753092+00:00",
+          "process_wall_seconds": 5.744382291999955
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.4638229170000159,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_035_optimized",
+          "finished_utc": "2026-11-02T10:56:54.739957+00:00",
+          "process_wall_seconds": 1.985645833000035
+        }
+      }
+    },
+    {
+      "round": 36,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.4774522919997253,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_036_optimized",
+          "finished_utc": "2026-11-02T10:56:56.736046+00:00",
+          "process_wall_seconds": 1.9938951250001082
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.210457542000313,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_036_original",
+          "finished_utc": "2026-11-02T10:57:02.471451+00:00",
+          "process_wall_seconds": 5.734515916999953
+        }
+      }
+    },
+    {
+      "round": 37,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.3056219999998575,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_037_original",
+          "finished_utc": "2026-11-02T10:57:08.317034+00:00",
+          "process_wall_seconds": 5.842909667000185
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.3697293750001336,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_037_optimized",
+          "finished_utc": "2026-11-02T10:57:10.207531+00:00",
+          "process_wall_seconds": 1.8897958749998907
+        }
+      }
+    },
+    {
+      "round": 38,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.345254042000306,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_038_optimized",
+          "finished_utc": "2026-11-02T10:57:12.070479+00:00",
+          "process_wall_seconds": 1.8604972500002077
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.081018791000133,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_038_original",
+          "finished_utc": "2026-11-02T10:57:17.675833+00:00",
+          "process_wall_seconds": 5.604132166999989
+        }
+      }
+    },
+    {
+      "round": 39,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.432418166999923,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_039_original",
+          "finished_utc": "2026-11-02T10:57:23.651055+00:00",
+          "process_wall_seconds": 5.971895125000174
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.3615744999997332,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_039_optimized",
+          "finished_utc": "2026-11-02T10:57:25.551353+00:00",
+          "process_wall_seconds": 1.899147124999672
+        }
+      }
+    },
+    {
+      "round": 40,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.4397611670001424,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_040_optimized",
+          "finished_utc": "2026-11-02T10:57:27.524078+00:00",
+          "process_wall_seconds": 1.96972258400001
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.26677487500001,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_040_original",
+          "finished_utc": "2026-11-02T10:57:33.331171+00:00",
+          "process_wall_seconds": 5.805695208000088
+        }
+      }
+    },
+    {
+      "round": 41,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.535987959000067,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_041_original",
+          "finished_utc": "2026-11-02T10:57:39.396754+00:00",
+          "process_wall_seconds": 6.06275262500003
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.3831617079999887,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_041_optimized",
+          "finished_utc": "2026-11-02T10:57:41.344222+00:00",
+          "process_wall_seconds": 1.9456282080000165
+        }
+      }
+    },
+    {
+      "round": 42,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.5855341670003327,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_042_optimized",
+          "finished_utc": "2026-11-02T10:57:43.526746+00:00",
+          "process_wall_seconds": 2.179664125000272
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.5649953329998425,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_042_original",
+          "finished_utc": "2026-11-02T10:57:49.677321+00:00",
+          "process_wall_seconds": 6.149230582999735
+        }
+      }
+    },
+    {
+      "round": 43,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.4583914169998025,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_043_original",
+          "finished_utc": "2026-11-02T10:57:55.705733+00:00",
+          "process_wall_seconds": 6.025471750000179
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.4055218339999556,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_043_optimized",
+          "finished_utc": "2026-11-02T10:57:57.638548+00:00",
+          "process_wall_seconds": 1.931096499999967
+        }
+      }
+    },
+    {
+      "round": 44,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.3756887920003464,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_044_optimized",
+          "finished_utc": "2026-11-02T10:57:59.538823+00:00",
+          "process_wall_seconds": 1.8969267500001479
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.054067666000265,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_044_original",
+          "finished_utc": "2026-11-02T10:58:05.127843+00:00",
+          "process_wall_seconds": 5.587576999999783
+        }
+      }
+    },
+    {
+      "round": 45,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.112334166999972,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_045_original",
+          "finished_utc": "2026-11-02T10:58:10.773867+00:00",
+          "process_wall_seconds": 5.643700250000165
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.3811638330003007,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_045_optimized",
+          "finished_utc": "2026-11-02T10:58:12.673151+00:00",
+          "process_wall_seconds": 1.8981867499996952
+        }
+      }
+    },
+    {
+      "round": 46,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.403441667000152,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_046_optimized",
+          "finished_utc": "2026-11-02T10:58:14.604061+00:00",
+          "process_wall_seconds": 1.9275197910001225
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.764802374999817,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_046_original",
+          "finished_utc": "2026-11-02T10:58:21.092280+00:00",
+          "process_wall_seconds": 6.487050499999896
+        }
+      }
+    },
+    {
+      "round": 47,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.367248167000071,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_047_original",
+          "finished_utc": "2026-11-02T10:58:27.020960+00:00",
+          "process_wall_seconds": 5.925724333999824
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.430766500000118,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_047_optimized",
+          "finished_utc": "2026-11-02T10:58:28.976847+00:00",
+          "process_wall_seconds": 1.9547555839999404
+        }
+      }
+    },
+    {
+      "round": 48,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.4017440000002352,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_048_optimized",
+          "finished_utc": "2026-11-02T10:58:30.905817+00:00",
+          "process_wall_seconds": 1.9263265409999804
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.1771666250001545,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_048_original",
+          "finished_utc": "2026-11-02T10:58:36.612145+00:00",
+          "process_wall_seconds": 5.705131958000038
+        }
+      }
+    },
+    {
+      "round": 49,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.324513709000257,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_049_original",
+          "finished_utc": "2026-11-02T10:58:42.475436+00:00",
+          "process_wall_seconds": 5.860784333000083
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.3947632090003026,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_049_optimized",
+          "finished_utc": "2026-11-02T10:58:44.396149+00:00",
+          "process_wall_seconds": 1.9194411660000696
+        }
+      }
+    },
+    {
+      "round": 50,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.4812190419997933,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_050_optimized",
+          "finished_utc": "2026-11-02T10:58:46.427271+00:00",
+          "process_wall_seconds": 2.02836491700009
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 6.084546375000173,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_050_original",
+          "finished_utc": "2026-11-02T10:58:53.076021+00:00",
+          "process_wall_seconds": 6.64792158299997
+        }
+      }
+    },
+    {
+      "round": 51,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.515401666999878,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_051_original",
+          "finished_utc": "2026-11-02T10:58:59.181671+00:00",
+          "process_wall_seconds": 6.102386125000066
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.425714459000119,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_051_optimized",
+          "finished_utc": "2026-11-02T10:59:01.146755+00:00",
+          "process_wall_seconds": 1.9638467089998812
+        }
+      }
+    },
+    {
+      "round": 52,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.8567058749999887,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_052_optimized",
+          "finished_utc": "2026-11-02T10:59:03.543830+00:00",
+          "process_wall_seconds": 2.3941655829999036
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.168096375000005,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_052_original",
+          "finished_utc": "2026-11-02T10:59:09.254441+00:00",
+          "process_wall_seconds": 5.709511917000327
+        }
+      }
+    },
+    {
+      "round": 53,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.13416049999978,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_053_original",
+          "finished_utc": "2026-11-02T10:59:14.944947+00:00",
+          "process_wall_seconds": 5.687787583000045
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.4161370419997183,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_053_optimized",
+          "finished_utc": "2026-11-02T10:59:16.893500+00:00",
+          "process_wall_seconds": 1.9469717910001236
+        }
+      }
+    },
+    {
+      "round": 54,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.929795582999759,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_054_optimized",
+          "finished_utc": "2026-11-02T10:59:19.433424+00:00",
+          "process_wall_seconds": 2.5370791250002185
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.849542208000003,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_054_original",
+          "finished_utc": "2026-11-02T10:59:25.861345+00:00",
+          "process_wall_seconds": 6.426796958000068
+        }
+      }
+    },
+    {
+      "round": 55,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.925851458000125,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_055_original",
+          "finished_utc": "2026-11-02T10:59:32.398562+00:00",
+          "process_wall_seconds": 6.5347777920001135
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.7035473749997436,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_055_optimized",
+          "finished_utc": "2026-11-02T10:59:34.732294+00:00",
+          "process_wall_seconds": 2.3326541250003174
+        }
+      }
+    },
+    {
+      "round": 56,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.5254627499998605,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_056_optimized",
+          "finished_utc": "2026-11-02T10:59:36.859672+00:00",
+          "process_wall_seconds": 2.1245401249998395
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 6.013888790999772,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_056_original",
+          "finished_utc": "2026-11-02T10:59:43.457206+00:00",
+          "process_wall_seconds": 6.596482665999702
+        }
+      }
+    },
+    {
+      "round": 57,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 7.230447040999934,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_057_original",
+          "finished_utc": "2026-11-02T10:59:51.267686+00:00",
+          "process_wall_seconds": 7.807740457999898
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.46983579200014,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_057_optimized",
+          "finished_utc": "2026-11-02T10:59:53.281909+00:00",
+          "process_wall_seconds": 2.012325083000178
+        }
+      }
+    },
+    {
+      "round": 58,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.671648500000174,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_058_optimized",
+          "finished_utc": "2026-11-02T10:59:55.643698+00:00",
+          "process_wall_seconds": 2.359236915999645
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.251839375000145,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_058_original",
+          "finished_utc": "2026-11-02T11:00:01.442756+00:00",
+          "process_wall_seconds": 5.798156708000079
+        }
+      }
+    },
+    {
+      "round": 59,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.716476292000152,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_059_original",
+          "finished_utc": "2026-11-02T11:00:07.725567+00:00",
+          "process_wall_seconds": 6.2791601250000895
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.4205107079997106,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_059_optimized",
+          "finished_utc": "2026-11-02T11:00:09.662066+00:00",
+          "process_wall_seconds": 1.9352301249996344
+        }
+      }
+    },
+    {
+      "round": 60,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.3934301660001438,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_060_optimized",
+          "finished_utc": "2026-11-02T11:00:11.580786+00:00",
+          "process_wall_seconds": 1.915900375000092
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.273911209000289,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_060_original",
+          "finished_utc": "2026-11-02T11:00:17.398047+00:00",
+          "process_wall_seconds": 5.815974624999853
+        }
+      }
+    },
+    {
+      "round": 61,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.040005165999901,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_061_original",
+          "finished_utc": "2026-11-02T11:00:22.974853+00:00",
+          "process_wall_seconds": 5.573316833000263
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.3541265410003689,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_061_optimized",
+          "finished_utc": "2026-11-02T11:00:24.850163+00:00",
+          "process_wall_seconds": 1.8740345840001282
+        }
+      }
+    },
+    {
+      "round": 62,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.355884375000187,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_062_optimized",
+          "finished_utc": "2026-11-02T11:00:26.727607+00:00",
+          "process_wall_seconds": 1.874459915999978
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.131484417000138,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_062_original",
+          "finished_utc": "2026-11-02T11:00:32.383388+00:00",
+          "process_wall_seconds": 5.654569416999948
+        }
+      }
+    },
+    {
+      "round": 63,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.075850707999962,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_063_original",
+          "finished_utc": "2026-11-02T11:00:37.987069+00:00",
+          "process_wall_seconds": 5.600669082999957
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.4255450840000776,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_063_optimized",
+          "finished_utc": "2026-11-02T11:00:39.933753+00:00",
+          "process_wall_seconds": 1.9455227500002366
+        }
+      }
+    },
+    {
+      "round": 64,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.4096195000001899,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_064_optimized",
+          "finished_utc": "2026-11-02T11:00:41.865607+00:00",
+          "process_wall_seconds": 1.9290201660001003
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.181311207999897,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_064_original",
+          "finished_utc": "2026-11-02T11:00:47.564697+00:00",
+          "process_wall_seconds": 5.6978897079998205
+        }
+      }
+    },
+    {
+      "round": 65,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.202172249999876,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_065_original",
+          "finished_utc": "2026-11-02T11:00:53.332350+00:00",
+          "process_wall_seconds": 5.764354500000081
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.4720675839998876,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_065_optimized",
+          "finished_utc": "2026-11-02T11:00:55.322962+00:00",
+          "process_wall_seconds": 1.9894992499998807
+        }
+      }
+    },
+    {
+      "round": 66,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.3891732499996579,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_066_optimized",
+          "finished_utc": "2026-11-02T11:00:57.224074+00:00",
+          "process_wall_seconds": 1.897525708000103
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.0683681669997895,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_066_original",
+          "finished_utc": "2026-11-02T11:01:02.812529+00:00",
+          "process_wall_seconds": 5.587110499999653
+        }
+      }
+    },
+    {
+      "round": 67,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.152606208000179,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_067_original",
+          "finished_utc": "2026-11-02T11:01:08.497403+00:00",
+          "process_wall_seconds": 5.681874667000102
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.3198656670001583,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_067_optimized",
+          "finished_utc": "2026-11-02T11:01:10.350156+00:00",
+          "process_wall_seconds": 1.8515359579996584
+        }
+      }
+    },
+    {
+      "round": 68,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.3377633750001223,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_068_optimized",
+          "finished_utc": "2026-11-02T11:01:12.205125+00:00",
+          "process_wall_seconds": 1.85188162500026
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.046368082999834,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_068_original",
+          "finished_utc": "2026-11-02T11:01:17.782377+00:00",
+          "process_wall_seconds": 5.576039084000058
+        }
+      }
+    },
+    {
+      "round": 69,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.053633125000033,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_069_original",
+          "finished_utc": "2026-11-02T11:01:23.363245+00:00",
+          "process_wall_seconds": 5.577689416999874
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.4280395420000787,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_069_optimized",
+          "finished_utc": "2026-11-02T11:01:25.321876+00:00",
+          "process_wall_seconds": 1.9574079999997593
+        }
+      }
+    },
+    {
+      "round": 70,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.4255238750001809,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_070_optimized",
+          "finished_utc": "2026-11-02T11:01:27.263346+00:00",
+          "process_wall_seconds": 1.937912249999954
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 4.984706124999775,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_070_original",
+          "finished_utc": "2026-11-02T11:01:32.768058+00:00",
+          "process_wall_seconds": 5.503601459000038
+        }
+      }
+    },
+    {
+      "round": 71,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.182258415999968,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_071_original",
+          "finished_utc": "2026-11-02T11:01:38.487564+00:00",
+          "process_wall_seconds": 5.715621584000019
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.4075968750003085,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_071_optimized",
+          "finished_utc": "2026-11-02T11:01:40.415156+00:00",
+          "process_wall_seconds": 1.926481916999819
+        }
+      }
+    },
+    {
+      "round": 72,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.4022215840000172,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_072_optimized",
+          "finished_utc": "2026-11-02T11:01:42.333662+00:00",
+          "process_wall_seconds": 1.9151465840000128
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.079635458000212,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_072_original",
+          "finished_utc": "2026-11-02T11:01:47.939211+00:00",
+          "process_wall_seconds": 5.604429292000077
+        }
+      }
+    },
+    {
+      "round": 73,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.452249083999959,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_073_original",
+          "finished_utc": "2026-11-02T11:01:53.937016+00:00",
+          "process_wall_seconds": 5.993887666000319
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.5405377499996575,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_073_optimized",
+          "finished_utc": "2026-11-02T11:01:56.018785+00:00",
+          "process_wall_seconds": 2.080456167000193
+        }
+      }
+    },
+    {
+      "round": 74,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.3930144999999357,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_074_optimized",
+          "finished_utc": "2026-11-02T11:01:57.952533+00:00",
+          "process_wall_seconds": 1.9303295830000025
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.388800290999825,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_074_original",
+          "finished_utc": "2026-11-02T11:02:04.040318+00:00",
+          "process_wall_seconds": 6.086641249999957
+        }
+      }
+    },
+    {
+      "round": 75,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.347491041000012,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_075_original",
+          "finished_utc": "2026-11-02T11:02:09.928246+00:00",
+          "process_wall_seconds": 5.884546000000228
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.3833621249996213,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_075_optimized",
+          "finished_utc": "2026-11-02T11:02:11.846067+00:00",
+          "process_wall_seconds": 1.9167783749999217
+        }
+      }
+    },
+    {
+      "round": 76,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.3895083749998776,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_076_optimized",
+          "finished_utc": "2026-11-02T11:02:13.793331+00:00",
+          "process_wall_seconds": 1.9432293750001008
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.158107375000327,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_076_original",
+          "finished_utc": "2026-11-02T11:02:19.485358+00:00",
+          "process_wall_seconds": 5.690818541999761
+        }
+      }
+    },
+    {
+      "round": 77,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.764216459000181,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_077_original",
+          "finished_utc": "2026-11-02T11:02:25.818848+00:00",
+          "process_wall_seconds": 6.330091374999938
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.349625708000076,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_077_optimized",
+          "finished_utc": "2026-11-02T11:02:27.795989+00:00",
+          "process_wall_seconds": 1.9754927499998303
+        }
+      }
+    },
+    {
+      "round": 78,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 2.4731082499997683,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_078_optimized",
+          "finished_utc": "2026-11-02T11:02:30.819633+00:00",
+          "process_wall_seconds": 3.019830499999898
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.242683040999964,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_078_original",
+          "finished_utc": "2026-11-02T11:02:36.652502+00:00",
+          "process_wall_seconds": 5.831571499999882
+        }
+      }
+    },
+    {
+      "round": 79,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.728912583000238,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_079_original",
+          "finished_utc": "2026-11-02T11:02:42.916690+00:00",
+          "process_wall_seconds": 6.260709124999721
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.4125199999998586,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_079_optimized",
+          "finished_utc": "2026-11-02T11:02:44.864626+00:00",
+          "process_wall_seconds": 1.9467440420003186
+        }
+      }
+    },
+    {
+      "round": 80,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.3795403330000227,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_080_optimized",
+          "finished_utc": "2026-11-02T11:02:46.786157+00:00",
+          "process_wall_seconds": 1.918323665999651
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.168293833000007,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_080_original",
+          "finished_utc": "2026-11-02T11:02:52.470222+00:00",
+          "process_wall_seconds": 5.682733334000204
+        }
+      }
+    },
+    {
+      "round": 81,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 6.05345295799998,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_081_original",
+          "finished_utc": "2026-11-02T11:02:59.064285+00:00",
+          "process_wall_seconds": 6.590344541999912
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.5056952920003823,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_081_optimized",
+          "finished_utc": "2026-11-02T11:03:01.116859+00:00",
+          "process_wall_seconds": 2.051198208000187
+        }
+      }
+    },
+    {
+      "round": 82,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.386954749999859,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_082_optimized",
+          "finished_utc": "2026-11-02T11:03:03.037224+00:00",
+          "process_wall_seconds": 1.914766458000031
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.357333042000391,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_082_original",
+          "finished_utc": "2026-11-02T11:03:08.923082+00:00",
+          "process_wall_seconds": 5.885083749999922
+        }
+      }
+    },
+    {
+      "round": 83,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.260181916999954,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_083_original",
+          "finished_utc": "2026-11-02T11:03:14.730688+00:00",
+          "process_wall_seconds": 5.804309165999712
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.4273272919999727,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_083_optimized",
+          "finished_utc": "2026-11-02T11:03:16.731874+00:00",
+          "process_wall_seconds": 1.9999994579998202
+        }
+      }
+    },
+    {
+      "round": 84,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.4732616250003048,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_084_optimized",
+          "finished_utc": "2026-11-02T11:03:18.736678+00:00",
+          "process_wall_seconds": 2.0017267499997615
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.3634864579998975,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_084_original",
+          "finished_utc": "2026-11-02T11:03:24.652267+00:00",
+          "process_wall_seconds": 5.914760167000168
+        }
+      }
+    },
+    {
+      "round": 85,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.30570866700009,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_085_original",
+          "finished_utc": "2026-11-02T11:03:30.492402+00:00",
+          "process_wall_seconds": 5.837313874999836
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.388608374999876,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_085_optimized",
+          "finished_utc": "2026-11-02T11:03:32.407493+00:00",
+          "process_wall_seconds": 1.9139971659997173
+        }
+      }
+    },
+    {
+      "round": 86,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.4853864169999724,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_086_optimized",
+          "finished_utc": "2026-11-02T11:03:34.443919+00:00",
+          "process_wall_seconds": 2.0332068329998947
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.322434958000031,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_086_original",
+          "finished_utc": "2026-11-02T11:03:40.310880+00:00",
+          "process_wall_seconds": 5.866182208000282
+        }
+      }
+    },
+    {
+      "round": 87,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.0106760000003305,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_087_original",
+          "finished_utc": "2026-11-02T11:03:45.870391+00:00",
+          "process_wall_seconds": 5.556444792000093
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.3881204169997545,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_087_optimized",
+          "finished_utc": "2026-11-02T11:03:47.783868+00:00",
+          "process_wall_seconds": 1.9116399169997749
+        }
+      }
+    },
+    {
+      "round": 88,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.5156571659999827,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_088_optimized",
+          "finished_utc": "2026-11-02T11:03:49.854471+00:00",
+          "process_wall_seconds": 2.0670546670003205
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.132798999999977,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_088_original",
+          "finished_utc": "2026-11-02T11:03:55.524567+00:00",
+          "process_wall_seconds": 5.667090542000096
+        }
+      }
+    },
+    {
+      "round": 89,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.239519375000327,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_089_original",
+          "finished_utc": "2026-11-02T11:04:01.312056+00:00",
+          "process_wall_seconds": 5.780864792000102
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.439572582999972,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_089_optimized",
+          "finished_utc": "2026-11-02T11:04:03.279504+00:00",
+          "process_wall_seconds": 1.9655532919996404
+        }
+      }
+    },
+    {
+      "round": 90,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.5642995000002884,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_090_optimized",
+          "finished_utc": "2026-11-02T11:04:05.437961+00:00",
+          "process_wall_seconds": 2.1542471249999835
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.236727874999815,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_090_original",
+          "finished_utc": "2026-11-02T11:04:11.212650+00:00",
+          "process_wall_seconds": 5.772445374999734
+        }
+      }
+    },
+    {
+      "round": 91,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.364987499999643,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_091_original",
+          "finished_utc": "2026-11-02T11:04:17.114147+00:00",
+          "process_wall_seconds": 5.897503292000238
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.4532854170001883,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_091_optimized",
+          "finished_utc": "2026-11-02T11:04:19.087609+00:00",
+          "process_wall_seconds": 1.972110665999935
+        }
+      }
+    },
+    {
+      "round": 92,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.4654096660001414,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_092_optimized",
+          "finished_utc": "2026-11-02T11:04:21.084941+00:00",
+          "process_wall_seconds": 1.9930061250001927
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.253731166999842,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_092_original",
+          "finished_utc": "2026-11-02T11:04:26.874180+00:00",
+          "process_wall_seconds": 5.787492708000173
+        }
+      }
+    },
+    {
+      "round": 93,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.327397207999638,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_093_original",
+          "finished_utc": "2026-11-02T11:04:32.749022+00:00",
+          "process_wall_seconds": 5.8705381250001665
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.4187941670002147,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_093_optimized",
+          "finished_utc": "2026-11-02T11:04:34.729696+00:00",
+          "process_wall_seconds": 1.9793997500000842
+        }
+      }
+    },
+    {
+      "round": 94,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.456888374999835,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_094_optimized",
+          "finished_utc": "2026-11-02T11:04:36.731800+00:00",
+          "process_wall_seconds": 1.998004750000291
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.237207165999735,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_094_original",
+          "finished_utc": "2026-11-02T11:04:42.519383+00:00",
+          "process_wall_seconds": 5.7858687919997465
+        }
+      }
+    },
+    {
+      "round": 95,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.0525749579996955,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_095_original",
+          "finished_utc": "2026-11-02T11:04:48.105781+00:00",
+          "process_wall_seconds": 5.582689958999708
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.5117685000000165,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_095_optimized",
+          "finished_utc": "2026-11-02T11:04:50.153207+00:00",
+          "process_wall_seconds": 2.0454860830000143
+        }
+      }
+    },
+    {
+      "round": 96,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.4203567080003268,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_096_optimized",
+          "finished_utc": "2026-11-02T11:04:52.103524+00:00",
+          "process_wall_seconds": 1.9464899580002566
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.024597707999874,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_096_original",
+          "finished_utc": "2026-11-02T11:04:57.718603+00:00",
+          "process_wall_seconds": 5.613899916000264
+        }
+      }
+    },
+    {
+      "round": 97,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.742252792000272,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_097_original",
+          "finished_utc": "2026-11-02T11:05:03.999258+00:00",
+          "process_wall_seconds": 6.275830584000232
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.5479362500000207,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_097_optimized",
+          "finished_utc": "2026-11-02T11:05:06.080024+00:00",
+          "process_wall_seconds": 2.079212957999971
+        }
+      }
+    },
+    {
+      "round": 98,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.4548120839999683,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_098_optimized",
+          "finished_utc": "2026-11-02T11:05:08.080206+00:00",
+          "process_wall_seconds": 1.9964633750000758
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.262265999999727,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_098_original",
+          "finished_utc": "2026-11-02T11:05:13.877274+00:00",
+          "process_wall_seconds": 5.796232249999775
+        }
+      }
+    },
+    {
+      "round": 99,
+      "order": [
+        "original",
+        "optimized"
+      ],
+      "results": {
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.450709791999998,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_099_original",
+          "finished_utc": "2026-11-02T11:05:19.863556+00:00",
+          "process_wall_seconds": 5.982435541000086
+        },
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.481066749999627,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_099_optimized",
+          "finished_utc": "2026-11-02T11:05:21.872869+00:00",
+          "process_wall_seconds": 2.0082807080002567
+        }
+      }
+    },
+    {
+      "round": 100,
+      "order": [
+        "optimized",
+        "original"
+      ],
+      "results": {
+        "optimized": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 1.4109687079999276,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_100_optimized",
+          "finished_utc": "2026-11-02T11:05:24.036442+00:00",
+          "process_wall_seconds": 2.1599282080001103
+        },
+        "original": {
+          "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/original.o",
+          "entry": "dummy_kretprobe",
+          "passed": true,
+          "seconds": 5.8166656250000415,
+          "equivalent": true,
+          "result_type": "equivalent",
+          "counter_example": "",
+          "complete": true,
+          "label": "trial_100_original",
+          "finished_utc": "2026-11-02T11:05:30.513924+00:00",
+          "process_wall_seconds": 6.4760728749997725
+        }
+      }
+    }
+  ]
+}

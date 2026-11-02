@@ -1,0 +1,461 @@
+[*] Detected program type 'tp_btf' from section 'tp_btf/sched_switch'
+[*] Using context size 64 bytes for program type 'tp_btf'
+[*] Detected program type 'tp_btf' from section 'tp_btf/sched_switch'
+[*] Parsed BTF metadata from C binary: 3 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - start: type=hash, key_size=4, value_size=8, max_entries=0
+    - hists: type=hash, key_size=4, value_size=160, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/cpudist.original.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400b28: S=0x400000 A=0 imm=-358
+    - Patching call <anon> @ 0x400b50: S=0x400000 A=0 imm=-363
+[*] Patching complete.
+[*] Scanning section 'raw_tp/sched_switch' for atomic instructions (offset 0x0-0x28)
+    No atomic instructions found
+[*] Found 1 .data global(s): initial_hist
+[*] Found entry 'sched_switch_tp' at 0x400b40
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x400b78
+[*] Initializing map 'start' from BTF: type=hash, key_size=4, value_size=8, max_entries=0 at 0x400b98
+[*] Initializing map 'hists' from BTF: type=hash, key_size=4, value_size=160, max_entries=0 at 0x400bb0
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2496
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v2
+[*] BPF Helper: bpf_probe_read called at source address:  2496
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v3
+[*] BPF Helper: bpf_ktime_get_ns called.
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v4
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=0 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 0 in map 'start' via update
+[*] BPF Helper: bpf_map_lookup_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=0 anyway (approximate model).
+[*] Map Manager: (hash) New key in map 'start', slot 0, addr=0xdeaf0000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_lookup_elem called.
+[!] Map Manager: hash map 'hists' exceeded max_entries; continuing with slot=0 anyway (approximate model).
+[*] Map Manager: (hash) New key in map 'hists', slot 0, addr=0xdeaf0008
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Updating existing slot 0 in map 'hists'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'hists'
+[*] BPF Helper: bpf_probe_read_kernel_str called.
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=61 errored=0
+    stash 'deadended': 61 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=2, map_entries=1
+[*] Path 2: constraints=3, map_entries=2
+[*] Path 3: constraints=4, map_entries=2
+[*] Path 4: constraints=7, map_entries=3
+[*] Path 5: constraints=8, map_entries=3
+[*] Path 6: constraints=8, map_entries=3
+[*] Path 7: constraints=8, map_entries=3
+[*] Path 8: constraints=8, map_entries=3
+[*] Path 9: constraints=8, map_entries=3
+[*] Path 10: constraints=8, map_entries=3
+[*] Path 11: constraints=7, map_entries=3
+[*] Path 12: constraints=8, map_entries=3
+[*] Path 13: constraints=8, map_entries=3
+[*] Path 14: constraints=8, map_entries=3
+[*] Path 15: constraints=8, map_entries=3
+[*] Path 16: constraints=8, map_entries=3
+[*] Path 17: constraints=8, map_entries=3
+[*] Path 18: constraints=8, map_entries=3
+[*] Path 19: constraints=7, map_entries=3
+[*] Path 20: constraints=7, map_entries=3
+[*] Path 21: constraints=6, map_entries=3
+[*] Path 22: constraints=7, map_entries=3
+[*] Path 23: constraints=6, map_entries=3
+[*] Path 24: constraints=6, map_entries=3
+[*] Path 25: constraints=6, map_entries=3
+[*] Path 26: constraints=6, map_entries=3
+[*] Path 27: constraints=6, map_entries=3
+[*] Path 28: constraints=6, map_entries=3
+[*] Path 29: constraints=6, map_entries=3
+[*] Path 30: constraints=6, map_entries=3
+[*] Path 31: constraints=6, map_entries=3
+[*] Path 32: constraints=5, map_entries=3
+[*] Path 33: constraints=10, map_entries=3
+[*] Path 34: constraints=11, map_entries=3
+[*] Path 35: constraints=11, map_entries=3
+[*] Path 36: constraints=11, map_entries=3
+[*] Path 37: constraints=11, map_entries=3
+[*] Path 38: constraints=11, map_entries=3
+[*] Path 39: constraints=11, map_entries=3
+[*] Path 40: constraints=10, map_entries=3
+[*] Path 41: constraints=11, map_entries=3
+[*] Path 42: constraints=11, map_entries=3
+[*] Path 43: constraints=11, map_entries=3
+[*] Path 44: constraints=11, map_entries=3
+[*] Path 45: constraints=11, map_entries=3
+[*] Path 46: constraints=11, map_entries=3
+[*] Path 47: constraints=11, map_entries=3
+[*] Path 48: constraints=10, map_entries=3
+[*] Path 49: constraints=10, map_entries=3
+[*] Path 50: constraints=13, map_entries=3
+[*] Path 51: constraints=10, map_entries=3
+[*] Path 52: constraints=13, map_entries=3
+[*] Path 53: constraints=13, map_entries=3
+[*] Path 54: constraints=13, map_entries=3
+[*] Path 55: constraints=13, map_entries=3
+[*] Path 56: constraints=13, map_entries=3
+[*] Path 57: constraints=13, map_entries=3
+[*] Path 58: constraints=13, map_entries=3
+[*] Path 59: constraints=13, map_entries=3
+[*] Path 60: constraints=13, map_entries=3
+[*] Path 61: constraints=13, map_entries=3
+[*] Parsed BTF metadata from Rust binary: 3 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - start: type=hash, key_size=4, value_size=8, max_entries=0
+    - hists: type=hash, key_size=4, value_size=160, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/cpudist.optimized.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400ad8: S=0x400000 A=0 imm=-348
+    - Patching call <anon> @ 0x400b00: S=0x400000 A=0 imm=-353
+[*] Patching complete.
+[*] Scanning section 'raw_tp/sched_switch' for atomic instructions (offset 0x0-0x28)
+    No atomic instructions found
+[*] Found 1 .data global(s): initial_hist
+[*] Found entry 'sched_switch_tp' at 0x400af0
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x400b28
+[*] Initializing map 'start' from BTF: type=hash, key_size=4, value_size=8, max_entries=0 at 0x400b48
+[*] Initializing map 'hists' from BTF: type=hash, key_size=4, value_size=160, max_entries=0 at 0x400b60
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2496
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v2
+[*] BPF Helper: bpf_probe_read called at source address:  2496
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v3
+[*] BPF Helper: bpf_ktime_get_ns called.
+[*] BPF Helper: bpf_probe_read called at source address:  0
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v4
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=0 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 0 in map 'start' via update
+[*] BPF Helper: bpf_map_lookup_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=0 anyway (approximate model).
+[*] Map Manager: (hash) New key in map 'start', slot 0, addr=0xdeaf0000
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_lookup_elem called.
+[!] Map Manager: hash map 'hists' exceeded max_entries; continuing with slot=0 anyway (approximate model).
+[*] Map Manager: (hash) New key in map 'hists', slot 0, addr=0xdeaf0008
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Updating existing slot 0 in map 'hists'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'hists'
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_probe_read_kernel_str called.
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BPF Helper: bpf_map_update_elem called.
+[!] Map Manager: hash map 'start' exceeded max_entries; continuing with slot=1 anyway (approximate model).
+[*] Map Manager: (hash) Creating new slot 1 in map 'start' via update
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=7 errored=0
+    stash 'deadended': 7 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=2, map_entries=1
+[*] Path 2: constraints=3, map_entries=2
+[*] Path 3: constraints=4, map_entries=2
+[*] Path 4: constraints=5, map_entries=3
+[*] Path 5: constraints=8, map_entries=3
+[*] Path 6: constraints=8, map_entries=3
+[*] Path 7: constraints=11, map_entries=3
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    61 paths converted
+[*] Converting Rust program paths to Z3...
+    7 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 3 maps via ITE semantics
+[!] .data symbol 'initial_hist': too large (160B > 64B), skipping value comparison
+    [?] Solver checking 7 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.

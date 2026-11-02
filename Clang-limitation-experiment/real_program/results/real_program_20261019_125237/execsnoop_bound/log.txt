@@ -1,0 +1,2338 @@
+Homebrew clang version 22.1.8
+Target: arm64-apple-darwin27.0.0
+Thread model: posix
+InstalledDir: /opt/homebrew/Cellar/llvm/22.1.8/bin
+Configuration file: /opt/homebrew/Cellar/llvm/22.1.8/etc/clang/arm64-apple-darwin27.cfg
+
+{"flags": ["-target", "bpfel", "-O2", "-g", "-D__TARGET_ARCH_x86", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include/bpf", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/libbpf-tools"], "entry": "tracepoint__syscalls__sys_enter_execve", "trials": 5, "warmups": 1, "timeout_seconds": 60, "input_assumptions": [], "requirement": "loader-frozen configuration; volatile read trace is not an observation"}
+{"command": ["/opt/homebrew/opt/llvm/bin/clang", "-target", "bpfel", "-O2", "-g", "-D__TARGET_ARCH_x86", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include/bpf", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/libbpf-tools", "-iquote", "/Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/libbpf-tools", "-x", "c", "-c", "-o", "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/execsnoop_bound.o", "-"], "source": "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/cases/execsnoop_bound.bpf.c"}
+{"command": ["/opt/homebrew/opt/llvm/bin/clang", "-target", "bpfel", "-O2", "-g", "-D__TARGET_ARCH_x86", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include/bpf", "-I", "/Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/libbpf-tools", "-iquote", "/Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/libbpf-tools", "-x", "c", "-c", "-o", "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/execsnoop_bound_SOURCE_OPT.o", "-"], "source": "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/source_level_opt/generated/execsnoop_bound_SOURCE_OPT.bpf.c"}
+<stdin>:111:2: warning: loop not unrolled: the optimizer was unable to perform the requested transformation; the transformation might be disabled or specified as part of an unsupported transformation ordering [-Wpass-failed=transform-warning]
+  111 |         for (i = 1; i < TOTAL_MAX_ARGS && i < cached_max_args; i++) {
+      |         ^
+1 warning generated.
+
+--- equivalence: execsnoop_bound.o vs execsnoop_bound_SOURCE_OPT.o ---
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Using context size 64 bytes for program type 'tracepoint'
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Parsed BTF metadata from C binary: 3 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - execs: type=hash, key_size=4, value_size=7720, max_entries=10240
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/execsnoop_bound.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x36c8)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x4056b0
+[*] Initializing map 'execs' from BTF: type=hash, key_size=4, value_size=7720, max_entries=10240 at 0x4056d0
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4056f0
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Creating new slot 0 in map 'execs' via update
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'execs'
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x8 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x10 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x18 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x20 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x28 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x30 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x38 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x40 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x48 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x50 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x58 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x60 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x68 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x70 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x78 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x80 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x88 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x90 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x98 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0xa0 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=47, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 3 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - execs: type=hash, key_size=4, value_size=7720, max_entries=10240
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/execsnoop_bound_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x450)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x402438
+[*] Initializing map 'execs' from BTF: type=hash, key_size=4, value_size=7720, max_entries=10240 at 0x402458
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x402478
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Creating new slot 0 in map 'execs' via update
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'execs'
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x8 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x10 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x18 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x20 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x28 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x30 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x38 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x40 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x48 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x50 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x58 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x60 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x68 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x70 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x78 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x80 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x88 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x90 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x98 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0xa0 + input_ctx_remaining_8_13446_448[191:128]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=47, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 2 maps via ITE semantics
+    [?] Solver checking 5 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "equivalence", "seconds": 16.90130616701208, "equivalent": true, "result_type": "equivalent"}
+
+--- warmup_original_self: execsnoop_bound.o vs execsnoop_bound.o ---
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Using context size 64 bytes for program type 'tracepoint'
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Parsed BTF metadata from C binary: 3 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - execs: type=hash, key_size=4, value_size=7720, max_entries=10240
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/execsnoop_bound.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x36c8)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x4056b0
+[*] Initializing map 'execs' from BTF: type=hash, key_size=4, value_size=7720, max_entries=10240 at 0x4056d0
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4056f0
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Creating new slot 0 in map 'execs' via update
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'execs'
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x8 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x10 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x18 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x20 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x28 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x30 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x38 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x40 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x48 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x50 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x58 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x60 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x68 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x70 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x78 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x80 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x88 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x90 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x98 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0xa0 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=47, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 3 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - execs: type=hash, key_size=4, value_size=7720, max_entries=10240
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/execsnoop_bound.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x36c8)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x4056b0
+[*] Initializing map 'execs' from BTF: type=hash, key_size=4, value_size=7720, max_entries=10240 at 0x4056d0
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4056f0
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Creating new slot 0 in map 'execs' via update
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'execs'
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x8 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x10 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x18 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x20 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x28 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x30 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x38 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x40 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x48 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x50 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x58 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x60 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x68 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x70 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x78 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x80 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x88 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x90 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x98 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0xa0 + input_ctx_remaining_8_13549_448[191:128]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=47, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 2 maps via ITE semantics
+    [?] Solver checking 5 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "warmup_original_self", "seconds": 18.80092037501163, "equivalent": true, "result_type": "equivalent"}
+
+--- warmup_optimized_self: execsnoop_bound_SOURCE_OPT.o vs execsnoop_bound_SOURCE_OPT.o ---
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Using context size 64 bytes for program type 'tracepoint'
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Parsed BTF metadata from C binary: 3 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - execs: type=hash, key_size=4, value_size=7720, max_entries=10240
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/execsnoop_bound_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x450)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x402438
+[*] Initializing map 'execs' from BTF: type=hash, key_size=4, value_size=7720, max_entries=10240 at 0x402458
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x402478
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Creating new slot 0 in map 'execs' via update
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'execs'
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x8 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x10 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x18 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x20 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x28 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x30 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x38 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x40 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x48 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x50 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x58 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x60 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x68 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x70 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x78 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x80 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x88 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x90 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x98 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0xa0 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=47, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 3 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - execs: type=hash, key_size=4, value_size=7720, max_entries=10240
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/execsnoop_bound_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x450)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x402438
+[*] Initializing map 'execs' from BTF: type=hash, key_size=4, value_size=7720, max_entries=10240 at 0x402458
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x402478
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Creating new slot 0 in map 'execs' via update
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'execs'
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x8 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x10 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x18 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x20 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x28 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x30 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x38 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x40 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x48 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x50 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x58 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x60 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x68 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x70 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x78 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x80 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x88 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x90 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x98 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0xa0 + input_ctx_remaining_8_13652_448[191:128]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=47, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 2 maps via ITE semantics
+    [?] Solver checking 5 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "warmup_optimized_self", "seconds": 14.744427707992145, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_1_original_self: execsnoop_bound.o vs execsnoop_bound.o ---
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Using context size 64 bytes for program type 'tracepoint'
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Parsed BTF metadata from C binary: 3 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - execs: type=hash, key_size=4, value_size=7720, max_entries=10240
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/execsnoop_bound.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x36c8)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x4056b0
+[*] Initializing map 'execs' from BTF: type=hash, key_size=4, value_size=7720, max_entries=10240 at 0x4056d0
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4056f0
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Creating new slot 0 in map 'execs' via update
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'execs'
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x8 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x10 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x18 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x20 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x28 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x30 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x38 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x40 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x48 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x50 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x58 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x60 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x68 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x70 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x78 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x80 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x88 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x90 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x98 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0xa0 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=47, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 3 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - execs: type=hash, key_size=4, value_size=7720, max_entries=10240
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/execsnoop_bound.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x36c8)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x4056b0
+[*] Initializing map 'execs' from BTF: type=hash, key_size=4, value_size=7720, max_entries=10240 at 0x4056d0
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4056f0
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Creating new slot 0 in map 'execs' via update
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'execs'
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x8 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x10 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x18 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x20 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x28 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x30 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x38 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x40 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x48 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x50 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x58 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x60 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x68 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x70 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x78 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x80 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x88 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x90 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x98 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0xa0 + input_ctx_remaining_8_13755_448[191:128]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=47, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 2 maps via ITE semantics
+    [?] Solver checking 5 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_1_original_self", "seconds": 19.654257874994073, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_1_optimized_self: execsnoop_bound_SOURCE_OPT.o vs execsnoop_bound_SOURCE_OPT.o ---
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Using context size 64 bytes for program type 'tracepoint'
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Parsed BTF metadata from C binary: 3 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - execs: type=hash, key_size=4, value_size=7720, max_entries=10240
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/execsnoop_bound_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x450)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x402438
+[*] Initializing map 'execs' from BTF: type=hash, key_size=4, value_size=7720, max_entries=10240 at 0x402458
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x402478
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Creating new slot 0 in map 'execs' via update
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'execs'
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x8 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x10 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x18 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x20 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x28 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x30 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x38 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x40 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x48 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x50 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x58 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x60 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x68 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x70 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x78 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x80 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x88 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x90 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x98 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0xa0 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=47, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 3 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - execs: type=hash, key_size=4, value_size=7720, max_entries=10240
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/execsnoop_bound_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x450)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x402438
+[*] Initializing map 'execs' from BTF: type=hash, key_size=4, value_size=7720, max_entries=10240 at 0x402458
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x402478
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Creating new slot 0 in map 'execs' via update
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'execs'
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x8 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x10 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x18 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x20 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x28 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x30 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x38 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x40 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x48 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x50 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x58 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x60 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x68 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x70 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x78 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x80 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x88 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x90 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x98 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0xa0 + input_ctx_remaining_8_13858_448[191:128]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=47, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 2 maps via ITE semantics
+    [?] Solver checking 5 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_1_optimized_self", "seconds": 14.691243459004909, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_2_optimized_self: execsnoop_bound_SOURCE_OPT.o vs execsnoop_bound_SOURCE_OPT.o ---
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Using context size 64 bytes for program type 'tracepoint'
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Parsed BTF metadata from C binary: 3 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - execs: type=hash, key_size=4, value_size=7720, max_entries=10240
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/execsnoop_bound_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x450)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x402438
+[*] Initializing map 'execs' from BTF: type=hash, key_size=4, value_size=7720, max_entries=10240 at 0x402458
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x402478
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Creating new slot 0 in map 'execs' via update
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'execs'
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x8 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x10 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x18 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x20 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x28 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x30 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x38 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x40 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x48 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x50 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x58 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x60 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x68 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x70 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x78 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x80 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x88 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x90 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x98 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0xa0 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=47, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 3 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - execs: type=hash, key_size=4, value_size=7720, max_entries=10240
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/execsnoop_bound_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x450)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x402438
+[*] Initializing map 'execs' from BTF: type=hash, key_size=4, value_size=7720, max_entries=10240 at 0x402458
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x402478
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Creating new slot 0 in map 'execs' via update
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'execs'
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x8 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x10 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x18 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x20 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x28 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x30 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x38 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x40 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x48 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x50 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x58 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x60 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x68 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x70 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x78 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x80 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x88 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x90 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x98 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0xa0 + input_ctx_remaining_8_13961_448[191:128]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=47, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 2 maps via ITE semantics
+    [?] Solver checking 5 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_2_optimized_self", "seconds": 15.39765250000346, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_2_original_self: execsnoop_bound.o vs execsnoop_bound.o ---
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Using context size 64 bytes for program type 'tracepoint'
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Parsed BTF metadata from C binary: 3 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - execs: type=hash, key_size=4, value_size=7720, max_entries=10240
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/execsnoop_bound.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x36c8)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x4056b0
+[*] Initializing map 'execs' from BTF: type=hash, key_size=4, value_size=7720, max_entries=10240 at 0x4056d0
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4056f0
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Creating new slot 0 in map 'execs' via update
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'execs'
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x8 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x10 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x18 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x20 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x28 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x30 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x38 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x40 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x48 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x50 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x58 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x60 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x68 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x70 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x78 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x80 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x88 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x90 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x98 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0xa0 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=47, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 3 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - execs: type=hash, key_size=4, value_size=7720, max_entries=10240
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/execsnoop_bound.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x36c8)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x4056b0
+[*] Initializing map 'execs' from BTF: type=hash, key_size=4, value_size=7720, max_entries=10240 at 0x4056d0
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4056f0
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Creating new slot 0 in map 'execs' via update
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'execs'
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x8 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x10 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x18 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x20 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x28 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x30 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x38 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x40 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x48 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x50 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x58 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x60 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x68 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x70 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x78 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x80 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x88 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x90 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x98 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0xa0 + input_ctx_remaining_8_14064_448[191:128]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=47, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 2 maps via ITE semantics
+    [?] Solver checking 5 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_2_original_self", "seconds": 18.76667958399048, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_3_original_self: execsnoop_bound.o vs execsnoop_bound.o ---
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Using context size 64 bytes for program type 'tracepoint'
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Parsed BTF metadata from C binary: 3 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - execs: type=hash, key_size=4, value_size=7720, max_entries=10240
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/execsnoop_bound.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x36c8)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x4056b0
+[*] Initializing map 'execs' from BTF: type=hash, key_size=4, value_size=7720, max_entries=10240 at 0x4056d0
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4056f0
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Creating new slot 0 in map 'execs' via update
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'execs'
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x8 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x10 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x18 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x20 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x28 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x30 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x38 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x40 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x48 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x50 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x58 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x60 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x68 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x70 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x78 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x80 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x88 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x90 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x98 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0xa0 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=47, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 3 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - execs: type=hash, key_size=4, value_size=7720, max_entries=10240
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/execsnoop_bound.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x36c8)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x4056b0
+[*] Initializing map 'execs' from BTF: type=hash, key_size=4, value_size=7720, max_entries=10240 at 0x4056d0
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4056f0
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Creating new slot 0 in map 'execs' via update
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'execs'
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x8 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x10 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x18 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x20 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x28 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x30 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x38 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x40 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x48 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x50 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x58 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x60 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x68 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x70 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x78 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x80 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x88 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x90 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x98 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0xa0 + input_ctx_remaining_8_14167_448[191:128]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=47, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 2 maps via ITE semantics
+    [?] Solver checking 5 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_3_original_self", "seconds": 20.367198000007193, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_3_optimized_self: execsnoop_bound_SOURCE_OPT.o vs execsnoop_bound_SOURCE_OPT.o ---
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Using context size 64 bytes for program type 'tracepoint'
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Parsed BTF metadata from C binary: 3 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - execs: type=hash, key_size=4, value_size=7720, max_entries=10240
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/execsnoop_bound_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x450)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x402438
+[*] Initializing map 'execs' from BTF: type=hash, key_size=4, value_size=7720, max_entries=10240 at 0x402458
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x402478
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Creating new slot 0 in map 'execs' via update
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'execs'
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x8 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x10 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x18 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x20 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x28 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x30 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x38 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x40 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x48 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x50 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x58 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x60 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x68 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x70 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x78 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x80 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x88 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x90 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x98 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0xa0 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=47, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 3 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - execs: type=hash, key_size=4, value_size=7720, max_entries=10240
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/execsnoop_bound_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x450)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x402438
+[*] Initializing map 'execs' from BTF: type=hash, key_size=4, value_size=7720, max_entries=10240 at 0x402458
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x402478
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Creating new slot 0 in map 'execs' via update
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'execs'
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x8 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x10 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x18 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x20 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x28 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x30 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x38 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x40 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x48 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x50 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x58 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x60 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x68 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x70 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x78 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x80 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x88 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x90 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x98 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0xa0 + input_ctx_remaining_8_14270_448[191:128]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=47, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 2 maps via ITE semantics
+    [?] Solver checking 5 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_3_optimized_self", "seconds": 17.010496832997887, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_4_optimized_self: execsnoop_bound_SOURCE_OPT.o vs execsnoop_bound_SOURCE_OPT.o ---
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Using context size 64 bytes for program type 'tracepoint'
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Parsed BTF metadata from C binary: 3 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - execs: type=hash, key_size=4, value_size=7720, max_entries=10240
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/execsnoop_bound_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x450)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x402438
+[*] Initializing map 'execs' from BTF: type=hash, key_size=4, value_size=7720, max_entries=10240 at 0x402458
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x402478
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Creating new slot 0 in map 'execs' via update
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'execs'
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x8 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x10 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x18 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x20 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x28 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x30 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x38 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x40 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x48 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x50 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x58 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x60 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x68 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x70 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x78 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x80 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x88 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x90 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x98 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0xa0 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=47, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 3 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - execs: type=hash, key_size=4, value_size=7720, max_entries=10240
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/execsnoop_bound_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x450)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x402438
+[*] Initializing map 'execs' from BTF: type=hash, key_size=4, value_size=7720, max_entries=10240 at 0x402458
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x402478
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Creating new slot 0 in map 'execs' via update
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'execs'
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x8 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x10 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x18 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x20 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x28 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x30 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x38 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x40 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x48 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x50 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x58 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x60 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x68 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x70 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x78 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x80 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x88 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x90 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x98 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0xa0 + input_ctx_remaining_8_14373_448[191:128]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=47, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 2 maps via ITE semantics
+    [?] Solver checking 5 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_4_optimized_self", "seconds": 15.934514999986277, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_4_original_self: execsnoop_bound.o vs execsnoop_bound.o ---
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Using context size 64 bytes for program type 'tracepoint'
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Parsed BTF metadata from C binary: 3 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - execs: type=hash, key_size=4, value_size=7720, max_entries=10240
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/execsnoop_bound.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x36c8)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x4056b0
+[*] Initializing map 'execs' from BTF: type=hash, key_size=4, value_size=7720, max_entries=10240 at 0x4056d0
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4056f0
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Creating new slot 0 in map 'execs' via update
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'execs'
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x8 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x10 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x18 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x20 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x28 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x30 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x38 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x40 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x48 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x50 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x58 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x60 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x68 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x70 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x78 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x80 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x88 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x90 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x98 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0xa0 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=47, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 3 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - execs: type=hash, key_size=4, value_size=7720, max_entries=10240
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/execsnoop_bound.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x36c8)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x4056b0
+[*] Initializing map 'execs' from BTF: type=hash, key_size=4, value_size=7720, max_entries=10240 at 0x4056d0
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4056f0
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Creating new slot 0 in map 'execs' via update
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'execs'
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x8 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x10 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x18 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x20 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x28 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x30 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x38 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x40 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x48 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x50 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x58 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x60 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x68 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x70 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x78 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x80 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x88 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x90 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x98 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0xa0 + input_ctx_remaining_8_14476_448[191:128]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=47, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 2 maps via ITE semantics
+    [?] Solver checking 5 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_4_original_self", "seconds": 19.481963957994594, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_5_original_self: execsnoop_bound.o vs execsnoop_bound.o ---
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Using context size 64 bytes for program type 'tracepoint'
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Parsed BTF metadata from C binary: 3 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - execs: type=hash, key_size=4, value_size=7720, max_entries=10240
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/execsnoop_bound.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x36c8)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x4056b0
+[*] Initializing map 'execs' from BTF: type=hash, key_size=4, value_size=7720, max_entries=10240 at 0x4056d0
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4056f0
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Creating new slot 0 in map 'execs' via update
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'execs'
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x8 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x10 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x18 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x20 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x28 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x30 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x38 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x40 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x48 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x50 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x58 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x60 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x68 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x70 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x78 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x80 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x88 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x90 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x98 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0xa0 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=47, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 3 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - execs: type=hash, key_size=4, value_size=7720, max_entries=10240
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/execsnoop_bound.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x36c8)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x4056b0
+[*] Initializing map 'execs' from BTF: type=hash, key_size=4, value_size=7720, max_entries=10240 at 0x4056d0
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x4056f0
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Creating new slot 0 in map 'execs' via update
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'execs'
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x8 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x10 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x18 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x20 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x28 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x30 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x38 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x40 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x48 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x50 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x58 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x60 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x68 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x70 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x78 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x80 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x88 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x90 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x98 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0xa0 + input_ctx_remaining_8_14579_448[191:128]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=47, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 2 maps via ITE semantics
+    [?] Solver checking 5 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_5_original_self", "seconds": 20.021779041999253, "equivalent": true, "result_type": "equivalent"}
+
+--- trial_5_optimized_self: execsnoop_bound_SOURCE_OPT.o vs execsnoop_bound_SOURCE_OPT.o ---
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Using context size 64 bytes for program type 'tracepoint'
+[*] Detected program type 'tracepoint' from section 'tracepoint/syscalls/sys_enter_execve'
+[*] Parsed BTF metadata from C binary: 3 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - execs: type=hash, key_size=4, value_size=7720, max_entries=10240
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/execsnoop_bound_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x450)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x402438
+[*] Initializing map 'execs' from BTF: type=hash, key_size=4, value_size=7720, max_entries=10240 at 0x402458
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x402478
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Creating new slot 0 in map 'execs' via update
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'execs'
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x8 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x10 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x18 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x20 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x28 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x30 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x38 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x40 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x48 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x50 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x58 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x60 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x68 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x70 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x78 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x80 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x88 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x90 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x98 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0xa0 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=47, map_entries=1
+[*] Parsed BTF metadata from Rust binary: 3 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - execs: type=hash, key_size=4, value_size=7720, max_entries=10240
+    - events: type=perf_event_array, key_size=4, value_size=4, max_entries=0
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/bytes/execsnoop_bound_SOURCE_OPT.o
+[*] Patching eBPF relocations (REL + RELA)...
+[*] Patching complete.
+[*] Scanning section 'tracepoint/syscalls/sys_enter_execve' for atomic instructions (offset 0x0-0x450)
+    No atomic instructions found
+[*] Found entry 'tracepoint__syscalls__sys_enter_execve' at 0x400000
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x402438
+[*] Initializing map 'execs' from BTF: type=hash, key_size=4, value_size=7720, max_entries=10240 at 0x402458
+[*] Initializing map 'events' from BTF: type=perf_event_array, key_size=4, value_size=4, max_entries=0 at 0x402478
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_get_current_uid_gid called.
+[*] BPF Helper: bpf_get_current_pid_tgid called.
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Creating new slot 0 in map 'execs' via update
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'execs'
+[*] BPF Helper: bpf_get_current_task called.
+[*] BPF Helper: bpf_probe_read called at source address:  18446603336221198800
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read called at source address:  2500
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v1
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x8 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x10 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x18 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x20 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x28 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x30 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x38 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x40 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x48 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x50 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x58 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x60 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x68 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x70 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x78 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x80 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x88 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x90 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0x98 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BPF Helper: bpf_probe_read_user_str called.
+[*] BPF Helper: bpf_probe_read_user called. Src: <BV64 0xa0 + input_ctx_remaining_8_14682_448[191:128]>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=1 errored=0
+    stash 'deadended': 1 states
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=47, map_entries=1
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    1 paths converted
+[*] Converting Rust program paths to Z3...
+    1 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 2 maps via ITE semantics
+    [?] Solver checking 5 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.
+{"label": "trial_5_optimized_self", "seconds": 15.566095000001951, "equivalent": true, "result_type": "equivalent"}
+
+--- SUMMARY ---
+{
+  "id": "execsnoop_bound",
+  "program": "libbpf-tools/execsnoop.bpf.c",
+  "entry": "tracepoint__syscalls__sys_enter_execve",
+  "method": "Cache max_args (conditional)",
+  "variant": "conditional_config_bound",
+  "requirement": "loader-frozen configuration; volatile read trace is not an observation",
+  "original_sha256": "75f03562dd74dec2375c0e21f002fd6e1e5f2fcf82d1d6dac946f38882aefecf",
+  "baseline_sha256": "75f03562dd74dec2375c0e21f002fd6e1e5f2fcf82d1d6dac946f38882aefecf",
+  "expected_instructions": [
+    1807,
+    192
+  ],
+  "original_directory": "c2rust_translation/c_bpf_programs/libbpf-tools",
+  "label": "execsnoop_bound*",
+  "status": "success",
+  "instructions": [
+    1807,
+    192
+  ],
+  "equivalence": "passed for selected entry",
+  "raw_seconds": {
+    "original_self": [
+      19.654257874994073,
+      18.76667958399048,
+      20.367198000007193,
+      19.481963957994594,
+      20.021779041999253
+    ],
+    "optimized_self": [
+      14.691243459004909,
+      15.39765250000346,
+      17.010496832997887,
+      15.934514999986277,
+      15.566095000001951
+    ]
+  },
+  "median_seconds": {
+    "original_self": 19.654257874994073,
+    "optimized_self": 15.566095000001951
+  },
+  "speedup": 1.2626325276179806,
+  "reduction_percent": 20.800392978426586,
+  "reduction_ci95_percent": [
+    16.480917831741603,
+    25.25159915757267
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "source": "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/cases/biosnoop_alignment.bpf.c",
+  "compiler": "/opt/homebrew/opt/llvm/bin/clang",
+  "objective": "strictly decrease total executable BPF instruction slots; no timing trials",
+  "flags": [
+    "-target",
+    "bpfel",
+    "-O2",
+    "-g",
+    "-D__TARGET_ARCH_x86",
+    "-I",
+    "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include",
+    "-I",
+    "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/include/bpf",
+    "-I",
+    "/Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/libbpf-tools",
+    "-iquote",
+    "/Users/dajohnyu/Documents/heimdall/heimdall/c2rust_translation/c_bpf_programs/libbpf-tools"
+  ],
+  "frozen_configuration": false,
+  "stack_addresses_unobserved": false,
+  "accepted": [
+    {
+      "pass": "map_alignment",
+      "reason": "Expose Linux hash/array map value-base alignment (8 bytes)",
+      "slots": 545,
+      "edits": [
+        {
+          "start": 2569,
+          "end": 2569,
+          "text": "__builtin_assume_aligned("
+        },
+        {
+          "start": 2601,
+          "end": 2601,
+          "text": ", 8)"
+        },
+        {
+          "start": 4529,
+          "end": 4529,
+          "text": "__builtin_assume_aligned("
+        },
+        {
+          "start": 4561,
+          "end": 4561,
+          "text": ", 8)"
+        },
+        {
+          "start": 4687,
+          "end": 4687,
+          "text": "__builtin_assume_aligned("
+        },
+        {
+          "start": 4723,
+          "end": 4723,
+          "text": ", 8)"
+        }
+      ]
+    }
+  ],
+  "trials": [
+    {
+      "pass": "local_alignment",
+      "reason": "trace_pid: strengthen automatic aggregate piddata to 8-byte alignment",
+      "slots": 551
+    },
+    {
+      "pass": "local_alignment",
+      "reason": "____block_rq_complete: strengthen automatic aggregate event to 8-byte alignment",
+      "slots": 551
+    },
+    {
+      "pass": "local_alignment",
+      "reason": "All independently discovered candidates in this pass",
+      "slots": 551
+    },
+    {
+      "pass": "map_alignment",
+      "reason": "Expose Linux hash/array map value-base alignment (8 bytes)",
+      "slots": 545
+    }
+  ],
+  "baseline_slots": 551,
+  "optimized_slots": 545,
+  "executable_code_changed": true
+}

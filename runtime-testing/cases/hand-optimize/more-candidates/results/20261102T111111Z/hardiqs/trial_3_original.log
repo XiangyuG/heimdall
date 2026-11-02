@@ -1,0 +1,117 @@
+[*] Detected program type 'tp_btf' from section 'tp_btf/irq_handler_entry'
+[*] Using context size 64 bytes for program type 'tp_btf'
+[*] Detected program type 'tp_btf' from section 'tp_btf/irq_handler_entry'
+[*] Parsed BTF metadata from C binary: 3 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - start: type=percpu_array, key_size=4, value_size=8, max_entries=1
+    - infos: type=hash, key_size=36, value_size=104, max_entries=256
+[*] No map specs on command line, using all maps from BTF
+
+============================================================
+  Generating formula for C program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/hardiqs.original.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400518: S=0x400000 A=0 imm=-164
+    - Patching call <anon> @ 0x400638: S=0x400000 A=0 imm=-200
+[*] Patching complete.
+[*] Scanning section 'raw_tp/irq_handler_exit' for atomic instructions (offset 0x0-0x20)
+    No atomic instructions found
+[*] Found 1 .data global(s): zero
+[*] Found entry 'irq_handler_exit' at 0x400630
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x400660
+[*] Initializing map 'start' from BTF: type=percpu_array, key_size=4, value_size=8, max_entries=1 at 0x400680
+[*] Initializing map 'infos' from BTF: type=hash, key_size=36, value_size=104, max_entries=256 at 0x4006a0
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (array) Lookup index <BV32 0x0> in map 'start', addr=0xdeaf0000
+[*] BPF Helper: bpf_ktime_get_ns called.
+[*] BPF Helper: bpf_probe_read called at source address:  80
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read_kernel_str called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'infos', slot 0, addr=0xdeaf0008
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Updating existing slot 0 in map 'infos'
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'infos'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=4 errored=0
+    stash 'deadended': 4 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=7, map_entries=2
+[*] Path 2: constraints=5, map_entries=2
+[*] Path 3: constraints=5, map_entries=2
+[*] Path 4: constraints=5, map_entries=2
+[*] Parsed BTF metadata from Rust binary: 3 maps
+    - cgroup_map: type=cgroup_array, key_size=4, value_size=4, max_entries=1
+    - start: type=percpu_array, key_size=4, value_size=8, max_entries=1
+    - infos: type=hash, key_size=36, value_size=104, max_entries=256
+
+============================================================
+  Generating formula for Rust program
+============================================================
+[*] Loading eBPF program: /Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/more-candidates/results/20261102T111111Z/build/hardiqs.original.o
+[*] Patching eBPF relocations (REL + RELA)...
+    - Patching call <anon> @ 0x400518: S=0x400000 A=0 imm=-164
+    - Patching call <anon> @ 0x400638: S=0x400000 A=0 imm=-200
+[*] Patching complete.
+[*] Scanning section 'raw_tp/irq_handler_exit' for atomic instructions (offset 0x0-0x20)
+    No atomic instructions found
+[*] Found 1 .data global(s): zero
+[*] Found entry 'irq_handler_exit' at 0x400630
+[*] BPF call stack initialized: call_depth=1, sentinel=0x100100 at 0x100000
+[*] Helper failure modeling: mode=off, helpers=[]
+[*] Initializing map 'cgroup_map' from BTF: type=cgroup_array, key_size=4, value_size=4, max_entries=1 at 0x400660
+[*] Initializing map 'start' from BTF: type=percpu_array, key_size=4, value_size=8, max_entries=1 at 0x400680
+[*] Initializing map 'infos' from BTF: type=hash, key_size=36, value_size=104, max_entries=256 at 0x4006a0
+[*] Storing symbolic context (64 bytes) at 0x200000
+[*] Starting symbolic execution...
+[*] Max exploration steps: 50000
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (array) Lookup index <BV32 0x0> in map 'start', addr=0xdeaf0000
+[*] BPF Helper: bpf_ktime_get_ns called.
+[*] BPF Helper: bpf_probe_read called at source address:  80
+[*] BPF Helper: probe_read from non-input memory → input_probe_read_kernel_v0
+[*] BPF Helper: bpf_probe_read_kernel_str called.
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) New key in map 'infos', slot 0, addr=0xdeaf0008
+[*] BPF Helper: bpf_map_update_elem called.
+[*] Map Manager: (hash) Updating existing slot 0 in map 'infos'
+[*] BPF Helper: bpf_map_lookup_elem called.
+[*] Map Manager: (hash) Reusing slot 0 for map 'infos'
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] BpfProgramExit: program terminating with R0=<BV64 0x0>
+[*] Exploration complete. deadended=4 errored=0
+    stash 'deadended': 4 states
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+      - addr=0x100100, call_depth=0
+[*] Path 1: constraints=7, map_entries=2
+[*] Path 2: constraints=5, map_entries=2
+[*] Path 3: constraints=5, map_entries=2
+[*] Path 4: constraints=5, map_entries=2
+
+[=] Starting ITE-based Z3 Verification [=]
+[*] Converting C program paths to Z3...
+    4 paths converted
+[*] Converting Rust program paths to Z3...
+    4 paths converted
+    [+] Comparing return values (R0)
+    [+] Comparing 3 maps via ITE semantics
+[!] .data symbol 'zero': too large (104B > 64B), skipping value comparison
+    [?] Solver checking 7 divergence conditions...
+
+[SUCCESS] Programs are EQUIVALENT.
+    No input exists that produces divergent outputs or map states.

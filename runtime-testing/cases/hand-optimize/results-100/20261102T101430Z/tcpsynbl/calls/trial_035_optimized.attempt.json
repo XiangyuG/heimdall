@@ -1,0 +1,7 @@
+{
+  "started_utc": "2026-11-02T10:23:21.472048+00:00",
+  "label": "trial_035_optimized",
+  "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/tcpsynbl/build/optimized.o",
+  "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/tcpsynbl/build/optimized.o",
+  "entry": "tcp_v4_syn_recv_kprobe"
+}

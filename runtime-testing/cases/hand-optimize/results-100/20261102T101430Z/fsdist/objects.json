@@ -1,0 +1,56 @@
+{
+  "original": {
+    "instruction_slots": 810,
+    "conditional_jumps": 110,
+    "entries": [
+      "file_read_entry",
+      "file_read_exit",
+      "file_write_entry",
+      "file_write_exit",
+      "file_open_entry",
+      "file_open_exit",
+      "file_sync_entry",
+      "file_sync_exit",
+      "getattr_entry",
+      "getattr_exit",
+      "file_read_fentry",
+      "file_read_fexit",
+      "file_write_fentry",
+      "file_write_fexit",
+      "file_open_fentry",
+      "file_open_fexit",
+      "file_sync_fentry",
+      "file_sync_fexit",
+      "getattr_fentry",
+      "getattr_fexit"
+    ],
+    "executable_sha256": "146a36561d4b5c231a86ea1278205d05f6978b7f18f0b9608d069dd8d4d8e564"
+  },
+  "optimized": {
+    "instruction_slots": 1000,
+    "conditional_jumps": 60,
+    "entries": [
+      "file_read_entry",
+      "file_read_exit",
+      "file_write_entry",
+      "file_write_exit",
+      "file_open_entry",
+      "file_open_exit",
+      "file_sync_entry",
+      "file_sync_exit",
+      "getattr_entry",
+      "getattr_exit",
+      "file_read_fentry",
+      "file_read_fexit",
+      "file_write_fentry",
+      "file_write_fexit",
+      "file_open_fentry",
+      "file_open_fexit",
+      "file_sync_fentry",
+      "file_sync_fexit",
+      "getattr_fentry",
+      "getattr_fexit"
+    ],
+    "executable_sha256": "12152cb6151bf072f3589bee3a5dea380dc3553c977d42b4516ccd0283893604"
+  }
+}

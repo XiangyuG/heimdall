@@ -1,0 +1,14 @@
+{
+  "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/tcpsynbl/build/original.o",
+  "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/tcpsynbl/build/original.o",
+  "entry": "tcp_v4_syn_recv_kprobe",
+  "passed": true,
+  "seconds": 8.899492291000115,
+  "equivalent": true,
+  "result_type": "equivalent",
+  "counter_example": "",
+  "complete": true,
+  "label": "trial_067_original",
+  "finished_utc": "2026-11-02T10:41:57.265368+00:00",
+  "process_wall_seconds": 9.400120708000031
+}

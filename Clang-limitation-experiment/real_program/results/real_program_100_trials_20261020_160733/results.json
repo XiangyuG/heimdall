@@ -1,0 +1,2059 @@
+[
+  {
+    "id": "ken_execsnoop_alignment",
+    "program": "KEN/dataset/libbpf/execsnoop.bpf.c",
+    "entry": "tracepoint__syscalls__sys_enter_execve",
+    "method": "Align local event buffer",
+    "requirement": null,
+    "expected_instructions": [
+      44,
+      43
+    ],
+    "preparation": [
+      {
+        "label": "equivalence",
+        "status": "success",
+        "seconds": 0.6056025830039289
+      },
+      {
+        "label": "warmup_original",
+        "status": "success",
+        "seconds": 0.5417796249967068
+      },
+      {
+        "label": "warmup_optimized",
+        "status": "success",
+        "seconds": 0.5383237089990871
+      }
+    ],
+    "objects": {
+      "original_self": {
+        "path": "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/real_program/bytes/ken_execsnoop_alignment.o",
+        "sha256": "3f54ec04df3ba3566ad5f3df24c6ac0b297f5bfe306b6983bc8bc4e992dff1d1"
+      },
+      "optimized_self": {
+        "path": "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/real_program/bytes/ken_execsnoop_alignment_SOURCE_OPT.o",
+        "sha256": "1ccd0c8694d66060f043f7a01f34074ff7a327ca010521ae96612b04dfe6221e"
+      }
+    },
+    "raw_seconds": {
+      "original_self": [
+        0.5176687500061234,
+        0.512193374990602,
+        0.49991162499645725,
+        1.0505808329908177,
+        0.646680333011318,
+        0.5848866669985,
+        1.0153058750001946,
+        0.6218767920072423,
+        0.9064484999980778,
+        0.5420153340091929,
+        0.6405450410093181,
+        0.6335302920051618,
+        0.6706849999900442,
+        0.6784490420104703,
+        0.6764577090070816,
+        0.5049540420004632,
+        0.5254515000124229,
+        0.5138565420056693,
+        0.49706658300419804,
+        0.48282704201119486,
+        0.4801869170041755,
+        0.5423304170108167,
+        0.50726308299636,
+        0.47352645799401216,
+        0.4864734589937143,
+        0.48403008400055114,
+        0.5016066249954747,
+        0.5791549160057912,
+        0.6123544160072925,
+        0.5703159169934224,
+        0.6154387909919024,
+        0.5452308749954682,
+        0.5866573750099633,
+        0.53430733300047,
+        0.6304272920096992,
+        0.5109410419972846,
+        0.5158693749981467,
+        0.4868681660009315,
+        0.508730542002013,
+        0.507058875009534,
+        0.5183841669932008,
+        0.4986571249901317,
+        0.5136351249966538,
+        0.6413246669981163,
+        0.615363167002215,
+        0.5815855830005603,
+        0.5143936670065159,
+        0.555969292006921,
+        0.6375397909869207,
+        0.5016020000039134,
+        0.5225547079899115,
+        0.4773630420095287,
+        0.47962125000776723,
+        0.5119377499941038,
+        0.5523580829903949,
+        0.6321080420020735,
+        0.6150762080069399,
+        0.525372582997079,
+        0.48225904200808145,
+        0.5106929580069846,
+        0.49409699998795986,
+        0.4875421250035288,
+        0.4957642919907812,
+        0.47309529200720135,
+        0.49997291700856294,
+        0.5109444170084316,
+        0.5173643749876646,
+        0.4867627920029918,
+        0.5052694170008181,
+        0.5039328330021817,
+        0.5395089999947231,
+        0.4890864580083871,
+        0.5022982920054346,
+        0.6097646669950336,
+        0.5047175829968182,
+        0.47029762499732897,
+        0.4850761249981588,
+        0.5140329579880927,
+        0.48536916699958965,
+        0.46904866700060666,
+        0.4738015830080258,
+        0.4879602910077665,
+        0.4711613330000546,
+        0.4623448339989409,
+        0.47027695800352376,
+        0.4807916249992559,
+        0.46995312500803266,
+        0.4700125420058612,
+        0.47116570800426416,
+        0.472668792004697,
+        0.47526345901133027,
+        0.6141946659918176,
+        0.6236222080042353,
+        1.4045635420043254,
+        0.7231731670035515,
+        0.5082375409983797,
+        0.5859377079905244,
+        0.6315096249891212,
+        0.5662020839954494,
+        0.5010432919953018
+      ],
+      "optimized_self": [
+        0.49734908300160896,
+        0.481473832987831,
+        0.5133412080031121,
+        1.5936285829957342,
+        0.7680249580007512,
+        0.7208960830030264,
+        1.002210083999671,
+        0.6576338329905411,
+        0.6587010829971405,
+        0.6305754170025466,
+        0.6106912499963073,
+        0.6852777500025695,
+        0.6109795420052251,
+        0.6609337499976391,
+        0.5955195419955999,
+        0.538519499998074,
+        0.5224965410016011,
+        0.5179774580028607,
+        0.49482166599773336,
+        0.4815723329957109,
+        0.459721332998015,
+        0.46742354199523106,
+        0.48144970899738837,
+        0.4984322090022033,
+        0.4600857080076821,
+        0.4645629580045352,
+        0.471920541007421,
+        0.49314279200916644,
+        0.522999291002634,
+        0.5090199160040356,
+        0.546589417004725,
+        0.49159191599756014,
+        0.5403710410027998,
+        0.5177299170027254,
+        0.7488076250010636,
+        0.5009338749950984,
+        0.4961687499890104,
+        0.5145646250020945,
+        0.4877180409966968,
+        0.46897412500402424,
+        0.5340220420039259,
+        0.5464778750028927,
+        0.49431041700881906,
+        0.6085500409972155,
+        0.6311868750053691,
+        0.5782111249864101,
+        0.4970019580068765,
+        0.485545124989585,
+        0.5798462499951711,
+        0.47336091598845087,
+        0.5303631669958122,
+        0.49086837499635294,
+        0.4706726250005886,
+        0.4647352499887347,
+        0.49836095799400937,
+        0.49439483298920095,
+        0.5541071669867961,
+        0.6375828750024084,
+        0.49488225000095554,
+        0.523806750003132,
+        0.5219347499951255,
+        0.5019602920074249,
+        0.4692357500025537,
+        0.5232861250115093,
+        0.48332095799560193,
+        0.4700843329919735,
+        0.495916625004611,
+        0.46751583299192134,
+        0.4851251670042984,
+        0.46164229199348483,
+        0.47322579099272843,
+        0.4670032919966616,
+        0.507565332998638,
+        0.9255399160028901,
+        0.4712426250043791,
+        0.4704082499956712,
+        0.46834741601196583,
+        0.4956362920056563,
+        0.4669422090082662,
+        0.46486933299456723,
+        0.48182333300064784,
+        0.5621885420114268,
+        0.4620095420104917,
+        0.4613559169956716,
+        0.4836308329977328,
+        0.476917541003786,
+        0.45702174998587,
+        0.4590962079964811,
+        0.48934079200262204,
+        0.48481920899939723,
+        0.45688254199922085,
+        0.63549679100106,
+        0.5981961249926826,
+        0.6509007080021547,
+        0.8872612499981187,
+        0.6507443339942256,
+        0.5026355419977335,
+        0.6838927500066347,
+        0.6409139590105042,
+        0.6137828339997213
+      ]
+    },
+    "distribution_seconds": {
+      "original_self": {
+        "n": 100,
+        "median": 0.5120655624923529,
+        "mean": 0.5569579117008834,
+        "stdev": 0.131253170185478,
+        "min": 0.4623448339989409,
+        "q25": 0.48737363525287947,
+        "q75": 0.5861176247453841,
+        "max": 1.4045635420043254
+      },
+      "optimized_self": {
+        "n": 100,
+        "median": 0.49839658349810634,
+        "mean": 0.5520283078595821,
+        "stdev": 0.14585740559406715,
+        "min": 0.45688254199922085,
+        "q25": 0.47602838474995224,
+        "q75": 0.5837645729952783,
+        "max": 1.5936285829957342
+      }
+    },
+    "attempts": {
+      "original_self": 100,
+      "optimized_self": 100
+    },
+    "failures": [],
+    "median_seconds": {
+      "original_self": 0.5120655624923529,
+      "optimized_self": 0.49839658349810634
+    },
+    "speedup": 1.0274259082963768,
+    "reduction_percent": 2.669380640970309,
+    "complete": true,
+    "all_trials_successful": true,
+    "reduction_ci95_percent": [
+      -0.7533236922274922,
+      3.837408816905963
+    ]
+  },
+  {
+    "id": "mdflush_alignment",
+    "program": "libbpf-tools/mdflush.bpf.c",
+    "entry": "md_flush_request",
+    "method": "Align local event buffer",
+    "requirement": null,
+    "expected_instructions": [
+      126,
+      118
+    ],
+    "preparation": [
+      {
+        "label": "equivalence",
+        "status": "success",
+        "seconds": 0.9854505830007838
+      },
+      {
+        "label": "warmup_original",
+        "status": "success",
+        "seconds": 0.9811814579879865
+      },
+      {
+        "label": "warmup_optimized",
+        "status": "success",
+        "seconds": 1.0001387079973938
+      }
+    ],
+    "objects": {
+      "original_self": {
+        "path": "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/real_program/bytes/mdflush_alignment.o",
+        "sha256": "436048d8c87cc61ca28772a9fada675ef9d523d6ecb8357d1c7cb3259a224ee5"
+      },
+      "optimized_self": {
+        "path": "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/real_program/bytes/mdflush_alignment_SOURCE_OPT.o",
+        "sha256": "c877f20493909524509dc878db5e6dd3d0b29aa66fe40907c69312e7972e3f41"
+      }
+    },
+    "raw_seconds": {
+      "original_self": [
+        1.0869687920057913,
+        1.1141762500046752,
+        1.0986241250066087,
+        1.0509297499957029,
+        1.0316244589921553,
+        1.027130667003803,
+        1.0349947920039995,
+        1.0239681669918355,
+        1.0558139170025242,
+        1.010522167009185,
+        1.0384060830110684,
+        1.0203876660089009,
+        1.0574640420090873,
+        1.033481499995105,
+        1.0902487090061186,
+        1.2430437090079067,
+        1.0374197920027655,
+        0.9803270840056939,
+        1.0128698339976836,
+        0.985705290993792,
+        1.0066228750074515,
+        0.9824299169995356,
+        1.0404032499936875,
+        1.019850333002978,
+        0.9794832080078777,
+        1.0247236249997513,
+        1.095801957999356,
+        0.9708582080056658,
+        1.030988291997346,
+        0.9609554169874173,
+        1.0070918330020504,
+        1.2914227079891134,
+        1.1395757499994943,
+        1.2452149169985205,
+        1.0760595419997117,
+        1.0902508750004927,
+        1.0992924169986509,
+        0.9801991249987623,
+        0.9748949589993572,
+        0.9958996249915799,
+        0.98311216699949,
+        0.9731823750043986,
+        1.0083906250074506,
+        1.0214943339960882,
+        1.0426607499975944,
+        0.9916118340042885,
+        0.9878509999980452,
+        0.9972743749967776,
+        0.9849770419968991,
+        0.9740442500042263,
+        1.298504000005778,
+        1.154662000000826,
+        1.0498640410078224,
+        1.6054503750056028,
+        1.4189765419869218,
+        1.14641187498637,
+        1.08779362498899,
+        0.9879942499974277,
+        0.9577877500123577,
+        1.160001292009838,
+        0.9896701660036342,
+        1.3726310829952126,
+        1.5966409999964526,
+        1.2272132920043077,
+        1.036526292009512,
+        1.0100423339899862,
+        1.0021080409933347,
+        1.038642625004286,
+        2.2008071659947746,
+        1.0924874999909662,
+        1.0984852919937111,
+        1.0014759170007892,
+        0.9764577500027372,
+        0.9675662500085309,
+        1.0391768749977928,
+        0.9928493329935009,
+        0.9612016669998411,
+        0.9795253339980263,
+        0.9571330829930957,
+        1.1688094589917455,
+        2.1572322080028243,
+        0.9743758749973495,
+        0.9441339590121061,
+        0.9350147499935701,
+        0.9261514170066221,
+        1.69270654200227,
+        1.188440208992688,
+        1.0276639169896953,
+        1.232766957997228,
+        1.1715964580071159,
+        1.219106541990186,
+        1.0455639579886338,
+        1.018599583010655,
+        1.0656657499930589,
+        1.310610665997956,
+        1.1262801669945475,
+        1.1847362499975134,
+        1.0764180840051267,
+        1.1951262909860816,
+        1.3017199999885634
+      ],
+      "optimized_self": [
+        1.004553417005809,
+        1.494951291999314,
+        0.9056053329986753,
+        1.0265166250028415,
+        0.9034606670029461,
+        0.8670630420092493,
+        0.8678661250014557,
+        0.8872913749946747,
+        0.8648138749995269,
+        0.8701983749924693,
+        0.8447389999928419,
+        0.8521101670048665,
+        0.9041988329991,
+        0.8835632499976782,
+        0.9855473749921657,
+        1.0368094590085093,
+        0.8629863750102231,
+        0.8585774579987628,
+        0.8393562499986729,
+        0.8655947919905884,
+        0.878317833004985,
+        0.8612100419995841,
+        0.852323165992857,
+        0.8792447499872651,
+        0.8612158750038361,
+        0.8669488329906017,
+        0.8470277080050437,
+        0.8579815840057563,
+        0.8454925419937354,
+        0.8393062910035951,
+        0.8330410409980686,
+        0.9887564160017064,
+        0.9252980410092277,
+        1.0154497499897843,
+        1.0105769590009004,
+        0.9613315829919884,
+        0.9134891249996144,
+        1.0124985829897923,
+        0.9222530000115512,
+        0.9771422499907203,
+        0.8690473750029923,
+        0.9104339579935186,
+        0.9005032499990193,
+        0.9049166670010891,
+        1.226727083005244,
+        0.931176250000135,
+        0.9256258750101551,
+        0.9357437919970835,
+        0.963551249995362,
+        0.8924393750057789,
+        0.921536042005755,
+        1.1131580000073882,
+        0.9555501249997178,
+        1.0049467089993414,
+        1.0528607500018552,
+        1.528672500004177,
+        0.9257657089910936,
+        0.8945199580048211,
+        0.8761452089966042,
+        0.8963453749893233,
+        0.9062518330028979,
+        2.8160893750027753,
+        1.1250080830068327,
+        1.1547586249944288,
+        0.9549399579991587,
+        0.9201789169892436,
+        0.8868763329955982,
+        1.0059057499893242,
+        1.0143547079933342,
+        0.9528869999921881,
+        0.9504079170001205,
+        0.8616308750060853,
+        0.8341533330094535,
+        0.869050374996732,
+        1.1294447920081438,
+        0.8286567089962773,
+        0.8316253749944735,
+        0.822639583988348,
+        0.8249642909941031,
+        1.167609750002157,
+        1.121940666998853,
+        0.9179038750007749,
+        0.8620870419981657,
+        0.8350837500038324,
+        0.8512054999882821,
+        0.9725605840067146,
+        1.0372152920026565,
+        0.9323275839997223,
+        1.0642267090006499,
+        1.0051106250029989,
+        0.9705446669977391,
+        0.9757558330020402,
+        0.8792942089930875,
+        0.8750385000021197,
+        1.0854601669998374,
+        1.0925613330036867,
+        1.368161708000116,
+        0.985735417008982,
+        1.3343972919974476,
+        1.0145709999924293
+      ]
+    },
+    "distribution_seconds": {
+      "original_self": {
+        "n": 100,
+        "median": 1.0369730420061387,
+        "mean": 1.1038153017495642,
+        "stdev": 0.20829983680679626,
+        "min": 0.9261514170066221,
+        "q25": 0.991126417004125,
+        "q75": 1.1296040627457842,
+        "max": 2.2008071659947746
+      },
+      "optimized_self": {
+        "n": 100,
+        "median": 0.9190413959950092,
+        "mean": 0.9744298904594325,
+        "stdev": 0.22809656529229308,
+        "min": 0.822639583988348,
+        "q25": 0.8670344897545874,
+        "q75": 1.0053094062495802,
+        "max": 2.8160893750027753
+      }
+    },
+    "attempts": {
+      "original_self": 100,
+      "optimized_self": 100
+    },
+    "failures": [],
+    "median_seconds": {
+      "original_self": 1.0369730420061387,
+      "optimized_self": 0.9190413959950092
+    },
+    "speedup": 1.1283202764587656,
+    "reduction_percent": 11.37268195352289,
+    "complete": true,
+    "all_trials_successful": true,
+    "reduction_ci95_percent": [
+      9.412172927547024,
+      13.23665215713975
+    ]
+  },
+  {
+    "id": "tcprtt_alignment",
+    "program": "libbpf-tools/tcprtt.bpf.c",
+    "entry": "tcp_rcv",
+    "method": "Align local key",
+    "requirement": null,
+    "expected_instructions": [
+      490,
+      486
+    ],
+    "preparation": [
+      {
+        "label": "equivalence",
+        "status": "success",
+        "seconds": 30.391125291003846
+      },
+      {
+        "label": "warmup_original",
+        "status": "success",
+        "seconds": 30.67940633399121
+      },
+      {
+        "label": "warmup_optimized",
+        "status": "success",
+        "seconds": 29.773701333004283
+      }
+    ],
+    "objects": {
+      "original_self": {
+        "path": "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/real_program/bytes/tcprtt_alignment.o",
+        "sha256": "e94972f88248fe414426004cfdab542abc866276e7047ec17ba5bcef279b6fee"
+      },
+      "optimized_self": {
+        "path": "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/real_program/bytes/tcprtt_alignment_SOURCE_OPT.o",
+        "sha256": "808dda91e860195ebeffbfd48fde3fc669d338687353db50c88d8f3a3967957e"
+      }
+    },
+    "raw_seconds": {
+      "original_self": [
+        29.188422040999285,
+        29.00707770799636,
+        24.616096707992256,
+        23.404127916990547,
+        23.31236887500563,
+        23.992823500011582,
+        27.02745695899648,
+        22.495577624998987,
+        22.782041707992903,
+        23.08985320899228,
+        20.928570999996737,
+        21.596895584007143,
+        21.528130250007962,
+        21.223898916010512,
+        20.570739583010436,
+        20.595037957988097,
+        20.647013292007614,
+        20.70876695799234,
+        20.787442791988724,
+        21.102061999990838,
+        20.864609124997514,
+        20.88786204099597,
+        22.538685500010615,
+        28.43993483298982,
+        29.423991000003298,
+        51.90280745898781,
+        34.92670370799897,
+        34.92483187500329,
+        28.92248845899303,
+        40.26948225000524,
+        43.81770800000231,
+        24.116055499995127,
+        34.66971683400334,
+        24.772912165994057,
+        26.481812875004834,
+        28.596395625005243,
+        29.50916841698927,
+        55.14141125000606,
+        49.874714707999374,
+        41.255411541002104,
+        24.721094792010263,
+        37.03574858298816,
+        25.7665327089926,
+        33.13411716699193,
+        41.08954579201236,
+        28.190386624992243,
+        45.714854500009096,
+        32.944190290989354,
+        36.79282995899848,
+        57.34877808400779,
+        50.80466466699727,
+        25.745906374999322,
+        26.212409665997257,
+        27.47062733300845,
+        28.189234082994517,
+        34.9452828749927,
+        28.9733509170037,
+        28.112309292002465,
+        29.585342332997243,
+        25.810588708991418,
+        26.678981417004252,
+        26.281893750012387,
+        26.69872062500508,
+        26.075026791993878,
+        26.839680499993847,
+        26.026511000003666,
+        26.06479274999583,
+        25.918368124999688,
+        26.139448999994784,
+        25.89191220801149,
+        26.884624625003198,
+        27.248562042004778,
+        26.786541207999107,
+        26.17466816600063,
+        26.21366333399783,
+        27.014935707993573,
+        27.489153832997545,
+        26.460463417010033,
+        26.86813833299675,
+        26.968296291001025,
+        27.612869916993077,
+        28.285835667003994,
+        27.1432657080004,
+        42.81064954200701,
+        41.44603770899994,
+        31.500206833006814,
+        31.54272620899428,
+        31.44334129100025,
+        31.686400417005643,
+        31.57930816699809,
+        31.787556583003607,
+        31.742036166993785,
+        31.94896387499466,
+        32.28557629100396,
+        32.277856542001246,
+        32.68778916700103
+      ],
+      "optimized_self": [
+        27.831968500002404,
+        32.207959791994654,
+        23.625817416992504,
+        23.729364458005875,
+        23.927676833001897,
+        23.62367099999392,
+        24.46634383300261,
+        23.58667004200106,
+        22.42098337499192,
+        22.226688417009427,
+        21.07583070799592,
+        20.66991529200459,
+        20.93193770799553,
+        21.151174375001574,
+        21.984493790994748,
+        20.71418533399992,
+        20.62295829199138,
+        21.00108662499406,
+        20.733324417000404,
+        20.735990499990294,
+        20.702256958989892,
+        21.13871533299971,
+        22.50415600000997,
+        22.02479849998781,
+        32.90721112499887,
+        57.178835500002606,
+        46.001803916995414,
+        46.12950783300039,
+        37.37630458299827,
+        46.85975720899296,
+        40.27666666699224,
+        27.812803458000417,
+        32.76718508300837,
+        27.755646250006976,
+        24.411573874996975,
+        30.99552283299272,
+        46.561786457998096,
+        37.34528137500456,
+        29.563864291994832,
+        32.142266666996875,
+        27.743078125000466,
+        33.29254054199555,
+        36.72018220899918,
+        32.46739287499804,
+        32.2684678749938,
+        33.783073167011025,
+        42.08112849999452,
+        34.49404066600255,
+        54.66235366600449,
+        56.92193283299275,
+        59.852258124999935,
+        57.439638916999684,
+        45.15586533299938,
+        27.02994520800712,
+        25.89188995900622,
+        27.25747974999831,
+        28.783527999999933,
+        28.165507458994398,
+        28.202282041995204,
+        28.35679729100957,
+        29.171355875005247,
+        27.824575916005415,
+        25.433763458000612,
+        25.84231862500019,
+        26.25179479199869,
+        26.447567791998154,
+        26.39091266700416,
+        25.909402624994982,
+        25.94826054100122,
+        25.95120795800176,
+        26.338650124991545,
+        26.51007012500486,
+        26.24838995799655,
+        27.55550708300143,
+        27.10799891699571,
+        25.838338125002338,
+        26.32796620800218,
+        28.040209499988123,
+        26.771317000006093,
+        26.12417091600946,
+        26.267310875002295,
+        26.38918549999653,
+        28.49149899999611,
+        31.84856608399423,
+        26.70785066699318,
+        35.72916816698853,
+        34.10963266600447,
+        32.06279941700632,
+        31.36195074999705,
+        32.418138416003785,
+        31.102691708001657,
+        31.488698665998527,
+        31.84875175000343,
+        31.882218832994113,
+        32.12379695799609,
+        33.347940500010736,
+        32.297315042000264,
+        32.639599332993384
+      ]
+    },
+    "distribution_seconds": {
+      "original_self": {
+        "n": 96,
+        "median": 27.19591387500259,
+        "mean": 29.656601101145498,
+        "stdev": 7.831812983306262,
+        "min": 20.570739583010436,
+        "q25": 25.76137612549428,
+        "q75": 31.82790840600137,
+        "max": 57.34877808400779
+      },
+      "optimized_self": {
+        "n": 98,
+        "median": 27.818689687002916,
+        "mean": 30.351472037815554,
+        "stdev": 8.753201975966432,
+        "min": 20.62295829199138,
+        "q25": 25.8393332500018,
+        "q75": 32.45507926024948,
+        "max": 59.852258124999935
+      }
+    },
+    "attempts": {
+      "original_self": 100,
+      "optimized_self": 100
+    },
+    "failures": [
+      {
+        "trial": 38,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-21T10:23:26.765376+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 50,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T00:47:34.708607+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 52,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T02:26:20.329165+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 53,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T03:32:21.901515+00:00",
+        "status": "timeout",
+        "seconds": null,
+        "error": "TimeoutError: verification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 54,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T05:51:59.370134+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 55,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T06:27:45.220619+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      }
+    ],
+    "median_seconds": {
+      "original_self": 27.19591387500259,
+      "optimized_self": 27.818689687002916
+    },
+    "speedup": 0.9776130429215977,
+    "reduction_percent": -2.289960965690363,
+    "complete": true,
+    "all_trials_successful": false
+  },
+  {
+    "id": "execsnoop_bound",
+    "program": "libbpf-tools/execsnoop.bpf.c",
+    "entry": "tracepoint__syscalls__sys_enter_execve",
+    "method": "Cache max_args (conditional)",
+    "requirement": "loader-frozen configuration; volatile read trace is not an observation",
+    "expected_instructions": [
+      1807,
+      192
+    ],
+    "preparation": [
+      {
+        "label": "equivalence",
+        "status": "success",
+        "seconds": 51.394785875003436
+      },
+      {
+        "label": "warmup_original",
+        "status": "success",
+        "seconds": 54.86063275000197
+      },
+      {
+        "label": "warmup_optimized",
+        "status": "success",
+        "seconds": 48.2613540829916
+      }
+    ],
+    "objects": {
+      "original_self": {
+        "path": "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/real_program/bytes/execsnoop_bound.o",
+        "sha256": "b66e1701bf616fbb173a7da4c092cdd72378c95eed452f404c66c1762d0c39d8"
+      },
+      "optimized_self": {
+        "path": "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/real_program/bytes/execsnoop_bound_SOURCE_OPT.o",
+        "sha256": "e801ad273fa012af98ee718a1d4b14f6fe54309a4e8e6207587ca4fc41e7cc62"
+      }
+    },
+    "raw_seconds": {
+      "original_self": [
+        52.55042608300573,
+        56.99985750000633,
+        59.267344833991956,
+        59.22362224999233,
+        57.73855650000041,
+        51.461995290999766,
+        48.15268537499651,
+        47.8461996249971,
+        51.535593540989794,
+        49.43460383301135,
+        50.20789054098714,
+        53.997587000005296,
+        52.39922395898611,
+        52.64239020799869,
+        47.6823186249967,
+        49.16331358399475,
+        49.539932499988936,
+        52.04860624999856,
+        54.467885083009605,
+        51.12711375000072,
+        52.28244004199223,
+        53.735185666999314,
+        50.79366920799657,
+        52.45482516699121,
+        50.808143208996626,
+        50.912224458006676,
+        53.36340704199392,
+        53.279126458000974,
+        49.11625275001279,
+        49.77488524999353,
+        53.51649120800721,
+        55.46800820798671,
+        52.46450950000144,
+        52.08021374999953,
+        105.45131666600355,
+        140.0363470829907
+      ],
+      "optimized_self": [
+        50.05754683399573,
+        56.240990582999075,
+        47.58972420799546,
+        51.52181833299983,
+        51.093969124995056,
+        47.67693658299686,
+        43.3841708330001,
+        43.1067955000035,
+        40.344454332996975,
+        43.31278783400194,
+        42.44595087500056,
+        43.82762916698994,
+        44.141425708992756,
+        46.35649633301364,
+        45.33104929199908,
+        43.428270625008736,
+        40.061183875004645,
+        45.46451479199459,
+        44.87520979200781,
+        49.415657875011675,
+        46.976987792004365,
+        44.69677562499419,
+        43.70298895900487,
+        42.321223582999664,
+        44.14957658298954,
+        44.542092584000784,
+        48.938320291999844,
+        48.90184620799846,
+        45.589421166994725,
+        44.38298929200391,
+        42.134086125006434,
+        46.139318333996926,
+        47.22905604200787,
+        47.180846791990916,
+        165.5740729579993,
+        88.41456070799904,
+        91.92985633399803
+      ]
+    },
+    "distribution_seconds": {
+      "original_self": {
+        "n": 36,
+        "median": 52.34083200048917,
+        "mean": 56.19511644438697,
+        "stdev": 17.12332167119815,
+        "min": 47.6823186249967,
+        "q25": 50.64722454124421,
+        "q75": 53.80078600025081,
+        "max": 140.0363470829907
+      },
+      "optimized_self": {
+        "n": 37,
+        "median": 45.46451479199459,
+        "mean": 51.41839464537829,
+        "stdev": 22.047274206663488,
+        "min": 40.061183875004645,
+        "q25": 43.70298895900487,
+        "q75": 48.90184620799846,
+        "max": 165.5740729579993
+      }
+    },
+    "attempts": {
+      "original_self": 100,
+      "optimized_self": 100
+    },
+    "failures": [
+      {
+        "trial": 6,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T07:54:02.552397+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 35,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T08:42:30.624404+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 36,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T08:43:32.860527+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 36,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T08:44:34.759927+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 37,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T08:45:36.412379+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 37,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T08:46:38.361965+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 38,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T08:47:40.376427+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 38,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T08:48:42.762971+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 39,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T08:49:44.906115+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 39,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T08:50:49.556260+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 40,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T08:54:42.882599+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 41,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T08:55:44.983534+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 41,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T08:56:47.052510+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 42,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T08:57:49.219629+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 42,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T08:58:52.405596+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 43,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T09:00:06.109250+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 43,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T09:01:08.695026+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 44,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T09:02:11.766225+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 44,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T09:03:14.429927+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 45,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T09:04:17.120204+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 45,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T09:05:19.580353+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 46,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T09:06:21.709550+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 46,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T09:07:24.861282+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 47,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T09:08:28.274429+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 47,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T09:09:32.376056+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 48,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T09:10:34.409739+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 48,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T09:11:37.868419+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 49,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T09:12:40.334636+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 49,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T09:13:42.364320+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 50,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T09:14:46.359016+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 50,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T09:15:48.765117+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 51,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T09:16:50.568015+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 51,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T09:17:53.157157+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 52,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T09:18:54.848860+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 52,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T09:19:56.903726+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 53,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T09:20:59.597994+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 53,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T09:22:59.794059+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 54,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T09:46:48.394177+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 54,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T09:47:50.262798+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 55,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T09:48:52.494922+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 55,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T09:49:54.269464+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 56,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T09:50:56.403145+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 56,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T09:51:58.190384+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 57,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T09:53:00.016493+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 57,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T09:54:02.147866+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 58,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T09:55:03.853402+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 58,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T09:56:05.817349+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 59,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T09:57:07.650421+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 60,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T09:59:39.880202+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 60,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T10:00:42.248003+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 61,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T10:01:44.266587+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 61,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T10:02:46.145448+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 62,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T10:03:48.400385+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 62,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T10:04:49.783378+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 63,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T10:05:51.236145+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 63,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T10:06:52.810190+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 64,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T10:07:54.191157+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 64,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T10:08:55.946927+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 65,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T10:09:57.293347+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 66,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T10:12:32.314376+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 66,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T10:13:33.679897+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 67,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T10:14:35.151742+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 67,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T10:15:36.994137+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 68,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T10:16:38.558020+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 68,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T10:17:40.501740+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 69,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T10:18:42.632200+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 69,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T10:19:44.380472+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 70,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T10:20:46.333474+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 70,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T10:21:47.679643+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 71,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T10:22:49.276788+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 71,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T10:23:50.781679+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 72,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T10:24:52.440517+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 72,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T10:25:54.262387+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 73,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T10:26:55.676273+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 73,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T10:27:57.156453+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 74,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T10:28:58.534469+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 74,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T10:30:00.095051+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 75,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T10:31:01.510860+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 75,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T10:32:03.144300+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 76,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T10:33:05.169827+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 76,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T10:34:06.982109+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 77,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T10:35:08.892892+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 77,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T10:36:10.512599+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 78,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T10:37:12.291462+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 78,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T10:38:13.959182+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 79,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T10:39:16.037754+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 79,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T10:40:17.981185+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 80,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T10:41:19.789666+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 80,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T10:42:21.828158+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 81,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T10:45:10.572615+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 82,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T10:46:12.580047+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 82,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T10:47:14.822114+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 83,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T10:48:16.481997+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 83,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T10:49:18.368873+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 84,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T10:50:20.011153+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 84,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T10:51:21.894654+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 85,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T10:52:23.658804+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 85,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T10:53:25.267833+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 86,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T10:54:27.187613+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 86,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T10:55:28.824875+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 87,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T10:56:30.950519+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 87,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T10:57:32.582742+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 88,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T10:58:34.424701+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 88,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T10:59:36.084032+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 89,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T11:00:38.280438+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 89,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T11:01:40.394182+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 90,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T11:02:42.251779+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 91,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T11:06:06.050420+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 91,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T11:07:08.194950+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 92,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T11:08:09.848491+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 92,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T11:09:12.077059+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 93,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T11:10:13.796685+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 93,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T11:11:15.749219+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 94,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T11:12:17.365647+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 94,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T11:13:20.107458+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 95,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T11:14:23.861306+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 95,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T11:15:26.666657+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 96,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T11:16:28.306403+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 96,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T11:17:30.346783+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 97,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T11:18:32.543253+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 97,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T11:19:35.175323+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 98,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T11:20:38.498935+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 98,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T11:21:41.145061+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 99,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T11:22:43.912991+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 99,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T11:23:46.837048+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 100,
+        "variant": "optimized_self",
+        "started_utc": "2026-10-22T11:24:49.021086+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      },
+      {
+        "trial": 100,
+        "variant": "original_self",
+        "started_utc": "2026-10-22T11:25:52.083850+00:00",
+        "status": "failed",
+        "seconds": null,
+        "error": "RuntimeError: incomplete/failed verification: error; Formula generation failed for C program.\nverification exceeded HEIMDALL_TIMEOUT_SECONDS"
+      }
+    ],
+    "median_seconds": {
+      "original_self": 52.34083200048917,
+      "optimized_self": 45.46451479199459
+    },
+    "speedup": 1.151245806536252,
+    "reduction_percent": 13.13757719485682,
+    "complete": true,
+    "all_trials_successful": false
+  }
+]

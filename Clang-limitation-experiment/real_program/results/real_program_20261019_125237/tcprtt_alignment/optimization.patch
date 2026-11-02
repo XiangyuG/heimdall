@@ -1,0 +1,11 @@
+--- tcprtt_alignment.bpf.c
++++ tcprtt_alignment_SOURCE_OPT.bpf.c
+@@ -83,7 +83,7 @@
+ 	const struct inet_sock *inet = (struct inet_sock *)(sk);
+ 	struct tcp_sock *ts;
+ 	struct hist *histp;
+-	struct hist_key key = {};
++	struct hist_key key __attribute__((aligned(8))) = {};
+ 	u64 slot;
+ 	u32 srtt;
+ 

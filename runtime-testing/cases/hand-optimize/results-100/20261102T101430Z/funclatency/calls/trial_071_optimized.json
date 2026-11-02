@@ -1,0 +1,14 @@
+{
+  "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+  "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/funclatency/build/optimized.o",
+  "entry": "dummy_kretprobe",
+  "passed": true,
+  "seconds": 1.4075968750003085,
+  "equivalent": true,
+  "result_type": "equivalent",
+  "counter_example": "",
+  "complete": true,
+  "label": "trial_071_optimized",
+  "finished_utc": "2026-11-02T11:01:40.415156+00:00",
+  "process_wall_seconds": 1.926481916999819
+}

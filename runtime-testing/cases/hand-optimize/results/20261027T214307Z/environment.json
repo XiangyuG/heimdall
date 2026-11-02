@@ -1,0 +1,75 @@
+{
+  "clang": "Homebrew clang version 22.1.8\nTarget: arm64-apple-darwin27.0.0\nThread model: posix\nInstalledDir: /opt/homebrew/Cellar/llvm/22.1.8/bin\nConfiguration file: /opt/homebrew/Cellar/llvm/22.1.8/etc/clang/arm64-apple-darwin27.cfg\n",
+  "python": "3.10.20 (main, Jun 11 2026, 15:14:28) [Clang 20.1.8 ]",
+  "manifest": {
+    "cases": [
+      {
+        "id": "tcpsynbl",
+        "upstream": "c2rust_translation/c_bpf_programs/libbpf-tools/tcpsynbl.bpf.c",
+        "upstream_sha256": "0d4d56ea1286ec2aebd1f7a26f6bd7d3f3198f910bfb408f5879da702509796d",
+        "original": "tcpsynbl.original.bpf.c",
+        "optimized": "tcpsynbl.optimized.bpf.c",
+        "timed_entry": "tcp_v4_syn_recv_kprobe",
+        "build_preparation": [
+          "Removed unused bpf_endian.h include; no endian macros occur in this source."
+        ],
+        "rewrite": "Replace histogram integer-logarithm comparisons with unsigned carry-bit arithmetic. Other program logic and volatile accesses are unchanged."
+      },
+      {
+        "id": "funclatency",
+        "upstream": "c2rust_translation/c_bpf_programs/libbpf-tools/funclatency.bpf.c",
+        "upstream_sha256": "4d86645966d1753f8c3d6069f23d1aeed032e84229d86e2a6e41bbb1a6c7bb33",
+        "original": "funclatency.original.bpf.c",
+        "optimized": "funclatency.optimized.bpf.c",
+        "timed_entry": "dummy_kretprobe",
+        "build_preparation": [],
+        "rewrite": "Replace histogram integer-logarithm comparisons with unsigned carry-bit arithmetic. Other program logic and volatile accesses are unchanged."
+      },
+      {
+        "id": "fsdist",
+        "upstream": "c2rust_translation/c_bpf_programs/libbpf-tools/fsdist.bpf.c",
+        "upstream_sha256": "e1f3d678719fa1dcb08eeab85db342d62459a5a21db71c0be885ae8f6c857a33",
+        "original": "fsdist.original.bpf.c",
+        "optimized": "fsdist.optimized.bpf.c",
+        "timed_entry": "file_read_exit",
+        "build_preparation": [],
+        "rewrite": "Replace histogram integer-logarithm comparisons with unsigned carry-bit arithmetic. Other program logic and volatile accesses are unchanged."
+      },
+      {
+        "id": "biostacks",
+        "upstream": "c2rust_translation/c_bpf_programs/libbpf-tools/biostacks.bpf.c",
+        "upstream_sha256": "488c067231493d4a03bb76eb0ebf393369047e0292a84e3e8054c78acbaf718b",
+        "original": "biostacks.original.bpf.c",
+        "optimized": "biostacks.optimized.bpf.c",
+        "timed_entry": "blk_account_io_done",
+        "build_preparation": [],
+        "rewrite": "Replace histogram integer-logarithm comparisons with unsigned carry-bit arithmetic. Other program logic and volatile accesses are unchanged."
+      },
+      {
+        "id": "biolatency",
+        "upstream": "c2rust_translation/c_bpf_programs/libbpf-tools/biolatency.bpf.c",
+        "upstream_sha256": "5007ba3fa26970e719890812e8495ed80191f520a8b9f87fc10688dddfef1e92",
+        "original": "biolatency.original.bpf.c",
+        "optimized": "biolatency.optimized.bpf.c",
+        "timed_entry": "block_rq_complete_btf",
+        "build_preparation": [],
+        "rewrite": "Replace histogram integer-logarithm comparisons with unsigned carry-bit arithmetic. Other program logic and volatile accesses are unchanged."
+      }
+    ],
+    "compiler_flags": [
+      "-target",
+      "bpfel",
+      "-O2",
+      "-g",
+      "-D__TARGET_ARCH_x86"
+    ],
+    "trials": 5,
+    "warmups": 1,
+    "verification_timeout_seconds": 120,
+    "input_assumptions": [],
+    "helper_fail_mode": "off",
+    "timing": "Heimdall self-equivalence; complete run_verification call, compilation and interpreter/import startup excluded.",
+    "original_bits_header_sha256": "593a6425c4cd04bd03cb55aa14dcbf3f1c2751b1b4746a4fb96e7219e081a263"
+  },
+  "worker_isolation": "Fresh process per verification call; imports and startup excluded from timings."
+}

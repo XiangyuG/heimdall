@@ -1,0 +1,149 @@
+Results: /Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/real_program/results/real_program_execsnoop_only_20261026_235830
+{"case": "execsnoop_bound", "paired_trials": 1, "of": 100, "median_seconds": {"original_self": 14.030596374999732, "optimized_self": 11.99141333400621}, "failures": 0, "utc": "2026-10-27T07:00:14.328228+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 2, "of": 100, "median_seconds": {"original_self": 14.031381708497065, "optimized_self": 10.977664791993448}, "failures": 0, "utc": "2026-10-27T07:00:38.398024+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 3, "of": 100, "median_seconds": {"original_self": 14.030596374999732, "optimized_self": 10.325231291993987}, "failures": 0, "utc": "2026-10-27T07:01:02.781548+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 4, "of": 100, "median_seconds": {"original_self": 14.031381708497065, "optimized_self": 10.430814374994952}, "failures": 0, "utc": "2026-10-27T07:01:27.562874+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 5, "of": 100, "median_seconds": {"original_self": 14.032167041994398, "optimized_self": 10.536397457995918}, "failures": 0, "utc": "2026-10-27T07:01:53.408358+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 6, "of": 100, "median_seconds": {"original_self": 14.0771602504974, "optimized_self": 10.430814374994952}, "failures": 0, "utc": "2026-10-27T07:02:19.228807+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 7, "of": 100, "median_seconds": {"original_self": 14.122153459000401, "optimized_self": 10.536397457995918}, "failures": 0, "utc": "2026-10-27T07:02:45.827112+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 8, "of": 100, "median_seconds": {"original_self": 14.26862566699856, "optimized_self": 10.585715604000143}, "failures": 0, "utc": "2026-10-27T07:03:13.771392+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 9, "of": 100, "median_seconds": {"original_self": 14.415097874996718, "optimized_self": 10.635033750004368}, "failures": 0, "utc": "2026-10-27T07:03:40.910406+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 10, "of": 100, "median_seconds": {"original_self": 14.976714708493091, "optimized_self": 10.735083729494363}, "failures": 0, "utc": "2026-10-27T07:04:08.360562+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 11, "of": 100, "median_seconds": {"original_self": 15.092876665992662, "optimized_self": 10.835133708984358}, "failures": 0, "utc": "2026-10-27T07:04:35.021947+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 12, "of": 100, "median_seconds": {"original_self": 15.315604103991063, "optimized_self": 11.085037458484294}, "failures": 0, "utc": "2026-10-27T07:05:03.795776+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 13, "of": 100, "median_seconds": {"original_self": 15.538331541989464, "optimized_self": 11.33494120798423}, "failures": 0, "utc": "2026-10-27T07:05:31.735038+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 14, "of": 100, "median_seconds": {"original_self": 15.65549016649311, "optimized_self": 11.367537999991328}, "failures": 0, "utc": "2026-10-27T07:06:02.843273+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 15, "of": 100, "median_seconds": {"original_self": 15.772648790996755, "optimized_self": 11.400134791998425}, "failures": 0, "utc": "2026-10-27T07:06:33.529150+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 16, "of": 100, "median_seconds": {"original_self": 15.801764312011073, "optimized_self": 11.4286209379934}, "failures": 0, "utc": "2026-10-27T07:07:04.732172+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 17, "of": 100, "median_seconds": {"original_self": 15.830879833025392, "optimized_self": 11.457107083988376}, "failures": 0, "utc": "2026-10-27T07:07:36.586926+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 18, "of": 100, "median_seconds": {"original_self": 15.853199791527004, "optimized_self": 11.510682375504985}, "failures": 0, "utc": "2026-10-27T07:08:09.093742+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 19, "of": 100, "median_seconds": {"original_self": 15.875519750028616, "optimized_self": 11.564257667021593}, "failures": 0, "utc": "2026-10-27T07:08:40.956976+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 20, "of": 100, "median_seconds": {"original_self": 16.003242416511057, "optimized_self": 11.679760250015534}, "failures": 0, "utc": "2026-10-27T07:09:12.891267+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 21, "of": 100, "median_seconds": {"original_self": 16.130965082993498, "optimized_self": 11.795262833009474}, "failures": 0, "utc": "2026-10-27T07:09:44.986640+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 22, "of": 100, "median_seconds": {"original_self": 16.185458603998995, "optimized_self": 11.891278958006296}, "failures": 0, "utc": "2026-10-27T07:10:15.683725+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 23, "of": 100, "median_seconds": {"original_self": 16.239952125004493, "optimized_self": 11.987295083003119}, "failures": 0, "utc": "2026-10-27T07:10:48.526078+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 24, "of": 100, "median_seconds": {"original_self": 16.5223560835002, "optimized_self": 11.989354208504665}, "failures": 0, "utc": "2026-10-27T07:11:20.554696+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 25, "of": 100, "median_seconds": {"original_self": 16.804760041995905, "optimized_self": 11.99141333400621}, "failures": 0, "utc": "2026-10-27T07:11:53.583138+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 26, "of": 100, "median_seconds": {"original_self": 16.81406785400759, "optimized_self": 12.216971166999429}, "failures": 0, "utc": "2026-10-27T07:12:26.638826+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 27, "of": 100, "median_seconds": {"original_self": 16.823375666019274, "optimized_self": 12.442528999992646}, "failures": 0, "utc": "2026-10-27T07:13:00.192453+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 28, "of": 100, "median_seconds": {"original_self": 16.915800166505505, "optimized_self": 12.660622249997687}, "failures": 0, "utc": "2026-10-27T07:13:33.827266+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 29, "of": 100, "median_seconds": {"original_self": 17.008224666991737, "optimized_self": 12.878715500002727}, "failures": 0, "utc": "2026-10-27T07:14:16.653403+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 30, "of": 100, "median_seconds": {"original_self": 17.325459354004124, "optimized_self": 12.932345353998244}, "failures": 0, "utc": "2026-10-27T07:15:02.768352+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 31, "of": 100, "median_seconds": {"original_self": 17.64269404101651, "optimized_self": 12.98597520799376}, "failures": 0, "utc": "2026-10-27T07:15:48.837004+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 32, "of": 100, "median_seconds": {"original_self": 17.797247645503376, "optimized_self": 13.141464312502649}, "failures": 0, "utc": "2026-10-27T07:16:35.679953+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 33, "of": 100, "median_seconds": {"original_self": 17.95180124999024, "optimized_self": 13.296953417011537}, "failures": 0, "utc": "2026-10-27T07:17:22.337686+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 34, "of": 100, "median_seconds": {"original_self": 17.986167624985683, "optimized_self": 13.381464353995398}, "failures": 0, "utc": "2026-10-27T07:18:09.606478+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 35, "of": 100, "median_seconds": {"original_self": 18.020533999981126, "optimized_self": 13.465975290979259}, "failures": 0, "utc": "2026-10-27T07:18:57.129734+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 36, "of": 100, "median_seconds": {"original_self": 18.06824160448741, "optimized_self": 13.468764645484043}, "failures": 0, "utc": "2026-10-27T07:19:44.522845+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 37, "of": 100, "median_seconds": {"original_self": 18.115949208993698, "optimized_self": 13.471553999988828}, "failures": 0, "utc": "2026-10-27T07:20:31.431615+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 38, "of": 100, "median_seconds": {"original_self": 18.12531991698779, "optimized_self": 13.499486853994313}, "failures": 0, "utc": "2026-10-27T07:21:19.824342+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 39, "of": 100, "median_seconds": {"original_self": 18.134690624981886, "optimized_self": 13.527419707999798}, "failures": 0, "utc": "2026-10-27T07:22:07.595166+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 40, "of": 100, "median_seconds": {"original_self": 18.19423652048863, "optimized_self": 13.57497787498869}, "failures": 0, "utc": "2026-10-27T07:22:55.555542+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 41, "of": 100, "median_seconds": {"original_self": 18.253782415995374, "optimized_self": 13.622536041977582}, "failures": 0, "utc": "2026-10-27T07:23:42.691157+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 42, "of": 100, "median_seconds": {"original_self": 18.273142291494878, "optimized_self": 13.690975354489638}, "failures": 0, "utc": "2026-10-27T07:24:32.533720+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 43, "of": 100, "median_seconds": {"original_self": 18.29250216699438, "optimized_self": 13.759414667001693}, "failures": 0, "utc": "2026-10-27T07:25:22.314109+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 44, "of": 100, "median_seconds": {"original_self": 18.301584103988716, "optimized_self": 13.826921874991967}, "failures": 0, "utc": "2026-10-27T07:26:12.332200+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 45, "of": 100, "median_seconds": {"original_self": 18.31066604098305, "optimized_self": 13.894429082982242}, "failures": 0, "utc": "2026-10-27T07:27:04.882590+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 46, "of": 100, "median_seconds": {"original_self": 18.359215186996153, "optimized_self": 13.955682541491115}, "failures": 0, "utc": "2026-10-27T07:27:56.658107+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 47, "of": 100, "median_seconds": {"original_self": 18.407764333009254, "optimized_self": 14.016935999999987}, "failures": 0, "utc": "2026-10-27T07:28:47.382935+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 48, "of": 100, "median_seconds": {"original_self": 18.40997689550568, "optimized_self": 14.06961874999979}, "failures": 0, "utc": "2026-10-27T07:29:39.449228+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 49, "of": 100, "median_seconds": {"original_self": 18.412189458002103, "optimized_self": 14.122301499999594}, "failures": 0, "utc": "2026-10-27T07:30:30.553499+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 50, "of": 100, "median_seconds": {"original_self": 18.63489516649861, "optimized_self": 14.200214625001536}, "failures": 0, "utc": "2026-10-27T07:31:22.694381+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 51, "of": 100, "median_seconds": {"original_self": 18.857600874995114, "optimized_self": 14.278127750003478}, "failures": 0, "utc": "2026-10-27T07:32:14.848558+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 52, "of": 100, "median_seconds": {"original_self": 18.933766687492607, "optimized_self": 14.54587685399747}, "failures": 0, "utc": "2026-10-27T07:33:06.995563+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 53, "of": 100, "median_seconds": {"original_self": 19.0099324999901, "optimized_self": 14.813625957991462}, "failures": 0, "utc": "2026-10-27T07:33:57.780157+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 54, "of": 100, "median_seconds": {"original_self": 19.366550791994086, "optimized_self": 14.818738458488951}, "failures": 0, "utc": "2026-10-27T07:34:51.041211+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 55, "of": 100, "median_seconds": {"original_self": 19.723169083998073, "optimized_self": 14.82385095898644}, "failures": 0, "utc": "2026-10-27T07:35:43.409432+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 56, "of": 100, "median_seconds": {"original_self": 21.19898347950948, "optimized_self": 17.334108750495943}, "failures": 0, "utc": "2026-10-27T07:36:40.149724+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 57, "of": 100, "median_seconds": {"original_self": 22.674797875020886, "optimized_self": 19.844366542005446}, "failures": 0, "utc": "2026-10-27T07:37:35.102068+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 58, "of": 100, "median_seconds": {"original_self": 23.778254625023692, "optimized_self": 19.955872063001152}, "failures": 0, "utc": "2026-10-27T07:38:31.581844+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 59, "of": 100, "median_seconds": {"original_self": 24.881711375026498, "optimized_self": 20.06737758399686}, "failures": 0, "utc": "2026-10-27T07:39:38.706514+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 60, "of": 100, "median_seconds": {"original_self": 24.918511667012353, "optimized_self": 20.462057291995734}, "failures": 0, "utc": "2026-10-27T07:41:08.055678+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 61, "of": 100, "median_seconds": {"original_self": 24.95531195899821, "optimized_self": 20.85673699999461}, "failures": 0, "utc": "2026-10-27T07:42:33.000338+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 62, "of": 100, "median_seconds": {"original_self": 25.07816387549974, "optimized_self": 20.860121395497117}, "failures": 0, "utc": "2026-10-27T07:43:58.003669+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 63, "of": 100, "median_seconds": {"original_self": 25.20101579200127, "optimized_self": 20.863505790999625}, "failures": 0, "utc": "2026-10-27T07:45:20.934707+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 64, "of": 100, "median_seconds": {"original_self": 25.21723902100348, "optimized_self": 20.999553561996436}, "failures": 0, "utc": "2026-10-27T07:46:46.284191+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 65, "of": 100, "median_seconds": {"original_self": 25.233462250005687, "optimized_self": 21.135601332993247}, "failures": 0, "utc": "2026-10-27T07:48:16.541521+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 66, "of": 100, "median_seconds": {"original_self": 25.236434979509795, "optimized_self": 21.145622624986572}, "failures": 0, "utc": "2026-10-27T07:49:47.980081+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 67, "of": 100, "median_seconds": {"original_self": 25.239407709013904, "optimized_self": 21.155643916979898}, "failures": 0, "utc": "2026-10-27T07:51:10.116212+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 68, "of": 100, "median_seconds": {"original_self": 25.2887992295, "optimized_self": 21.202017770992825}, "failures": 0, "utc": "2026-10-27T07:52:35.873726+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 69, "of": 100, "median_seconds": {"original_self": 25.338190749986097, "optimized_self": 21.248391625005752}, "failures": 0, "utc": "2026-10-27T07:54:03.251032+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 70, "of": 100, "median_seconds": {"original_self": 25.36725587498222, "optimized_self": 21.265024583495688}, "failures": 0, "utc": "2026-10-27T07:55:30.075686+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 71, "of": 100, "median_seconds": {"original_self": 25.396320999978343, "optimized_self": 21.281657541985624}, "failures": 0, "utc": "2026-10-27T07:56:58.977467+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 72, "of": 100, "median_seconds": {"original_self": 25.467135999992024, "optimized_self": 21.325432749988977}, "failures": 0, "utc": "2026-10-27T07:58:30.727617+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 73, "of": 100, "median_seconds": {"original_self": 25.537951000005705, "optimized_self": 21.36920795799233}, "failures": 0, "utc": "2026-10-27T07:59:59.811734+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 74, "of": 100, "median_seconds": {"original_self": 25.5476958125073, "optimized_self": 21.416235395503463}, "failures": 0, "utc": "2026-10-27T08:01:26.281413+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 75, "of": 100, "median_seconds": {"original_self": 25.557440625008894, "optimized_self": 21.463262833014596}, "failures": 0, "utc": "2026-10-27T08:02:53.206047+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 76, "of": 100, "median_seconds": {"original_self": 25.605571791995317, "optimized_self": 21.52870825001446}, "failures": 0, "utc": "2026-10-27T08:04:25.558758+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 77, "of": 100, "median_seconds": {"original_self": 25.65370295898174, "optimized_self": 21.594153667014325}, "failures": 0, "utc": "2026-10-27T08:14:01.646122+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 78, "of": 100, "median_seconds": {"original_self": 25.718145708495285, "optimized_self": 21.715858729512547}, "failures": 0, "utc": "2026-10-27T08:15:57.993950+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 79, "of": 100, "median_seconds": {"original_self": 25.78258845800883, "optimized_self": 21.83756379201077}, "failures": 0, "utc": "2026-10-27T08:17:37.068623+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 80, "of": 100, "median_seconds": {"original_self": 25.993945395501214, "optimized_self": 22.04284108351567}, "failures": 0, "utc": "2026-10-27T08:19:19.827030+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 81, "of": 100, "median_seconds": {"original_self": 26.205302332993597, "optimized_self": 22.248118375020567}, "failures": 0, "utc": "2026-10-27T08:20:56.478515+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 82, "of": 100, "median_seconds": {"original_self": 26.42654122899694, "optimized_self": 22.2992391045118}, "failures": 0, "utc": "2026-10-27T08:22:30.981382+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 83, "of": 100, "median_seconds": {"original_self": 26.64778012500028, "optimized_self": 22.35035983400303}, "failures": 0, "utc": "2026-10-27T08:24:04.232992+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 84, "of": 100, "median_seconds": {"original_self": 26.723301812511636, "optimized_self": 22.46143666699936}, "failures": 0, "utc": "2026-10-27T08:25:50.646307+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 85, "of": 100, "median_seconds": {"original_self": 26.79882350002299, "optimized_self": 22.572513499995694}, "failures": 0, "utc": "2026-10-27T08:27:44.376967+00:00"}
+ERROR    | 2026-10-27 01:29:41,709 | pyvex.lifting.util.lifter_helper | Error decoding block at offset 0x40 (address 0x401140):
+Traceback (most recent call last):
+  File "/Users/dajohnyu/miniconda3/envs/c2rust/lib/python3.10/site-packages/pyvex/lifting/util/lifter_helper.py", line 92, in decode
+    instr = self._decode_next_instruction(addr)
+  File "/Users/dajohnyu/miniconda3/envs/c2rust/lib/python3.10/site-packages/pyvex/lifting/util/lifter_helper.py", line 66, in _decode_next_instruction
+    return possible_instr(self.bitstrm, self.irsb.arch, addr)
+  File "/Users/dajohnyu/miniconda3/envs/c2rust/lib/python3.10/site-packages/pyvex/lifting/util/instr_helper.py", line 84, in __init__
+    self.data = self.parse(bitstrm)
+  File "/Users/dajohnyu/miniconda3/envs/c2rust/lib/python3.10/site-packages/pyvex/lifting/util/instr_helper.py", line 188, in parse
+    instr_bits = bitstrm.peek("bin:%d" % self.bitwidth)
+  File "/Users/dajohnyu/miniconda3/envs/c2rust/lib/python3.10/site-packages/bitstring/bitstream.py", line 428, in peek
+    value = self.read(fmt)
+  File "/Users/dajohnyu/miniconda3/envs/c2rust/lib/python3.10/site-packages/bitstring/bitstream.py", line 338, in read
+    dtype = bitstring.dtypes.Dtype(fmt)
+  File "/Users/dajohnyu/miniconda3/envs/c2rust/lib/python3.10/site-packages/bitstring/dtypes.py", line 62, in __new__
+    x = cls._new_from_token(token, scale)
+  File "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/real_program/source_level_opt/support/benchmark_helpers.py", line 53, in timeout_handler
+    raise TimeoutError("verification exceeded HEIMDALL_TIMEOUT_SECONDS")
+TimeoutError: verification exceeded HEIMDALL_TIMEOUT_SECONDS
+execsnoop_bound trial86 original_self: RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.
+verification exceeded HEIMDALL_TIMEOUT_SECONDS
+{"case": "execsnoop_bound", "paired_trials": 86, "of": 100, "median_seconds": {"original_self": 26.79882350002299, "optimized_self": 22.74575633299537}, "failures": 1, "utc": "2026-10-27T08:29:41.718991+00:00"}
+ERROR    | 2026-10-27 01:30:42,257 | pyvex.lifting.util.lifter_helper | Error decoding block at offset 0xa0 (address 0x403720):
+Traceback (most recent call last):
+  File "/Users/dajohnyu/miniconda3/envs/c2rust/lib/python3.10/site-packages/pyvex/lifting/util/lifter_helper.py", line 92, in decode
+    instr = self._decode_next_instruction(addr)
+  File "/Users/dajohnyu/miniconda3/envs/c2rust/lib/python3.10/site-packages/pyvex/lifting/util/lifter_helper.py", line 66, in _decode_next_instruction
+    return possible_instr(self.bitstrm, self.irsb.arch, addr)
+  File "/Users/dajohnyu/miniconda3/envs/c2rust/lib/python3.10/site-packages/pyvex/lifting/util/instr_helper.py", line 84, in __init__
+    self.data = self.parse(bitstrm)
+  File "/Users/dajohnyu/miniconda3/envs/c2rust/lib/python3.10/site-packages/pyvex/lifting/util/instr_helper.py", line 190, in parse
+    data = {c: "" for c in self.bin_format if c in string.ascii_letters}
+  File "/Users/dajohnyu/miniconda3/envs/c2rust/lib/python3.10/site-packages/pyvex/lifting/util/instr_helper.py", line 190, in <dictcomp>
+    data = {c: "" for c in self.bin_format if c in string.ascii_letters}
+  File "/Users/dajohnyu/Documents/heimdall/heimdall/Clang-limitation-experiment/real_program/source_level_opt/support/benchmark_helpers.py", line 53, in timeout_handler
+    raise TimeoutError("verification exceeded HEIMDALL_TIMEOUT_SECONDS")
+TimeoutError: verification exceeded HEIMDALL_TIMEOUT_SECONDS
+execsnoop_bound trial87 original_self: RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.
+verification exceeded HEIMDALL_TIMEOUT_SECONDS
+{"case": "execsnoop_bound", "paired_trials": 87, "of": 100, "median_seconds": {"original_self": 26.79882350002299, "optimized_self": 22.918999165995046}, "failures": 2, "utc": "2026-10-27T08:31:39.694112+00:00"}
+execsnoop_bound trial88 original_self: RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.
+verification exceeded HEIMDALL_TIMEOUT_SECONDS
+{"case": "execsnoop_bound", "paired_trials": 88, "of": 100, "median_seconds": {"original_self": 26.79882350002299, "optimized_self": 22.963054707986885}, "failures": 3, "utc": "2026-10-27T08:33:38.814823+00:00"}
+execsnoop_bound trial89 original_self: RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.
+verification exceeded HEIMDALL_TIMEOUT_SECONDS
+{"case": "execsnoop_bound", "paired_trials": 89, "of": 100, "median_seconds": {"original_self": 26.79882350002299, "optimized_self": 23.007110249978723}, "failures": 4, "utc": "2026-10-27T08:35:33.684771+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 90, "of": 100, "median_seconds": {"original_self": 27.04281750001246, "optimized_self": 23.036575478996383}, "failures": 4, "utc": "2026-10-27T08:37:29.815504+00:00"}
+execsnoop_bound trial91 original_self: RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.
+verification exceeded HEIMDALL_TIMEOUT_SECONDS
+execsnoop_bound trial91 optimized_self: RuntimeError: incomplete/failed verification: error; Formula generation failed for Rust program.
+verification exceeded HEIMDALL_TIMEOUT_SECONDS
+{"case": "execsnoop_bound", "paired_trials": 91, "of": 100, "median_seconds": {"original_self": 27.04281750001246, "optimized_self": 23.036575478996383}, "failures": 6, "utc": "2026-10-27T08:39:31.046759+00:00"}
+execsnoop_bound trial92 original_self: TimeoutError: verification exceeded HEIMDALL_TIMEOUT_SECONDS
+{"case": "execsnoop_bound", "paired_trials": 92, "of": 100, "median_seconds": {"original_self": 27.04281750001246, "optimized_self": 23.066040708014043}, "failures": 7, "utc": "2026-10-27T08:41:30.268205+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 93, "of": 100, "median_seconds": {"original_self": 27.28681150000193, "optimized_self": 23.113472000011825}, "failures": 7, "utc": "2026-10-27T08:43:14.982488+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 94, "of": 100, "median_seconds": {"original_self": 27.29412685400166, "optimized_self": 23.160903292009607}, "failures": 7, "utc": "2026-10-27T08:44:55.285595+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 95, "of": 100, "median_seconds": {"original_self": 27.30144220800139, "optimized_self": 23.26349881249189}, "failures": 7, "utc": "2026-10-27T08:46:39.491484+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 96, "of": 100, "median_seconds": {"original_self": 27.336397291495814, "optimized_self": 23.36609433297417}, "failures": 7, "utc": "2026-10-27T08:48:18.190385+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 97, "of": 100, "median_seconds": {"original_self": 27.371352374990238, "optimized_self": 23.413111270492664}, "failures": 7, "utc": "2026-10-27T08:49:57.981283+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 98, "of": 100, "median_seconds": {"original_self": 27.3972274169937, "optimized_self": 23.460128208011156}, "failures": 7, "utc": "2026-10-27T08:51:40.374672+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 99, "of": 100, "median_seconds": {"original_self": 27.423102458997164, "optimized_self": 23.495118104008725}, "failures": 7, "utc": "2026-10-27T08:53:24.846691+00:00"}
+{"case": "execsnoop_bound", "paired_trials": 100, "of": 100, "median_seconds": {"original_self": 27.477704979508417, "optimized_self": 23.530108000006294}, "failures": 7, "utc": "2026-10-27T08:55:08.231069+00:00"}
+Case process finished: execsnoop_bound

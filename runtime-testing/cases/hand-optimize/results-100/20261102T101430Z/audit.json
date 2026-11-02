@@ -1,0 +1,14 @@
+{
+  "audited_utc": "2026-11-02T21:23:57.515264+00:00",
+  "passed": true,
+  "timed_calls": 1000,
+  "untimed_warmups": 10,
+  "equivalence_proofs": 39,
+  "total_serial_calls": 1049,
+  "unique_attempts_and_results": true,
+  "alternating_order_confirmed": true,
+  "no_overlapping_calls": true,
+  "previous_case_notes_before_next_case_start": true,
+  "all_frozen_source_and_code_hashes_match": true,
+  "all_cases_share_compiler_dependencies_and_code": true
+}

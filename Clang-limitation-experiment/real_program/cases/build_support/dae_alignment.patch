@@ -1,0 +1,16 @@
+--- ebpf-se/dae/dae_kern.c
++++ dae_alignment.bpf.c
+@@ -5,7 +5,12 @@
+ #include "vmlinux.h"
+ 
+ #include <bpf_core_read.h>
+-#include <bpf_endian.h>
++#define bpf_htons(x) __builtin_bswap16(x)
++#define bpf_ntohs(x) __builtin_bswap16(x)
++#define bpf_htonl(x) __builtin_bswap32(x)
++#define bpf_ntohl(x) __builtin_bswap32(x)
++#define bpf_cpu_to_be64(x) __builtin_bswap64(x)
++#define bpf_be64_to_cpu(x) __builtin_bswap64(x)
+ #include <bpf_helpers.h>
+ #include <bpf_tracing.h>
+ 

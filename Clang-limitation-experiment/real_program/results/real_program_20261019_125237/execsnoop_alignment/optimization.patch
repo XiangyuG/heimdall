@@ -1,0 +1,20 @@
+--- execsnoop_alignment.bpf.c
++++ execsnoop_alignment_SOURCE_OPT.bpf.c
+@@ -82,7 +82,7 @@
+ 	if (bpf_map_update_elem(&execs, &pid, &empty_event, BPF_NOEXIST))
+ 		return 0;
+ 
+-	event = bpf_map_lookup_elem(&execs, &pid);
++	event = __builtin_assume_aligned(bpf_map_lookup_elem(&execs, &pid), 8);
+ 	if (!event)
+ 		return 0;
+ 
+@@ -149,7 +149,7 @@
+ 		return 0;
+ 	id = bpf_get_current_pid_tgid();
+ 	pid = (pid_t)id;
+-	event = bpf_map_lookup_elem(&execs, &pid);
++	event = __builtin_assume_aligned(bpf_map_lookup_elem(&execs, &pid), 8);
+ 	if (!event)
+ 		return 0;
+ 	ret = ctx->ret;

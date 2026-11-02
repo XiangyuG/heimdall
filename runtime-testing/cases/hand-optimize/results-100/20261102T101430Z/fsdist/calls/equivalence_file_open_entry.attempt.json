@@ -1,0 +1,7 @@
+{
+  "started_utc": "2026-11-02T11:51:08.052679+00:00",
+  "label": "equivalence_file_open_entry",
+  "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/fsdist/build/original.o",
+  "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/results-100/20261102T101430Z/fsdist/build/optimized.o",
+  "entry": "file_open_entry"
+}

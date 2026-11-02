@@ -1,0 +1,13 @@
+--- execsnoop_bound.bpf.c
++++ execsnoop_bound_SOURCE_OPT.bpf.c
+@@ -106,8 +106,9 @@
+ 	}
+ 
+ 	event->args_count++;
++	const int cached_max_args = max_args;
+ 	#pragma unroll
+-	for (i = 1; i < TOTAL_MAX_ARGS && i < max_args; i++) {
++	for (i = 1; i < TOTAL_MAX_ARGS && i < cached_max_args; i++) {
+ 		ret = bpf_probe_read_user(&argp, sizeof(argp), &args[i]);
+ 		if (ret < 0)
+ 			return 0;

@@ -1,0 +1,572 @@
+[
+  {
+    "id": "bashreadline",
+    "upstream": "c2rust_translation/c_bpf_programs/libbpf-tools/bashreadline.bpf.c",
+    "upstream_sha256": "3d3889dc048e4d1cd087c675b4f9fbe9edad3c767162522f5ed022059fe5012d",
+    "original": "bashreadline.original.bpf.c",
+    "optimized": "bashreadline.optimized.bpf.c",
+    "timed_entry": "printret",
+    "build_preparation": [],
+    "rewrite": "if (comm[0] != 'b' || comm[1] != 'a' || comm[2] != 's' || comm[3] != 'h' || comm[4] != 0 ) -> if ((((unsigned char)comm[0] ^ 'b') | ((unsigned char)comm[1] ^ 'a') | ((unsigned char)comm[2] ^ 's') | ((unsigned char)comm[3] ^ 'h') | (unsigned char)comm[4]) != 0)",
+    "proofs": {
+      "printret": {
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/bashreadline.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/bashreadline.optimized.o",
+        "entry": "printret",
+        "passed": true,
+        "seconds": 0.856294958000035,
+        "equivalent": true,
+        "result_type": "equivalent",
+        "counter_example": "",
+        "complete": true
+      }
+    },
+    "trials": {
+      "original": [
+        0.8902710000002116,
+        0.817331582999941,
+        0.7760375420002674,
+        0.7912683339995965,
+        0.7597757080002339
+      ],
+      "optimized": [
+        0.635957832999793,
+        0.5714264160001221,
+        0.6182973750001111,
+        0.5695575839999947,
+        0.5618814169997677
+      ]
+    },
+    "original_object": {
+      "instruction_slots": 36,
+      "conditional_jumps": 6,
+      "entries": [
+        "printret"
+      ],
+      "executable_sha256": "f6e52cd3840a0938fd3341e876ef64bb020f8ee58c8ebfc9837989ccb2045aac"
+    },
+    "original_source_sha256": "3d3889dc048e4d1cd087c675b4f9fbe9edad3c767162522f5ed022059fe5012d",
+    "optimized_object": {
+      "instruction_slots": 41,
+      "conditional_jumps": 2,
+      "entries": [
+        "printret"
+      ],
+      "executable_sha256": "3d82b450e1a002c0145213ba42b2fd1db0493dafc3b77458afe3c7e01cacf4d4"
+    },
+    "optimized_source_sha256": "ad7946f91520e6f2f35324b6c78274abecf31b38f74bb51bcd968fde05c82acb",
+    "medians": {
+      "original": 0.7912683339995965,
+      "optimized": 0.5714264160001221
+    },
+    "time_reduction_percent": 27.783484887894737,
+    "all_entries_equivalent": true,
+    "status": "complete"
+  },
+  {
+    "id": "tcptracer",
+    "upstream": "c2rust_translation/c_bpf_programs/libbpf-tools/tcptracer.bpf.c",
+    "upstream_sha256": "9612f74b481f6ee4e3855f4f9f7e29c13861f5d51a04884eb3b6547c62e6526a",
+    "original": "tcptracer.original.bpf.c",
+    "optimized": "tcptracer.optimized.bpf.c",
+    "timed_entry": "entry_trace_close",
+    "build_preparation": [
+      "Replaced unavailable bpf_endian.h with its little-endian bpf_ntohs expansion in both copies."
+    ],
+    "rewrite": "if (oldstate == TCP_SYN_SENT ||\n\t    oldstate == TCP_SYN_RECV ||\n\t    oldstate == TCP_NEW_SYN_RECV) -> if ((oldstate == TCP_SYN_SENT) |\n\t    (oldstate == TCP_SYN_RECV) |\n\t    (oldstate == TCP_NEW_SYN_RECV))",
+    "proofs": {
+      "entry_trace_close": {
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/tcptracer.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/tcptracer.optimized.o",
+        "entry": "entry_trace_close",
+        "passed": true,
+        "seconds": 5.426919665999776,
+        "equivalent": true,
+        "result_type": "equivalent",
+        "counter_example": "",
+        "complete": true
+      },
+      "tcp_v4_connect": {
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/tcptracer.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/tcptracer.optimized.o",
+        "entry": "tcp_v4_connect",
+        "passed": true,
+        "seconds": 0.8068399999997382,
+        "equivalent": true,
+        "result_type": "equivalent",
+        "counter_example": "",
+        "complete": true
+      },
+      "tcp_v4_connect_ret": {
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/tcptracer.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/tcptracer.optimized.o",
+        "entry": "tcp_v4_connect_ret",
+        "passed": true,
+        "seconds": 1.9147065420002036,
+        "equivalent": true,
+        "result_type": "equivalent",
+        "counter_example": "",
+        "complete": true
+      },
+      "tcp_v6_connect": {
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/tcptracer.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/tcptracer.optimized.o",
+        "entry": "tcp_v6_connect",
+        "passed": true,
+        "seconds": 0.8488391249998131,
+        "equivalent": true,
+        "result_type": "equivalent",
+        "counter_example": "",
+        "complete": true
+      },
+      "tcp_v6_connect_ret": {
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/tcptracer.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/tcptracer.optimized.o",
+        "entry": "tcp_v6_connect_ret",
+        "passed": true,
+        "seconds": 1.7379841659999329,
+        "equivalent": true,
+        "result_type": "equivalent",
+        "counter_example": "",
+        "complete": true
+      },
+      "enter_tcp_set_state": {
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/tcptracer.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/tcptracer.optimized.o",
+        "entry": "enter_tcp_set_state",
+        "passed": true,
+        "seconds": 3.9342934169999353,
+        "equivalent": true,
+        "result_type": "equivalent",
+        "counter_example": "",
+        "complete": true
+      },
+      "exit_inet_csk_accept": {
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/tcptracer.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/tcptracer.optimized.o",
+        "entry": "exit_inet_csk_accept",
+        "passed": true,
+        "seconds": 2.847317750000002,
+        "equivalent": true,
+        "result_type": "equivalent",
+        "counter_example": "",
+        "complete": true
+      }
+    },
+    "trials": {
+      "original": [
+        3.494248125000013,
+        3.9260979589998897,
+        3.950271832999988,
+        4.039635583999825,
+        3.695561833999818
+      ],
+      "optimized": [
+        6.127862707999611,
+        5.3432628330001535,
+        5.483382375000019,
+        4.971826915999827,
+        5.390793042000041
+      ]
+    },
+    "original_object": {
+      "instruction_slots": 833,
+      "conditional_jumps": 70,
+      "entries": [
+        "tcp_v4_connect",
+        "tcp_v4_connect_ret",
+        "tcp_v6_connect",
+        "tcp_v6_connect_ret",
+        "entry_trace_close",
+        "enter_tcp_set_state",
+        "exit_inet_csk_accept"
+      ],
+      "executable_sha256": "3165166db5d6f26e4e30bff44929799c0ea68945fe265edd5e65042b5c8c97bb"
+    },
+    "original_source_sha256": "09825fada95e80fc6f7cb2b4aaa0e9fb9ca63c00999899c8c1b164a913ab9cf9",
+    "optimized_object": {
+      "instruction_slots": 834,
+      "conditional_jumps": 69,
+      "entries": [
+        "tcp_v4_connect",
+        "tcp_v4_connect_ret",
+        "tcp_v6_connect",
+        "tcp_v6_connect_ret",
+        "entry_trace_close",
+        "enter_tcp_set_state",
+        "exit_inet_csk_accept"
+      ],
+      "executable_sha256": "caafd985c382df4c6ec3cbdb345bec51af22b37389d9737313688e7ad523dbc0"
+    },
+    "optimized_source_sha256": "303ffcfc2c9ed0225937069643c91d067a82136fea41646485a7cb576971b701",
+    "medians": {
+      "original": 3.9260979589998897,
+      "optimized": 5.390793042000041
+    },
+    "time_reduction_percent": -37.30663621478407,
+    "all_entries_equivalent": true,
+    "status": "complete"
+  },
+  {
+    "id": "bitesize",
+    "upstream": "c2rust_translation/c_bpf_programs/libbpf-tools/bitesize.bpf.c",
+    "upstream_sha256": "0003956b315e4521a146dced89fe44d6032803b8075380184cb0c8e0388f1085",
+    "original": "bitesize.original.bpf.c",
+    "optimized": "bitesize.optimized.bpf.c",
+    "timed_entry": "block_rq_issue",
+    "build_preparation": [
+      "Inlined runtime-testing/include/bits.bpf.h unchanged in both copies."
+    ],
+    "rewrite": "if (slot >= MAX_SLOTS)\n\t\tslot = MAX_SLOTS - 1; -> u64 over = (slot + (256ULL - MAX_SLOTS)) >> 8;\n\tu64 mask = 0ULL - over;\n\tslot = (slot & ~mask) | ((MAX_SLOTS - 1) & mask);",
+    "proofs": {
+      "block_rq_issue": {
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/bitesize.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/bitesize.optimized.o",
+        "entry": "block_rq_issue",
+        "passed": true,
+        "seconds": 1.2331702080000468,
+        "equivalent": true,
+        "result_type": "equivalent",
+        "counter_example": "",
+        "complete": true
+      }
+    },
+    "trials": {
+      "original": [
+        1.3504869170001257,
+        1.3290162499997678,
+        1.678703625000253,
+        1.3523888330000773,
+        1.292491874999996
+      ],
+      "optimized": [
+        1.430631459000324,
+        1.3186782919997313,
+        1.4463438749999113,
+        1.3905502080001497,
+        1.466770541999722
+      ]
+    },
+    "original_object": {
+      "instruction_slots": 130,
+      "conditional_jumps": 15,
+      "entries": [
+        "block_rq_issue"
+      ],
+      "executable_sha256": "96018cb94d2b631e984bc4cdfac14baee3ad4cc06f90f0020e693b509a4492f9"
+    },
+    "original_source_sha256": "1d81e1ca6a6761db5618e1930f8eb53b40bba17c160422bdb80b10ee944aebb6",
+    "optimized_object": {
+      "instruction_slots": 137,
+      "conditional_jumps": 14,
+      "entries": [
+        "block_rq_issue"
+      ],
+      "executable_sha256": "676746ea984f24df3e64d482160b700623eb7743b9af1290ddcf86e27f7f91eb"
+    },
+    "optimized_source_sha256": "4655b73774b45b650e7891f801fa654178d1875be73d9ceaa7bc57443ea3693c",
+    "medians": {
+      "original": 1.3504869170001257,
+      "optimized": 1.430631459000324
+    },
+    "time_reduction_percent": -5.934492292470739,
+    "all_entries_equivalent": true,
+    "status": "complete"
+  },
+  {
+    "id": "cpufreq",
+    "upstream": "c2rust_translation/c_bpf_programs/libbpf-tools/cpufreq.bpf.c",
+    "upstream_sha256": "62e777c0babc74bf963a755fa70a3301c832d9307c00e5df5d670cd6eede0c41",
+    "original": "cpufreq.original.bpf.c",
+    "optimized": "cpufreq.optimized.bpf.c",
+    "timed_entry": "do_sample",
+    "build_preparation": [],
+    "rewrite": "if (slot >= MAX_SLOTS)\n\t\tslot = MAX_SLOTS - 1; -> u64 over = (slot + (0x100000000ULL - MAX_SLOTS)) >> 32;\n\tu64 mask = 0ULL - over;\n\tslot = (slot & ~mask) | ((MAX_SLOTS - 1) & mask);",
+    "proofs": {
+      "do_sample": {
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/cpufreq.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/cpufreq.optimized.o",
+        "entry": "do_sample",
+        "passed": true,
+        "seconds": 1.4158689159999085,
+        "equivalent": true,
+        "result_type": "equivalent",
+        "counter_example": "",
+        "complete": true
+      },
+      "cpu_frequency": {
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/cpufreq.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/cpufreq.optimized.o",
+        "entry": "cpu_frequency",
+        "passed": true,
+        "seconds": 0.650921582999672,
+        "equivalent": true,
+        "result_type": "equivalent",
+        "counter_example": "",
+        "complete": true
+      }
+    },
+    "trials": {
+      "original": [
+        1.4305428329998904,
+        1.4316166660000818,
+        1.4506272080002418,
+        1.996097582999937,
+        2.978176667000298
+      ],
+      "optimized": [
+        1.452636750000238,
+        1.460593708000033,
+        1.8730832080000255,
+        1.8558776249997209,
+        2.2827753750002557
+      ]
+    },
+    "original_object": {
+      "instruction_slots": 98,
+      "conditional_jumps": 17,
+      "entries": [
+        "cpu_frequency",
+        "do_sample"
+      ],
+      "executable_sha256": "e35cb4a50fdcd66bd5fec55645bf83245763687ceab6d4358214f9e624dbdb2e"
+    },
+    "original_source_sha256": "62e777c0babc74bf963a755fa70a3301c832d9307c00e5df5d670cd6eede0c41",
+    "optimized_object": {
+      "instruction_slots": 106,
+      "conditional_jumps": 16,
+      "entries": [
+        "cpu_frequency",
+        "do_sample"
+      ],
+      "executable_sha256": "5599c4887fde7caeeb6631a52ed789747ef1716ca4d2be6230abdf440a15b0e4"
+    },
+    "optimized_source_sha256": "2849fe1cf2949246c4319ed478870c32faee53573faa9d09ab9fbc4135e782e6",
+    "medians": {
+      "original": 1.4506272080002418,
+      "optimized": 1.8558776249997209
+    },
+    "time_reduction_percent": -27.936220606129126,
+    "all_entries_equivalent": true,
+    "status": "complete"
+  },
+  {
+    "id": "biotop",
+    "upstream": "c2rust_translation/c_bpf_programs/libbpf-tools/biotop.bpf.c",
+    "upstream_sha256": "4dc9dbe652b589e536be3f4c8c8b40c0bfa251d3e0d17e97eb78043bb5a15d8a",
+    "original": "biotop.original.bpf.c",
+    "optimized": "biotop.optimized.bpf.c",
+    "timed_entry": "blk_account_io_done",
+    "build_preparation": [],
+    "rewrite": "info.rwflag = !!((cmd_flags & REQ_OP_MASK) == REQ_OP_WRITE); -> info.rwflag = ((__u64)((cmd_flags & REQ_OP_MASK) ^ REQ_OP_WRITE) - 1) >> 63;",
+    "proofs": {
+      "blk_account_io_done": {
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/biotop.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/biotop.optimized.o",
+        "entry": "blk_account_io_done",
+        "passed": true,
+        "seconds": 4.3241859590002605,
+        "equivalent": true,
+        "result_type": "equivalent",
+        "counter_example": "",
+        "complete": true
+      },
+      "blk_mq_start_request": {
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/biotop.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/biotop.optimized.o",
+        "entry": "blk_mq_start_request",
+        "passed": true,
+        "seconds": 0.46335129199997027,
+        "equivalent": true,
+        "result_type": "equivalent",
+        "counter_example": "",
+        "complete": true
+      },
+      "blk_account_io_start": {
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/biotop.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/biotop.optimized.o",
+        "entry": "blk_account_io_start",
+        "passed": true,
+        "seconds": 0.4480412919997434,
+        "equivalent": true,
+        "result_type": "equivalent",
+        "counter_example": "",
+        "complete": true
+      },
+      "__blk_account_io_start": {
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/biotop.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/biotop.optimized.o",
+        "entry": "__blk_account_io_start",
+        "passed": true,
+        "seconds": 0.4340799579999839,
+        "equivalent": true,
+        "result_type": "equivalent",
+        "counter_example": "",
+        "complete": true
+      },
+      "__blk_account_io_done": {
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/biotop.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/biotop.optimized.o",
+        "entry": "__blk_account_io_done",
+        "passed": true,
+        "seconds": 3.5583823749998373,
+        "equivalent": true,
+        "result_type": "equivalent",
+        "counter_example": "",
+        "complete": true
+      },
+      "block_io_start": {
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/biotop.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/biotop.optimized.o",
+        "entry": "block_io_start",
+        "passed": true,
+        "seconds": 0.5184959170001093,
+        "equivalent": true,
+        "result_type": "equivalent",
+        "counter_example": "",
+        "complete": true
+      },
+      "block_io_done": {
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/biotop.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/biotop.optimized.o",
+        "entry": "block_io_done",
+        "passed": true,
+        "seconds": 3.56580645799977,
+        "equivalent": true,
+        "result_type": "equivalent",
+        "counter_example": "",
+        "complete": true
+      }
+    },
+    "trials": {
+      "original": [
+        4.567749124999864,
+        3.9876110000000153,
+        4.580772541999977,
+        3.9271698749998905,
+        3.9894084999996267
+      ],
+      "optimized": [
+        2.696176041000399,
+        3.015642041999854,
+        2.7445928750003077,
+        2.9972872919997826,
+        3.069037499999922
+      ]
+    },
+    "original_object": {
+      "instruction_slots": 542,
+      "conditional_jumps": 36,
+      "entries": [
+        "blk_mq_start_request",
+        "blk_account_io_start",
+        "blk_account_io_done",
+        "__blk_account_io_start",
+        "__blk_account_io_done",
+        "block_io_start",
+        "block_io_done"
+      ],
+      "executable_sha256": "2388b79a8a8db0241bdb5f71c08fc20a709bc81e0699f89f5e00921a427002b0"
+    },
+    "original_source_sha256": "4dc9dbe652b589e536be3f4c8c8b40c0bfa251d3e0d17e97eb78043bb5a15d8a",
+    "optimized_object": {
+      "instruction_slots": 542,
+      "conditional_jumps": 33,
+      "entries": [
+        "blk_mq_start_request",
+        "blk_account_io_start",
+        "blk_account_io_done",
+        "__blk_account_io_start",
+        "__blk_account_io_done",
+        "block_io_start",
+        "block_io_done"
+      ],
+      "executable_sha256": "8bf640090537f16416b2440f1a77d5f97954e90191ce250bea932a490acfc619"
+    },
+    "optimized_source_sha256": "975bf12532f00a455ed5b7b635553a25c6451168b61fdc71b4a23daa5f17327c",
+    "medians": {
+      "original": 3.9894084999996267,
+      "optimized": 2.9972872919997826
+    },
+    "time_reduction_percent": 24.86887988532478,
+    "all_entries_equivalent": true,
+    "status": "complete"
+  },
+  {
+    "id": "capable",
+    "upstream": "c2rust_translation/c_bpf_programs/libbpf-tools/capable.bpf.c",
+    "upstream_sha256": "d9b122ee98021b10b77d34e3db3b146dee7a1b1b108471a64bbc326c7a2d27d9",
+    "original": "capable.original.bpf.c",
+    "optimized": "capable.optimized.bpf.c",
+    "timed_entry": "kprobe__cap_capable_exit",
+    "build_preparation": [],
+    "rewrite": "event.audit = (ap->cap_opt & 0b10) == 0;\n\t\tevent.insetid = (ap->cap_opt & 0b100) != 0; -> event.audit = 1 ^ (((unsigned int)ap->cap_opt >> 1) & 1);\n\t\tevent.insetid = ((unsigned int)ap->cap_opt >> 2) & 1;",
+    "proofs": {
+      "kprobe__cap_capable_exit": {
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/capable.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/capable.optimized.o",
+        "entry": "kprobe__cap_capable_exit",
+        "passed": true,
+        "seconds": 1.0909903749998193,
+        "equivalent": true,
+        "result_type": "equivalent",
+        "counter_example": "",
+        "complete": true
+      },
+      "kprobe__cap_capable_entry": {
+        "left": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/capable.original.o",
+        "right": "/Users/dajohnyu/Documents/heimdall/heimdall/runtime-testing/cases/hand-optimize/branch-reduction/results/20261102T104828Z/build/capable.optimized.o",
+        "entry": "kprobe__cap_capable_entry",
+        "passed": true,
+        "seconds": 0.6060807499998191,
+        "equivalent": true,
+        "result_type": "equivalent",
+        "counter_example": "",
+        "complete": true
+      }
+    },
+    "trials": {
+      "original": [
+        0.8401531250001426,
+        1.1534567499998047,
+        0.9584329589997651,
+        1.0387030000001687,
+        1.091714041999694
+      ],
+      "optimized": [
+        1.1022698339997987,
+        1.0973004580000634,
+        1.069658249999975,
+        1.0920309589996577,
+        0.9801115000000209
+      ]
+    },
+    "original_object": {
+      "instruction_slots": 175,
+      "conditional_jumps": 14,
+      "entries": [
+        "kprobe__cap_capable_entry",
+        "kprobe__cap_capable_exit"
+      ],
+      "executable_sha256": "aa6bcb99495f92c32b9db2833dd1e7d2bf381e574a7681495ea3738cd5d9d7c9"
+    },
+    "original_source_sha256": "d9b122ee98021b10b77d34e3db3b146dee7a1b1b108471a64bbc326c7a2d27d9",
+    "optimized_object": {
+      "instruction_slots": 175,
+      "conditional_jumps": 14,
+      "entries": [
+        "kprobe__cap_capable_entry",
+        "kprobe__cap_capable_exit"
+      ],
+      "executable_sha256": "aa6bcb99495f92c32b9db2833dd1e7d2bf381e574a7681495ea3738cd5d9d7c9"
+    },
+    "optimized_source_sha256": "9be263a69c9e33c1d3cd74bdc287bc2090f2fb3935b34dfc3d00a1baa3f3d3a1",
+    "medians": {
+      "original": 1.0387030000001687,
+      "optimized": 1.0920309589996577
+    },
+    "time_reduction_percent": -5.1340911694180535,
+    "all_entries_equivalent": true,
+    "status": "complete"
+  }
+]

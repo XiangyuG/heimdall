@@ -1,0 +1,16 @@
+--- tcpconnect_bound.bpf.c
++++ tcpconnect_bound_SOURCE_OPT.bpf.c
+@@ -93,10 +93,11 @@
+ {
+ 	int i;
+ 
+-	if (filter_ports_len == 0)
++	const int cached_filter_ports_len = filter_ports_len;
++	if (cached_filter_ports_len == 0)
+ 		return false;
+ 
+-	for (i = 0; i < filter_ports_len && i < MAX_PORTS; i++) {
++	for (i = 0; i < cached_filter_ports_len && i < MAX_PORTS; i++) {
+ 		if (port == filter_ports[i])
+ 			return false;
+ 	}

@@ -1,0 +1,482 @@
+[
+  {
+    "id": "ken_execsnoop_alignment",
+    "program": "KEN/dataset/libbpf/execsnoop.bpf.c",
+    "entry": "tracepoint__syscalls__sys_enter_execve",
+    "method": "Align local event buffer",
+    "variant": "combined",
+    "requirement": null,
+    "original_sha256": "99d062a7773b3d26f92e665682a563496db1cad780adf5b6bc9e4b85f39cb2cc",
+    "baseline_sha256": "d54ffed6062ae86d4d1265c416517b607da535993ce8d111c4692d9f56f6bf58",
+    "expected_instructions": [
+      44,
+      43
+    ],
+    "original_directory": "c2rust_translation/c_bpf_programs/KEN/dataset/libbpf",
+    "label": "KEN execsnoop\nalignment",
+    "status": "success",
+    "instructions": [
+      44,
+      43
+    ],
+    "equivalence": "passed for selected entry",
+    "raw_seconds": {
+      "original_self": [
+        0.33281716700003017,
+        0.35468791700259317,
+        0.3290267909906106,
+        0.3681330420076847,
+        0.3465027909987839
+      ],
+      "optimized_self": [
+        0.30493941700842697,
+        0.30589545900875237,
+        0.31376424999325536,
+        0.3533797089912696,
+        0.3347555830114288
+      ]
+    },
+    "median_seconds": {
+      "original_self": 0.3465027909987839,
+      "optimized_self": 0.31376424999325536
+    },
+    "speedup": 1.1043412084271305,
+    "reduction_percent": 9.44827627828355,
+    "reduction_ci95_percent": [
+      3.390220307748193,
+      13.756447754459044
+    ]
+  },
+  {
+    "id": "ken_sigsnoop_alignment",
+    "program": "KEN/dataset/libbpf/sigsnoop.bpf.c",
+    "entry": "kill_entry",
+    "method": "Align local event buffer",
+    "variant": "combined",
+    "requirement": null,
+    "original_sha256": "f19eaa6019a91096e9d2de254d13056ebc70bfceaa93d93d59656d8d3c43c57b",
+    "baseline_sha256": "f19eaa6019a91096e9d2de254d13056ebc70bfceaa93d93d59656d8d3c43c57b",
+    "expected_instructions": [
+      67,
+      64
+    ],
+    "original_directory": "c2rust_translation/c_bpf_programs/KEN/dataset/libbpf",
+    "label": "KEN sigsnoop\nalignment",
+    "status": "success",
+    "instructions": [
+      67,
+      64
+    ],
+    "equivalence": "passed for selected entry",
+    "raw_seconds": {
+      "original_self": [
+        0.25418283299950417,
+        0.24904712500574533,
+        0.40345199999865144,
+        0.2517534579965286,
+        0.2708106669888366
+      ],
+      "optimized_self": [
+        0.24715795899101067,
+        0.23752708300889935,
+        0.23391945898765698,
+        0.24303216699627228,
+        0.3322039170016069
+      ]
+    },
+    "median_seconds": {
+      "original_self": 0.25418283299950417,
+      "optimized_self": 0.24303216699627228
+    },
+    "speedup": 1.0458814408851604,
+    "reduction_percent": 4.386868252134734,
+    "reduction_ci95_percent": [
+      -22.670174220021046,
+      42.02049835211156
+    ]
+  },
+  {
+    "id": "dae_alignment",
+    "program": "ebpf-se/dae/dae_kern.c",
+    "entry": "kprobe_skb_1",
+    "method": "Align local event buffer",
+    "variant": "combined",
+    "requirement": null,
+    "original_sha256": "774b6298f3209068e032337d38276aa568c333621e1c421939d47ceda6fadad7",
+    "baseline_sha256": "f0950cdd5044c05aa72f195cbd72579c2f7cbe6fa5023750d7de9fabec0ac55e",
+    "expected_instructions": [
+      2339,
+      2279
+    ],
+    "original_directory": "c2rust_translation/c_bpf_programs/ebpf-se/dae",
+    "label": "dae_kern\nalignment",
+    "status": "success",
+    "instructions": [
+      2339,
+      2279
+    ],
+    "equivalence": "passed for selected entry",
+    "raw_seconds": {
+      "original_self": [
+        7.313755374998436,
+        7.3299010829941835,
+        7.516366583004128,
+        7.098417166998843,
+        7.8170982919982634
+      ],
+      "optimized_self": [
+        7.72621695799171,
+        7.098350959000527,
+        7.143098583997926,
+        7.2284287079965,
+        7.64449470800173
+      ]
+    },
+    "median_seconds": {
+      "original_self": 7.3299010829941835,
+      "optimized_self": 7.2284287079965
+    },
+    "speedup": 1.014037957500422,
+    "reduction_percent": 1.3843621332504275,
+    "reduction_ci95_percent": [
+      -5.639532112370693,
+      4.966069641284254
+    ]
+  },
+  {
+    "id": "biosnoop_alignment",
+    "program": "libbpf-tools/biosnoop.bpf.c",
+    "entry": "block_rq_complete",
+    "method": "Expose hash-map value alignment",
+    "variant": "combined",
+    "requirement": null,
+    "original_sha256": "27e7457ff697bb2eec993ddf3a4918628d1b204f92b49af1fc6357f3bdef33a1",
+    "baseline_sha256": "27e7457ff697bb2eec993ddf3a4918628d1b204f92b49af1fc6357f3bdef33a1",
+    "expected_instructions": [
+      551,
+      545
+    ],
+    "original_directory": "c2rust_translation/c_bpf_programs/libbpf-tools",
+    "label": "biosnoop\nalignment",
+    "status": "success",
+    "instructions": [
+      551,
+      545
+    ],
+    "equivalence": "passed for selected entry",
+    "raw_seconds": {
+      "original_self": [
+        1.3204330419976031,
+        1.2966774160013301,
+        1.5820030419999966,
+        1.5314239580038702,
+        1.4841126249957597
+      ],
+      "optimized_self": [
+        1.5412176249956246,
+        1.2668326249986421,
+        1.7346424160059541,
+        1.5568439580092672,
+        1.3747379169944907
+      ]
+    },
+    "median_seconds": {
+      "original_self": 1.4841126249957597,
+      "optimized_self": 1.5412176249956246
+    },
+    "speedup": 0.9629481268097833,
+    "reduction_percent": -3.847753805074472,
+    "reduction_ci95_percent": [
+      -16.720619370749002,
+      7.369704034529157
+    ]
+  },
+  {
+    "id": "capable_alignment",
+    "program": "libbpf-tools/capable.bpf.c",
+    "entry": "kprobe__cap_capable_exit",
+    "method": "Align event and i_key",
+    "variant": "combined",
+    "requirement": null,
+    "original_sha256": "d9b122ee98021b10b77d34e3db3b146dee7a1b1b108471a64bbc326c7a2d27d9",
+    "baseline_sha256": "d9b122ee98021b10b77d34e3db3b146dee7a1b1b108471a64bbc326c7a2d27d9",
+    "expected_instructions": [
+      175,
+      171
+    ],
+    "original_directory": "c2rust_translation/c_bpf_programs/libbpf-tools",
+    "label": "capable\nalignment",
+    "status": "success",
+    "instructions": [
+      175,
+      171
+    ],
+    "equivalence": "passed for selected entry",
+    "raw_seconds": {
+      "original_self": [
+        0.7702641659998335,
+        0.7862118750053924,
+        0.9079405420052353,
+        0.7677711669966811,
+        0.7529627500043716
+      ],
+      "optimized_self": [
+        0.732423999987077,
+        0.7359474580007372,
+        0.7517590829957044,
+        0.7238130839978112,
+        0.7072052500006976
+      ]
+    },
+    "median_seconds": {
+      "original_self": 0.7702641659998335,
+      "optimized_self": 0.732423999987077
+    },
+    "speedup": 1.0516642901016682,
+    "reduction_percent": 4.91262188779592,
+    "reduction_ci95_percent": [
+      4.91262188779592,
+      17.201727622449358
+    ]
+  },
+  {
+    "id": "execsnoop_alignment",
+    "program": "libbpf-tools/execsnoop.bpf.c",
+    "entry": "tracepoint__syscalls__sys_enter_execve",
+    "method": "Expose hash-map value alignment",
+    "variant": "combined",
+    "requirement": null,
+    "original_sha256": "75f03562dd74dec2375c0e21f002fd6e1e5f2fcf82d1d6dac946f38882aefecf",
+    "baseline_sha256": "75f03562dd74dec2375c0e21f002fd6e1e5f2fcf82d1d6dac946f38882aefecf",
+    "expected_instructions": [
+      1807,
+      1806
+    ],
+    "original_directory": "c2rust_translation/c_bpf_programs/libbpf-tools",
+    "label": "execsnoop\nalignment",
+    "status": "success",
+    "instructions": [
+      1807,
+      1806
+    ],
+    "equivalence": "passed for selected entry",
+    "raw_seconds": {
+      "original_self": [
+        15.467076291999547,
+        26.160198917001253,
+        17.71991554100532,
+        16.612163166995742,
+        16.92600591700466
+      ],
+      "optimized_self": [
+        16.345778624992818,
+        17.015469791003852,
+        17.986903500001063,
+        18.76571808299923,
+        16.139288874997874
+      ]
+    },
+    "median_seconds": {
+      "original_self": 16.92600591700466,
+      "optimized_self": 17.015469791003852
+    },
+    "speedup": 0.9947422037065063,
+    "reduction_percent": -0.5285586832349809,
+    "reduction_ci95_percent": [
+      -12.96372359430027,
+      34.95664981375326
+    ]
+  },
+  {
+    "id": "mdflush_alignment",
+    "program": "libbpf-tools/mdflush.bpf.c",
+    "entry": "md_flush_request",
+    "method": "Align local event buffer",
+    "variant": "combined",
+    "requirement": null,
+    "original_sha256": "d66d42f0b1e186de68a755ee077e51d6d6edc067d6fffdb8f0c1a43aeb8d020c",
+    "baseline_sha256": "d66d42f0b1e186de68a755ee077e51d6d6edc067d6fffdb8f0c1a43aeb8d020c",
+    "expected_instructions": [
+      126,
+      118
+    ],
+    "original_directory": "c2rust_translation/c_bpf_programs/libbpf-tools",
+    "label": "mdflush\nalignment",
+    "status": "success",
+    "instructions": [
+      126,
+      118
+    ],
+    "equivalence": "passed for selected entry",
+    "raw_seconds": {
+      "original_self": [
+        0.7549186249962077,
+        0.8071643750008661,
+        0.7590038330090465,
+        0.745901166999829,
+        0.7405499170126859
+      ],
+      "optimized_self": [
+        0.6541012910020072,
+        1.089707292005187,
+        0.635719625002821,
+        0.6426210420031566,
+        0.627752958011115
+      ]
+    },
+    "median_seconds": {
+      "original_self": 0.7549186249962077,
+      "optimized_self": 0.6426210420031566
+    },
+    "speedup": 1.1747493089286352,
+    "reduction_percent": 14.87545535038497,
+    "reduction_ci95_percent": [
+      -35.00438395884575,
+      16.242896629055114
+    ]
+  },
+  {
+    "id": "tcprtt_alignment",
+    "program": "libbpf-tools/tcprtt.bpf.c",
+    "entry": "tcp_rcv",
+    "method": "Align local key",
+    "variant": "combined",
+    "requirement": null,
+    "original_sha256": "1f632ef78dc0c8dc7a913d6478a769b58c2607be37d71adea667b13dafa786b4",
+    "baseline_sha256": "8817e5f7620bf7211ff073d85295c467962da0c4dce9c62448a847cdf65ffea2",
+    "expected_instructions": [
+      490,
+      486
+    ],
+    "original_directory": "c2rust_translation/c_bpf_programs/libbpf-tools",
+    "label": "tcprtt\nalignment",
+    "status": "success",
+    "instructions": [
+      490,
+      486
+    ],
+    "equivalence": "passed for selected entry",
+    "raw_seconds": {
+      "original_self": [
+        27.229412000000593,
+        24.144879083003616,
+        26.36836837499868,
+        27.016943041991908,
+        27.025555458007148
+      ],
+      "optimized_self": [
+        23.513347582993447,
+        22.351193334005075,
+        25.26970804198936,
+        22.5771392500028,
+        24.352443374998984
+      ]
+    },
+    "median_seconds": {
+      "original_self": 27.016943041991908,
+      "optimized_self": 23.513347582993447
+    },
+    "speedup": 1.149004536535347,
+    "reduction_percent": 12.968141708530423,
+    "reduction_ci95_percent": [
+      4.166584437021981,
+      16.433405456303497
+    ]
+  },
+  {
+    "id": "execsnoop_bound",
+    "program": "libbpf-tools/execsnoop.bpf.c",
+    "entry": "tracepoint__syscalls__sys_enter_execve",
+    "method": "Cache max_args (conditional)",
+    "variant": "conditional_config_bound",
+    "requirement": "loader-frozen configuration; volatile read trace is not an observation",
+    "original_sha256": "75f03562dd74dec2375c0e21f002fd6e1e5f2fcf82d1d6dac946f38882aefecf",
+    "baseline_sha256": "75f03562dd74dec2375c0e21f002fd6e1e5f2fcf82d1d6dac946f38882aefecf",
+    "expected_instructions": [
+      1807,
+      192
+    ],
+    "original_directory": "c2rust_translation/c_bpf_programs/libbpf-tools",
+    "label": "execsnoop\nbound caching*",
+    "status": "success",
+    "instructions": [
+      1807,
+      192
+    ],
+    "equivalence": "passed for selected entry",
+    "raw_seconds": {
+      "original_self": [
+        19.654257874994073,
+        18.76667958399048,
+        20.367198000007193,
+        19.481963957994594,
+        20.021779041999253
+      ],
+      "optimized_self": [
+        14.691243459004909,
+        15.39765250000346,
+        17.010496832997887,
+        15.934514999986277,
+        15.566095000001951
+      ]
+    },
+    "median_seconds": {
+      "original_self": 19.654257874994073,
+      "optimized_self": 15.566095000001951
+    },
+    "speedup": 1.2626325276179806,
+    "reduction_percent": 20.800392978426586,
+    "reduction_ci95_percent": [
+      16.480917831741603,
+      25.25159915757267
+    ]
+  },
+  {
+    "id": "tcpconnect_bound",
+    "program": "libbpf-tools/tcpconnect.bpf.c",
+    "entry": "tcp_v4_connect_ret",
+    "method": "Cache filter_ports_len (conditional)",
+    "variant": "conditional_config_bound",
+    "requirement": "loader-frozen configuration; volatile read trace is not an observation",
+    "original_sha256": "c0fe59431993fe03e24d15ce92625a46a019ff7cf8867e43b89495697b7d2c72",
+    "baseline_sha256": "c0fe59431993fe03e24d15ce92625a46a019ff7cf8867e43b89495697b7d2c72",
+    "expected_instructions": [
+      393,
+      381
+    ],
+    "original_directory": "c2rust_translation/c_bpf_programs/libbpf-tools",
+    "label": "tcpconnect\nbound caching*",
+    "status": "success",
+    "instructions": [
+      393,
+      381
+    ],
+    "equivalence": "passed for selected entry",
+    "raw_seconds": {
+      "original_self": [
+        1.3333330410096096,
+        1.312363874996663,
+        1.3977450829988811,
+        1.272733749996405,
+        1.2827454579964979
+      ],
+      "optimized_self": [
+        1.4784309590031626,
+        1.380170749995159,
+        1.3261664169986034,
+        1.297737667002366,
+        1.277073040997493
+      ]
+    },
+    "median_seconds": {
+      "original_self": 1.312363874996663,
+      "optimized_self": 1.3261664169986034
+    },
+    "speedup": 0.9895921493524331,
+    "reduction_percent": -1.0517313273329387,
+    "reduction_ci95_percent": [
+      -10.88234623539246,
+      5.12101003758888
+    ]
+  }
+]

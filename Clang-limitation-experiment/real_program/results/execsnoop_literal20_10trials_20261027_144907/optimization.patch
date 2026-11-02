@@ -1,0 +1,11 @@
+--- execsnoop_original.bpf.c
++++ execsnoop_literal20.bpf.c
+@@ -107,7 +107,7 @@
+ 
+ 	event->args_count++;
+ 	#pragma unroll
+-	for (i = 1; i < TOTAL_MAX_ARGS && i < max_args; i++) {
++	for (i = 1; i < 20; i++) {
+ 		ret = bpf_probe_read_user(&argp, sizeof(argp), &args[i]);
+ 		if (ret < 0)
+ 			return 0;
