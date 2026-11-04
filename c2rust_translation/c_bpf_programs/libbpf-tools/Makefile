@@ -13,7 +13,7 @@
 
 CC      ?= clang
 CFLAGS  ?= -O2 -Wall
-LDLIBS  := -lbpf -lelf -lz
+LDLIBS  := -lbpf -lelf -lz -lm
 
 RUNNER_SRCS := $(wildcard *_runner.c)
 RUNNERS     := $(RUNNER_SRCS:.c=)

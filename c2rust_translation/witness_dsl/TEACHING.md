@@ -589,6 +589,7 @@ experiment vs. a CI gate).
 | Is `m[:]` applied to a map and `.f` to a struct? (`x[:][:]`, `scalar.f` parse fine at this layer) | Semantic layer's kind check |
 | Does `bpf_map_update_elem` really take a `flags` argument? | Semantic layer |
 | Lowering the `assumption`/`binding` blocks into a stronger-premise equivalence proof obligation | Semantic layer (`lower.py`) |
+| Do two `.wit` files, lowered against the same `Env`, impose the *same* net constraints? | `equivalence.py` (`check_equivalent` et al.) -- canonicalizes ranges per `(path, signedness)` and intersects them, and compares helper-flag / map-correspondence sets; no SMT solver needed since the DSL has only AND, never OR |
 
 One-sentence summary of this whole document: **the BNF is responsible for
 shape, the semantic layer is responsible for meaning, and the line between

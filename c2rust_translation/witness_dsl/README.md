@@ -81,6 +81,8 @@ program = parse(source_text)       # raises DslSyntaxError on the first error
 | `ast_nodes.py` | dataclass AST (`Program`, `Expr`, statements, …) |
 | `parser.py` | recursive-descent `parse(src)` → `Program` |
 | `syntax_check.py` | `check_source` / `check_file` API + CLI |
+| `lower.py` | semantic pass: `Program` + `Env` -> resolved `WitnessPlan` |
+| `equivalence.py` | do two lowered witnesses impose the same net constraints? `check_equivalent` / `check_sources_equivalent` / `check_files_equivalent` API + CLI (`python3 -m witness_dsl.equivalence`) |
 | `errors.py` | `Pos`, `Diagnostic` (caret rendering), `DslSyntaxError` |
 | `examples/*.wit` | valid + `invalid_*` fixtures |
 | `test_syntax.py` | standalone test suite — `python3 test_syntax.py` |

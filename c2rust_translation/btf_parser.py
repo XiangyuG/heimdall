@@ -7,7 +7,7 @@ including type, key_size, value_size, and max_entries.
 
 import struct
 from elftools.elf.elffile import ELFFile
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Tuple
 
 BTF_MAGIC = 0xeB9F
@@ -115,6 +115,9 @@ class BTFArray(BTFType):
 class BTFStruct(BTFType):
     size: int
     members: List[Tuple[str, int, int]]
+    # BTF kind_flag: when set, each member offset packs
+    # (bitfield_size << 24) | bit_offset instead of a plain bit offset.
+    kind_flag: bool = False
 
 @dataclass
 class BTFTypedef(BTFType):
@@ -147,6 +150,11 @@ class MapMetadata:
     inner_key_size: int = 0
     inner_value_size: int = 0
     inner_max_entries: int = 0
+    # Byte layout of the value type when it is a plain struct:
+    # [(member_name, byte_offset, byte_size), ...] in offset order. None when
+    # the value is not a struct or has a layout this can't express (bitfields,
+    # non-byte-aligned or anonymous members).
+    value_fields: Optional[List[Tuple[str, int, int]]] = None
 
 class BTFParser:
     """Parser for BTF sections in eBPF ELF files."""
@@ -207,6 +215,7 @@ class BTFParser:
             offset += 12
 
             kind = (info >> 24) & 0x1f
+            kind_flag = bool(info >> 31)
             vlen = info & 0xffff
             name = self._get_string(name_off)
 
@@ -234,7 +243,7 @@ class BTFParser:
                     offset += 12
                     member_name = self._get_string(member_name_off)
                     members.append((member_name, member_type, member_offset))
-                btf_type = BTFStruct(type_id, kind, name, size_or_type, members)
+                btf_type = BTFStruct(type_id, kind, name, size_or_type, members, kind_flag)
 
             elif kind == BTF_KIND_ENUM:
                 offset += vlen * 8
@@ -320,6 +329,32 @@ class BTFParser:
             return elem_size * t.nr_elems
 
         return 0
+
+    def _struct_layout(self, type_id: int) -> Optional[List[Tuple[str, int, int]]]:
+        """[(member_name, byte_offset, byte_size), ...] of the STRUCT that
+        `type_id` names (through typedef/const/volatile), in offset order, or
+        None if it isn't a plain struct of named, byte-aligned, non-bitfield
+        members."""
+        seen = set()
+        t = self.types.get(type_id)
+        while isinstance(t, BTFTypedef) and t.type_id not in seen:
+            seen.add(t.type_id)
+            t = self.types.get(t.target_type_id)
+        if not isinstance(t, BTFStruct) or t.kind != BTF_KIND_STRUCT:
+            return None
+        layout = []
+        for member_name, member_type, member_offset in t.members:
+            if t.kind_flag:
+                if member_offset >> 24:
+                    return None  # bitfield
+                member_offset &= 0xFFFFFF
+            if not member_name or member_offset % 8:
+                return None
+            size = self._resolve_type_size(member_type)
+            if size <= 0:
+                return None
+            layout.append((member_name, member_offset // 8, size))
+        return sorted(layout, key=lambda m: m[1])
 
     def _resolve_array_nelems(self, type_id: int) -> int:
         """Follow PTR -> ARRAY chain to get nr_elems (used for type and max_entries)."""
@@ -471,12 +506,14 @@ class BTFParser:
         elif 'key_size' in fields:
             key_size = self._resolve_array_nelems(fields['key_size'])
 
+        value_fields = None
         if 'value' in fields:
             value_tid = fields['value']
             if value_tid in self.types:
                 ptr = self.types[value_tid]
                 if isinstance(ptr, BTFPtr):
                     value_size = self._resolve_type_size(ptr.target_type_id)
+                    value_fields = self._struct_layout(ptr.target_type_id)
         elif 'value_size' in fields:
             value_size = self._resolve_array_nelems(fields['value_size'])
 
@@ -516,6 +553,7 @@ class BTFParser:
             inner_key_size=inner_key_size,
             inner_value_size=inner_value_size,
             inner_max_entries=inner_max_entries,
+            value_fields=value_fields,
         )
 
     def is_func_void_return(self, func_name: str) -> bool:
@@ -576,12 +614,29 @@ def is_void_return_via_btf(filepath: str, func_name: str) -> bool:
 
 if __name__ == "__main__":
     import sys
-    if len(sys.argv) < 2:
-        print(f"Usage: {sys.argv[0]} <ebpf.o>")
+    args = [a for a in sys.argv[1:] if a != "--json"]
+    if len(args) != 1:
+        print(f"Usage: {sys.argv[0]} <ebpf.o> [--json]")
         sys.exit(1)
 
-    filepath = sys.argv[1]
+    filepath = args[0]
     maps = parse_map_metadata_from_btf(filepath)
+
+    if "--json" in sys.argv[1:]:
+        # Machine-readable form: {map_name: {map_type, key_size, value_size,
+        # max_entries, value_fields: [{name, offset, size}] | null, ...}}.
+        import json
+        from dataclasses import asdict
+        out = {}
+        for name, meta in maps.items():
+            d = asdict(meta)
+            if meta.value_fields is not None:
+                d["value_fields"] = [
+                    {"name": n, "offset": o, "size": sz} for n, o, sz in meta.value_fields
+                ]
+            out[name] = d
+        print(json.dumps(out, indent=2))
+        sys.exit(0 if maps else 1)
 
     if not maps:
         print("No maps found or BTF parsing failed.")

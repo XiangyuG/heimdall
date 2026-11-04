@@ -5,10 +5,17 @@
  *
  * Unlike the per-tool *_runner.c files (cachestat_runner.c, filetop_runner.c,
  * ...), this doesn't read any tool-specific map contents. It only reads the
- * kernel's own per-program bpf_prog_info.run_cnt/run_time_ns counters before
- * and after a sleep -- which the kernel tracks for ANY loaded BPF program
- * regardless of what its body does internally -- so one binary covers every
- * tool in this attach-mechanism family instead of a bespoke runner each.
+ * kernel's own per-program bpf_prog_info.run_cnt/run_time_ns counters --
+ * which the kernel tracks for ANY loaded BPF program regardless of what its
+ * body does internally -- so one binary covers every tool in this
+ * attach-mechanism family instead of a bespoke runner each.
+ *
+ * The counters are read once per second: each second's delta run_time_ns /
+ * delta run_cnt is one ns/run sample (printed as a "sample N:" line). At the
+ * end it prints the whole-window table (unchanged format) and, per program,
+ * the median/min/max/mean/std of the per-second samples plus their
+ * mean/variance/std after dropping TRIM_PCT percent from each end -- the same
+ * output filetop_runner.c prints.
  *
  * A named program that fails to attach is logged and skipped rather than
  * aborting the whole run: several tools define a CO-RE fallback pair for the
@@ -21,6 +28,7 @@
 #include <bpf/libbpf.h>
 #include <errno.h>
 #include <linux/bpf.h>
+#include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -28,12 +36,18 @@
 #include <unistd.h>
 
 #define MAX_PROGRAMS 64
+/* Percent of the per-second samples dropped from EACH end before the trimmed
+ * statistics (floor(n * TRIM_PCT / 100)); same default as filetop_runner. */
+#define TRIM_PCT 2.0
 
 struct measured_program {
 	const char *name;
 	struct bpf_program *program;
 	struct bpf_link *link;
 	struct bpf_prog_info before;
+	struct bpf_prog_info prev;	/* stats at the start of the current 1s interval */
+	double *samples;		/* per-second ns/run, intervals with run_cnt > 0 */
+	int nsamples;
 	bool attached;
 };
 
@@ -63,8 +77,59 @@ static void cleanup(void)
 {
 	size_t i;
 
-	for (i = 0; i < n_measured; i++)
+	for (i = 0; i < n_measured; i++) {
 		bpf_link__destroy(measured[i].link);
+		free(measured[i].samples);
+	}
+}
+
+static int compare_double(const void *a, const void *b)
+{
+	double x = *(const double *)a, y = *(const double *)b;
+
+	return (x > y) - (x < y);
+}
+
+/* Summary of one program's per-second ns/run samples: the full-sample
+ * median/min/max/mean/std, then mean/variance/std after dropping
+ * floor(n * trim_pct / 100) samples from EACH end. */
+static void print_sample_stats(const struct measured_program *m, double trim_pct)
+{
+	int n = m->nsamples, k, kept, i;
+	double mean = 0, var = 0, tmean = 0, tvar = 0, median;
+	double *v = m->samples;
+
+	if (!n) {
+		printf("%-38s samples=0\n", m->name);
+		return;
+	}
+	qsort(v, n, sizeof(*v), compare_double);
+	k = (int)(n * trim_pct / 100.0);
+	if (n - 2 * k <= 0)
+		k = 0;
+	kept = n - 2 * k;
+
+	for (i = 0; i < n; i++)
+		mean += v[i];
+	mean /= n;
+	for (i = 0; i < n; i++)
+		var += (v[i] - mean) * (v[i] - mean);
+	var = n > 1 ? var / (n - 1) : 0;
+
+	for (i = k; i < n - k; i++)
+		tmean += v[i];
+	tmean /= kept;
+	for (i = k; i < n - k; i++)
+		tvar += (v[i] - tmean) * (v[i] - tmean);
+	tvar = kept > 1 ? tvar / (kept - 1) : 0;
+
+	median = n % 2 ? v[n / 2] : (v[n / 2 - 1] + v[n / 2]) / 2;
+
+	printf("%-38s samples=%d median=%.2f min=%.2f max=%.2f mean=%.2f "
+	       "std=%.2f | trim=%g%% (%d each end, %d kept) "
+	       "trimmed_mean=%.2f trimmed_var=%.2f trimmed_std=%.2f\n",
+	       m->name, n, median, v[0], v[n - 1], mean, sqrt(var),
+	       trim_pct, k, kept, tmean, tvar, sqrt(tvar));
 }
 
 int main(int argc, char **argv)
@@ -94,8 +159,14 @@ int main(int argc, char **argv)
 		fprintf(stderr, "too many programs (max %d)\n", MAX_PROGRAMS);
 		return 2;
 	}
-	for (i = 0; i < n_measured; i++)
+	for (i = 0; i < n_measured; i++) {
 		measured[i].name = argv[3 + i];
+		measured[i].samples = calloc(seconds, sizeof(double));
+		if (!measured[i].samples) {
+			fprintf(stderr, "out of memory\n");
+			goto cleanup_and_out;
+		}
+	}
 
 	libbpf_set_strict_mode(LIBBPF_STRICT_ALL);
 
@@ -189,7 +260,41 @@ int main(int argc, char **argv)
 			printf("  %-38s program ID %u\n", measured[i].name, measured[i].before.id);
 	fflush(stdout);
 
-	sleep(seconds);
+	/* Sample the cumulative kernel stats once per second; each interval's
+	 * delta run_time_ns / delta run_cnt is one ns/run sample. */
+	for (i = 0; i < n_measured; i++)
+		measured[i].prev = measured[i].before;
+	printf("\nper-second ns/run samples (second: program=ns/run(run_cnt) ...)\n");
+	for (int t = 1; t <= seconds; t++) {
+		sleep(1);
+		printf("sample %3d:", t);
+		for (i = 0; i < n_measured; i++) {
+			struct measured_program *m = &measured[i];
+			struct bpf_prog_info now;
+			__u64 dcnt, dtime;
+
+			if (!m->attached)
+				continue;
+			if (read_prog_stats(m->program, &now)) {
+				fprintf(stderr, "failed to read statistics for %s: %s\n",
+					m->name, strerror(errno));
+				goto cleanup_and_out;
+			}
+			dcnt = now.run_cnt - m->prev.run_cnt;
+			dtime = now.run_time_ns - m->prev.run_time_ns;
+			m->prev = now;
+			if (dcnt) {
+				double ns = (double)dtime / (double)dcnt;
+
+				m->samples[m->nsamples++] = ns;
+				printf("  %s=%.2f(%llu)", m->name, ns, (unsigned long long)dcnt);
+			} else {
+				printf("  %s=n/a(0)", m->name);
+			}
+		}
+		printf("\n");
+		fflush(stdout);
+	}
 
 	printf("\n%-38s %15s %18s %14s\n", "program", "run_cnt", "run_time_ns", "ns/run");
 	for (i = 0; i < n_measured; i++) {
@@ -218,6 +323,11 @@ int main(int argc, char **argv)
 			printf("%-38s %15llu %18llu %14s\n", measured[i].name,
 			       (unsigned long long)run_count, (unsigned long long)run_time, "n/a");
 	}
+
+	printf("\nper-second ns/run statistics\n");
+	for (i = 0; i < n_measured; i++)
+		if (measured[i].attached)
+			print_sample_stats(&measured[i], TRIM_PCT);
 
 	error = 0;
 
