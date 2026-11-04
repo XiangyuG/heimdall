@@ -109,7 +109,7 @@ int main(int argc, char **argv)
 	const char *object_path = argc > 1 ? argv[1] : "filetop.o";
 	int seconds = argc > 2 ? atoi(argv[2]) : 60;
 	int max_entries = argc > 3 ? atoi(argv[3]) : 256;
-	double trim_pct = argc > 4 ? atof(argv[4]) : 10.0;
+	double trim_pct = argc > 4 ? atof(argv[4]) : 2.0;
 	struct bpf_object *object = NULL;
 	struct bpf_program *program;
 	struct bpf_map *entries;
